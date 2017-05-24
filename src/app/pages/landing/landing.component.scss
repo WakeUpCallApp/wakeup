@@ -1,0 +1,158 @@
+header {
+    background-color: rgb(76, 94, 166);
+    color: white;
+    padding: 10px;
+}
+
+header nav {
+    display: flex;
+}
+
+header nav .logo {
+    flex: 1;
+}
+
+header nav .logo img {
+    height: 50px;
+}
+
+header nav ul {
+    display: flex;
+    list-style-type: none;
+    font-size: 20px;
+}
+
+header nav ul li {
+    flex: 1;
+    padding: 0 10px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+}
+header nav .login {
+  font-size: 20px; 
+  background-color: rgb(162, 201, 214);
+}
+
+header .intro {
+    display: flex;
+    min-height: 350px;
+}
+
+header .appName{
+	font-size: 50px;
+}
+
+.sectionTitle {
+	font-size: 50px;
+	margin-left: 10px;
+}
+
+#Features,
+#Contact {
+    min-height: 660px;
+}
+
+header .intro header {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: 20px;
+    align-items: center;
+}
+.createAccountButton{
+    height: 50px;
+    width: 300px;
+    font-size: 24px;
+    color: white;
+    background-color: rgba(247, 137, 3, 0.98);
+    cursor: pointer;
+    border: none;
+    border-radius: 19px;
+    margin-top: 15px;
+}
+
+#About {
+    background-color: white;
+    padding: 30px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+}
+#About .content {
+	margin-bottom: 20px;
+}
+#About .content li {
+    font-size: 24px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#About .content li:not(:first-child){
+    padding-top: 70px;
+}
+
+
+#Features {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(76, 94, 166);
+    padding: 30px 10px 10px 10px;
+    color: white;
+}
+
+#Features .content {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    margin-top: 70px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#Features .content div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 30px;
+}
+
+#Features .content div .material-icons {
+    font-size: 40px;
+}
+
+#Features .content div ul li {
+    margin-top: 16px;
+}
+
+#Contact {
+    padding: 30px 10px 10px 10px;
+}
+
+#Contact .content {
+    margin-top: 70px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#Contact .content p {
+    font-size: 24px;
+}
+
+#Contact form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#Contact form label {
+    margin: 16px 0;
+}
+
+#Contact form button {
+    height: 50px;
+    width: 200px;
+    margin-top: 10px;
+}

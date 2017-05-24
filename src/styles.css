@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+}
+
+body > div.container {
+    position: relative;
+    max-width: 2000px;
+    height: 100vh;
+    margin: 0 auto;
+}
