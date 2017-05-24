@@ -16,26 +16,15 @@ header nav .logo img {
     height: 50px;
 }
 
-header nav ul {
-    display: flex;
-    list-style-type: none;
+header nav .logo .appLogo{
+    font-size: 18px;
+}
+
+.login {
+    color: rgba(247, 137, 3, 0.98);
     font-size: 20px;
 }
 
-header nav ul li {
-    flex: 1;
-    padding: 0 10px;
-}
-
-header nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 24px;
-}
-header nav .login {
-  font-size: 20px; 
-  background-color: rgb(162, 201, 214);
-}
 
 header .intro {
     display: flex;
@@ -51,8 +40,7 @@ header .appName{
 	margin-left: 10px;
 }
 
-#Features,
-#Contact {
+#Features{
     min-height: 660px;
 }
 
@@ -127,32 +115,8 @@ header .intro header {
     margin-top: 16px;
 }
 
-#Contact {
-    padding: 30px 10px 10px 10px;
-}
-
-#Contact .content {
-    margin-top: 70px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-#Contact .content p {
-    font-size: 24px;
-}
-
-#Contact form {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-}
-
-#Contact form label {
-    margin: 16px 0;
-}
-
-#Contact form button {
-    height: 50px;
-    width: 200px;
-    margin-top: 10px;
+.footer {
+    text-align: center;
+    padding: 30px 0;
+    border-top: 1px solid #E5E5E5;
 }
