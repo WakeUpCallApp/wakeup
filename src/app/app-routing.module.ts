@@ -6,16 +6,18 @@ import { LandingComponent } from './pages/landing/landing.component';
 @NgModule({
 	imports: [
 	RouterModule.forRoot([
-	{ path: 'login',		
-	  component: LoginComponent 
+	{ path: 'login',
+	  component: LoginComponent,
+    data: { title: 'Login' }
 	},
 	{ path: 'landing',
-	  component: LandingComponent 
-	},  	
+	  component: LandingComponent,
+    data: { title: 'Landing Page' }
+	},
 	{ path: '', redirectTo: 'landing', pathMatch: 'full' },
 	{ path: '**', redirectTo: 'landing', pathMatch: 'full' }
 	])
 	],
 	exports: [ RouterModule ]
 })
-export class AppRoutingModule {}; 
+export class AppRoutingModule {};

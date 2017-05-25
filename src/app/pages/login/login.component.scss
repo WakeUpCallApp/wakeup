@@ -1,0 +1,111 @@
+.loginComponent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(76, 94, 166);
+    color: white;
+    @media (min-width: 600px) {
+        height: 100vh;
+    }
+    .content {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        flex-direction: column;
+        @media (min-width: 600px) {
+            flex-direction: row;
+        }
+    }
+    .banner {
+        background-color: rgba(0, 0, 0, 0.32);
+        padding: 80px;
+        height: 314px;
+        .backToLanding a {
+            color: white;
+            text-decoration: none;
+        }
+    }
+    .LoginContainer {
+        text-align: center;
+        background-color: white;
+        color: black;
+        padding: 26px;
+        margin-bottom: 42px;
+        width: 91%;
+        height: 100%;
+        @media (min-width: 600px) {
+            max-height: 500px;
+            max-width: 300px;
+            margin-bottom: 0px;
+            height: inherit;
+        }
+        .delimiterLoginMethod {
+            border: 1px solid gray;
+            padding: 10px;
+            border-radius: 32px;
+            color: gray;
+        }
+        i.fa-google-plus {
+            margin-left: 0px;
+            border-right: 0.5px solid white;
+            margin-right: 8px;
+            padding: 10px;
+        }
+    }
+}
+
+.title {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.title a {
+    color: white;
+    text-decoration: none;
+}
+
+.title a:hover {
+    border-bottom: 1px solid white;
+}
+
+.title+small {
+    font-size: 16px;
+}
+
+img.logo {
+    margin-top: 30px;
+    height: 60px;
+}
+
+form.loginForm {
+    display: flex;
+    flex-direction: column;
+    button {
+        width: 180px;
+        align-self: center;
+    }
+}
+
+div.google {
+    padding: 30px;
+    button {
+        color: #fff;
+        background-color: #dd4b39;
+        border-color: #c53727;
+        width: 180px;
+        padding-left: 0px;
+    }
+}
+
+.usefulLinks {
+    margin-top: 50px;
+}
+
+.footer {
+    text-align: center;
+    padding: 30px 0;
+    background-color: white;
+    color: black;
+    width: 100%;
+}
