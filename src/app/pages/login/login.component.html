@@ -5,31 +5,11 @@
       <small>Enrich your life through the power of questions</small>
       <div><img class="logo" src="/../../../assets/images/heart.png" alt='logo'></div>
     </div>
-    <div class="LoginContainer">
-      <h1>Log In</h1>
-      <hr>
-      <div class="google">
-        <button md-button md-raised-button><i class="fa fa-google-plus" aria-hidden="true" mdSuffix></i>
-      Log In with Google</button>
-      </div>
-
-      <span class="delimiterLoginMethod">
-        OR
-       </span>
-
-      <form class="loginForm" #loginForm="ngForm">
-        <md-input-container dividerColor="{{ (emailVar.touched || emailVar.dirty) && !emailVar.valid ? 'warn' : 'primary' }}">
-          <input mdInput placeholder="Email" type="email" #emailVar required name="email" [(ngModel)]="user.email">
-        </md-input-container>
-        <md-input-container dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
-          <input mdInput placeholder="Password" type="password" #passwordVar required name="password" [(ngModel)]="user.password">
-        </md-input-container>
-        <button md-button md-raised-button class="loginButton" [disabled]="!loginForm.valid">Log In</button>
-      </form>
-      <div class="usefulLinks">
-        <a [routerLink]="['/signup']">Sign up now ></a>
-      </div>
+    <div class='LoginContainer'>
+      <router-outlet>
+      </router-outlet>
     </div>
+
   </div>
   <footer class="footer">
     <div>

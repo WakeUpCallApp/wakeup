@@ -1,0 +1,41 @@
+@import "~../../../../common/constants";
+.delimiterLoginMethod {
+    border: 1px solid gray;
+    padding: 10px;
+    border-radius: 32px;
+    color: gray;
+}
+
+i.fa-google-plus {
+    margin-left: 0px;
+    border-right: 0.5px solid white;
+    margin-right: 8px;
+    padding: 10px;
+}
+
+form.signupForm {
+    display: flex;
+    flex-direction: column;
+    button {
+        width: 180px;
+        align-self: center;
+    }
+    button.signupButton:not(:disabled) {
+        background-color: $accent;
+    }
+}
+
+div.google {
+    padding: 30px;
+    button {
+        color: #fff;
+        background-color: #dd4b39;
+        border-color: #c53727;
+        width: 180px;
+        padding-left: 0px;
+    }
+}
+
+.usefulLinks {
+    margin-top: 50px;
+}

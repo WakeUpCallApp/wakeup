@@ -10,13 +10,12 @@ import { Router } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LandingComponent } from './pages/landing/landing.component';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginModule } from './pages/login/login.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LandingComponent,
-    LoginComponent
+    LandingComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +23,7 @@ import { LoginComponent } from './pages/login/login.component';
     FormsModule,
     HttpModule,
     MaterialModule,
+    LoginModule,
     AppRoutingModule,
   ],
   providers: [],

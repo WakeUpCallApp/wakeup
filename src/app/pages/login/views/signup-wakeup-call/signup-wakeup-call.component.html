@@ -1,0 +1,26 @@
+<h1>Sign Up</h1>
+<hr>
+<div class="google">
+  <button md-button md-raised-button><i class="fa fa-google-plus" aria-hidden="true" mdSuffix></i>
+      Sign Up with Google</button>
+</div>
+
+<span class="delimiterLoginMethod">
+        OR
+       </span>
+
+<form class="signupForm" #signupForm="ngForm">
+  <md-input-container dividerColor="{{ (userName.touched || userName.dirty) && !userName.valid ? 'warn' : 'primary' }}">
+    <input mdInput placeholder="Name" type="text" #userName required name="userName" [(ngModel)]="user.name">
+  </md-input-container>
+  <md-input-container dividerColor="{{ (emailVar.touched || emailVar.dirty) && !emailVar.valid ? 'warn' : 'primary' }}">
+    <input mdInput placeholder="Email" type="email" #emailVar required name="email" [(ngModel)]="user.email">
+  </md-input-container>
+  <md-input-container dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
+    <input mdInput placeholder="Password" type="password" #passwordVar required name="password" [(ngModel)]="user.password">
+  </md-input-container>
+  <button md-button md-raised-button class="signupButton" [disabled]="!signupForm.valid">Sign Up</button>
+</form>
+<div class="usefulLinks">
+  <a [routerLink]="['../wakeupcallapp']">Log in now ></a>
+</div>
