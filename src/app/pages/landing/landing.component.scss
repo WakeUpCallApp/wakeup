@@ -1,5 +1,7 @@
+@import "~../../common/constants";
+
 header {
-    background-color: rgb(76, 94, 166);
+    background-color: $primary;
     color: white;
     padding: 10px;
 }
@@ -16,31 +18,31 @@ header nav .logo img {
     height: 50px;
 }
 
-header nav .logo .appLogo{
+header nav .logo .appLogo {
     font-size: 18px;
 }
 
 .login {
     height: 45px;
     font-weight: bold;
+    background-color: $accent;
 }
-
 
 header .intro {
     display: flex;
     min-height: 350px;
 }
 
-header .appName{
-	font-size: 50px;
+header .appName {
+    font-size: 50px;
 }
 
 .sectionTitle {
-	font-size: 50px;
-	margin-left: 10px;
+    font-size: 50px;
+    margin-left: 10px;
 }
 
-#Features{
+#Features {
     min-height: 660px;
 }
 
@@ -51,12 +53,12 @@ header .intro header {
     margin-top: 20px;
     align-items: center;
 }
-.createAccountButton{
+
+.createAccountButton {
     height: 50px;
     width: 300px;
     font-size: 24px;
-    color: white;
-    background-color: rgba(247, 137, 3, 0.98);
+    background-color: $accent;
     cursor: pointer;
     border: none;
     border-radius: 19px;
@@ -69,46 +71,64 @@ header .intro header {
     display: flex;
     flex-direction: column;
 }
+
 #About .content {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    @media (min-width: 1000px) {
+        flex-direction: row;
+        ul {
+            width: 100%;
+        }
+    }
 }
+
 #About .content li {
     font-size: 24px;
     margin-left: 10px;
     margin-right: 10px;
 }
-#About .content li:not(:first-child){
-    padding-top: 70px;
-}
 
+#About .content li:not(:first-child) {
+    padding-top: 26px;
+}
 
 #Features {
     display: flex;
     flex-direction: column;
-    background-color: rgb(76, 94, 166);
+    background-color: $primary;
     padding: 30px 10px 10px 10px;
     color: white;
 }
 
 #Features .content {
     display: flex;
-    flex-wrap: wrap;
-    flex: 1;
+    flex-direction: column;
     margin-top: 70px;
     margin-left: 10px;
     margin-right: 10px;
+
+     @media (min-width: 1000px) {
+        flex-direction: row;
+    }
 }
 
 #Features .content div {
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
     font-size: 30px;
+    margin-bottom: 40px;
 }
 
 #Features .content div .material-icons {
     font-size: 40px;
+    align-self: center;
+}
+
+#Features .content div ul {
+    margin-top: 0px;
 }
 
 #Features .content div ul li {

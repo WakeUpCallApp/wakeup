@@ -24,7 +24,7 @@
         <md-input-container dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
           <input mdInput placeholder="Password" type="password" #passwordVar required name="password" [(ngModel)]="user.password">
         </md-input-container>
-        <button md-button md-raised-button color="primary" [disabled]="!loginForm.valid">Log In</button>
+        <button md-button md-raised-button class="loginButton" [disabled]="!loginForm.valid">Log In</button>
       </form>
       <div class="usefulLinks">
         <a [routerLink]="['/signup']">Sign up now ></a>

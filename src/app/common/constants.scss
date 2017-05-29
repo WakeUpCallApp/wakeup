@@ -1,0 +1,8 @@
+@import '~../../theme';
+
+@include mat-core();
+
+$primary: mat-color($wakeupcall-app-primary);
+$accent: mat-color($wakeupcall-app-accent);
+$warn: mat-color($wakeupcall-app-warn);
+

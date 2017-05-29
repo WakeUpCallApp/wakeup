@@ -2,15 +2,15 @@
 
 @include mat-core();
 
-$candy-app-primary: mat-palette($mat-deep-purple);
-$candy-app-accent:  mat-palette($mat-orange);
+$wakeupcall-app-primary: mat-palette($mat-indigo);
+$wakeupcall-app-accent:  mat-palette($mat-orange);
 
 
-$candy-app-warn:    mat-palette($mat-red);
+$wakeupcall-app-warn:    mat-palette($mat-red);
 
 
-$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+$wakeupcall-app-theme: mat-light-theme($wakeupcall-app-primary, $wakeupcall-app-accent, $wakeupcall-app-warn);
 
 
-@include angular-material-theme($candy-app-theme);
+@include angular-material-theme($wakeupcall-app-theme);
 
