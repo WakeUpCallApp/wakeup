@@ -1,7 +1,12 @@
 <h1>Sign Up</h1>
 <hr>
 <div class="google">
-  <button md-button md-raised-button><i class="fa fa-google-plus" aria-hidden="true" mdSuffix></i>
+  <button
+    md-button
+    md-raised-button
+    (click)="loginOauth('google')">
+    <i class="fa fa-google-plus" aria-hidden="true">
+    </i>
       Sign Up with Google</button>
 </div>
 
@@ -19,7 +24,11 @@
   <md-input-container dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
     <input mdInput placeholder="Password" type="password" #passwordVar required name="password" [(ngModel)]="user.password">
   </md-input-container>
-  <button md-button md-raised-button class="signupButton" [disabled]="!signupForm.valid">Sign Up</button>
+  <button md-button
+     md-raised-button
+     class="signupButton"
+     (click)="signUp()"
+     [disabled]="!signupForm.valid">Sign Up</button>
 </form>
 <div class="usefulLinks">
   <a [routerLink]="['../wakeupcallapp']">Log in now ></a>

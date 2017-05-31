@@ -19,9 +19,6 @@ var passport = require('passport');
 module.exports = function(app) {
     var env = app.get('env');
 
-    app.set('views', config.root + '/server/views');
-    app.engine('html', require('ejs').renderFile);
-    app.set('view engine', 'html');
     app.use(compression());
     app.use(bodyParser.urlencoded({
         extended: false
@@ -30,6 +27,27 @@ module.exports = function(app) {
     app.use(methodOverride());
     app.use(cookieParser());
     app.use(passport.initialize());
+    // Add headers
+    app.use(function (req, res, next) {
+
+      // Website you wish to allow to connect
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+      res.setHeader('Authorization', 'http://localhost:4200')
+      // Request methods you wish to allow res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+
+
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+      // Request headers you wish to allow
+      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization');
+
+      // Set to true if you need the website to include cookies in the requests sent
+      // to the API (e.g. in case you use sessions)
+      res.setHeader('Access-Control-Allow-Credentials', true);
+
+      // Pass to next layer of middleware
+      next();
+});
     if ('production' === env) {
         app.use(favicon(path.join(config.root, 'dist', 'favicon.ico')));
         app.use(express.static(path.join(config.root, 'dist')));
@@ -39,9 +57,6 @@ module.exports = function(app) {
     }
 
     if ('development' === env || 'test' === env) {
-        /*app.use(require('connect-livereload')());
-        app.use(express.static(path.join(config.root, '.tmp')));
-        app.use(express.static(path.join(config.root, 'client')));*/
         app.set('appPath', path.join(config.root, 'dist'));
         app.use(morgan('dev'));
         app.use(errorHandler()); // Error handler - has to be last
