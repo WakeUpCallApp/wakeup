@@ -39,3 +39,10 @@ div.google {
 .usefulLinks {
     margin-top: 50px;
 }
+
+.usefulLinks a {
+    color: black;
+}
+.usefulLinks a:hover {
+    color: $primary;
+}

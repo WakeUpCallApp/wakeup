@@ -4,8 +4,8 @@ body {
 }
 
 body > div.container {
-    position: relative;
+    /*position: relative;
     max-width: 2000px;
     height: 100vh;
-    margin: 0 auto;
+    margin: 0 auto;*/
 }
