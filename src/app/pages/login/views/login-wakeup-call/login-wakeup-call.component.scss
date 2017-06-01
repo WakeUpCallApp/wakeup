@@ -16,12 +16,24 @@ i.fa-google-plus {
 form.loginForm {
     display: flex;
     flex-direction: column;
+    margin-top: 26px;
     button {
         width: 180px;
         align-self: center;
     }
     button.loginButton:not(:disabled) {
         background-color: $accent;
+    }
+    md-input-container {
+        margin-bottom: 10px;
+    }
+    .errorMessage{
+        color: $warn;
+        padding-bottom: 10px;
+    }
+    .spinner {
+        height: 50px;
+        align-self: center;
     }
 }
 
@@ -43,6 +55,7 @@ div.google {
 .usefulLinks a {
     color: black;
 }
+
 .usefulLinks a:hover {
     color: $primary;
 }

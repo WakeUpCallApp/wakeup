@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { httpFactory } from './config/http.factory';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CommonModule } from './common/common.module';
+import { WakeupCommonModule } from './common/common.module';
 import { LandingComponent } from './pages/landing/landing.component';
 import { LoginModule } from './pages/login/login.module';
 
@@ -25,7 +25,7 @@ import { LoginModule } from './pages/login/login.module';
     FormsModule,
     HttpModule,
     MaterialModule,
-    CommonModule,
+    WakeupCommonModule,
     LoginModule,
     AppRoutingModule,
   ],

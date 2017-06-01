@@ -1,5 +1,4 @@
 @import "~../../common/constants";
-
 .loginComponent {
     display: flex;
     min-height: 100vh;
@@ -9,7 +8,6 @@
     justify-content: center;
     background-color: $primary;
     color: white;
-
     .content {
         margin: auto;
         display: flex;
@@ -36,7 +34,7 @@
         width: 91%;
         height: 100%;
         @media (min-width: 600px) {
-            max-height: 500px;
+            max-height: 550px;
             max-width: 300px;
             margin-bottom: 0px;
             height: inherit;

@@ -17,18 +17,24 @@
 <form class="signupForm" #signupForm="ngForm">
   <md-input-container dividerColor="{{ (userName.touched || userName.dirty) && !userName.valid ? 'warn' : 'primary' }}">
     <input mdInput placeholder="Name" type="text" #userName required name="userName" [(ngModel)]="user.name">
+    <md-error>Name is required</md-error>
   </md-input-container>
   <md-input-container dividerColor="{{ (emailVar.touched || emailVar.dirty) && !emailVar.valid ? 'warn' : 'primary' }}">
     <input mdInput placeholder="Email" type="email" #emailVar required name="email" [(ngModel)]="user.email">
+    <md-error>Email is required</md-error>
   </md-input-container>
   <md-input-container dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
     <input mdInput placeholder="Password" type="password" #passwordVar required name="password" [(ngModel)]="user.password">
+    <md-error>Password is required</md-error>
   </md-input-container>
-  <button md-button
+
+  <div class="errorMessage" *ngIf="errorMessage">{{errorMessage}}</div>
+  <button *ngIf="!isSigningIn" md-button
      md-raised-button
      class="signupButton"
      (click)="signUp()"
      [disabled]="!signupForm.valid">Sign Up</button>
+     <md-spinner class="spinner" *ngIf="isSigningIn"></md-spinner>
 </form>
 <div class="usefulLinks">
   <a [routerLink]="['../wakeupcallapp']">Log in now ></a>

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
 import { AuthTokenService } from './services/authToken.service';
 import { LoginService } from './services/login.service';
 
@@ -9,4 +9,4 @@ import { LoginService } from './services/login.service';
   providers: [AuthTokenService, LoginService],
   exports: [],
 })
-export class CommonModule { }
+export class WakeupCommonModule { }

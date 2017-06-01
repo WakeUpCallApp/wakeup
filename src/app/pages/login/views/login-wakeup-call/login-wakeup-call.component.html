@@ -12,11 +12,22 @@
 <form class="loginForm" #loginForm="ngForm">
   <md-input-container dividerColor="{{ (emailVar.touched || emailVar.dirty) && !emailVar.valid ? 'warn' : 'primary' }}">
     <input mdInput placeholder="Email" type="email" #emailVar required name="email" [(ngModel)]="user.email">
+    <md-error>Email is required</md-error>
   </md-input-container>
   <md-input-container dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
     <input mdInput placeholder="Password" type="password" #passwordVar required name="password" [(ngModel)]="user.password">
+    <md-error>Password is required</md-error>
   </md-input-container>
-  <button md-button md-raised-button class="loginButton" [disabled]="!loginForm.valid">Log In</button>
+  <div class="errorMessage" *ngIf="errorMessage">{{errorMessage}}</div>
+  <button 
+     *ngIf="!isLoggingIn"
+     md-button
+     md-raised-button
+     class="loginButton"
+     [disabled]="!loginForm.valid"
+     (click)="login()">Log In
+      </button>
+   <md-spinner class="spinner" *ngIf="isLoggingIn"></md-spinner>
 </form>
 <div class="usefulLinks">
   <a [routerLink]="['../signup']">Sign up now ></a>
