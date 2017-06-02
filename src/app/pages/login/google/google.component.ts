@@ -18,7 +18,7 @@ export class GoogleComponent implements OnInit {
   ngOnInit() {
     const token = window.location.search.split('token=')[1];
     this.authService.setToken(token);
-    this.router.navigate([appConstants.routes.LANDING]);
+    this.router.navigate([appConstants.routes.QUESTION_SETS]);
   }
 
 }

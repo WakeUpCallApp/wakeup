@@ -1,0 +1,30 @@
+.container {
+}
+
+.sidenav {
+    padding: 15px;
+    width: 209px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.tags{
+	display: flex;
+	flex-direction:column;
+	max-height: 550px;
+    overflow-y: auto;
+}
+
+.tagCheckbox{
+	margin-bottom: 16px;
+}
+
+.mat-input-container .mat-input-wrapper{
+  margin-top: 8px !important;
+}

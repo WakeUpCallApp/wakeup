@@ -5,7 +5,8 @@ const appConstants = {
     },
     routes: {
         LANDING: 'landing',
-        LOGIN: 'login'
+        LOGIN: 'login',
+        QUESTION_SETS: 'questionSets'
     }
 };
 

@@ -36,7 +36,7 @@ export class LoginWakeupCallComponent implements OnInit {
       resp => {
         this.isLoggingIn = false;
         this.authService.setToken(resp.token);
-        this.router.navigate([appConstants.routes.LANDING]);
+        this.router.navigate([appConstants.routes.QUESTION_SETS]);
       },
       (error) => {
         this.isLoggingIn = false;

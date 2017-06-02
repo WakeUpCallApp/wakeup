@@ -34,7 +34,7 @@ export class SignupWakeupCallComponent implements OnInit {
     this.loginService.signUp(this.user).subscribe(
       resp => {
         this.isSigningIn = false;
-        this.router.navigate([appConstants.routes.LANDING]);
+        this.router.navigate([appConstants.routes.QUESTION_SETS]);
       },
       (error) => {
         this.isSigningIn = false;

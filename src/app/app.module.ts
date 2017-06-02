@@ -13,11 +13,13 @@ import { AppComponent } from './app.component';
 import { WakeupCommonModule } from './common/common.module';
 import { LandingComponent } from './pages/landing/landing.component';
 import { LoginModule } from './pages/login/login.module';
+import { QuestionSetsComponent } from './pages/question-sets/question-sets.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LandingComponent
+    LandingComponent,
+    QuestionSetsComponent
   ],
   imports: [
     BrowserModule,

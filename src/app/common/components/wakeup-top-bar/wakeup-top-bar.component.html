@@ -1,0 +1,29 @@
+<md-toolbar color="primary" *ngIf="loggedUser">
+  <div class="left">
+    <div class="openMenu">
+      <md-icon *ngIf="!isOpen" class="icon" title="Show search and filters" (click)="toggleSideNav()">
+        search
+      </md-icon>
+      <md-icon *ngIf="isOpen" class="icon" title="Hide search and filters" (click)="toggleSideNav()">
+        chevron_left
+      </md-icon>
+    </div>
+  </div>
+  <div class="right">
+    <div class="userProfile">
+      <button md-button [mdMenuTriggerFor]="menu">{{loggedUser?.name}} <md-icon>keyboard_arrow_down</md-icon> </button>
+    </div>
+    <md-menu #menu="mdMenu" [overlapTrigger]="false">
+      <button md-menu-item>
+                <div class="menu-section">
+                     <div class="userInfo"> 
+                       <a [routerLink]="['profile']"> View Profile</a>
+                     </div>
+                 </div>
+            </button>
+      <button md-menu-item>Help </button>
+      <button md-menu-item (click)="logoutUser()">Logout</button>
+    </md-menu>
+
+  </div>
+</md-toolbar>

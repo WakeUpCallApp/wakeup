@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginService } from './common/services/login.service';
+import { AuthTokenService } from './common/services/authToken.service';
+import appConstants from './common/app-constants';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +10,43 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  public isOpen: boolean = false;
+  canShowNavBarButtons = true;
+
+  constructor(private router: Router,
+    private loginService: LoginService,
+    private authTokenService: AuthTokenService) {
+  }
+  ngOnInit() {
+    if (this.authTokenService.isLoggedIn()) {
+      this.loginService.checkAuthenticationStatus().subscribe(() => {
+        if (this.canShowNavigation()) {
+          this.isOpen = window.innerWidth > 600;
+        }
+      });
+    }
+    this.router.events.subscribe(() => {
+      if (this.canShowNavigation()) {
+        this.isOpen = window.innerWidth > 600;
+      }
+      this.canShowNavBarButtons = true;
+      this.isOpen = this.canShowNavBarButtons ? this.isOpen : false;
+    });
+  }
+
+  openMenu(isOpen) {
+    this.isOpen = isOpen;
+  }
+
+  canShowNavigation() {
+    return this.loginService.isAuthenticated() && 
+      location.pathname.indexOf(appConstants.routes.LANDING) === -1 &&
+      location.pathname.indexOf(appConstants.routes.LOGIN) === -1;
+  }
+
+  logout(): void {
+    this.loginService.logout();
+    this.isOpen = false;
+    this.router.navigate(['/login']);
+  }
 }
