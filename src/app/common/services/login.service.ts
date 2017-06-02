@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 import { AuthTokenService } from './authToken.service';
-import { UserApi, Token } from '../models/User.model';
+import { User, Token } from '../models/User.model';
 
 @Injectable()
 export class LoginService {
@@ -15,7 +15,7 @@ export class LoginService {
   constructor(private http: Http, private authService: AuthTokenService) {
   }
 
-  signUp(userObject: UserApi): Observable<UserApi> {
+  signUp(userObject: User): Observable<User> {
     return this.http.post('/api/users', userObject)
       .map((response: Response) => {
         this.currentUser = response.json();
@@ -25,7 +25,7 @@ export class LoginService {
       .catch(error => Observable.throw(error));
   }
 
-  login(userObject): Observable<Token> {
+  login(userObject: User): Observable<Token> {
     return this.http.post('/auth/local',userObject)
     .map((response:Response) => {
       return response.json();

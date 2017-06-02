@@ -18,7 +18,11 @@ router
 
 .get('/callback', passport.authenticate('google', {
     failureRedirect: '/signup',
-    session: false
+    session: false,
+     scope: [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email'
+    ]
 }), auth.setTokenCookie);
 
 module.exports = router;

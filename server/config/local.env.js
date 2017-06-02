@@ -9,8 +9,8 @@ module.exports = {
     DOMAIN: 'http://localhost:9000',
     SESSION_SECRET: "wakeup-secret",
 
-    GOOGLE_ID: '830749660897-latfhot0slv33cfh4o3197nvktd4ea7g.apps.googleusercontent.com',
-    GOOGLE_SECRET: 'zh5LrIxKMdtcH8D2aIIAqFJJ',
+    GOOGLE_ID: '383546803296-6kivmfltecc90d7nfe405ri5ufp1kg5c.apps.googleusercontent.com',
+    GOOGLE_SECRET: 'exWFeiKRn53ipo8TAVLyH6rr',
 
     // Control debug level for modules using visionmedia/debug
     DEBUG: ''

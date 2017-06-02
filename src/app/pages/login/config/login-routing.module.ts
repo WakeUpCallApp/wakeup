@@ -1,6 +1,7 @@
 import { LoginWakeupCallComponent }          from '../views/login-wakeup-call/login-wakeup-call.component';
 import { SignupWakeupCallComponent }         from '../views/signup-wakeup-call/signup-wakeup-call.component';
 import { LoginComponent }                    from '../login.component';
+import { GoogleComponent }                   from '../google/google.component'; 
 
 import { RouterModule, Routes }              from '@angular/router';
 import { NgModule }                          from '@angular/core';
@@ -13,7 +14,8 @@ export const loginChildRoutes: Routes = [
     children: [
       { path: '', redirectTo: 'wakeupcallapp', pathMatch: 'full' },
       { path: 'wakeupcallapp', component: LoginWakeupCallComponent },
-      { path: 'signup', component: SignupWakeupCallComponent }
+      { path: 'signup', component: SignupWakeupCallComponent },
+      { path: 'google', component: GoogleComponent}
     ]
   }
 ];

@@ -8,6 +8,7 @@ var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
 var validateJwt = expressJwt({ secret: config.secrets.session });
+var redirectDomain = process.env.NODE_ENV === 'development'? 'http://localhost:4200/' : 'production';
 
 /**
  * Attaches the user object to the request if authenticated
@@ -66,8 +67,8 @@ function signToken(id) {
 function setTokenCookie(req, res) {
   if (!req.user) return res.status(404).json({ message: 'Something went wrong, please try again.'});
   var token = signToken(req.user._id, req.user.role);
-  res.cookie('token', JSON.stringify(token));
-  res.redirect('/');
+  //res.cookie('token', JSON.stringify(token));
+  res.redirect(`${redirectDomain}/login/google?token=${token}`);
 }
 
 exports.isAuthenticated = isAuthenticated;

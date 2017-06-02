@@ -57,7 +57,7 @@ module.exports = function(app) {
     }
 
     if ('development' === env || 'test' === env) {
-        app.set('appPath', path.join(config.root, 'dist'));
+        app.set('appPath', path.join(config.root, 'src'));
         app.use(morgan('dev'));
         app.use(errorHandler()); // Error handler - has to be last
     }

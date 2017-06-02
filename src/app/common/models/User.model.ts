@@ -1,7 +1,7 @@
-export interface UserApi {
-  name: string;
+export interface User {
   email: string;
   password: string;
+  name?: string;
 }
 
 export interface Token {

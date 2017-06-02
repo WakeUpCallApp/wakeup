@@ -4,6 +4,7 @@ import { AuthTokenService } from '../../../../common/services/authToken.service'
 import { Router } from '@angular/router';
 import appConstants from '../../../../common/app-constants';
 import constants from '../../config/constants';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-login-wakeup-call',
@@ -26,7 +27,7 @@ export class LoginWakeupCallComponent implements OnInit {
   }
 
   loginOauth(provider) {
-    window.location.href = '/auth/' + provider;
+    window.location.href = `${environment.serverURL}/auth/${provider}`;
   };
 
   login() {
@@ -35,7 +36,7 @@ export class LoginWakeupCallComponent implements OnInit {
       resp => {
         this.isLoggingIn = false;
         this.authService.setToken(resp.token);
-        this.router.navigate(['landing']);
+        this.router.navigate([appConstants.routes.LANDING]);
       },
       (error) => {
         this.isLoggingIn = false;
@@ -46,5 +47,8 @@ export class LoginWakeupCallComponent implements OnInit {
           this.errorMessage = constants.genericError;
         }
       });
+  }
+  valuechange($event) {
+      this.errorMessage = undefined;
   }
 }

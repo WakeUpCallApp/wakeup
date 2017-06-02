@@ -2,6 +2,7 @@
 
 var path = require('path');
 var _ = require('lodash');
+var domainUrl = process.env.NODE_ENV === 'development'? 'http://localhost:9000/' : 'production';
 
 function requiredProcessEnv(name) {
   if(!process.env[name]) {
@@ -45,9 +46,9 @@ var all = {
   },
 
   google: {
-        clientID: process.env.GOOGLE_ID || 'id',
-    clientSecret: process.env.GOOGLE_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback'
+    clientID: process.env.GOOGLE_ID || '383546803296-6kivmfltecc90d7nfe405ri5ufp1kg5c.apps.googleusercontent.com',
+    clientSecret: process.env.GOOGLE_SECRET || 'exWFeiKRn53ipo8TAVLyH6rr',
+    callbackURL:  domainUrl+'auth/google/callback'
   }
 };
 

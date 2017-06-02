@@ -1,7 +1,10 @@
 <h1>Log In</h1>
 <hr>
 <div class="google">
-  <button md-button md-raised-button><i class="fa fa-google-plus" aria-hidden="true" mdSuffix></i>
+  <button 
+  (click)="loginOauth('google')"
+  md-button 
+  md-raised-button><i class="fa fa-google-plus" aria-hidden="true"></i>
       Log In with Google</button>
 </div>
 
@@ -10,12 +13,30 @@
        </span>
 
 <form class="loginForm" #loginForm="ngForm">
-  <md-input-container dividerColor="{{ (emailVar.touched || emailVar.dirty) && !emailVar.valid ? 'warn' : 'primary' }}">
-    <input mdInput placeholder="Email" type="email" #emailVar required name="email" [(ngModel)]="user.email">
+  <md-input-container 
+  dividerColor="{{ (emailVar.touched || emailVar.dirty) && !emailVar.valid ? 'warn' : 'primary' }}">
+    <input 
+    mdInput 
+    placeholder="Email" 
+    type="email" 
+    #emailVar 
+    required 
+    name="email" 
+    [(ngModel)]="user.email"
+    (ngModelChange)="valuechange($event)">
     <md-error>Email is required</md-error>
   </md-input-container>
-  <md-input-container dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
-    <input mdInput placeholder="Password" type="password" #passwordVar required name="password" [(ngModel)]="user.password">
+  <md-input-container 
+  dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
+    <input 
+    mdInput 
+    placeholder="Password" 
+    type="password" 
+    #passwordVar 
+    required 
+    name="password" 
+    [(ngModel)]="user.password"
+    (ngModelChange)="valuechange($event)">
     <md-error>Password is required</md-error>
   </md-input-container>
   <div class="errorMessage" *ngIf="errorMessage">{{errorMessage}}</div>

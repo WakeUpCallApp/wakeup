@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import appConstants from '../../../../common/app-constants';
 import constants from '../../config/constants';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-signup-wakeup-call',
@@ -25,7 +26,7 @@ export class SignupWakeupCallComponent implements OnInit {
   }
 
   loginOauth(provider) {
-    window.location.href = '/auth/' + provider;
+    window.location.href = `${environment.serverURL}/auth/${provider}`;
   };
 
   signUp() {
@@ -33,7 +34,7 @@ export class SignupWakeupCallComponent implements OnInit {
     this.loginService.signUp(this.user).subscribe(
       resp => {
         this.isSigningIn = false;
-        this.router.navigate(['landing']);
+        this.router.navigate([appConstants.routes.LANDING]);
       },
       (error) => {
         this.isSigningIn = false;
@@ -47,6 +48,10 @@ export class SignupWakeupCallComponent implements OnInit {
           this.errorMessage = constants.genericError;
         }
       });
+  }
+
+  valuechange($event) {
+    this.errorMessage = undefined;
   }
 
 }

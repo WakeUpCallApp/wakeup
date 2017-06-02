@@ -3,8 +3,8 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 exports.setup = function(User, config) {
     passport.use(new GoogleStrategy({
-            clientID: config.google.clientID,
-            clientSecret: config.google.clientSecret,
+            clientID: '383546803296-6kivmfltecc90d7nfe405ri5ufp1kg5c.apps.googleusercontent.com',
+            clientSecret: 'exWFeiKRn53ipo8TAVLyH6rr',
             callbackURL: config.google.callbackURL
         },
         function(accessToken, refreshToken, profile, done) {

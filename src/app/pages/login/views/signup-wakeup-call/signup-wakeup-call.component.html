@@ -15,16 +15,41 @@
        </span>
 
 <form class="signupForm" #signupForm="ngForm">
-  <md-input-container dividerColor="{{ (userName.touched || userName.dirty) && !userName.valid ? 'warn' : 'primary' }}">
-    <input mdInput placeholder="Name" type="text" #userName required name="userName" [(ngModel)]="user.name">
+  <md-input-container 
+    dividerColor="{{ (userName.touched || userName.dirty) && !userName.valid ? 'warn' : 'primary' }}">
+    <input mdInput
+        placeholder="Name"
+        type="text" #userName
+        required
+        name="userName"
+        [(ngModel)]="user.name"
+        (ngModelChange)="valuechange($event)">
     <md-error>Name is required</md-error>
   </md-input-container>
-  <md-input-container dividerColor="{{ (emailVar.touched || emailVar.dirty) && !emailVar.valid ? 'warn' : 'primary' }}">
-    <input mdInput placeholder="Email" type="email" #emailVar required name="email" [(ngModel)]="user.email">
+  <md-input-container 
+     dividerColor="{{ (emailVar.touched || emailVar.dirty) && !emailVar.valid ? 'warn' : 'primary' }}">
+    <input
+       mdInput
+       placeholder="Email"
+       type="email"
+       #emailVar 
+       required 
+       name="email" 
+       [(ngModel)]="user.email"
+       (ngModelChange)="valuechange($event)">
     <md-error>Email is required</md-error>
   </md-input-container>
-  <md-input-container dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
-    <input mdInput placeholder="Password" type="password" #passwordVar required name="password" [(ngModel)]="user.password">
+  <md-input-container 
+    dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
+    <input 
+    mdInput 
+    placeholder="Password" 
+    type="password" 
+    #passwordVar 
+    required 
+    name="password" 
+    [(ngModel)]="user.password"
+    (ngModelChange)="valuechange($event)">
     <md-error>Password is required</md-error>
   </md-input-container>
 
