@@ -35,7 +35,6 @@ export class LoginWakeupCallComponent implements OnInit {
     this.loginService.login(this.user).subscribe(
       resp => {
         this.isLoggingIn = false;
-        this.authService.setToken(resp.token);
         this.router.navigate([appConstants.routes.QUESTION_SETS]);
       },
       (error) => {

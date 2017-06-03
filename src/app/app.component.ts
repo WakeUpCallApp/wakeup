@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { LoginService } from './common/services/login.service';
 import { AuthTokenService } from './common/services/authToken.service';
 import appConstants from './common/app-constants';
@@ -12,18 +12,23 @@ import appConstants from './common/app-constants';
 export class AppComponent {
   public isOpen: boolean;
   public canShowTopBar: boolean;
+  private userDetailsSubscription;
 
   constructor(private router: Router,
     private loginService: LoginService,
-    private authTokenService: AuthTokenService) {
-  }
+    private authTokenService: AuthTokenService) { }
+
   ngOnInit() {
-      this.loginService.checkAuthenticationStatus().subscribe(() => {
+    if (!this.loginService.getCurrentUser()) {
+      this.userDetailsSubscription = this.loginService.getUserDetails().subscribe((user) => {
         this.canShowTopBar = this.canShowNavigation();
-        if (this.canShowTopBar) {
-          this.isOpen = window.innerWidth > 600;
-        }
+        this.isOpen = this.canShowTopBar && window.innerWidth > 600;
       });
+    }
+  }
+
+  ngOnDestroy() {
+    this.userDetailsSubscription.unsubscribe();
   }
 
   openMenu(isOpen) {
@@ -31,8 +36,7 @@ export class AppComponent {
   }
 
   canShowNavigation() {
-    return this.loginService.isAuthenticated() && 
-      location.pathname.indexOf(appConstants.routes.LANDING) === -1 &&
+    return location.pathname.indexOf(appConstants.routes.LANDING) === -1 &&
       location.pathname.indexOf(appConstants.routes.LOGIN) === -1;
   }
 

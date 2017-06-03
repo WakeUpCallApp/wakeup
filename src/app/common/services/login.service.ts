@@ -20,7 +20,7 @@ export class LoginService {
   }
 
   isAuthenticated() {
-    return this.currentUser !== undefined && this.authService.isLoggedIn();
+    return this.currentUser !== undefined;
   }
 
   signUp(userObject: User): Observable<User> {
@@ -35,13 +35,17 @@ export class LoginService {
 
   login(userObject: User): Observable<Token> {
     return this.http.post('/auth/local', userObject)
-      .map((response: Response) => {
-        return response.json();
+      .map((response: Response) => response.json())
+      .do(user => {
+        this.currentUser = user;
+        this.authService.setToken(this.currentUser.token);
+        return this.currentUser;
       })
+
       .catch(this.handleError);
   }
 
-  checkAuthenticationStatus() {
+  getUserDetails(): Observable<User> {
     return this.http.get(this.identityUrl)
       .map((response: any) => {
         return response._body ? response.json() : {};
