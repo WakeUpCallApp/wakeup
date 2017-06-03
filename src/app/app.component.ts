@@ -10,28 +10,20 @@ import appConstants from './common/app-constants';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public isOpen: boolean = false;
-  canShowNavBarButtons = true;
+  public isOpen: boolean;
+  public canShowTopBar: boolean;
 
   constructor(private router: Router,
     private loginService: LoginService,
     private authTokenService: AuthTokenService) {
   }
   ngOnInit() {
-    if (this.authTokenService.isLoggedIn()) {
       this.loginService.checkAuthenticationStatus().subscribe(() => {
-        if (this.canShowNavigation()) {
+        this.canShowTopBar = this.canShowNavigation();
+        if (this.canShowTopBar) {
           this.isOpen = window.innerWidth > 600;
         }
       });
-    }
-    this.router.events.subscribe(() => {
-      if (this.canShowNavigation()) {
-        this.isOpen = window.innerWidth > 600;
-      }
-      this.canShowNavBarButtons = true;
-      this.isOpen = this.canShowNavBarButtons ? this.isOpen : false;
-    });
   }
 
   openMenu(isOpen) {

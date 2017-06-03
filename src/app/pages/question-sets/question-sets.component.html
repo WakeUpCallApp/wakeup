@@ -1,3 +1,5 @@
 <div class="questionSets">
-  <h1>Question Sets</h1>
+  <ul *ngFor="let questionSet of questionSets$ | async ">
+     <li>{{questionSet.name}}</li>
+  </ul>
 </div>

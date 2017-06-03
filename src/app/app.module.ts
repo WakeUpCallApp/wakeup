@@ -4,8 +4,16 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 import { MaterialModule } from '@angular/material';
 import { Router } from '@angular/router';
+
+import { QuestionSetEffects } from './common/effects';
+
+import { reducer } from './common/reducers';
 
 import { httpFactory } from './config/http.factory';
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +38,10 @@ import { QuestionSetsComponent } from './pages/question-sets/question-sets.compo
     WakeupCommonModule,
     LoginModule,
     AppRoutingModule,
+    StoreModule.provideStore(reducer),
+    // must come AFTER `provideStore` call
+    StoreDevtoolsModule.instrumentOnlyWithExtension(),
+    EffectsModule.run(QuestionSetEffects)
   ],
   providers: [
     {

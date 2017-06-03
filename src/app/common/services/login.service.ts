@@ -46,12 +46,12 @@ export class LoginService {
       .map((response: any) => {
         return response._body ? response.json() : {};
       })
-      .catch(this.handleError)
       .do(currentUser => {
         if (!!currentUser.name) {
           this.currentUser = currentUser;
         }
-      });
+      })
+      .catch(this.handleError);
   }
   private handleError(error: Response) {
     console.error(error);
