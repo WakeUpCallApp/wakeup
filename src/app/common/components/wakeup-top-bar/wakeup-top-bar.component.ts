@@ -23,9 +23,17 @@ export class WakeupTopBarComponent implements OnInit {
   @Input() canShowNavBarButtons: boolean;
   @Output() onOpenMenu = new EventEmitter();
   @Output() logout = new EventEmitter();
+
+  currentUser;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(changeObj) {
+    if (changeObj['loggedUser']) {
+      this.loggedUser = changeObj['loggedUser'].currentValue;
+    }
   }
 
   toggleSideNav() {

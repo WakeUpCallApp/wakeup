@@ -11,7 +11,6 @@ import appConstants from './common/app-constants';
 })
 export class AppComponent {
   public isOpen: boolean;
-  public canShowTopBar: boolean;
   private userDetailsSubscription;
 
   constructor(private router: Router,
@@ -19,12 +18,7 @@ export class AppComponent {
     private authTokenService: AuthTokenService) { }
 
   ngOnInit() {
-    if (!this.loginService.getCurrentUser()) {
-      this.userDetailsSubscription = this.loginService.getUserDetails().subscribe((user) => {
-        this.canShowTopBar = this.canShowNavigation();
-        this.isOpen = this.canShowTopBar && window.innerWidth > 600;
-      });
-    }
+    this.isOpen = this.canShowNavigation() && window.innerWidth > 600;
   }
 
   ngOnDestroy() {

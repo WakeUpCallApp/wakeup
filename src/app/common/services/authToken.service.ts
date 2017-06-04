@@ -27,6 +27,15 @@ export class AuthTokenService{
     this.token = undefined;
   }
 
+  getUserInfo() {
+      const token = this.jwtHelper.decodeToken(this.getStoredToken());
+      return {
+        name: token.name,
+        id: token._id,
+        role: token.role
+      }
+  }
+
   isLoggedIn() {
     const token = this.getToken();
     return token ?

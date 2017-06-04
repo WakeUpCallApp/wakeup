@@ -2,8 +2,7 @@
   [isOpen]="isOpen">
 	<wakeup-top-bar 
 	 [isOpen]="isOpen"
-	 [loggedUser] = "loginService.getCurrentUser()"
-	 [hidden]="!canShowTopBar"
+	 [loggedUser] = "loginService.getCurrentUser()"	
 	 (onOpenMenu)="openMenu($event)"
 	 (logout) = "logout($event)"
 	 >	

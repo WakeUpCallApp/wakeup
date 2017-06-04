@@ -15,8 +15,8 @@ export class LoginService {
   constructor(private http: Http, private authService: AuthTokenService) {
   }
 
-  getCurrentUser():User{
-        return this.currentUser;
+  getCurrentUser(): User {
+    return this.currentUser;
   }
 
   isAuthenticated() {
@@ -25,10 +25,11 @@ export class LoginService {
 
   signUp(userObject: User): Observable<User> {
     return this.http.post('/api/users', userObject)
-      .map((response: Response) => {
-        this.currentUser = response.json();
-        this.authService.setToken(this.currentUser.token);
-        return this.currentUser;
+      .map((response: Response) => response.json())
+      .do((response) => {
+        this.authService.setToken(response.token);
+        this.currentUser = this.authService.getUserInfo();
+        return response;
       })
       .catch(this.handleError);
   }
@@ -36,12 +37,11 @@ export class LoginService {
   login(userObject: User): Observable<Token> {
     return this.http.post('/auth/local', userObject)
       .map((response: Response) => response.json())
-      .do(user => {
-        this.currentUser = user;
-        this.authService.setToken(this.currentUser.token);
-        return this.currentUser;
+      .do(response => {
+        this.authService.setToken(response.token);
+        this.currentUser = this.authService.getUserInfo();
+        return response;
       })
-
       .catch(this.handleError);
   }
 

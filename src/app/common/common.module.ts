@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule} from '@angular/router';
 
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { UserDetailResolver } from './guards/user-details.resolver';
 import { LoginService, AuthTokenService, QuestionSetService } from './services';
 import { WakeupTopBarComponent } from './components/wakeup-top-bar/wakeup-top-bar.component';
 import { WakeupSideNavComponent } from './components/wakeup-side-nav/wakeup-side-nav.component';
@@ -23,7 +24,8 @@ import { WakeupSideNavComponent } from './components/wakeup-side-nav/wakeup-side
     AuthTokenService, 
     LoginService, 
     QuestionSetService, 
-    AuthenticationGuard
+    AuthenticationGuard,
+    UserDetailResolver
   ],
   exports: [
     WakeupTopBarComponent,
