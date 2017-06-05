@@ -22,12 +22,16 @@ import { WakeupCommonModule } from './common/common.module';
 import { LandingComponent } from './pages/landing/landing.component';
 import { LoginModule } from './pages/login/login.module';
 import { QuestionSetsComponent } from './pages/question-sets/question-sets.component';
+import { NewQuestionSetComponent } from './pages/new-question-set/new-question-set.component';
+import { QuestionSetDetailsComponent } from './pages/question-set-details/question-set-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
-    QuestionSetsComponent
+    QuestionSetsComponent,
+    NewQuestionSetComponent,
+    QuestionSetDetailsComponent
   ],
   imports: [
     BrowserModule,

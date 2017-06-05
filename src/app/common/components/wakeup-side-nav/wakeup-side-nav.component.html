@@ -1,6 +1,20 @@
 <md-sidenav-container class="container">
-    <md-sidenav #sidenav [opened]="isOpen" mode="side" class="sidenav">
-        <div class="pages">
+    <md-sidenav #sidenav [opened]="isOpen" mode="side" class='mat-elevation-z5'>
+        <div class="sidenav-content" class="sidenav">
+            <div class="search">
+                <md-input-container class="search">
+                    <input mdInput name="search" placeholder="search">
+                    <md-icon class="material-icons" mdSuffix>search</md-icon>
+                </md-input-container>
+            </div>
+
+            <ul class='globalMenuLinks'>
+                <li><a routerLink="/questionSets" routerLinkActive="activeLink"> <i  class="material-icons">list</i> Question Sets</a></li>
+                <li><a><i  class="material-icons">lightbulb_outline</i> Topics</a></li>
+                <li><a routerLink="/newQuestionSet" routerLinkActive="activeLink"> <i class="material-icons">create</i> New Question Set</a></li>
+                <li><a><i  class="material-icons">create</i> New Topic</a></li>
+
+            </ul>
         </div>
     </md-sidenav>
     <div class="content">
