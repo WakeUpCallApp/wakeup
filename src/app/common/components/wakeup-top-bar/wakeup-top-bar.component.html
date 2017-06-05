@@ -11,7 +11,9 @@
   </div>
   <div class="right">
     <div class="userProfile">
-      <button md-button [mdMenuTriggerFor]="menu">{{loggedUser?.name}} <md-icon>keyboard_arrow_down</md-icon> </button>
+      <button md-button [mdMenuTriggerFor]="menu"><span class="greeting">Hello</span> {{loggedUser?.name}}
+        <md-icon>keyboard_arrow_down</md-icon> 
+        </button>
     </div>
     <md-menu #menu="mdMenu" [overlapTrigger]="false">
       <button md-menu-item>
@@ -21,9 +23,7 @@
                      </div>
                  </div>
             </button>
-      <button md-menu-item>Help </button>
-      <button md-menu-item (click)="logoutUser()">Logout</button>
     </md-menu>
-
+    <button md-button (click)="logoutUser()">Logout <i class="fa fa-sign-out"></i></button>
   </div>
 </md-toolbar>
