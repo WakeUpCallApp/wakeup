@@ -17,6 +17,10 @@ export function reducer(state = initialState, action: Action): State {
       return {
         entities: questionSets
       };
+    case actions.ActionTypes.CREATE:
+      return {
+        entities: [... state.entities, action.payload]
+      }  
     default: {
       return state;
     }

@@ -14,9 +14,9 @@ export class QuestionSetEffects {
   @Effect() load$ = this.actions$
     .ofType(questionSet.ActionTypes.LOAD)
     .map(action => action.payload)
-    .switchMap(user => this.questionSetService.all())
-    .map(result => new questionSet.LoadActionSuccess(result))
-  ;
+    .switchMap(() => this.questionSetService.all())
+    .map(result => new questionSet.LoadActionSuccess(result));  
+
   constructor(
     private questionSetService: QuestionSetService,
     private actions$: Actions

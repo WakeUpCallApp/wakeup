@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { AuthenticationGuard } from './common/guards/authentication.guard';
 import { UserDetailResolver } from './common/guards/user-details.resolver';
+import { QuestionSetDetailsResolver } from './common/guards/question-set-details.resolver';
 import { LandingComponent } from './pages/landing/landing.component';
 import { QuestionSetsComponent } from './pages/question-sets/question-sets.component';
 import { NewQuestionSetComponent } from './pages/new-question-set/new-question-set.component';
@@ -29,10 +30,13 @@ import { QuestionSetDetailsComponent } from './pages/question-set-details/questi
 				resolve: { userDetails: UserDetailResolver }
 			},
 			{
-				path: 'QuestionSetDetails/:id',
+				path: 'questionSetDetails/:id',
 				component: QuestionSetDetailsComponent,
 				canActivate: [AuthenticationGuard],
-				resolve: { userDetails: UserDetailResolver }
+				resolve: {
+					userDetails: UserDetailResolver,
+					currentQuestionSet: QuestionSetDetailsResolver
+				},
 			},
 			{ path: '', redirectTo: 'questionSets', pathMatch: 'full' },
 			{ path: '**', redirectTo: 'questionSets', pathMatch: 'full' }

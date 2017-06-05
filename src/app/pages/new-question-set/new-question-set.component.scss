@@ -1,0 +1,17 @@
+@import "~../../common/constants";
+.newQuestionSet {
+    .createQuestionSetForm {
+        display: flex;
+        flex-direction: column;
+        max-width: 700px;
+        md-input-container {
+            margin-bottom: 26px;
+        }
+        .createButton{
+            max-width: 200px;
+        }
+        .createButton:not(:disabled){ 
+            background-color: $accent;
+        }
+    }
+}

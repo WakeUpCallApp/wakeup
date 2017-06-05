@@ -1,3 +1,35 @@
-<p>
-  new-question-set works!
-</p>
+<div class="newQuestionSet">
+<h1>Create Question Set</h1>
+<form class="createQuestionSetForm" #qsForm='ngForm'>
+  <md-input-container
+  dividerColor="{{ (qsNameVar.touched || qsNameVar.dirty) && !qsNameVar.valid ? 'warn' : 'primary' }}">
+    <input 
+    #qsNameVar
+    placeholder="type name" 
+    type="text" 
+    mdInput 
+    name="name" 
+    required
+    [(ngModel)]="questionSet.name">
+    <md-error>Question Set name is required</md-error>
+  </md-input-container>
+   <md-input-container>
+     <textarea mdInput 
+     placeholder="type description" 
+     name="description" 
+     cols="30"
+     rows="5"
+     [(ngModel)]="questionSet.description">
+    </textarea>
+   </md-input-container>
+    <button *ngIf="!isCreating" 
+    md-button 
+    md-raised-button
+    [disabled]="!qsForm.valid"
+    class="createButton"
+    (click)="createQuestionSet()">
+    Create
+    </button>
+    <md-spinner class="spinner" *ngIf="isCreating"></md-spinner>
+</form>
+</div>

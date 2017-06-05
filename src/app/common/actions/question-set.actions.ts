@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { QuestionSet } from '../models/question-set.model';
+import { IQuestionSet, QuestionSet } from '../models/question-set.model';
 import { type } from '../util';
 
 export const ActionTypes = {
@@ -25,7 +25,7 @@ export class LoadActionSuccess implements Action {
 export class CreateAction implements Action {
   type = ActionTypes.CREATE;
 
-  constructor(public payload: QuestionSet) { }
+  constructor(public payload: IQuestionSet) { }
 }
 
 export class UpdateAction implements Action {
