@@ -19,12 +19,14 @@
     mdInput 
     placeholder="Email" 
     type="email" 
-    #emailVar 
+    #emailVar="ngModel" 
     required 
     name="email" 
     [(ngModel)]="user.email"
-    (ngModelChange)="valuechange($event)">
-    <md-error>Email is required</md-error>
+    (ngModelChange)="valuechange($event)"
+    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+    <md-error *ngIf="emailVar.errors?.required">Email is required</md-error>
+    <md-error *ngIf="emailVar.errors?.pattern">Email is not valid</md-error>
   </md-input-container>
   <md-input-container 
   dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
