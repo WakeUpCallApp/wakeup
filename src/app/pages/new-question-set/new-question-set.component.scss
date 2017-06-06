@@ -1,5 +1,10 @@
 @import "~../../common/constants";
 .newQuestionSet {
+    overflow: auto;
+    height: 100%;
+    max-height: 93vh;
+    margin: 0px;
+    padding: 0px;
     .createQuestionSetForm {
         display: flex;
         flex-direction: column;
@@ -7,10 +12,10 @@
         md-input-container {
             margin-bottom: 26px;
         }
-        .createButton{
+        .createButton {
             max-width: 200px;
         }
-        .createButton:not(:disabled){ 
+        .createButton:not(:disabled) {
             background-color: $accent;
         }
     }

@@ -1,5 +1,7 @@
 <div class="questionSets">
-  <ul *ngFor="let questionSet of questionSets$ | async ">
-     <li><a [routerLink]="['/questionSetDetails', questionSet.id]">{{questionSet.name}}</a></li>
+  <ul>
+    <li *ngFor="let questionSet of questionSets$ | async ">
+      <a [routerLink]="['/questionSetDetails', questionSet.id]">{{questionSet.name}}</a>
+    </li>
   </ul>
 </div>

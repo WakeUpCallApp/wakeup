@@ -30,7 +30,8 @@ export class AppComponent {
   }
 
   canShowNavigation() {
-    return location.pathname.indexOf(appConstants.routes.LANDING) === -1 &&
+    return this.authTokenService.isLoggedIn() && 
+      location.pathname.indexOf(appConstants.routes.LANDING) === -1 &&
       location.pathname.indexOf(appConstants.routes.LOGIN) === -1;
   }
 
