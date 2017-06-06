@@ -1,11 +1,11 @@
-<md-toolbar color="primary" *ngIf="loggedUser" class="mat-elevation-z5">
+<md-toolbar *ngIf="loggedUser">
   <div class="left">
     <div class="openMenu">
       <md-icon *ngIf="!isOpen" class="icon" title="Show menu" (click)="toggleSideNav()">
-        search
+        menu
       </md-icon>
       <md-icon *ngIf="isOpen" class="icon" title="Hide menu" (click)="toggleSideNav()">
-        chevron_left
+        clear
       </md-icon>
     </div>
   </div>

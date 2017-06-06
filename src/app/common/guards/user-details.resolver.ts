@@ -7,6 +7,8 @@ import { AuthTokenService, LoginService } from '../services';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Observable';
 
+import AppConstants from '../app-constants';
+
 
 @Injectable()
 export class UserDetailResolver implements Resolve<User> {
@@ -15,10 +17,14 @@ export class UserDetailResolver implements Resolve<User> {
     private router: Router) { }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
     if (!this.loginService.getCurrentUser() && this.authTokenService.isLoggedIn()) {
-      return this.loginService.getUserDetails();
+      return this.loginService.getUserDetails()
+      .catch(error => {
+        this.router.navigate([AppConstants.routes.LANDING]);
+        return Observable.of(error);
+      });
     }
     else if (!this.loginService.getCurrentUser()) {
-      this.router.navigate(['/landing']);
+      this.router.navigate([AppConstants.routes.LANDING]);
       return null;
     }
   }
