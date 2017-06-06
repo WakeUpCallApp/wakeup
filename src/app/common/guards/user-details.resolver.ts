@@ -15,8 +15,7 @@ export class UserDetailResolver implements Resolve<User> {
     private router: Router) { }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
     if (!this.loginService.getCurrentUser() && this.authTokenService.isLoggedIn()) {
-      return this.loginService.getUserDetails().subscribe((user) => {
-      });
+      return this.loginService.getUserDetails();
     }
     else if (!this.loginService.getCurrentUser()) {
       this.router.navigate(['/landing']);
