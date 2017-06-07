@@ -1,39 +1,5 @@
-html, body {
-    font: 1em/1.5 "Arial", sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hgroup,
-ul,
-ol,
-dd,
-p,
-figure,
-pre,
-table,
-fieldset,
-hr,
-div {
-    margin-bottom: 1.5rem;
-}
-
-.container {
-    margin-bottom: 0;
-}
-
-h1 {
-    font-size: 5.9vw;
-}
-
-h2 {
-    font-size: 3.0vh;
-}
-
-p {
-    font-size: 2vmin;
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }

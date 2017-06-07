@@ -1,12 +1,9 @@
-<md-toolbar *ngIf="loggedUser">
+<md-toolbar *ngIf="loggedUser" class="mat-elevation-z5">
   <div class="left">
     <div class="openMenu">
-      <md-icon *ngIf="!isOpen" class="icon" title="Show menu" (click)="toggleSideNav()">
-        menu
-      </md-icon>
-      <md-icon *ngIf="isOpen" class="icon" title="Hide menu" (click)="toggleSideNav()">
-        clear
-      </md-icon>
+      <button (click)="toggleSideNav()" md-mini-fab title="Show/Hide menu">
+      <md-icon>menu</md-icon>
+      </button>
     </div>
   </div>
   <div class="right">

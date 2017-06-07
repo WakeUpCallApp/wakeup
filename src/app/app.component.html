@@ -1,13 +1,11 @@
-<wakeup-side-nav 
-  [isOpen]="isOpen">
-	<wakeup-top-bar 
-	 [isOpen]="isOpen"
-	 [loggedUser] = "loginService.getCurrentUser()"	
-	 (onOpenMenu)="openMenu($event)"
-	 (logout) = "logout($event)"
-	 >	
-	</wakeup-top-bar>
-	<div class="container" role="application">
-        <router-outlet></router-outlet>
+<wakeup-top-bar 
+[isOpen]="isOpen"
+ [loggedUser]="loginService.getCurrentUser()" 
+ (onOpenMenu)="openMenu($event)" 
+ (logout)="logout($event)">
+</wakeup-top-bar>
+<wakeup-side-nav [isOpen]="isOpen">
+	<div class="app-container" role="application">
+		<router-outlet></router-outlet>
 	</div>
 </wakeup-side-nav>

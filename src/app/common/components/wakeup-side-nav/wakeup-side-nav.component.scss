@@ -1,15 +1,22 @@
 @import "~../../constants";
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+md-sidenav {
+  box-shadow: 3px 0 6px rgba(0,0,0,.24);
+}
+
 .sidenav {
     width: 260px;
     padding: 8px;
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 100vh;
-    overflow: hidden;
+.mat-sidenav-container {
+    flex: 1;
+     background: #f5f5f5;
 }
 
 .logo {

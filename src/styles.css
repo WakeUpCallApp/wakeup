@@ -1,4 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
+
+html {
+    height: 100%;
+}
+
 body {
     margin: 0;
+    font-family: Roboto, sans-serif;
+    height: 100%;
+    display: flex;
+}
+
+html,
+body {
+    font: 1em/1.5 "Arial", sans-serif;
+}
+
+.container {
+    margin-bottom: 0;
+}
+
+.pageContent {
+    margin: 0px auto;
+    width: 80%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.cardTitle {
+  margin-top: -10px;
+  border-bottom: 1px solid black;
+  font-size: 16px;
+  margin-bottom: 26px;
+}
+
+.card-footer {
+    margin-left: 16px;
+    margin-bottom: 16px;
+}
+
+textarea { 
+   /* will prevent resizing horizontally */
+   resize:vertical;
 }

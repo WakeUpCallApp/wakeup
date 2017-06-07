@@ -1,7 +1,7 @@
-<div class="questionSetDetails">
-    <div class="container">
-        <header class="header">
-            <h1 class="title">{{currentQuestionSet.name}}</h1>
+<div class="questionSetDetails pageContent">
+    <wakeup-card class="summary">
+        <div class="card-header">
+            <span class="title">{{currentQuestionSet.name}}</span>
             <div class="actions">
                 <md-menu #appMenu="mdMenu">
                     <button md-menu-item> View Practice Sessions </button>
@@ -11,38 +11,31 @@
                 </md-menu>
 
                 <button md-icon-button [mdMenuTriggerFor]="appMenu">
-   <md-icon>more_vert</md-icon>
-</button></div>
-        </header>
-        <section class="summary">
-            <div class="left">
-                <md-input-container>
-                    <label for="Name">Name</label>
-                    <input mdInput type="text" name="name" [(ngModel)]="currentQuestionSet.name" required>
-                    <md-error>Name is required</md-error>
-                </md-input-container>
-                <md-input-container>
-                    <label for="description">Description</label>
-                    <textarea mdInput name="description" [(ngModel)]="currentQuestionSet.description" cols="30" rows="5"></textarea>
-                </md-input-container>
-            </div>
-            <div class="right">
-                <button class="practiceQuestionSetButton" md-button md-button-raised>Practice Question Set</button>
-            </div>
-        </section>
-
-        <h2>Questions</h2>
-        <section class="questions">
-            <div class="add">
-                <md-input-container>
-                    <input mdInput type="text" placeholder="type question text">
-                </md-input-container>
-                <button class="addQuestionButton" md-button md-button-raised>Add Question</button>
-            </div>
-            <div class="questionList">
-
-            </div>
-        </section>
-    </div>
-
+                    <md-icon>more_vert</md-icon>
+                    </button></div>
+        </div>
+        <div class="card-body">
+            <md-input-container floatPlaceholder="always">
+                <input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="currentQuestionSet.name" required>
+                <md-error>Name is required</md-error>
+            </md-input-container>
+            <md-input-container floatPlaceholder="always">
+                <textarea mdInput placeholder="Description" name="description" [(ngModel)]="currentQuestionSet.description" rows="5"></textarea>
+            </md-input-container>
+        </div>
+        <div class="card-footer">
+            <button class="practiceQuestionSetButton" md-button md-button-raised>Practice Question Set</button>
+        </div>
+    </wakeup-card>
+    <md-card class="addQuestion mat-elevation-z3">
+        <md-card-header>
+            <h1 class="cardTitle">Add Question</h1>
+        </md-card-header>
+        <md-card-content class="add">
+            <md-input-container floatPlaceholder="always">
+                <input mdInput type="text" placeholder="New question">
+            </md-input-container>
+            <button class="addQuestionButton" md-button md-button-raised>Add Question</button>
+        </md-card-content>
+    </md-card>
 </div>

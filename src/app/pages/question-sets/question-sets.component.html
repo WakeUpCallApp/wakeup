@@ -1,7 +1,12 @@
-<div class="questionSets">
-  <ul>
-    <li *ngFor="let questionSet of questionSets$ | async ">
-      <a [routerLink]="['/questionSetDetails', questionSet.id]">{{questionSet.name}}</a>
-    </li>
-  </ul>
+<div class="questionSets pageContent">
+  <wakeup-card>
+    <div class="card-header">Question Sets</div>
+    <div class="card-body">
+      <ul>
+        <li *ngFor="let questionSet of questionSets$ | async ">
+          <a [routerLink]="['/questionSetDetails', questionSet.id]">{{questionSet.name}}</a>
+        </li>
+      </ul>
+    </div>
+  </wakeup-card>
 </div>
