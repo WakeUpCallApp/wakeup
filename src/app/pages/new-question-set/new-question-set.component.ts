@@ -30,9 +30,9 @@ export class NewQuestionSetComponent implements OnInit {
     this.isCreating = true;
     this.questionSetService.create(this.questionSet)
       .subscribe((result: QuestionSet) => {
-        //this.isCreating = false;
+        this.isCreating = false;
          this.store.dispatch(new actions.CreateAction(result));
-         //this.router.navigate([`/questionSetDetails`, result.id])
+         this.router.navigate([`/questionSetDetails`, result.id])
       },
       () => {
         this.isCreating = false;

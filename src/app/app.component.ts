@@ -24,13 +24,6 @@ export class AppComponent {
     this.isOpen = isOpen;
   }
 
-  ngAfterViewChecked() {
-    setTimeout(() => { 
-      if (!this.isOpen) {
-      this.isOpen = this.canShowNavigation() && window.innerWidth > 600;
-    }});
-  }
-
   canShowNavigation() {
     return this.authTokenService.isLoggedIn() &&
       location.pathname.indexOf(appConstants.routes.LANDING) === -1 &&

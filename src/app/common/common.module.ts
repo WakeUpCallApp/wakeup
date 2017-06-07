@@ -10,6 +10,7 @@ import { QuestionSetDetailsResolver} from './guards/question-set-details.resolve
 import { LoginService, AuthTokenService, QuestionSetService } from './services';
 import { WakeupTopBarComponent } from './components/wakeup-top-bar/wakeup-top-bar.component';
 import { WakeupSideNavComponent } from './components/wakeup-side-nav/wakeup-side-nav.component';
+import { WakeupCardComponent } from './components/wakeup-card/wakeup-card.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { WakeupSideNavComponent } from './components/wakeup-side-nav/wakeup-side
   ],
   declarations: [
     WakeupTopBarComponent, 
-    WakeupSideNavComponent
+    WakeupSideNavComponent, WakeupCardComponent
   ],
   providers: [
     AuthTokenService, 
@@ -32,6 +33,7 @@ import { WakeupSideNavComponent } from './components/wakeup-side-nav/wakeup-side
   exports: [
     WakeupTopBarComponent,
     WakeupSideNavComponent, 
+    WakeupCardComponent,
     MaterialModule 
   ],
 })

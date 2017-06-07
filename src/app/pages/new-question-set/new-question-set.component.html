@@ -1,9 +1,7 @@
 <div class="newQuestionSet">
-  <md-card class="newQuestionSetCard">
-    <md-card-header>
-      <md-card-title>Create Question Set</md-card-title>
-    </md-card-header>
-    <md-card-content>
+  <wakeup-card>
+    <div class="card-header">Create Question Set</div>
+    <div class="card-body">
       <form class="createQuestionSetForm" #qsForm='ngForm'>
         <md-input-container floatPlaceholder="always" dividerColor="{{ (qsNameVar.touched || qsNameVar.dirty) && !qsNameVar.valid ? 'warn' : 'primary' }}">
           <input #qsNameVar placeholder="Name" type="text" mdInput name="name" required [(ngModel)]="questionSet.name">
@@ -13,16 +11,13 @@
           <textarea mdInput placeholder="Description" name="description" cols="30" rows="5" [(ngModel)]="questionSet.description">
     </textarea>
         </md-input-container>
-
       </form>
-    </md-card-content>
-    <md-card-actions>
+    </div>
+    <div class="card-footer">
       <button *ngIf="!isCreating" md-button md-raised-button [disabled]="!qsForm.valid" class="createButton" (click)="createQuestionSet()">
     Create
     </button>
       <md-spinner class="spinner" *ngIf="isCreating"></md-spinner>
-    </md-card-actions>
-  </md-card>
-  <h1></h1>
-
+    </div>
+  </wakeup-card>
 </div>

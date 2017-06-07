@@ -8,11 +8,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    .newQuestionSetCard {
+    /*.newQuestionSetCard {
         margin: 26px;
         margin-top: 46px;
         width: 80%;
-    }
+    }*/
     .createQuestionSetForm {
         display: flex;
         flex-direction: column;
@@ -22,7 +22,7 @@
     }
 }
 
-md-card {
+/*md-card {
     max-width: 990px;
 }
 
@@ -45,9 +45,9 @@ md-card {
 .newQuestionSetCard md-card-content {
     margin-top: 36px;
     font-size: 16px;
-}
+}*/
 
-md-card-actions {
+.card-footer {
     .createButton {
         width: 200px;
         margin-left: 16px;

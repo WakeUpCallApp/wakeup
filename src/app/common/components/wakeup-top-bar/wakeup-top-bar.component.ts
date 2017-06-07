@@ -18,7 +18,7 @@ import { User } from '../../models/User.model';
 })
 export class WakeupTopBarComponent implements OnInit {
   @Input() isMenuClosed: boolean;
-  @Input() isOpen: boolean;
+  @Input() isOpen: boolean = true;
   @Input() loggedUser: User;
   @Input() canShowNavBarButtons: boolean;
   @Output() onOpenMenu = new EventEmitter();
@@ -33,6 +33,11 @@ export class WakeupTopBarComponent implements OnInit {
   ngOnChanges(changeObj) {
     if (changeObj['loggedUser']) {
       this.loggedUser = changeObj['loggedUser'].currentValue;
+      setTimeout(() => {
+        if (this.loggedUser && !this.isOpen && window.innerWidth > 600) {
+          this.toggleSideNav()
+        }
+      });
     }
   }
 
