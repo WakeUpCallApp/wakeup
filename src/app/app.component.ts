@@ -11,7 +11,6 @@ import appConstants from './common/app-constants';
 })
 export class AppComponent {
   public isOpen: boolean;
-  private userDetailsSubscription;
 
   constructor(private router: Router,
     private loginService: LoginService,
@@ -21,16 +20,19 @@ export class AppComponent {
     this.isOpen = this.canShowNavigation() && window.innerWidth > 600;
   }
 
-  ngOnDestroy() {
-    this.userDetailsSubscription.unsubscribe();
-  }
-
   openMenu(isOpen) {
     this.isOpen = isOpen;
   }
 
+  ngAfterViewChecked() {
+    setTimeout(() => { 
+      if (!this.isOpen) {
+      this.isOpen = this.canShowNavigation() && window.innerWidth > 600;
+    }});
+  }
+
   canShowNavigation() {
-    return this.authTokenService.isLoggedIn() && 
+    return this.authTokenService.isLoggedIn() &&
       location.pathname.indexOf(appConstants.routes.LANDING) === -1 &&
       location.pathname.indexOf(appConstants.routes.LOGIN) === -1;
   }
