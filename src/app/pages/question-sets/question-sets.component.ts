@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { QuestionSet } from '../../common/models/question-set.model';
 import * as reducers from '../../common/reducers';
@@ -8,7 +8,8 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'wakeup-question-sets',
   templateUrl: './question-sets.component.html',
-  styleUrls: ['./question-sets.component.scss']
+  styleUrls: ['./question-sets.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionSetsComponent implements OnInit {
   questionSets$: Observable<QuestionSet[]>;

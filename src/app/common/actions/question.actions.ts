@@ -8,6 +8,7 @@ export const ActionTypes = {
   LOAD_ERROR: type('[Question] Load error'),
   CREATE: type('[Question] Create'),
   CREATE_SUCCESS: type('[Question] Create success'),
+  CREATE_ERROR: type('[Question] Create error'),
   UPDATE: type('[Question] Update'),
   DELETE: type('[Question] Delete'),
 };
@@ -38,7 +39,13 @@ export class CreateAction implements Action {
 export class CreateActionSuccess implements Action {
   type = ActionTypes.CREATE_SUCCESS;
 
-  constructor(public payload: IQuestion) { }
+  constructor(public payload: Question) { }
+}
+
+export class CreateActionError implements Action {
+  type = ActionTypes.CREATE_ERROR;
+
+  constructor(public payload) { }
 }
 
 export class UpdateAction implements Action {
@@ -63,5 +70,6 @@ export type Actions
   | LoadActionError
   | CreateAction
   | CreateActionSuccess
+  | CreateActionError
   | UpdateAction
   | DeleteAction;

@@ -11,7 +11,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MaterialModule } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { QuestionSetEffects } from './common/effects';
+import { QuestionSetEffects, QuestionEffects } from './common/effects';
 
 import { reducer } from './common/reducers';
 
@@ -45,7 +45,8 @@ import { QuestionSetDetailsComponent } from './pages/question-set-details/questi
     StoreModule.provideStore(reducer),
     // must come AFTER `provideStore` call
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
-    EffectsModule.run(QuestionSetEffects)
+    EffectsModule.run(QuestionSetEffects),
+    EffectsModule.run(QuestionEffects)
   ],
   providers: [
     {

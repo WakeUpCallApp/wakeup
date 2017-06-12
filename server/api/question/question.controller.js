@@ -57,12 +57,15 @@
             var questionId = latestQuestionId + 1;
 
             req.body._id = questionId;
+            console.log(questionId);
             findQuestionSet(req.body.questionSet).then(function(questionSet) {
-                if (questionSet[0].isDefault) {
+                console.log(questionSet);
+                if (questionSet.isDefault) {
                     return res.status(404).send('Cannot create question in a default questionSet');
                 } else {
+                    console.log('else')
                     Question.create(req.body, function(err, question) {
-
+                        console.log(err, question);
                         if (err) {
                             console.log(err);
                             return handleError(res, err);
@@ -77,7 +80,7 @@
     };
 
     function addQuestionToQuoteQuestions(questionId, quoteId) {
-        if (quoteId !== "") {
+        if (quoteId) {
             Quote.update({
                 _id: quoteId
             }, {
@@ -259,7 +262,7 @@
     }
 
     function updateQuestionInQuestionSetList(questionSetId, questionId) {
-        //console.log(questionId, answerId);
+        console.log(questionSetId, questionId);
         QuestionSet.update({
             _id: questionSetId
         }, {

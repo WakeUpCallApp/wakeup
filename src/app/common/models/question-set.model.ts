@@ -1,15 +1,19 @@
+import { Question } from './question.model';
+
 export interface IQuestionSet {
+    id?: number;
     name: string;
     description: string;
+    isDefault: boolean; 
 }
 
-export interface QuesstionSetApi {
+export interface QuestionSetApi {
     _id: number;
     name: string;
     description: string;
     user: string;
     practiceTimes: number;
-    questions: number[];
+    questions;
     isDefault: boolean;
 }
 
@@ -21,7 +25,8 @@ export class QuestionSet {
         public user: string,
         public practiceTimes: number,
         public questionIds: number[],
-        public isDefault: boolean
+        public isDefault: boolean,
+        public questions?: Question[]
     ) { }
 
 }

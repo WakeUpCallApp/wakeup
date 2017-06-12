@@ -14,7 +14,7 @@ import AppConstants from '../app-constants';
 
 
 import * as questionSet from '../actions/question-set.actions';
-import { QuestionSetService } from '../services/question-set.service';
+import { QuestionSetService, QuestionService } from '../services';
 
 @Injectable()
 export class QuestionSetEffects {
@@ -24,6 +24,43 @@ export class QuestionSetEffects {
     .switchMap(() => this.questionSetService.all())
     .map(result => new questionSet.LoadActionSuccess(result));
 
+  @Effect() create$ = this.actions$
+    .ofType(questionSet.ActionTypes.CREATE)
+    .map(action => action.payload)
+    .switchMap(questionSet => this.questionSetService.create(questionSet))
+    .map(result => new questionSet.CreateActionSuccess(result))
+    .catch(error => Observable.of(new questionSet.CreateActionError(error))
+    );
+
+  @Effect({ dispatch: false }) createSuccess$ = this.actions$
+    .ofType(questionSet.ActionTypes.CREATE_SUCCESS)
+    .map(action => action.payload)
+    .map(questionSet => {
+      this.router.navigate([AppConstants.routes.QUESTION_SET_DETAILS, questionSet.id]);
+      return Observable.of(questionSet);
+    });
+
+  @Effect() update$ = this.actions$
+    .ofType(questionSet.ActionTypes.UPDATE)
+    .map(action => action.payload)
+    .switchMap(questionSet => this.questionSetService.update(questionSet))
+    .map(result => new questionSet.UpdateActionSuccess(result))
+    .catch(error => Observable.of(new questionSet.UpdateActionError(error))
+    );
+
+    @Effect() delete$ = this.actions$
+    .ofType(questionSet.ActionTypes.DELETE)
+    .map(action => action.payload)
+    .switchMap(questionSet => this.questionSetService.delete(questionSet))
+    .map(() => new questionSet.DeleteActionSuccess());
+
+     @Effect({ dispatch: false }) deleteSuccess$ = this.actions$
+    .ofType(questionSet.ActionTypes.DELETE_SUCCESS)
+    .map(action => action.payload)
+    .map(() => {
+      this.router.navigate([AppConstants.routes.QUESTION_SETS]);
+    });  
+
   @Effect() getCurrentQS$ = this.actions$
     .ofType(questionSet.ActionTypes.GET_CURRENT_QUESTION_SET)
     .map(action => action.payload)
@@ -32,18 +69,24 @@ export class QuestionSetEffects {
       .catch(error => Observable.of(new questionSet.GetCurrentQSActionError(error)))
     );
 
-  @Effect({ dispatch: false })
-  httpErrors$: Observable<any> = this.actions$
-    .ofType(
-    questionSet.ActionTypes.GET_CURRENT_QUESTION_SET_ERROR
-    ).map(action => action.payload)
+  @Effect() addQuestion$ = this.actions$
+    .ofType(questionSet.ActionTypes.ADD_QUESTION)
+    .map(action => action.payload)
+    .switchMap(question => this.questionService.create(question))
+    .map(result => new questionSet.AddQuestionActionSuccess(result));
+
+  @Effect({ dispatch: false }) httpErrors$ = this.actions$
+    .ofType(questionSet.ActionTypes.GET_CURRENT_QUESTION_SET_ERROR)
+    .map(action => action.payload)
     .map(error => {
       this.router.navigate([AppConstants.routes.QUESTION_SETS]);
       return Observable.of(error);
     });
 
+
   constructor(
     private questionSetService: QuestionSetService,
+    private questionService: QuestionService,
     private actions$: Actions,
     private router: Router
   ) { }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import '@ngrx/core/add/operator/select';
 
 import { Store } from '@ngrx/store';
@@ -16,8 +16,10 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class QuestionSetDetailsComponent implements OnInit {
   currentQuestionSet: QuestionSet;
+  newQuestion: string;
   actionsSubscription: Subscription;
   qsSubscription: Subscription;
+  updateObject;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
@@ -30,15 +32,34 @@ export class QuestionSetDetailsComponent implements OnInit {
       .map(id => new actions.GetCurrentQSAction(id))
       .subscribe(this.store);
 
-    this.store.select(reducers.getCurrentQuestionSetState)
+    this.qsSubscription = this.store.select(reducers.getCurrentQuestionSetState)
       .subscribe(currentQuestionSet => {
-        this.currentQuestionSet = currentQuestionSet;
+        this.currentQuestionSet = Object.assign({}, currentQuestionSet);
+        this.updateObject = Object.assign({}, currentQuestionSet);
       });
   }
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
     this.qsSubscription.unsubscribe();
+  }
+
+  addQuestion() {
+    this.store.dispatch(new actions.AddQuestionAction(
+      {
+        text: this.newQuestion,
+        questionSet: this.currentQuestionSet.id,
+        date: new Date().getTime()
+      }));
+      this.newQuestion = '';
+  }
+
+  updateQuestionSet($event) {
+     this.store.dispatch(new actions.UpdateAction(this.updateObject)); 
+  }
+
+  deleteQuestionSet() {
+    this.store.dispatch(new actions.DeleteAction(this.currentQuestionSet.id));
   }
 
 }

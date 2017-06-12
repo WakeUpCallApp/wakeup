@@ -11,8 +11,14 @@ export const ActionTypes = {
   GET_CURRENT_QUESTION_SET_ERROR: type('[QuestionSet] Get Current Question Set Error'),
   CREATE: type('[QuestionSet] Create'),
   CREATE_SUCCESS: type('[QuestionSet] Create Success'),
+  CREATE_ERROR:type('[QuestionSet] Create Error'),
+  ADD_QUESTION: type('[QuestionSet] Add Question'),
+  ADD_QUESTION_SUCCESS: type('[QuestionSet] Add Question Success'),
   UPDATE: type('[QuestionSet] Update'),
+  UPDATE_SUCCESS: type('[QuestionSet] Update Success'),
+  UPDATE_ERROR: type('[QuestionSet] Update Error'),
   DELETE: type('[QuestionSet] Delete'),
+  DELETE_SUCCESS: type('[QuestionSet] Delete Success'),
 };
 
 export class LoadAction implements Action {
@@ -58,10 +64,28 @@ export class CreateAction implements Action {
   constructor(public payload: IQuestionSet) { }
 }
 
-export class CreateActionSucces implements Action {
+export class CreateActionSuccess implements Action {
   type = ActionTypes.CREATE_SUCCESS;
 
-  constructor(public payload: IQuestionSet) { }
+  constructor(public payload) { }
+}
+
+export class AddQuestionAction implements Action {
+  type = ActionTypes.ADD_QUESTION;
+
+  constructor(public payload) { }
+}
+
+export class AddQuestionActionSuccess implements Action {
+  type = ActionTypes.ADD_QUESTION_SUCCESS;
+
+  constructor(public payload) { }
+}
+
+export class CreateActionError implements Action {
+  type = ActionTypes.CREATE_ERROR;
+
+  constructor(public payload) { }
 }
 
 export class UpdateAction implements Action {
@@ -70,10 +94,28 @@ export class UpdateAction implements Action {
   constructor(public payload: QuestionSet) { }
 }
 
+export class UpdateActionSuccess implements Action {
+  type = ActionTypes.UPDATE_SUCCESS;
+
+  constructor(public payload: QuestionSet) { }
+}
+
+export class UpdateActionError implements Action {
+  type = ActionTypes.UPDATE_ERROR;
+
+  constructor(public payload: QuestionSet) { }
+}
+
 export class DeleteAction implements Action {
   type = ActionTypes.DELETE;
 
-  constructor(public payload: string) { }
+  constructor(public payload: number) { }
+}
+
+export class DeleteActionSuccess implements Action {
+  type = ActionTypes.DELETE_SUCCESS;
+
+  constructor() { }
 }
 
 /**
@@ -88,6 +130,10 @@ export type Actions
   | GetCurrentQSActionSuccess
   | GetCurrentQSActionError
   | CreateAction
-  | CreateActionSucces
+  | CreateActionSuccess
+  | CreateActionError
+  | AddQuestionAction
+  | AddQuestionActionSuccess
   | UpdateAction
-  | DeleteAction;
+  | DeleteAction
+  | DeleteActionSuccess;

@@ -16,7 +16,8 @@ import { Observable } from 'rxjs/Observable';
 export class NewQuestionSetComponent implements OnInit {
   questionSet: IQuestionSet = {
     name: '',
-    description: ''
+    description: '',
+    isDefault: false
   };
   isCreating = false;
   constructor(private questionSetService: QuestionSetService,
@@ -27,15 +28,6 @@ export class NewQuestionSetComponent implements OnInit {
   }
 
   createQuestionSet() {
-    this.isCreating = true;
-    this.questionSetService.create(this.questionSet)
-      .subscribe((result: QuestionSet) => {
-        this.isCreating = false;
-         this.store.dispatch(new actions.CreateAction(result));
-         this.router.navigate([`/questionSetDetails`, result.id])
-      },
-      () => {
-        this.isCreating = false;
-      })
+    this.store.dispatch(new actions.CreateAction(this.questionSet));
   }
 }

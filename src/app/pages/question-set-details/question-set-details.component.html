@@ -7,7 +7,7 @@
                     <button md-menu-item> View Practice Sessions </button>
                     <button md-menu-item> Import Questions </button>
                     <button md-menu-item> Export Questions </button>
-                    <button md-menu-item> Delete Question Set </button>
+                    <button md-menu-item (click)="deleteQuestionSet()"> Delete Question Set </button>
                 </md-menu>
 
                 <button md-icon-button [mdMenuTriggerFor]="appMenu">
@@ -16,26 +16,44 @@
         </div>
         <div class="card-body">
             <md-input-container floatPlaceholder="always">
-                <input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="currentQuestionSet.name" required>
+                <input 
+                mdInput 
+                type="text" 
+                placeholder="Name" 
+                name="name" 
+                [(ngModel)]="updateObject.name"
+                (ngModelChange)="updateQuestionSet($event)" 
+                required>
                 <md-error>Name is required</md-error>
             </md-input-container>
             <md-input-container floatPlaceholder="always">
-                <textarea mdInput placeholder="Description" name="description" [(ngModel)]="currentQuestionSet.description" rows="5"></textarea>
+                <textarea 
+                mdInput 
+                placeholder="Description" 
+                name="description" 
+                [(ngModel)]="updateObject.description"
+                (ngModelChange)="updateQuestionSet($event)" 
+                rows="5">
+                </textarea>
             </md-input-container>
         </div>
         <div class="card-footer">
             <button class="practiceQuestionSetButton" md-button md-button-raised>Practice Question Set</button>
         </div>
     </wakeup-card>
-    <md-card class="addQuestion mat-elevation-z3">
+    <md-card class="addQuestion mat-elevation-z3" *ngIf="!currentQuestionSet.isDefault">
         <md-card-header>
             <h1 class="cardTitle">Add Question</h1>
         </md-card-header>
         <md-card-content class="add">
             <md-input-container floatPlaceholder="always">
-                <input mdInput type="text" placeholder="New question">
+                <textarea mdInput type="text" placeholder="New question" rows="3" [(ngModel)]="newQuestion"></textarea>
             </md-input-container>
-            <button class="addQuestionButton" md-button md-button-raised>Add Question</button>
+            <button class="addQuestionButton" (click)="addQuestion()" md-button md-button-raised>Add Question</button>
         </md-card-content>
     </md-card>
+
+    <div *ngFor="let question of currentQuestionSet.questions">  
+        {{question.text}}    
+    </div>
 </div>
