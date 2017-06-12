@@ -6,7 +6,6 @@ import { RouterModule} from '@angular/router';
 
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { UserDetailResolver } from './guards/user-details.resolver';
-import { QuestionSetDetailsResolver} from './guards/question-set-details.resolver';
 import { LoginService, AuthTokenService, QuestionSetService } from './services';
 import { WakeupTopBarComponent } from './components/wakeup-top-bar/wakeup-top-bar.component';
 import { WakeupSideNavComponent } from './components/wakeup-side-nav/wakeup-side-nav.component';
@@ -27,8 +26,7 @@ import { WakeupCardComponent } from './components/wakeup-card/wakeup-card.compon
     LoginService, 
     QuestionSetService, 
     AuthenticationGuard,
-    UserDetailResolver,
-    QuestionSetDetailsResolver
+    UserDetailResolver
   ],
   exports: [
     WakeupTopBarComponent,

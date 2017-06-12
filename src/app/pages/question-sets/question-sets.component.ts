@@ -12,9 +12,11 @@ import { Observable } from 'rxjs/Observable';
 })
 export class QuestionSetsComponent implements OnInit {
   questionSets$: Observable<QuestionSet[]>;
+  isLoading$: Observable<boolean>;
 
   constructor(private store: Store<reducers.State>) {
     this.questionSets$ = store.select(reducers.getQuestionSetsState);
+    this.isLoading$ = store.select(reducers.getLoadingQuestionSetState);
    }
 
   ngOnInit() {

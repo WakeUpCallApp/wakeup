@@ -2,6 +2,7 @@
   <wakeup-card>
     <div class="card-header">Question Sets</div>
     <div class="card-body">
+      <md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
       <ul>
         <li *ngFor="let questionSet of questionSets$ | async ">
           <a [routerLink]="['/questionSetDetails', questionSet.id]">{{questionSet.name}}</a>

@@ -31,3 +31,7 @@ export function reducer(state: any, action: any) {
 export const getQuestionSetsState = (state: State): QuestionSet[] => state.questionSet.entities;
 
 export const getQuestionSetSate = (state: State, id): QuestionSet[] => state.questionSet.entities.filter(questionSet => questionSet.id === id);
+
+export const getLoadingQuestionSetState = (state: State) : boolean => state.questionSet.isLoading;
+
+export const getCurrentQuestionSetState = (state: State) : QuestionSet => state.questionSet.currentQuestionSet;

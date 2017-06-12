@@ -34,8 +34,7 @@ import { QuestionSetDetailsComponent } from './pages/question-set-details/questi
 				component: QuestionSetDetailsComponent,
 				canActivate: [AuthenticationGuard],
 				resolve: {
-					userDetails: UserDetailResolver,
-					currentQuestionSet: QuestionSetDetailsResolver
+					userDetails: UserDetailResolver
 				},
 			},
 			{ path: '', redirectTo: 'questionSets', pathMatch: 'full' },
