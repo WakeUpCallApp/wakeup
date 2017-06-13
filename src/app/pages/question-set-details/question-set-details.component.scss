@@ -19,6 +19,7 @@
         }
     }
     .addQuestion {
+        margin-bottom: 26px;
         .add {
             display: flex;
             align-items: center;
@@ -30,6 +31,27 @@
         .addQuestionButton {
             background-color: $accent;
             margin: 26px;
+        }
+    }
+
+    .questionList {
+        .title {
+            flex: 1;
+        }
+        .title > h1 {
+            float: left;
+        }
+        .allQuestionsCheck{
+            margin-left: 5px;
+            span {
+                margin-left: 16px;
+            }
+        }
+        .questionTitle{
+            font-weight: bold;
+        }
+        .deleteQuestions {
+            background-color: $accent;
         }
     }
 }

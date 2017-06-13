@@ -12,28 +12,18 @@
 
                 <button md-icon-button [mdMenuTriggerFor]="appMenu">
                     <md-icon>more_vert</md-icon>
-                    </button></div>
+                </button>
+            </div>
         </div>
         <div class="card-body">
             <md-input-container floatPlaceholder="always">
-                <input 
-                mdInput 
-                type="text" 
-                placeholder="Name" 
-                name="name" 
-                [(ngModel)]="updateObject.name"
-                (ngModelChange)="updateQuestionSet($event)" 
-                required>
+                <input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="updateObject.name" (ngModelChange)="updateQuestionSet($event)"
+                    required>
                 <md-error>Name is required</md-error>
             </md-input-container>
             <md-input-container floatPlaceholder="always">
-                <textarea 
-                mdInput 
-                placeholder="Description" 
-                name="description" 
-                [(ngModel)]="updateObject.description"
-                (ngModelChange)="updateQuestionSet($event)" 
-                rows="5">
+                <textarea mdInput placeholder="Description" name="description" [(ngModel)]="updateObject.description" (ngModelChange)="updateQuestionSet($event)"
+                    rows="5">
                 </textarea>
             </md-input-container>
         </div>
@@ -53,7 +43,42 @@
         </md-card-content>
     </md-card>
 
-    <div *ngFor="let question of currentQuestionSet.questions">  
-        {{question.text}}    
-    </div>
+    <md-card class="questionList mat-elevation-z3">
+        <md-card-header>
+            <div class="title">
+                <h1 class="cardTitle">Question List</h1>
+            </div>
+            <div class="actions" *ngIf="canDelete()">
+                <button class="deleteQuestions" md-button md-raised-button (click)="deleteQuestions()">Delete</button>
+            </div>
+        </md-card-header>
+        <md-card-content class="list">
+            <md-list>
+                   <h3 class="allQuestionsCheck" md-subheader>
+                       <md-checkbox 
+                        [indeterminate]="indeterminate" 
+                        [(checked)]="checked" 
+                        (change)="toggleCheckAllQuestions()">
+                       </md-checkbox>
+                       <span *ngIf="getSelectedQuestions().length">
+                           {{getSelectedQuestions().length}} Selected
+                       </span>
+                    </h3>
+                <md-list-item *ngFor="let question of currentQuestionSet.questions">
+                    <md-checkbox [(ngModel)]="question.checked" md-list-icon></md-checkbox>
+                    <h2 md-line class="questionTitle">{{question.text}}</h2>
+                    <button md-icon-button [mdMenuTriggerFor]="questionMenu">
+                    <md-icon>more_vert</md-icon>
+                    </button>
+                    <md-menu #questionMenu="mdMenu">
+                        <button md-menu-item> Edit </button>
+                        <button md-menu-item> See answers </button>
+                        <button md-menu-item> Add Quote </button>
+                    </md-menu>
+                    <p md-line> {{question.quote}} And some textAnd some textAnd some textAnd some textAnd some textAnd some textAnd
+                        some textAnd some textAnd some textAnd some textAnd some text</p>
+                </md-list-item>
+            </md-list>
+        </md-card-content>
+    </md-card>
 </div>

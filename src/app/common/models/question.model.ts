@@ -13,6 +13,7 @@ export interface QuestionApi {
 }
 
 export class Question {
+    checked: boolean = false;
     constructor(
     public id: number,    
     public text: string,
