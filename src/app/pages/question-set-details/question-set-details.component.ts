@@ -55,7 +55,9 @@ export class QuestionSetDetailsComponent implements OnInit {
   get indeterminate() {
     return this.currentQuestionSet.questions
       ? !this.checked &&
-          this.currentQuestionSet.questions.some(question => question.checked === true)
+          this.currentQuestionSet.questions.some(
+            question => question.checked === true
+          )
       : false;
   }
 
@@ -100,6 +102,18 @@ export class QuestionSetDetailsComponent implements OnInit {
   getSelectedQuestions() {
     return (
       (this.currentQuestionSet.questions &&
-        this.currentQuestionSet.questions.filter(question => question.checked)) || []);
+        this.currentQuestionSet.questions.filter(
+          question => question.checked
+        )) ||
+      []
+    );
+  }
+
+  deleteQuestions() {
+    this.currentQuestionSet.questions
+      .filter(question => question.checked)
+      .forEach(question =>
+        this.store.dispatch(new actions.DeleteQuestionAction(question.id))
+      );
   }
 }

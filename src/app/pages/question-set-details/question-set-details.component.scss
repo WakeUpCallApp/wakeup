@@ -9,7 +9,7 @@
                 flex: 1;
             }
         }
-        .card-body{
+        .card-body {
             display: flex;
             flex-direction: column;
         }
@@ -29,29 +29,34 @@
             }
         }
         .addQuestionButton {
-            background-color: $accent;
             margin: 26px;
         }
+        .addQuestionButton:not(:disabled) {
+            background-color: $accent;
+        }
     }
-
     .questionList {
         .title {
             flex: 1;
         }
-        .title > h1 {
+        .title>h1 {
             float: left;
         }
-        .allQuestionsCheck{
+        .allQuestionsCheck {
             margin-left: 5px;
             span {
                 margin-left: 16px;
             }
         }
-        .questionTitle{
+        .questionTitle {
             font-weight: bold;
         }
         .deleteQuestions {
             background-color: $accent;
         }
+    }
+    .mat-list{
+        max-width: 800px;
+        margin: 20px 20px 0 0;
     }
 }

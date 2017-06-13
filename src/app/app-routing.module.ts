@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 
 import { AuthenticationGuard } from './common/guards/authentication.guard';
 import { UserDetailResolver } from './common/guards/user-details.resolver';
-import { QuestionSetDetailsResolver } from './common/guards/question-set-details.resolver';
 import { LandingComponent } from './pages/landing/landing.component';
 import { QuestionSetsComponent } from './pages/question-sets/question-sets.component';
 import { NewQuestionSetComponent } from './pages/new-question-set/new-question-set.component';

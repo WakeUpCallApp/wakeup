@@ -151,7 +151,7 @@
                 return res.status(404).send('Not Found');
             }
             findQuestionSet(question.questionSet).then(function(questionSet) {
-                if (questionSet[0].isDefault) {
+                if (questionSet.isDefault) {
                     return res.status(404).send('Cannot delete question of default questionSet');
                 } else {
                     Answer.find({

@@ -75,6 +75,12 @@ export class QuestionSetEffects {
     .switchMap(question => this.questionService.create(question))
     .map(result => new questionSet.AddQuestionActionSuccess(result));
 
+    @Effect() deleteQuestion$ = this.actions$
+    .ofType(questionSet.ActionTypes.DELETE_QUESTION)
+    .map(action => action.payload)
+    .flatMap(question => this.questionService.delete(question))
+    .map(result => new questionSet.DeleteQuestionActionSuccess(result));
+
   @Effect({ dispatch: false }) httpErrors$ = this.actions$
     .ofType(questionSet.ActionTypes.GET_CURRENT_QUESTION_SET_ERROR)
     .map(action => action.payload)

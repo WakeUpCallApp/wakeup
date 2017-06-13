@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-
+import Parser from './parser';
 import { QuestionSet, IQuestionSet, QuestionSetApi } from '../models/question-set.model';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class QuestionSetService {
             .map((response: Response) => response.json())
             .map((questionSetApiList) => {
                 return questionSetApiList.map(questionSetApi => {
-                    return this.fromApi(questionSetApi);
+                    return Parser.questionSetFromApi(questionSetApi);
                 })
             })
             .catch(this.handleError);
@@ -25,7 +25,7 @@ export class QuestionSetService {
         return this.http.post('/api/questionSet', questionSet)
             .map((response: Response) => response.json())
             .map((questionSetApi: QuestionSetApi) => {
-                return this.fromApi(questionSetApi)
+                return Parser.questionSetFromApi(questionSetApi)
             })
             .catch(this.handleError);
     }
@@ -34,8 +34,8 @@ export class QuestionSetService {
         return this.http.get(`/api/questionSet/${id}`)
             .map((response: Response) => response.json())
             .map((questionSetApi: QuestionSetApi) => {
-                const questionSet = this.fromApi(questionSetApi);
-                questionSet.questions = questionSetApi.questions;
+                const questionSet = Parser.questionSetFromApi(questionSetApi);
+                questionSet.questions = questionSetApi.questions.map(question => Parser.questionFromApi(question));
                 questionSet.questionIds = questionSetApi.questions.map(question => question._id);
                 return questionSet;
             })
@@ -47,8 +47,8 @@ export class QuestionSetService {
         return this.http.put(`/api/questionSet/${questionSet.id}`, questionSet)
             .map((response: Response) => response.json())
             .map((questionSetApi: QuestionSetApi) => {
-                const questionSet = this.fromApi(questionSetApi);
-                questionSet.questions = questionSetApi.questions;
+                const questionSet = Parser.questionSetFromApi(questionSetApi);
+                questionSet.questions = questionSetApi.questions.map(question => Parser.questionFromApi(question));;
                 questionSet.questionIds = questionSetApi.questions.map(question => question._id);
                 return questionSet;
             })
@@ -66,14 +66,6 @@ export class QuestionSetService {
         return Observable.throw(error || 'Server error');
     }
 
-    fromApi(questionSetApi: QuestionSetApi): QuestionSet {
-        return new QuestionSet(questionSetApi._id,
-            questionSetApi.name,
-            questionSetApi.description,
-            questionSetApi.user,
-            questionSetApi.practiceTimes,
-            questionSetApi.questions,
-            questionSetApi.isDefault);
-    }
+    
 
 }

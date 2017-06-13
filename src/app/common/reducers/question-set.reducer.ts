@@ -1,6 +1,6 @@
-import { Action } from '@ngrx/store';
-import { QuestionSet } from '../models/question-set.model';
-import * as actions from '../actions/question-set.actions';
+import { Action } from "@ngrx/store";
+import { QuestionSet } from "../models/question-set.model";
+import * as actions from "../actions/question-set.actions";
 
 export interface State {
   entities: QuestionSet[];
@@ -15,6 +15,9 @@ export const initialState: State = {
 };
 
 export function reducer(state = initialState, action: Action): State {
+  let question;
+  let updatedQuestionSet;
+
   switch (action.type) {
     case actions.ActionTypes.LOAD:
       return Object.assign({}, state, { isLoading: true });
@@ -33,29 +36,34 @@ export function reducer(state = initialState, action: Action): State {
       });
 
     case actions.ActionTypes.CREATE_SUCCESS:
-      return Object.assign({}, state,
-        {
-          currentQuestionSet: action.payload
-        });
+      return Object.assign({}, state, {
+        currentQuestionSet: action.payload
+      });
     case actions.ActionTypes.UPDATE_SUCCESS:
-      return Object.assign({}, state,
-        {
-          currentQuestionSet: Object.assign({}, state.currentQuestionSet, action.payload)
-        });
+      return Object.assign({}, state, {
+        currentQuestionSet: Object.assign(
+          {},
+          state.currentQuestionSet,
+          action.payload
+        )
+      });
     case actions.ActionTypes.ADD_QUESTION_SUCCESS:
-      const question = action.payload;
-      const updatedQuestionSet = Object.assign({},
-        state.currentQuestionSet,
-        {
-          questions: [...state.currentQuestionSet.questions, question]
-        });
-      return Object.assign({}, state,
-        {
-          currentQuestionSet: updatedQuestionSet
-        });
+      question = action.payload;
+      updatedQuestionSet = Object.assign({}, state.currentQuestionSet, {
+        questions: [...state.currentQuestionSet.questions, question]
+      });
+      return Object.assign({}, state, {
+        currentQuestionSet: updatedQuestionSet
+      });
+    case actions.ActionTypes.DELETE_QUESTION_SUCCESS:
+      updatedQuestionSet = Object.assign({}, state.currentQuestionSet, {
+        questions: state.currentQuestionSet.questions.filter(question => question.id !== action.payload)
+      });
+      return Object.assign({}, state, {
+        currentQuestionSet: updatedQuestionSet
+      });
     default: {
       return state;
     }
   }
 }
-
