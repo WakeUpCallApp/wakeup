@@ -25,10 +25,12 @@
             flex: 1;
         }
     }
-    .questionTitle {
+    md-checkbox.questionCheckbox {
+        display: flex;
         flex: 1;
-        word-break: break-all;
-        margin-left: 16px;
+        .questionTitle {
+            word-break: break-all;
+        }
     }
     .deleteQuestions:not(:disabled) {
         background-color: $accent;

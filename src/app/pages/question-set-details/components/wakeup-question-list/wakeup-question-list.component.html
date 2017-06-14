@@ -20,8 +20,9 @@
     <hr>
     <ul>
       <li *ngFor="let question of questions">
-        <md-checkbox [(ngModel)]="question.checked"></md-checkbox>
-        <span class="questionTitle">{{question.text}}</span>
+        <md-checkbox class="questionCheckbox" [(ngModel)]="question.checked">
+          <span class="questionTitle">{{question.text}}</span>
+        </md-checkbox>
         <button md-icon-button [mdMenuTriggerFor]="questionMenu">
                     <md-icon>more_vert</md-icon>
                     </button>
