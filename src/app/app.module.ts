@@ -23,15 +23,14 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { LoginModule } from './pages/login/login.module';
 import { QuestionSetsComponent } from './pages/question-sets/question-sets.component';
 import { NewQuestionSetComponent } from './pages/new-question-set/new-question-set.component';
-import { QuestionSetDetailsComponent } from './pages/question-set-details/question-set-details.component';
+import { QuestionSetDetailsModule } from './pages/question-set-details/question-set-details.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     QuestionSetsComponent,
-    NewQuestionSetComponent,
-    QuestionSetDetailsComponent
+    NewQuestionSetComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +40,7 @@ import { QuestionSetDetailsComponent } from './pages/question-set-details/questi
     MaterialModule,
     WakeupCommonModule,
     LoginModule,
+    QuestionSetDetailsModule,
     AppRoutingModule,
     StoreModule.provideStore(reducer),
     // must come AFTER `provideStore` call

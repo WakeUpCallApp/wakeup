@@ -1,0 +1,25 @@
+<md-card class="Question mat-elevation-z3">
+  <md-card-header>
+    <h1 class="cardTitle">{{question.id ? 'Edit Question' : 'Add Question'}}</h1>
+  </md-card-header>
+  <md-card-content class="content">
+    <md-input-container floatPlaceholder="always">
+      <textarea #characterCountInputHint 
+      mdInput 
+      maxlength="200" 
+      type="text" 
+      placeholder="Text" 
+      rows="3" 
+      [(ngModel)]="question.text">
+      </textarea>
+      <md-hint align="end" aria-live="polite">
+        {{characterCountInputHint.value.length}} / 200
+      </md-hint>
+    </md-input-container>
+    <button class="saveQuestionButton" 
+    md-button 
+    md-button-raised 
+    [disabled]="!question.text.trim()" 
+    (click)="handleClick()">{{question.id ? 'Update' : 'Create'}}</button>
+  </md-card-content>
+</md-card>

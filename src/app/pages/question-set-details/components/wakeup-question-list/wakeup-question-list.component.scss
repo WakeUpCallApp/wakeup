@@ -1,0 +1,36 @@
+@import "~../../../../common/constants";
+.questionList {
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        li {
+            display: flex;
+            align-items: center;
+            min-height: 60px;
+        }
+    }
+    .title {
+        flex: 1;
+    }
+    .title>h1 {
+        float: left;
+    }
+    .allQuestionsCheck {
+        display: flex;
+        align-items: center;
+        md-checkbox {
+            font-weight: normal;
+            font-size: 14px;
+            flex: 1;
+        }
+    }
+    .questionTitle {
+        flex: 1;
+        word-break: break-all;
+        margin-left: 16px;
+    }
+    .deleteQuestions:not(:disabled) {
+        background-color: $accent;
+    }
+}

@@ -4,6 +4,7 @@ import "@ngrx/core/add/operator/select";
 import { Store } from "@ngrx/store";
 import { ActivatedRoute, Router } from "@angular/router";
 import { QuestionSet } from "../../common/models/question-set.model";
+import { IQuestion } from "../../common/models/question.model";
 import * as reducers from "../../common/reducers";
 import * as actions from "../../common/actions/question-set.actions";
 import { Observable } from "rxjs/Observable";
@@ -16,7 +17,7 @@ import { Subscription } from "rxjs/Subscription";
 })
 export class QuestionSetDetailsComponent implements OnInit {
   currentQuestionSet: QuestionSet;
-  newQuestion: string;
+  newQuestion: IQuestion;
   actionsSubscription: Subscription;
   qsSubscription: Subscription;
   updateObject;
@@ -37,12 +38,22 @@ export class QuestionSetDetailsComponent implements OnInit {
       .subscribe(currentQuestionSet => {
         this.currentQuestionSet = Object.assign({}, currentQuestionSet);
         this.updateObject = Object.assign({}, currentQuestionSet);
+        this.newQuestion = this.getEmptyQuestion();
       });
   }
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
     this.qsSubscription.unsubscribe();
+  }
+
+  getEmptyQuestion() {
+    return {
+      id: undefined,
+      text: "",
+      quote: undefined,
+      questionSet: this.currentQuestionSet.id
+    };
   }
 
   get checked() {
@@ -61,15 +72,16 @@ export class QuestionSetDetailsComponent implements OnInit {
       : false;
   }
 
-  addQuestion() {
+  addQuestion(qs: IQuestion) {
     this.store.dispatch(
       new actions.AddQuestionAction({
-        text: this.newQuestion,
-        questionSet: this.currentQuestionSet.id,
-        date: new Date().getTime()
+        text: qs.text,
+        questionSet: qs.questionSet,
+        date: new Date().getTime(),
+        quote: qs.quote
       })
     );
-    this.newQuestion = "";
+    this.newQuestion = this.getEmptyQuestion();
   }
 
   updateQuestionSet($event) {
@@ -109,11 +121,9 @@ export class QuestionSetDetailsComponent implements OnInit {
     );
   }
 
-  deleteQuestions() {
-    this.currentQuestionSet.questions
-      .filter(question => question.checked)
-      .forEach(question =>
-        this.store.dispatch(new actions.DeleteQuestionAction(question.id))
-      );
+  deleteQuestions(questions) {
+    questions.forEach(question =>
+      this.store.dispatch(new actions.DeleteQuestionAction(question.id))
+    );
   }
 }

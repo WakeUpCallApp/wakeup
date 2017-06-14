@@ -1,7 +1,8 @@
 export interface IQuestion{
-text: string,
-questionSet: number,
-quote?: number
+id: number;
+text: string;
+questionSet: number;
+quote?: number;
 }
 
 export interface QuestionApi {

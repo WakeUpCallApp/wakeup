@@ -1,89 +1,46 @@
 <div class="questionSetDetails pageContent">
-    <wakeup-card class="summary">
-        <div class="card-header">
-            <span class="title">{{currentQuestionSet.name}}</span>
-            <div class="actions">
-                <md-menu #appMenu="mdMenu">
-                    <button md-menu-item> View Practice Sessions </button>
-                    <button md-menu-item> Import Questions </button>
-                    <button md-menu-item> Export Questions </button>
-                    <button md-menu-item (click)="deleteQuestionSet()"> Delete Question Set </button>
-                </md-menu>
+    <section class="details">
+        <wakeup-card class="summary">
+            <div class="card-header">
+                <span class="title">{{currentQuestionSet.name}}</span>
+                <div class="actions">
+                    <md-menu #appMenu="mdMenu">
+                        <button md-menu-item> View Practice Sessions </button>
+                        <button md-menu-item> Import Questions </button>
+                        <button md-menu-item> Export Questions </button>
+                        <button md-menu-item (click)="deleteQuestionSet()"> Delete Question Set </button>
+                    </md-menu>
 
-                <button md-icon-button [mdMenuTriggerFor]="appMenu">
+                    <button md-icon-button [mdMenuTriggerFor]="appMenu">
                     <md-icon>more_vert</md-icon>
                 </button>
-            </div>
-        </div>
-        <div class="card-body">
-            <md-input-container floatPlaceholder="always">
-                <input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="updateObject.name" (ngModelChange)="updateQuestionSet($event)"
-                    required>
-                <md-error>Name is required</md-error>
-            </md-input-container>
-            <md-input-container floatPlaceholder="always">
-                <textarea mdInput placeholder="Description" name="description" [(ngModel)]="updateObject.description" (ngModelChange)="updateQuestionSet($event)"
-                    rows="5">
-                </textarea>
-            </md-input-container>
-        </div>
-        <div class="card-footer">
-            <button class="practiceQuestionSetButton" md-button md-button-raised>Practice Question Set</button>
-        </div>
-    </wakeup-card>
-    <md-card class="addQuestion mat-elevation-z3" *ngIf="!currentQuestionSet.isDefault">
-        <md-card-header>
-            <h1 class="cardTitle">Add Question</h1>
-        </md-card-header>
-        <md-card-content class="add">
-            <md-input-container floatPlaceholder="always">
-                <textarea #characterCountInputHint mdInput maxlength="200" type="text" placeholder="New question" rows="3" [(ngModel)]="newQuestion">
-                </textarea>
-                <md-hint align="end" aria-live="polite">
-                    {{characterCountInputHint.value.length}} / 200
-                </md-hint>
-            </md-input-container>
-            <button class="addQuestionButton" 
-            md-button 
-            md-button-raised 
-            [disabled]="!newQuestion" 
-            (click)="addQuestion()">Add Question</button>
-        </md-card-content>
-    </md-card>
-
-    <md-card class="questionList mat-elevation-z3" *ngIf="currentQuestionSet.questions?.length">
-        <md-card-header>
-            <div class="title">
-                <h1 class="cardTitle">Question List</h1>
-            </div>
-        </md-card-header>
-        <md-card-content class="list">
-            <h3 class="allQuestionsCheck">
-                <md-checkbox [indeterminate]="indeterminate" [(checked)]="checked" (change)="toggleCheckAllQuestions()">
-                </md-checkbox>
-                <span *ngIf="getSelectedQuestions().length">
-                           {{getSelectedQuestions().length}} Selected
-                    </span>
-                <span *ngIf="!getSelectedQuestions().length">Select all</span>
-                <div class="actions">
-                    <button [disabled]="!canDelete()" class="deleteQuestions" md-button md-raised-button (click)="deleteQuestions()">Delete</button>
                 </div>
-            </h3>
-            <hr>
-            <ul>
-                <li *ngFor="let question of currentQuestionSet.questions">
-                    <md-checkbox [(ngModel)]="question.checked"></md-checkbox>
-                    <span class="questionTitle">{{question.text}}</span>
-                    <button md-icon-button [mdMenuTriggerFor]="questionMenu">
-                    <md-icon>more_vert</md-icon>
-                    </button>
-                    <md-menu #questionMenu="mdMenu">
-                        <button md-menu-item> Edit </button>
-                        <button md-menu-item> See answers </button>
-                    </md-menu><span class="actions">
-                    </span>
-                </li>
-            </ul>
-        </md-card-content>
-    </md-card>
+            </div>
+            <div class="card-body">
+                <md-input-container floatPlaceholder="always">
+                    <input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="updateObject.name" (ngModelChange)="updateQuestionSet($event)"
+                        required>
+                    <md-error>Name is required</md-error>
+                </md-input-container>
+                <md-input-container floatPlaceholder="always">
+                    <textarea mdInput placeholder="Description" name="description" [(ngModel)]="updateObject.description" (ngModelChange)="updateQuestionSet($event)"
+                        rows="5">
+                </textarea>
+                </md-input-container>
+            </div>
+            <div class="card-footer">
+                <button class="practiceQuestionSetButton" md-button md-button-raised>Practice Question Set</button>
+            </div>
+        </wakeup-card>
+    </section>
+
+    <section class="newQuestion" *ngIf="!currentQuestionSet.isDefault">
+        <wakeup-question (save)="addQuestion($event)" [question]="newQuestion"></wakeup-question>
+    </section>
+
+    <section class="questionList" *ngIf="currentQuestionSet.questions?.length">
+        <wakeup-question-list [questions]="currentQuestionSet.questions" (delete)="deleteQuestions($event)">
+        </wakeup-question-list>
+    </section>
+
 </div>

@@ -1,0 +1,36 @@
+<md-card class="questionList mat-elevation-z3">
+  <md-card-header>
+    <div class="title">
+      <h1 class="cardTitle">Question List</h1>
+    </div>
+  </md-card-header>
+  <md-card-content class="list">
+    <h3 class="allQuestionsCheck">
+      <md-checkbox [indeterminate]="indeterminate" [(checked)]="checked" (change)="toggleCheckAllQuestions()">
+        <span *ngIf="!getSelectedQuestions().length">Select all</span>
+        <span *ngIf="getSelectedQuestions().length">
+                           {{getSelectedQuestions().length}} Selected
+                    </span>
+      </md-checkbox>
+
+      <div class="actions">
+        <button [disabled]="!canDelete()" class="deleteQuestions" md-button md-raised-button (click)="deleteQuestions()">Delete</button>
+      </div>
+    </h3>
+    <hr>
+    <ul>
+      <li *ngFor="let question of questions">
+        <md-checkbox [(ngModel)]="question.checked"></md-checkbox>
+        <span class="questionTitle">{{question.text}}</span>
+        <button md-icon-button [mdMenuTriggerFor]="questionMenu">
+                    <md-icon>more_vert</md-icon>
+                    </button>
+        <md-menu #questionMenu="mdMenu">
+          <button md-menu-item> Edit </button>
+          <button md-menu-item> See answers </button>
+        </md-menu><span class="actions">
+                    </span>
+      </li>
+    </ul>
+  </md-card-content>
+</md-card>
