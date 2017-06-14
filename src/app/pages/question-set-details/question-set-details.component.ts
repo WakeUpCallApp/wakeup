@@ -47,6 +47,14 @@ export class QuestionSetDetailsComponent implements OnInit {
     this.qsSubscription.unsubscribe();
   }
 
+  updateQuestionSet($event) {
+    this.store.dispatch(new actions.UpdateAction(this.updateObject));
+  }
+
+  deleteQuestionSet() {
+    this.store.dispatch(new actions.DeleteAction(this.currentQuestionSet.id));
+  }
+
   getEmptyQuestion() {
     return {
       id: undefined,
@@ -54,22 +62,6 @@ export class QuestionSetDetailsComponent implements OnInit {
       quote: undefined,
       questionSet: this.currentQuestionSet.id
     };
-  }
-
-  get checked() {
-    return (
-      this.currentQuestionSet.questions &&
-      this.currentQuestionSet.questions.every(question => question.checked)
-    );
-  }
-
-  get indeterminate() {
-    return this.currentQuestionSet.questions
-      ? !this.checked &&
-          this.currentQuestionSet.questions.some(
-            question => question.checked === true
-          )
-      : false;
   }
 
   addQuestion(qs: IQuestion) {
@@ -82,43 +74,6 @@ export class QuestionSetDetailsComponent implements OnInit {
       })
     );
     this.newQuestion = this.getEmptyQuestion();
-  }
-
-  updateQuestionSet($event) {
-    this.store.dispatch(new actions.UpdateAction(this.updateObject));
-  }
-
-  deleteQuestionSet() {
-    this.store.dispatch(new actions.DeleteAction(this.currentQuestionSet.id));
-  }
-
-  toggleCheckAllQuestions() {
-    const questions = this.currentQuestionSet.questions;
-    if (questions.every(question => question.checked)) {
-      questions.forEach(question => {
-        question.checked = false;
-      });
-    } else {
-      questions.forEach(question => {
-        question.checked = true;
-      });
-    }
-  }
-
-  canDelete() {
-    return this.currentQuestionSet.questions
-      ? this.currentQuestionSet.questions.some(question => question.checked)
-      : false;
-  }
-
-  getSelectedQuestions() {
-    return (
-      (this.currentQuestionSet.questions &&
-        this.currentQuestionSet.questions.filter(
-          question => question.checked
-        )) ||
-      []
-    );
   }
 
   deleteQuestions(questions) {
