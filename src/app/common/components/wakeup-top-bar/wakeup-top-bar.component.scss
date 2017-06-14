@@ -1,10 +1,81 @@
+@import "~../../constants";
+
 md-toolbar {
     z-index: 1;
     position: relative;
 }
 
+.left.large-screen {
+    display: none;
+
+    @media(min-width: 1000px) {
+        display: flex;
+    }
+}
+
+.left.small-screen {
+    @media(min-width: 1000px) {
+        display: none;
+    }
+}
+
+.openMenu {
+    display: flex;
+    align-items: center;
+
+    button {
+        background-color: inherit;
+    }
+}
+
 .left {
+    height: 100%;
     flex-grow: 1;
+    display: flex;
+    a.logo {
+        color: black;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding-right: 10px;
+        img {
+            height: 30px;
+        }
+        .appName {
+            margin-left: 8px;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+    }
+    nav {
+        height: 100%;
+        .globalMenuLinks {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            font-size: 14px;
+            height: 100%;
+            display: flex;
+            li a {
+                text-decoration: none;
+                color: black;
+                padding: 0 16px;
+                display: flex;
+                align-items: center;
+                height: 100%;
+                min-width: 100px;
+                justify-content: center;
+            }
+            li a:hover {
+                border-bottom:3px solid lighten($primary, 0.9);
+                font-weight: bold;
+            }
+            li a.activeLink {
+                border-bottom: 3px solid $primary;
+                color: $primary;
+            }
+        }
+    }
 }
 
 .right {

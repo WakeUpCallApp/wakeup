@@ -23,39 +23,58 @@
         .add {
             display: flex;
             align-items: center;
+            flex-direction: column;
+            @media(min-width: 1000px) {
+                flex-direction: row;
+            }
             md-input-container {
-                max-width: 600px;
-                width: 100%;
+                width: 90%;
             }
         }
         .addQuestionButton {
-            margin: 26px;
+            margin-left: 26px;
         }
         .addQuestionButton:not(:disabled) {
             background-color: $accent;
         }
     }
     .questionList {
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            li {
+                display: flex;
+                align-items: center;
+                min-height: 60px;
+            }
+        }
         .title {
             flex: 1;
         }
-        .title>h1 {
+        .title > h1 {
             float: left;
         }
         .allQuestionsCheck {
-            margin-left: 5px;
+            display: flex;
+            align-items: center;
             span {
                 margin-left: 16px;
+                font-weight: normal;
+                font-size: 14px;
+                flex: 1;
             }
         }
         .questionTitle {
-            font-weight: bold;
+            flex: 1;
+            word-break: break-all;
+            margin-left: 16px;
         }
-        .deleteQuestions {
+        .deleteQuestions:not(:disabled) {
             background-color: $accent;
         }
     }
-    .mat-list{
+    .mat-list {
         max-width: 800px;
         margin: 20px 20px 0 0;
     }

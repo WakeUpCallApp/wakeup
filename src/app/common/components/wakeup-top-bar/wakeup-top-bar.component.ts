@@ -30,17 +30,6 @@ export class WakeupTopBarComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngOnChanges(changeObj) {
-    if (changeObj['loggedUser']) {
-      this.loggedUser = changeObj['loggedUser'].currentValue;
-      setTimeout(() => {
-        if (this.loggedUser && !this.isOpen && window.innerWidth > 600) {
-          this.toggleSideNav()
-        }
-      });
-    }
-  }
-
   toggleSideNav() {
     this.isOpen = !this.isOpen;
     this.onOpenMenu.emit(this.isOpen);

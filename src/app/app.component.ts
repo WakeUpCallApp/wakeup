@@ -10,14 +10,13 @@ import appConstants from './common/app-constants';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public isOpen: boolean;
+  public isOpen: boolean = false;
 
   constructor(private router: Router,
     private loginService: LoginService,
     private authTokenService: AuthTokenService) { }
 
   ngOnInit() {
-    this.isOpen = this.canShowNavigation() && window.innerWidth > 600;
   }
 
   openMenu(isOpen) {

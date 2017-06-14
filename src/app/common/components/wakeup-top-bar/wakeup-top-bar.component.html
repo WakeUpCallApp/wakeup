@@ -1,5 +1,35 @@
 <md-toolbar *ngIf="loggedUser" class="mat-elevation-z5">
-  <div class="left">
+  <div class="left large-screen">
+    <a routerLink="/questionSets" class="logo">
+        <img src="/../../../assets/images/heart.png" alt='logo'>
+        <span class="appName">WakeupCallApp</span>
+    </a>
+    <nav>
+      <ul class='globalMenuLinks'>
+        <li>
+          <a routerLink="/questionSets" routerLinkActive="activeLink"> 
+         Question Sets
+        </a>
+        </li>
+        <li>
+          <a>
+           Topics
+          </a>
+        </li>
+        <li>
+          <a routerLink="/newQuestionSet" routerLinkActive="activeLink"> 
+        New Question Set
+        </a>
+        </li>
+        <li>
+          <a>
+          New Topic
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="left small-screen">
     <div class="openMenu">
       <button (click)="toggleSideNav()" md-mini-fab title="Show/Hide menu">
       <md-icon>menu</md-icon>

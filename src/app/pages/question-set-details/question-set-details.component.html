@@ -36,14 +36,18 @@
             <h1 class="cardTitle">Add Question</h1>
         </md-card-header>
         <md-card-content class="add">
-            <md-input-container floatPlaceholder="always" >
+            <md-input-container floatPlaceholder="always">
                 <textarea #characterCountInputHint mdInput maxlength="200" type="text" placeholder="New question" rows="3" [(ngModel)]="newQuestion">
                 </textarea>
                 <md-hint align="end" aria-live="polite">
                     {{characterCountInputHint.value.length}} / 200
                 </md-hint>
             </md-input-container>
-            <button class="addQuestionButton" md-button md-button-raised [disabled]="!newQuestion" (click)="addQuestion()">Add Question</button>
+            <button class="addQuestionButton" 
+            md-button 
+            md-button-raised 
+            [disabled]="!newQuestion" 
+            (click)="addQuestion()">Add Question</button>
         </md-card-content>
     </md-card>
 
@@ -52,33 +56,34 @@
             <div class="title">
                 <h1 class="cardTitle">Question List</h1>
             </div>
-            <div class="actions" *ngIf="canDelete()">
-                <button class="deleteQuestions" md-button md-raised-button (click)="deleteQuestions()">Delete</button>
-            </div>
         </md-card-header>
         <md-card-content class="list">
-            <md-list>
-                <h3 class="allQuestionsCheck" md-subheader>
-                    <md-checkbox [indeterminate]="indeterminate" [(checked)]="checked" (change)="toggleCheckAllQuestions()">
-                    </md-checkbox>
-                    <span *ngIf="getSelectedQuestions().length">
+            <h3 class="allQuestionsCheck">
+                <md-checkbox [indeterminate]="indeterminate" [(checked)]="checked" (change)="toggleCheckAllQuestions()">
+                </md-checkbox>
+                <span *ngIf="getSelectedQuestions().length">
                            {{getSelectedQuestions().length}} Selected
-                       </span>
-                </h3>
-                <md-list-item *ngFor="let question of currentQuestionSet.questions">
-                    <md-checkbox [(ngModel)]="question.checked" md-list-icon></md-checkbox>
-                    <h2 md-line class="questionTitle">{{question.text}}</h2>
+                    </span>
+                <span *ngIf="!getSelectedQuestions().length">Select all</span>
+                <div class="actions">
+                    <button [disabled]="!canDelete()" class="deleteQuestions" md-button md-raised-button (click)="deleteQuestions()">Delete</button>
+                </div>
+            </h3>
+            <hr>
+            <ul>
+                <li *ngFor="let question of currentQuestionSet.questions">
+                    <md-checkbox [(ngModel)]="question.checked"></md-checkbox>
+                    <span class="questionTitle">{{question.text}}</span>
                     <button md-icon-button [mdMenuTriggerFor]="questionMenu">
                     <md-icon>more_vert</md-icon>
                     </button>
                     <md-menu #questionMenu="mdMenu">
                         <button md-menu-item> Edit </button>
                         <button md-menu-item> See answers </button>
-                        <button md-menu-item> Add Quote </button>
-                    </md-menu>
-                    <p md-line> {{question.quote}}</p>
-                </md-list-item>
-            </md-list>
+                    </md-menu><span class="actions">
+                    </span>
+                </li>
+            </ul>
         </md-card-content>
     </md-card>
 </div>

@@ -6,14 +6,13 @@ html {
 
 body {
     margin: 0;
-    font-family: Roboto, sans-serif;
     height: 100%;
     display: flex;
 }
 
 html,
 body {
-    font: 1em/1.5 "Arial", sans-serif;
+    font: 1em/1.5 Roboto, sans-serif;
 }
 
 .container {
@@ -30,7 +29,6 @@ body {
 
 .cardTitle {
     margin-top: -10px;
-    border-bottom: 1px solid black;
     font-size: 16px;
     margin-bottom: 26px;
 }
