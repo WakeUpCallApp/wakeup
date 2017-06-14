@@ -3,23 +3,18 @@
     <h1 class="cardTitle">{{question.id ? 'Edit Question' : 'Add Question'}}</h1>
   </md-card-header>
   <md-card-content class="content">
-    <md-input-container floatPlaceholder="always">
-      <textarea #characterCountInputHint 
-      mdInput 
-      maxlength="200" 
-      type="text" 
-      placeholder="Text" 
-      rows="3" 
-      [(ngModel)]="question.text">
+    <section class="row questionText">
+      <md-input-container floatPlaceholder="always">
+        <textarea #characterCountInputHint mdInput maxlength="200" type="text" placeholder="Text" rows="3" [(ngModel)]="question.text">
       </textarea>
-      <md-hint align="end" aria-live="polite">
-        {{characterCountInputHint.value.length}} / 200
-      </md-hint>
-    </md-input-container>
-    <button class="saveQuestionButton" 
-    md-button 
-    md-button-raised 
-    [disabled]="!question.text.trim()" 
-    (click)="handleClick()">{{question.id ? 'Update' : 'Create'}}</button>
+        <md-hint align="end" aria-live="polite">
+          {{characterCountInputHint.value.length}} / 200
+        </md-hint>
+      </md-input-container>
+      <button class="saveQuestionButton" md-button md-button-raised [disabled]="!question.text.trim()" (click)="handleClick()">{{question.id ? 'Update' : 'Create'}}</button>
+    </section>
+    <section class="row questionQuote">
+      Associate a quote <button md-mini-fab md-button md-button-raised><md-icon>add</md-icon></button>
+    </section>
   </md-card-content>
 </md-card>

@@ -1,21 +1,37 @@
 @import "~../../../../common/constants";
 .Question {
+    margin-bottom: 26px;
+    .content {
+        display: flex;
+        flex-direction: column;
+    }
+    .content .questionText {
         margin-bottom: 26px;
-        .content {
-            display: flex;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        @media(min-width: 1000px) {
+            flex-direction: row;
             align-items: center;
-            flex-direction: column;
-            @media(min-width: 1000px) {
-                flex-direction: row;
-            }
             md-input-container {
                 width: 90%;
             }
         }
-        .saveQuestionButton {
-            margin-left: 26px;
-        }
-        .saveQuestionButton:not(:disabled) {
-            background-color: $accent;
+        md-input-container {
+            width: 100%;
         }
     }
+    .saveQuestionButton {
+        @media(min-width: 1000px) {
+            margin-left: 26px;
+        }
+    }
+    .saveQuestionButton:not(:disabled) {
+        background-color: $accent;
+    }
+    .questionQuote {
+        button {
+            margin-left: 26px;
+        }
+    }
+}
