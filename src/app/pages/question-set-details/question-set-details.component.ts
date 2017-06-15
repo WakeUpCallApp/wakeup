@@ -7,6 +7,7 @@ import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 
 import { WakeupQuotesBrowserComponent } from "./components/wakeup-quotes-browser/wakeup-quotes-browser.component";
+import { WakeupEditQuestionDialogComponent } from "./components/wakeup-edit-question-dialog/wakeup-edit-question-dialog.component";
 import { QuestionSet } from "../../common/models/question-set.model";
 import { IQuestion } from "../../common/models/question.model";
 import * as reducers from "../../common/reducers";
@@ -95,6 +96,14 @@ export class QuestionSetDetailsComponent implements OnInit {
   }
 
   editQuestion(question) {
-   
+    let config: MdDialogConfig = {
+      disableClose: false,
+      width: "600px"
+    };
+    let dialogRef = this.dialog.open(WakeupEditQuestionDialogComponent, config);
+    dialogRef.componentInstance.question = Object.assign({}, question);
+    dialogRef.afterClosed().subscribe(result => {
+      this.store.dispatch(new actions.EditQuestionAction(result));
+    });
   }
 }

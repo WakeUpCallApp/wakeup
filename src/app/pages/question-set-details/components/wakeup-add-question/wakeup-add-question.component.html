@@ -1,6 +1,6 @@
-<md-card class="Question mat-elevation-z3">
+<md-card class="addQuestion mat-elevation-z3">
   <md-card-header>
-    <h1 class="cardTitle">{{question.id ? 'Edit Question' : 'Add Question'}}</h1>
+    <h1 class="cardTitle">Add Question</h1>
   </md-card-header>
   <md-card-content class="content">
     <section class="row questionText">
@@ -11,7 +11,7 @@
           {{characterCountInputHint.value.length}} / 200
         </md-hint>
       </md-input-container>
-      <button class="saveQuestionButton" md-button md-button-raised [disabled]="!question.text.trim()" (click)="handleClick()">{{question.id ? 'Update' : 'Create'}}</button>
+      <button class="addQuestionButton" md-button md-button-raised [disabled]="!question.text.trim()" (click)="handleClick()">Create</button>
     </section>
     <section class="row questionQuote">
       Associate a quote <button md-mini-fab md-button md-button-raised (click)="openQuotes()"><md-icon>add</md-icon></button>

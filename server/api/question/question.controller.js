@@ -121,7 +121,7 @@
             var prevQuote = question.quote || "";
             findQuestionSet(question.questionSet).then(function(questionSet) {
 
-                if (questionSet[0].isDefault) {
+                if (questionSet.isDefault) {
                     return res.status(404).send('Cannot update question of default questionSet');
                 } else {
                     var updated = _.merge(question, req.body);

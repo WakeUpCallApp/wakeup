@@ -37,10 +37,10 @@
     </section>
 
     <section class="newQuestion" *ngIf="!currentQuestionSet.isDefault">
-        <wakeup-question 
-        (save)="addQuestion($event)" 
+        <wakeup-add-question 
+        (create)="addQuestion($event)" 
         (openQuotesBrowser)="openQuotesBrowser($event)"
-        [question]="newQuestion" ></wakeup-question>
+        [question]="newQuestion" ></wakeup-add-question>
     </section>
 
     <section class="questionList" *ngIf="currentQuestionSet.questions?.length">

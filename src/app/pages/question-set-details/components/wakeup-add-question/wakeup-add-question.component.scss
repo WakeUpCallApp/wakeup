@@ -1,5 +1,5 @@
 @import "~../../../../common/constants";
-.Question {
+.addQuestion {
     margin-bottom: 26px;
     .content {
         display: flex;
@@ -21,12 +21,12 @@
             width: 100%;
         }
     }
-    .saveQuestionButton {
+    .addQuestionButton {
         @media(min-width: 1000px) {
             margin-left: 26px;
         }
     }
-    .saveQuestionButton:not(:disabled) {
+    .addQuestionButton:not(:disabled) {
         background-color: $accent;
     }
     .questionQuote {

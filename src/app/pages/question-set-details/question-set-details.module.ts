@@ -6,9 +6,10 @@ import { CommonModule } from "@angular/common";
 
 import { WakeupCommonModule } from "../../common/common.module";
 import { QuestionSetDetailsComponent } from "./question-set-details.component";
-import { WakeupQuestionComponent } from "./components/wakeup-question/wakeup-question.component";
+import { WakeupAddQuestionComponent } from "./components/wakeup-add-question/wakeup-add-question.component";
 import { WakeupQuestionListComponent } from "./components/wakeup-question-list/wakeup-question-list.component";
 import { WakeupQuotesBrowserComponent } from "./components/wakeup-quotes-browser/wakeup-quotes-browser.component";
+import { WakeupEditQuestionDialogComponent } from './components/wakeup-edit-question-dialog/wakeup-edit-question-dialog.component';
 
 @NgModule({
   imports: [
@@ -22,10 +23,11 @@ import { WakeupQuotesBrowserComponent } from "./components/wakeup-quotes-browser
   declarations: [
     WakeupQuotesBrowserComponent,
     QuestionSetDetailsComponent,
-    WakeupQuestionComponent,
-    WakeupQuestionListComponent
+    WakeupAddQuestionComponent,
+    WakeupQuestionListComponent,
+    WakeupEditQuestionDialogComponent
   ],
   providers: [],
-  entryComponents: [WakeupQuotesBrowserComponent]
+  entryComponents: [WakeupQuotesBrowserComponent,  WakeupEditQuestionDialogComponent]
 })
 export class QuestionSetDetailsModule {}

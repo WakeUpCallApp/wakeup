@@ -1,0 +1,24 @@
+<h2 md-dialog-title>Update Question</h2>
+<md-dialog-content class="editQuestion">
+  <form class="content">
+    <md-input-container floatPlaceholder="always">
+      <textarea #characterCountInputHint
+       mdInput 
+       maxlength="200" 
+       type="text" 
+       placeholder="Text" 
+       rows="3" 
+       [(ngModel)]="question.text"
+       name="text">
+      </textarea>
+      <md-hint align="end" aria-live="polite">
+        {{characterCountInputHint.value.length}} / 200
+      </md-hint>
+    </md-input-container>
+  </form>
+</md-dialog-content>
+<md-dialog-actions>
+  <button md-button md-dialog-close>Cancel</button>
+  <!-- Can optionally provide a result for the closing dialog. -->
+  <button [disabled]="!question.text.trim()" md-button (click)="handleClick()">Update</button>
+</md-dialog-actions>

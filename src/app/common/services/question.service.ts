@@ -23,7 +23,7 @@ export class QuestionService {
 
   update(question: Question): Observable<Question> {
     return this.http
-      .put("/api/questions/", Parser.questionToApi(question))
+      .put(`/api/questions/${question.id}`, Parser.questionToApi(question))
       .map((response: Response) => response.json())
       .map((questionApi: QuestionApi) => {
         return Parser.questionFromApi(questionApi);
