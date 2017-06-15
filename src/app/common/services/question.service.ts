@@ -21,6 +21,16 @@ export class QuestionService {
       .catch(this.handleError);
   }
 
+  update(question: Question): Observable<Question> {
+    return this.http
+      .put("/api/questions/", Parser.questionToApi(question))
+      .map((response: Response) => response.json())
+      .map((questionApi: QuestionApi) => {
+        return Parser.questionFromApi(questionApi);
+      })
+      .catch(this.handleError);
+  }
+
   delete(questionId: number): Observable<number> {
     return this.http
       .delete(`/api/questions/${questionId}`)

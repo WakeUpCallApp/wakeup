@@ -18,6 +18,8 @@ export const ActionTypes = {
   CREATE_ERROR: type("[QuestionSet] Create Error"),
   ADD_QUESTION: type("[QuestionSet] Add Question"),
   ADD_QUESTION_SUCCESS: type("[QuestionSet] Add Question Success"),
+  EDIT_QUESTION: type("[QuestionSet] Edit Question"),
+  EDIT_QUESTION_SUCCESS: type("[QuestionSet] Edit Question Success"),
   DELETE_QUESTION: type("[QuestionSet] Delete Question"),
   DELETE_QUESTION_SUCCESS: type("[QuestionSet] Delete Question Success"),
   UPDATE: type("[QuestionSet] Update"),
@@ -87,6 +89,18 @@ export class AddQuestionActionSuccess implements Action {
   constructor(public payload) {}
 }
 
+export class EditQuestionAction implements Action {
+  type = ActionTypes.EDIT_QUESTION;
+
+  constructor(public payload) {}
+}
+
+export class EditQuestionActionSuccess implements Action {
+  type = ActionTypes.EDIT_QUESTION_SUCCESS;
+
+  constructor(public payload) {}
+}
+
 export class DeleteQuestionAction implements Action {
   type = ActionTypes.DELETE_QUESTION;
 
@@ -151,6 +165,8 @@ export type Actions =
   | CreateActionError
   | AddQuestionAction
   | AddQuestionActionSuccess
+  | EditQuestionAction
+  | EditQuestionActionSuccess
   | DeleteQuestionAction
   | DeleteQuestionActionSuccess
   | UpdateAction

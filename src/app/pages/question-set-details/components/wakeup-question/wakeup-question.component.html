@@ -14,7 +14,7 @@
       <button class="saveQuestionButton" md-button md-button-raised [disabled]="!question.text.trim()" (click)="handleClick()">{{question.id ? 'Update' : 'Create'}}</button>
     </section>
     <section class="row questionQuote">
-      Associate a quote <button md-mini-fab md-button md-button-raised><md-icon>add</md-icon></button>
+      Associate a quote <button md-mini-fab md-button md-button-raised (click)="openQuotes()"><md-icon>add</md-icon></button>
     </section>
   </md-card-content>
 </md-card>

@@ -8,11 +8,20 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 export class WakeupQuestionListComponent implements OnInit {
   @Input() questions;
   @Output() delete = new EventEmitter();
+  @Output() edit = new EventEmitter();
   constructor() {}
 
   ngOnInit() {}
   get checked() {
     return this.questions && this.questions.every(question => question.checked);
+  }
+
+  deleteQuestions() {
+    this.delete.emit(this.questions.filter(question => question.checked));
+  }
+
+  editQuestion(question) {
+    this.edit.emit(question);
   }
 
   get indeterminate() {
@@ -45,9 +54,5 @@ export class WakeupQuestionListComponent implements OnInit {
       (this.questions && this.questions.filter(question => question.checked)) ||
       []
     );
-  }
-
-  deleteQuestions() {
-    this.delete.emit(this.questions.filter(question => question.checked));
   }
 }

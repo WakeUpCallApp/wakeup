@@ -27,10 +27,10 @@
                     <md-icon>more_vert</md-icon>
                     </button>
         <md-menu #questionMenu="mdMenu">
-          <button md-menu-item> Edit </button>
+          <button md-menu-item (click)="editQuestion(question)"> Edit </button>
+          <button md-menu-item> {{question.quote ? 'Remove Quote': 'Associate Quote'}} </button>
           <button md-menu-item> See answers </button>
-        </md-menu><span class="actions">
-                    </span>
+        </md-menu>
       </li>
     </ul>
   </md-card-content>

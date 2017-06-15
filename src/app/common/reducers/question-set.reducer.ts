@@ -55,9 +55,24 @@ export function reducer(state = initialState, action: Action): State {
       return Object.assign({}, state, {
         currentQuestionSet: updatedQuestionSet
       });
+    case actions.ActionTypes.EDIT_QUESTION_SUCCESS:
+      question = action.payload;
+      updatedQuestionSet = Object.assign({}, state.currentQuestionSet, {
+        questions: state.currentQuestionSet.questions.map(question => {
+          if (question.id === action.payload.id) {
+            return Object.assign({}, question, action.payload);
+          }
+          return question;
+        })
+      });
+      return Object.assign({}, state, {
+        currentQuestionSet: updatedQuestionSet
+      });
     case actions.ActionTypes.DELETE_QUESTION_SUCCESS:
       updatedQuestionSet = Object.assign({}, state.currentQuestionSet, {
-        questions: state.currentQuestionSet.questions.filter(question => question.id !== action.payload)
+        questions: state.currentQuestionSet.questions.filter(
+          question => question.id !== action.payload
+        )
       });
       return Object.assign({}, state, {
         currentQuestionSet: updatedQuestionSet

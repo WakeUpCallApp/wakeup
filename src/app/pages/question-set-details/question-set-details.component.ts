@@ -1,14 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import "@ngrx/core/add/operator/select";
-
-import { Store } from "@ngrx/store";
+import { Component, OnInit, EventEmitter } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { MdDialog, MdDialogConfig } from "@angular/material";
+import { Store } from "@ngrx/store";
+import "@ngrx/core/add/operator/select";
+import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
+
+import { WakeupQuotesBrowserComponent } from "./components/wakeup-quotes-browser/wakeup-quotes-browser.component";
 import { QuestionSet } from "../../common/models/question-set.model";
 import { IQuestion } from "../../common/models/question.model";
 import * as reducers from "../../common/reducers";
 import * as actions from "../../common/actions/question-set.actions";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: "wakeup-question-set-details",
@@ -24,7 +26,8 @@ export class QuestionSetDetailsComponent implements OnInit {
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MdDialog
   ) {}
 
   ngOnInit() {
@@ -80,5 +83,18 @@ export class QuestionSetDetailsComponent implements OnInit {
     questions.forEach(question =>
       this.store.dispatch(new actions.DeleteQuestionAction(question.id))
     );
+  }
+
+  openQuotesBrowser(question) {
+    let config: MdDialogConfig = {
+      disableClose: false,
+      width: "600px"
+    };
+    let dialogRef = this.dialog.open(WakeupQuotesBrowserComponent, config);
+    dialogRef.afterClosed().subscribe(result => (question.quote = result));
+  }
+
+  editQuestion(question) {
+   
   }
 }

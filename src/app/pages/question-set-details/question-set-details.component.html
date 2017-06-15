@@ -37,11 +37,17 @@
     </section>
 
     <section class="newQuestion" *ngIf="!currentQuestionSet.isDefault">
-        <wakeup-question (save)="addQuestion($event)" [question]="newQuestion"></wakeup-question>
+        <wakeup-question 
+        (save)="addQuestion($event)" 
+        (openQuotesBrowser)="openQuotesBrowser($event)"
+        [question]="newQuestion" ></wakeup-question>
     </section>
 
     <section class="questionList" *ngIf="currentQuestionSet.questions?.length">
-        <wakeup-question-list [questions]="currentQuestionSet.questions" (delete)="deleteQuestions($event)">
+        <wakeup-question-list 
+        [questions]="currentQuestionSet.questions" 
+        (delete)="deleteQuestions($event)"
+        (edit)="editQuestion($event)">
         </wakeup-question-list>
     </section>
 
