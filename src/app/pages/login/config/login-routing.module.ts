@@ -13,8 +13,8 @@ export const loginChildRoutes: Routes = [
     component: LoginComponent,
     children: [
       { path: '', redirectTo: 'wakeupcallapp', pathMatch: 'full' },
-      { path: 'wakeupcallapp', component: LoginWakeupCallComponent },
-      { path: 'signup', component: SignupWakeupCallComponent },
+      { path: 'wakeupcallapp', component: LoginWakeupCallComponent, data: {'title': 'Login'} },
+      { path: 'signup', component: SignupWakeupCallComponent, data: {'title': 'Signup'} },
       { path: 'google', component: GoogleComponent}
     ]
   }

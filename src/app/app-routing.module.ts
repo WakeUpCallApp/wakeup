@@ -19,18 +19,21 @@ import { QuestionSetDetailsComponent } from './pages/question-set-details/questi
 			{
 				path: 'questionSets',
 				component: QuestionSetsComponent,
+				data: { title: 'Question Sets' },
 				canActivate: [AuthenticationGuard],
 				resolve: { userDetails: UserDetailResolver }
 			},
 			{
 				path: 'newQuestionSet',
 				component: NewQuestionSetComponent,
+				data: { title: 'New Question' },
 				canActivate: [AuthenticationGuard],
 				resolve: { userDetails: UserDetailResolver }
 			},
 			{
 				path: 'questionSetDetails/:id',
 				component: QuestionSetDetailsComponent,
+				data: { title: 'Question Set Details' },
 				canActivate: [AuthenticationGuard],
 				resolve: {
 					userDetails: UserDetailResolver

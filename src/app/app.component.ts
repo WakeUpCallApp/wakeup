@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { LoginService } from './common/services/login.service';
 import { AuthTokenService } from './common/services/authToken.service';
 import appConstants from './common/app-constants';
@@ -14,9 +15,21 @@ export class AppComponent {
 
   constructor(private router: Router,
     private loginService: LoginService,
-    private authTokenService: AuthTokenService) { }
+    private authTokenService: AuthTokenService,
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .map(() => this.activatedRoute)
+      .map(route => {
+        while (route.firstChild) route = route.firstChild;
+        return route;
+      })
+      .filter(route => route.outlet === 'primary')
+      .mergeMap(route => route.data)
+      .subscribe((event) => this.titleService.setTitle(event['title']));
   }
 
   openMenu(isOpen) {
