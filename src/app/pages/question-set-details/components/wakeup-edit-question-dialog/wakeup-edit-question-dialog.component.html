@@ -9,7 +9,8 @@
        placeholder="Text" 
        rows="3" 
        [(ngModel)]="question.text"
-       name="text">
+       name="text"
+       required>
       </textarea>
       <md-hint align="end" aria-live="polite">
         {{characterCountInputHint.value.length}} / 200
@@ -18,7 +19,14 @@
   </form>
 </md-dialog-content>
 <md-dialog-actions>
-  <button md-button md-dialog-close>Cancel</button>
+  <button class="cancelButton" md-button md-button-raised md-dialog-close>Cancel</button>
   <!-- Can optionally provide a result for the closing dialog. -->
-  <button [disabled]="!question.text.trim()" md-button (click)="handleClick()">Update</button>
+  <button 
+    class="updateButton" 
+    [disabled]="!question.text.trim()"
+    md-button 
+    md-button-raised
+    (click)="handleClick()">
+    Update
+    </button>
 </md-dialog-actions>

@@ -103,7 +103,9 @@ export class QuestionSetDetailsComponent implements OnInit {
     let dialogRef = this.dialog.open(WakeupEditQuestionDialogComponent, config);
     dialogRef.componentInstance.question = Object.assign({}, question);
     dialogRef.afterClosed().subscribe(result => {
-      this.store.dispatch(new actions.EditQuestionAction(result));
+      if (result) {
+        this.store.dispatch(new actions.EditQuestionAction(result));
+      }
     });
   }
 }
