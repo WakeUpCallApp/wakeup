@@ -6,14 +6,12 @@
                 <div class="actions">
                     <md-menu #appMenu="mdMenu">
                         <button md-menu-item> View Practice Sessions </button>
-                        <button md-menu-item> Import Questions </button>
-                        <button md-menu-item> Export Questions </button>
                         <button md-menu-item (click)="deleteQuestionSet()"> Delete Question Set </button>
                     </md-menu>
 
                     <button md-icon-button [mdMenuTriggerFor]="appMenu">
-                    <md-icon>more_vert</md-icon>
-                </button>
+                       <md-icon>more_vert</md-icon>
+                    </button>
                 </div>
             </div>
             <div class="card-body">
@@ -37,17 +35,11 @@
     </section>
 
     <section class="newQuestion" *ngIf="!currentQuestionSet.isDefault">
-        <wakeup-add-question 
-        (create)="addQuestion($event)" 
-        (openQuotesBrowser)="openQuotesBrowser($event)"
-        [question]="newQuestion" ></wakeup-add-question>
+        <wakeup-add-question (create)="addQuestion($event)" (openQuotesBrowser)="openQuotesBrowser($event)" [question]="newQuestion"></wakeup-add-question>
     </section>
 
     <section class="questionList" *ngIf="currentQuestionSet.questions?.length">
-        <wakeup-question-list 
-        [questions]="currentQuestionSet.questions" 
-        (delete)="deleteQuestions($event)"
-        (edit)="editQuestion($event)">
+        <wakeup-question-list [questions]="currentQuestionSet.questions" (delete)="deleteQuestions($event)" (edit)="editQuestion($event)">
         </wakeup-question-list>
     </section>
 

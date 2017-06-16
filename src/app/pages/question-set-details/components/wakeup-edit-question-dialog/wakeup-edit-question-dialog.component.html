@@ -19,13 +19,13 @@
   </form>
 </md-dialog-content>
 <md-dialog-actions>
-  <button class="cancelButton" md-button md-button-raised md-dialog-close>Cancel</button>
+  <button class="cancelButton" md-button md-raised-button md-dialog-close>Cancel</button>
   <!-- Can optionally provide a result for the closing dialog. -->
   <button 
     class="updateButton" 
     [disabled]="!question.text.trim()"
     md-button 
-    md-button-raised
+    md-raised-button
     (click)="handleClick()">
     Update
     </button>

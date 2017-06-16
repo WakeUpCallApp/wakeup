@@ -11,10 +11,10 @@
           {{characterCountInputHint.value.length}} / 200
         </md-hint>
       </md-input-container>
-      <button class="addQuestionButton" md-button md-button-raised [disabled]="!question.text.trim()" (click)="handleClick()">Create</button>
+      <button class="addQuestionButton" md-button md-raised-button [disabled]="!question.text.trim()" (click)="handleClick()">Create</button>
     </section>
     <section class="row questionQuote">
-      Associate a quote <button md-mini-fab md-button md-button-raised (click)="openQuotes()"><md-icon>add</md-icon></button>
+      Associate a quote <button md-mini-fab md-button md-raised-button (click)="openQuotes()"><md-icon>add</md-icon></button>
     </section>
   </md-card-content>
 </md-card>

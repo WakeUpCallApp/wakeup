@@ -28,9 +28,12 @@ body {
 }
 
 .cardTitle {
-    margin-top: -10px;
     font-size: 16px;
-    margin-bottom: 26px;
+}
+
+md-card-header{
+    align-items: center;
+    margin-bottom: 16px;
 }
 
 .card-footer {
