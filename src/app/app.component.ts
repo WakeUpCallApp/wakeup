@@ -1,23 +1,26 @@
-import { Component } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { LoginService } from './common/services/login.service';
-import { AuthTokenService } from './common/services/authToken.service';
-import appConstants from './common/app-constants';
+import { Component } from "@angular/core";
+import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
+import { Title } from "@angular/platform-browser";
+import { LoginService } from "./common/services/login.service";
+import { AuthTokenService } from "./common/services/authToken.service";
+import appConstants from "./common/app-constants";
+import { addEvent } from "./common/util";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
   public isOpen: boolean = false;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private loginService: LoginService,
     private authTokenService: AuthTokenService,
     private activatedRoute: ActivatedRoute,
-    private titleService: Title) { }
+    private titleService: Title
+  ) {}
 
   ngOnInit() {
     this.router.events
@@ -27,9 +30,19 @@ export class AppComponent {
         while (route.firstChild) route = route.firstChild;
         return route;
       })
-      .filter(route => route.outlet === 'primary')
+      .filter(route => route.outlet === "primary")
       .mergeMap(route => route.data)
-      .subscribe((event) => this.titleService.setTitle(event['title']));
+      .subscribe(event => this.titleService.setTitle(event["title"]));
+
+    addEvent(window, "resize", e => {
+      if (this.isOpen) {
+        this.isOpen = window.innerWidth < 1000;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    window.document.removeEventListener("resize");
   }
 
   openMenu(isOpen) {
@@ -37,14 +50,16 @@ export class AppComponent {
   }
 
   canShowNavigation() {
-    return this.authTokenService.isLoggedIn() &&
+    return (
+      this.authTokenService.isLoggedIn() &&
       location.pathname.indexOf(appConstants.routes.LANDING) === -1 &&
-      location.pathname.indexOf(appConstants.routes.LOGIN) === -1;
+      location.pathname.indexOf(appConstants.routes.LOGIN) === -1
+    );
   }
 
   logout(): void {
     this.loginService.logout();
     this.isOpen = false;
-    this.router.navigate(['/login']);
+    this.router.navigate(["/login"]);
   }
 }
