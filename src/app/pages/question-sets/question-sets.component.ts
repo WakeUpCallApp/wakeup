@@ -24,4 +24,9 @@ export class QuestionSetsComponent implements OnInit {
      this.store.dispatch(new actions.LoadAction());
   }
 
+  startQuestionSet(e, questionSet) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  }
+
 }

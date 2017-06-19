@@ -31,7 +31,7 @@ body {
     font-size: 16px;
 }
 
-md-card-header{
+md-card-header {
     align-items: center;
     margin-bottom: 16px;
 }
@@ -44,4 +44,11 @@ md-card-header{
 textarea {
     /* will prevent resizing horizontally */
     resize: vertical;
+}
+
+.truncate {
+    width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 100%;
 }

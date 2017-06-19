@@ -3,9 +3,23 @@
     <div class="card-header">Question Sets</div>
     <div class="card-body">
       <md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
-      <ul>
+      <ul class="list">
         <li *ngFor="let questionSet of questionSets$ | async ">
-          <a [routerLink]="['/questionSetDetails', questionSet.id]">{{questionSet.name}}</a>
+          <a mdRipple [routerLink]="['/questionSetDetails', questionSet.id]">
+          <div class="info" md-line>
+            <span class="title truncate">{{questionSet.name}}</span>
+            <span class="summary"> 
+              <span> <md-icon>play_arrow</md-icon> Played {{questionSet.practiceTimes}} times</span>  
+              <span><md-icon> question_answer</md-icon>{{questionSet.questionIds?.length}} Questions</span>
+            </span>
+          </div>
+          <div (click)="startQuestionSet($event, questionSet); $event.stopPropagation()" 
+          class="play">
+          <span class="text">Practice now</span> 
+          <img class="practiceIcon" src="../../assets/images/healthyHeart.png" alt="practice" 
+                title="practice question set">
+          </div>
+         </a>
         </li>
       </ul>
     </div>
