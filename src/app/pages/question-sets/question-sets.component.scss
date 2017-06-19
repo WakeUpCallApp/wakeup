@@ -1,5 +1,13 @@
 @import "~../../common/constants";
 .questionSets {
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        md-spinner {
+            height: 50px;
+            align-self: center;
+        }
+    }
     .list {
         list-style: none;
         margin: 0;
