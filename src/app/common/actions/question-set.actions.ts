@@ -3,6 +3,7 @@ import { IQuestionSet, QuestionSet } from "../models/question-set.model";
 import { type } from "../util";
 
 export const ActionTypes = {
+  SEARCH_INPUT: type("[QuestionSet] Search Input"),
   LOAD: type("[QuestionSet] Load"),
   LOAD_SUCCESS: type("[QuestionSet] Load Success"),
   LOAD_ERROR: type("[QuestionSet] Load Error"),
@@ -28,6 +29,12 @@ export const ActionTypes = {
   DELETE: type("[QuestionSet] Delete"),
   DELETE_SUCCESS: type("[QuestionSet] Delete Success")
 };
+
+export class SearchAction implements Action {
+  type = ActionTypes.SEARCH_INPUT;
+
+  constructor(public payload: string) {}
+}
 
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;
@@ -154,6 +161,7 @@ export class DeleteActionSuccess implements Action {
  * so that reducers can easily compose action types
  */
 export type Actions =
+  | SearchAction
   | LoadAction
   | LoadActionSuccess
   | LoadActionError

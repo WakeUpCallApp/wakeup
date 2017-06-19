@@ -1,11 +1,14 @@
 @import "~../../common/constants";
 .questionSets {
     .card-body {
-        display: flex;
-        flex-direction: column;
         md-spinner {
             height: 50px;
-            align-self: center;
+            margin: 0 auto;
+            margin-bottom: 16px;
+        }
+        .search {
+            width: 100%;
+            margin: 16px 0;
         }
     }
     .list {
@@ -46,8 +49,8 @@
                     .summary {
                         display: flex;
                         flex-direction: column;
-                        @media(min-width : 554px) {
-                          flex-direction:  row;
+                        @media(min-width: 554px) {
+                            flex-direction: row;
                         }
                         span {
                             margin-right: 10px;

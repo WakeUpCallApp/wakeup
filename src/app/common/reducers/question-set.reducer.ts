@@ -6,12 +6,14 @@ export interface State {
   entities: QuestionSet[];
   isLoading: boolean;
   currentQuestionSet: QuestionSet;
+  searchTerm: string;
 }
 
 export const initialState: State = {
   entities: [],
   isLoading: false,
-  currentQuestionSet: <QuestionSet>{}
+  currentQuestionSet: <QuestionSet>{},
+  searchTerm: ''
 };
 
 export function reducer(state = initialState, action: Action): State {
@@ -19,9 +21,10 @@ export function reducer(state = initialState, action: Action): State {
   let updatedQuestionSet;
 
   switch (action.type) {
+    case actions.ActionTypes.SEARCH_INPUT:
+      return Object.assign({}, state, { searchTerm: action.payload });
     case actions.ActionTypes.LOAD:
       return Object.assign({}, state, { isLoading: true });
-
     case actions.ActionTypes.LOAD_SUCCESS:
       const questionSets = action.payload;
       return Object.assign({}, state, {

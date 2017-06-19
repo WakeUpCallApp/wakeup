@@ -33,6 +33,13 @@ export function reducer(state: any, action: any) {
 // Selectors
 // -------------------------------------------------------------------
 export const getQuestionSetsState = (state: State): QuestionSet[] => state.questionSet.entities;
+export const getQuestionSetsSortedState = (state: State): QuestionSet[] => state.questionSet.entities.sort((qs1, qs2) => {
+  return qs1.name.toLowerCase().localeCompare(qs2.name.toLowerCase());
+});
+export const getQuestionSetsMostPlayedState = (state: State): QuestionSet[] => state.questionSet.entities.filter((qs) => {
+  return qs.practiceTimes > 0;
+});
+export const getQuestionSetSearchTerm = (state: State): string => state.questionSet.searchTerm;
 
 export const getQuestionSetSate = (state: State, id): QuestionSet[] => state.questionSet.entities.filter(questionSet => questionSet.id === id);
 
