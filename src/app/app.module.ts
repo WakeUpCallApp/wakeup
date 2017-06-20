@@ -21,16 +21,17 @@ import { AppComponent } from './app.component';
 import { WakeupCommonModule } from './common/common.module';
 import { LandingComponent } from './pages/landing/landing.component';
 import { LoginModule } from './pages/login/login.module';
-import { QuestionSetsComponent } from './pages/question-sets/question-sets.component';
+import { QuestionSetsModule } from './pages/question-sets/question-sets.module';
 import { NewQuestionSetComponent } from './pages/new-question-set/new-question-set.component';
 import { QuestionSetDetailsModule } from './pages/question-set-details/question-set-details.module';
+import { TopicsComponent } from './pages/topics/topics.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
-    QuestionSetsComponent,
-    NewQuestionSetComponent
+    NewQuestionSetComponent,
+    TopicsComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +41,7 @@ import { QuestionSetDetailsModule } from './pages/question-set-details/question-
     MaterialModule,
     WakeupCommonModule,
     LoginModule,
+    QuestionSetsModule,
     QuestionSetDetailsModule,
     AppRoutingModule,
     StoreModule.provideStore(reducer),

@@ -7,6 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 })
 export class WakeupQuestionListComponent implements OnInit {
   @Input() questions;
+  @Input() canEdit;
   @Output() delete = new EventEmitter();
   @Output() edit = new EventEmitter();
   constructor() {}

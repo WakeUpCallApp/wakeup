@@ -1,0 +1,17 @@
+<ul class="questionSetList">
+  <li *ngFor="let questionSet of questionSets">
+    <a mdRipple [routerLink]="['/questionSetDetails', questionSet.id]">
+      <div class="info" md-line>
+        <span class="title truncate">{{questionSet.name}}</span>
+        <span class="summary"> 
+              <span> <md-icon>play_arrow</md-icon> Played {{questionSet.practiceTimes}} times</span>
+        <span><md-icon> question_answer</md-icon>{{questionSet.questionIds?.length}} Questions</span>
+        </span>
+      </div>
+      <div (click)="startQuestionSet($event, questionSet)" class="play">
+        <span class="text">Practice now</span>
+        <img class="practiceIcon" src="../../../../assets/images/healthyHeart.png" alt="practice" title="practice question set">
+      </div>
+    </a>
+  </li>
+</ul>

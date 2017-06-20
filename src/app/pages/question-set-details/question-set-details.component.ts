@@ -1,4 +1,12 @@
-import { Component, OnInit, EventEmitter } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  NgZone,
+  ChangeDetectorRef,
+  ApplicationRef,
+  ViewChild,
+  ElementRef
+} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MdDialog, MdDialogConfig } from "@angular/material";
 import { Store } from "@ngrx/store";
@@ -24,11 +32,16 @@ export class QuestionSetDetailsComponent implements OnInit {
   actionsSubscription: Subscription;
   qsSubscription: Subscription;
   updateObject;
+  @ViewChild("nameInput") nameElRef: ElementRef;
+  @ViewChild("descriptionInput") descriptionElRef: ElementRef;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MdDialog
+    private dialog: MdDialog,
+    private ngzone: NgZone,
+    private cdref: ChangeDetectorRef,
+    private appref: ApplicationRef
   ) {}
 
   ngOnInit() {
@@ -46,12 +59,32 @@ export class QuestionSetDetailsComponent implements OnInit {
       });
   }
 
+  ngAfterViewInit() {
+    if (!this.nameElRef && !this.descriptionElRef) {
+      return;
+    }
+    this.ngzone.runOutsideAngular(() => {
+      Observable.fromEvent(this.nameElRef.nativeElement, "keyup")
+        .debounceTime(1000)
+        .subscribe(keyboardEvent => {
+          this.updateQuestionSet();
+          this.cdref.detectChanges();
+        });
+      Observable.fromEvent(this.descriptionElRef.nativeElement, "keyup")
+        .debounceTime(1000)
+        .subscribe(keyboardEvent => {
+          this.updateQuestionSet();
+          this.cdref.detectChanges();
+        });
+    });
+  }
+
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
     this.qsSubscription.unsubscribe();
   }
 
-  updateQuestionSet($event) {
+  updateQuestionSet() {
     this.store.dispatch(new actions.UpdateAction(this.updateObject));
   }
 

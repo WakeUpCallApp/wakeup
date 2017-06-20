@@ -20,21 +20,25 @@ export class QuestionSetsComponent implements OnInit {
   constructor(private store: Store<reducers.State>) {
     this.questionSets$ = store.select(reducers.getQuestionSetsSortedState);
     this.searchTerm$ = store.select(reducers.getQuestionSetSearchTerm);
-    this.filteredList$ = Observable.combineLatest(this.questionSets$, this.searchTerm$, (questionSets, searchTerm) => {
-         return searchTerm ? 
-         questionSets.filter(questionSet => questionSet.name.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase()) !== -1) 
-         : questionSets;
-    });
+    this.filteredList$ = Observable.combineLatest(
+      this.questionSets$,
+      this.searchTerm$,
+      (questionSets, searchTerm) => {
+        return searchTerm
+          ? questionSets.filter(
+              questionSet =>
+                questionSet.name
+                  .toLocaleLowerCase()
+                  .indexOf(searchTerm.toLocaleLowerCase()) !== -1
+            )
+          : questionSets;
+      }
+    );
     this.isLoading$ = store.select(reducers.getLoadingQuestionSetState);
   }
 
   ngOnInit() {
     this.store.dispatch(new actions.LoadAction());
-  }
-
-  startQuestionSet(e, questionSet) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
   }
 
   doSearch(val) {

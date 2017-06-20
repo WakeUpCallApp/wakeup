@@ -11,13 +11,32 @@
                 word-break: break-all;
             }
         }
-        .card-body {
+        .editable {
             display: flex;
             flex-direction: column;
         }
         .practiceQuestionSetButton {
             background-color: $accent;
             border-radius: 5px;
+        }
+
+        .readOnly {
+            display: flex;
+            flex-direction: column;
+            div.name {
+                padding-bottom: 16px;
+            }
+            > div {
+              display: flex;
+              flex-direction: column;
+
+              label {
+                  font-size: 12px;
+                  font-weight: bold;
+                  margin-bottom: 4px;
+                  color: $primary;
+              }
+            }
         }
     }
     .newQuestion {

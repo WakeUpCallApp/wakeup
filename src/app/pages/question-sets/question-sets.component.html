@@ -5,31 +5,13 @@
       <md-tab-group>
         <md-tab label="All">
           <md-input-container class="search">
-            <input mdInput [(ngModel)]="search" 
-            name="search" 
-            placeholder="search" 
-            (keyup)="doSearch($event.target.value)">
+            <input mdInput [(ngModel)]="search" name="search" placeholder="search" (keyup)="doSearch($event.target.value)">
             <md-icon class="material-icons" mdSuffix>search</md-icon>
           </md-input-container>
           <md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
           <span *ngIf="!(filteredList$|async)?.length">Nothing found</span>
-          <ul class="list" *ngIf="(filteredList$|async)?.length">
-            <li *ngFor="let questionSet of filteredList$ | async ">
-              <a mdRipple [routerLink]="['/questionSetDetails', questionSet.id]">
-                <div class="info" md-line>
-                  <span class="title truncate">{{questionSet.name}}</span>
-                  <span class="summary"> 
-              <span> <md-icon>play_arrow</md-icon> Played {{questionSet.practiceTimes}} times</span>
-                  <span><md-icon> question_answer</md-icon>{{questionSet.questionIds?.length}} Questions</span>
-                  </span>
-                </div>
-                <div (click)="startQuestionSet($event, questionSet)" class="play">
-                  <span class="text">Practice now</span>
-                  <img class="practiceIcon" src="../../assets/images/healthyHeart.png" alt="practice" title="practice question set">
-                </div>
-              </a>
-            </li>
-          </ul>
+          <wakeup-question-sets-list *ngIf="(filteredList$|async)?.length" [questionSets]="filteredList$ | async">
+          </wakeup-question-sets-list>
         </md-tab>
         <md-tab label="Most Played">Content 2</md-tab>
       </md-tab-group>

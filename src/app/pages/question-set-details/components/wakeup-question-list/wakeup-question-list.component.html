@@ -4,24 +4,25 @@
       <h1 class="cardTitle">Question List</h1>
     </div>
     <div class="actions">
-      <button class="questionListMenu" md-icon-button [mdMenuTriggerFor]="questionsMenu">
+      <button *ngIf="canEdit" class="questionListMenu" md-icon-button [mdMenuTriggerFor]="questionsMenu">
          <md-icon>more_vert</md-icon>
       </button>
       <md-menu #questionsMenu="mdMenu">
-        <button md-menu-item> Import Questions </button>
-        <button md-menu-item> Export Questions </button>
+        <button md-menu-item> <md-icon>file_upload</md-icon> Import Questions </button>
+        <button md-menu-item> <md-icon>file_download</md-icon> Export Questions </button>
       </md-menu>
+
+      <button *ngIf="!canEdit" md-button md-raised-button> <md-icon>file_download</md-icon> Export Questions </button>
     </div>
   </md-card-header>
   <md-card-content class="list">
-    <h3 class="allQuestionsCheck">
+    <h3 class="allQuestionsCheck" *ngIf="canEdit">
       <md-checkbox [indeterminate]="indeterminate" [(checked)]="checked" (change)="toggleCheckAllQuestions()">
         <span *ngIf="!getSelectedQuestions().length">Select all</span>
         <span *ngIf="getSelectedQuestions().length">
-                           {{getSelectedQuestions().length}} Selected
-                    </span>
+              {{getSelectedQuestions().length}} Selected
+        </span>
       </md-checkbox>
-
       <div class="actions">
         <button [disabled]="!canDelete()" class="deleteQuestions" md-button md-raised-button (click)="deleteQuestions()">Delete</button>
       </div>
@@ -29,12 +30,15 @@
     <hr>
     <ul>
       <li *ngFor="let question of questions">
-        <md-checkbox class="questionCheckbox" [(ngModel)]="question.checked">
+        <md-checkbox *ngIf="canEdit" class="questionCheckbox" [(ngModel)]="question.checked">
           <span class="questionTitle">{{question.text}}</span>
         </md-checkbox>
-        <button md-icon-button [mdMenuTriggerFor]="questionMenu">
-                    <md-icon>more_vert</md-icon>
-                    </button>
+
+        <a *ngIf="!canEdit" class="questionTitleLink" [routerLink]="['/answers', question.id]">{{question.text}}</a>
+
+        <button md-icon-button [mdMenuTriggerFor]="questionMenu" *ngIf="canEdit">
+            <md-icon>more_vert</md-icon>
+        </button>
         <md-menu #questionMenu="mdMenu">
           <button md-menu-item (click)="editQuestion(question)"> Edit </button>
           <button md-menu-item> {{question.quote ? 'Remove Quote': 'Associate Quote'}} </button>
