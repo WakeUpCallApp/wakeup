@@ -1,40 +1,45 @@
-import { NgModule } from '@angular/core';
-import { MaterialModule } from '@angular/material';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule} from '@angular/router';
+import { NgModule } from "@angular/core";
+import { MaterialModule } from "@angular/material";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
 
-import { AuthenticationGuard } from './guards/authentication.guard';
-import { UserDetailResolver } from './guards/user-details.resolver';
-import { LoginService, AuthTokenService, QuestionSetService, QuestionService, QuoteService } from './services';
-import { WakeupTopBarComponent } from './components/wakeup-top-bar/wakeup-top-bar.component';
-import { WakeupSideNavComponent } from './components/wakeup-side-nav/wakeup-side-nav.component';
-import { WakeupCardComponent } from './components/wakeup-card/wakeup-card.component';
+import { AuthenticationGuard } from "./guards/authentication.guard";
+import { UserDetailResolver } from "./guards/user-details.resolver";
+import {
+  LoginService,
+  AuthTokenService,
+  QuestionSetService,
+  QuestionService,
+  QuoteService,
+  TopicService
+} from "./services";
+import { WakeupTopBarComponent } from "./components/wakeup-top-bar/wakeup-top-bar.component";
+import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side-nav.component";
+import { WakeupCardComponent } from "./components/wakeup-card/wakeup-card.component";
 
 @NgModule({
-  imports: [
-    MaterialModule, 
-    CommonModule, 
-    RouterModule
-  ],
+  imports: [MaterialModule, CommonModule, RouterModule],
   declarations: [
-    WakeupTopBarComponent, 
-    WakeupSideNavComponent, WakeupCardComponent
+    WakeupTopBarComponent,
+    WakeupSideNavComponent,
+    WakeupCardComponent
   ],
   providers: [
-    AuthTokenService, 
-    LoginService, 
+    AuthTokenService,
+    LoginService,
     QuestionSetService,
-    QuestionService, 
+    QuestionService,
     QuoteService,
+    TopicService,
     AuthenticationGuard,
     UserDetailResolver
   ],
   exports: [
     WakeupTopBarComponent,
-    WakeupSideNavComponent, 
+    WakeupSideNavComponent,
     WakeupCardComponent,
-    MaterialModule 
-  ],
+    MaterialModule
+  ]
 })
-export class WakeupCommonModule { }
+export class WakeupCommonModule {}

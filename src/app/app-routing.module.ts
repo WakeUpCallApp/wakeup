@@ -8,7 +8,8 @@ import { QuestionSetsComponent } from './pages/question-sets/question-sets.compo
 import { NewQuestionSetComponent } from './pages/new-question-set/new-question-set.component';
 import { QuestionSetDetailsComponent } from './pages/question-set-details/question-set-details.component';
 import { TopicsComponent } from './pages/topics/topics.component';
-
+import { NewTopicComponent } from './pages/new-topic/new-topic.component';
+import { TopicDetailsComponent } from './pages/topic-details/topic-details.component';
 @NgModule({
 	imports: [
 		RouterModule.forRoot([
@@ -46,6 +47,22 @@ import { TopicsComponent } from './pages/topics/topics.component';
 				data: { title: 'Topics' },
 				canActivate: [AuthenticationGuard],
 				resolve: { userDetails: UserDetailResolver }
+			},
+			{
+				path: 'newTopic',
+				component: NewTopicComponent,
+				data: { title: 'New Topic' },
+				canActivate: [AuthenticationGuard],
+				resolve: { userDetails: UserDetailResolver }
+			},
+			{
+				path: 'topicDetails/:id',
+				component: TopicDetailsComponent,
+				data: { title: 'Topic Details' },
+				canActivate: [AuthenticationGuard],
+				resolve: {
+					userDetails: UserDetailResolver
+				},
 			},
 			{ path: '', redirectTo: 'questionSets', pathMatch: 'full' },
 			{ path: '**', redirectTo: 'questionSets', pathMatch: 'full' }

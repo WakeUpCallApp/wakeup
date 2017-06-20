@@ -11,7 +11,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MaterialModule } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { QuestionSetEffects, QuestionEffects, QuoteEffects } from './common/effects';
+import { QuestionSetEffects, 
+  QuestionEffects, 
+  QuoteEffects,
+TopicEffects } from './common/effects';
 
 import { reducer } from './common/reducers';
 
@@ -25,13 +28,17 @@ import { QuestionSetsModule } from './pages/question-sets/question-sets.module';
 import { NewQuestionSetComponent } from './pages/new-question-set/new-question-set.component';
 import { QuestionSetDetailsModule } from './pages/question-set-details/question-set-details.module';
 import { TopicsComponent } from './pages/topics/topics.component';
+import { NewTopicComponent } from './pages/new-topic/new-topic.component';
+import { TopicDetailsComponent } from './pages/topic-details/topic-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     NewQuestionSetComponent,
-    TopicsComponent
+    TopicsComponent,
+    NewTopicComponent,
+    TopicDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +56,8 @@ import { TopicsComponent } from './pages/topics/topics.component';
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(QuestionSetEffects),
     EffectsModule.run(QuestionEffects),
-    EffectsModule.run(QuoteEffects)
+    EffectsModule.run(QuoteEffects),
+    EffectsModule.run(TopicEffects)
   ],
   providers: [
     {

@@ -8,6 +8,8 @@ const appConstants = {
         LOGIN: 'login',
         QUESTION_SETS: 'questionSets',
         QUESTION_SET_DETAILS: 'questionSetDetails',
+        TOPICS: 'topics',
+        TOPIC_DETAILS:'topicDetails'
     }
 };
 
