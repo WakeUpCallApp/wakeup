@@ -2,8 +2,14 @@ import { Action } from "@ngrx/store";
 import { IQuestionSet, QuestionSet } from "../models/question-set.model";
 import { type } from "../util";
 
+export enum Filter {
+  MOST_PLAYED,
+  ALL
+}
+
 export const ActionTypes = {
   SEARCH_INPUT: type("[QuestionSet] Search Input"),
+  FILTER: type('[QuestionSet] FILTER'),
   LOAD: type("[QuestionSet] Load"),
   LOAD_SUCCESS: type("[QuestionSet] Load Success"),
   LOAD_ERROR: type("[QuestionSet] Load Error"),
@@ -34,6 +40,11 @@ export class SearchAction implements Action {
   type = ActionTypes.SEARCH_INPUT;
 
   constructor(public payload: string) {}
+}
+
+export class FilterAction implements Action {
+  type = ActionTypes.FILTER;
+  constructor(public payload) {}
 }
 
 export class LoadAction implements Action {
@@ -162,6 +173,7 @@ export class DeleteActionSuccess implements Action {
  */
 export type Actions =
   | SearchAction
+  | FilterAction
   | LoadAction
   | LoadActionSuccess
   | LoadActionError

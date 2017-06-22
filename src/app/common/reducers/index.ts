@@ -40,6 +40,7 @@ export const getQuestionSetsMostPlayedState = (state: State): QuestionSet[] => s
   return qs.practiceTimes > 0;
 });
 export const getQuestionSetSearchTerm = (state: State): string => state.questionSet.searchTerm;
+export const getQuestionSetFilter = (state: State): number => state.questionSet.filter;
 
 export const getQuestionSetSate = (state: State, id): QuestionSet[] => state.questionSet.entities.filter(questionSet => questionSet.id === id);
 

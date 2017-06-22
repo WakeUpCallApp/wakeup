@@ -14,27 +14,44 @@ import { Observable } from "rxjs/Observable";
 export class QuestionSetsComponent implements OnInit {
   questionSets$: Observable<QuestionSet[]>;
   searchTerm$: Observable<string>;
+  filter$: Observable<number>;
   filteredList$: Observable<QuestionSet[]>;
   isLoading$: Observable<boolean>;
+  selectedFilter = this.all;
+  search;
 
   constructor(private store: Store<reducers.State>) {
     this.questionSets$ = store.select(reducers.getQuestionSetsSortedState);
     this.searchTerm$ = store.select(reducers.getQuestionSetSearchTerm);
+    this.filter$ = store.select(reducers.getQuestionSetFilter);
     this.filteredList$ = Observable.combineLatest(
       this.questionSets$,
       this.searchTerm$,
-      (questionSets, searchTerm) => {
+      this.filter$,
+      (questionSets, searchTerm, filter) => {
+        const filteredQuestionSets = filter === this.mostPlayed
+          ? questionSets.filter(questionSet => questionSet.practiceTimes > 0)
+          : questionSets;
+
         return searchTerm
-          ? questionSets.filter(
+          ? filteredQuestionSets.filter(
               questionSet =>
                 questionSet.name
                   .toLocaleLowerCase()
                   .indexOf(searchTerm.toLocaleLowerCase()) !== -1
             )
-          : questionSets;
+          : filteredQuestionSets;
       }
     );
     this.isLoading$ = store.select(reducers.getLoadingQuestionSetState);
+  }
+
+  get all() {
+    return actions.Filter.ALL;
+  }
+
+  get mostPlayed() {
+    return actions.Filter.MOST_PLAYED;
   }
 
   ngOnInit() {
@@ -42,7 +59,10 @@ export class QuestionSetsComponent implements OnInit {
   }
 
   doSearch(val) {
-    // dispatch the input's value to the store
     this.store.dispatch(new actions.SearchAction(val));
+  }
+
+  doFilter() {
+    this.store.dispatch(new actions.FilterAction(this.selectedFilter));
   }
 }

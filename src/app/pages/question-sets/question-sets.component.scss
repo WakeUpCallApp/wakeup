@@ -1,14 +1,26 @@
 @import "~../../common/constants";
 .questionSets {
-  .card-body {
-    md-spinner {
-      height: 50px;
-      margin: 0 auto;
-      margin-bottom: 16px;
+    .card-body {
+        md-spinner {
+            height: 50px;
+            margin: 0 auto;
+            margin-bottom: 16px;
+        }
+        .search {
+            width: 100%;
+            margin: 16px 0;
+        }
+        .filter {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: flex-end;
+            strong{
+              margin-right: 16px;
+            }
+            md-select{
+              min-width: 130px;
+            }
+        }
     }
-    .search {
-      width: 100%;
-      margin: 16px 0;
-    }
-  }
 }

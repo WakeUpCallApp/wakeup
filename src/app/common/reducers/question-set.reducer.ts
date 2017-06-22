@@ -7,13 +7,15 @@ export interface State {
   isLoading: boolean;
   currentQuestionSet: QuestionSet;
   searchTerm: string;
+  filter: actions.Filter;
 }
 
 export const initialState: State = {
   entities: [],
   isLoading: false,
   currentQuestionSet: <QuestionSet>{},
-  searchTerm: ''
+  searchTerm: "",
+  filter: actions.Filter.ALL
 };
 
 export function reducer(state = initialState, action: Action): State {
@@ -23,6 +25,10 @@ export function reducer(state = initialState, action: Action): State {
   switch (action.type) {
     case actions.ActionTypes.SEARCH_INPUT:
       return Object.assign({}, state, { searchTerm: action.payload });
+    case actions.ActionTypes.FILTER:
+      return Object.assign({}, state, {
+        filter: action.payload
+      });
     case actions.ActionTypes.LOAD:
       return Object.assign({}, state, { isLoading: true });
     case actions.ActionTypes.LOAD_SUCCESS:
@@ -31,7 +37,6 @@ export function reducer(state = initialState, action: Action): State {
         entities: questionSets,
         isLoading: false
       });
-
     case actions.ActionTypes.GET_CURRENT_QUESTION_SET_SUCCESS:
       const currentQuestionSet = action.payload;
       return Object.assign({}, state, {
