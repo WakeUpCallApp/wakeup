@@ -38,7 +38,10 @@
         text-decoration: none;
         color: black;
         padding: 16px;
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
          transition: all .3s;
     }
     .questionTitleLink:hover{

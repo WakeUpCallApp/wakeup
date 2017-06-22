@@ -34,7 +34,7 @@
           <span class="questionTitle">{{question.text}}</span>
         </md-checkbox>
 
-        <a *ngIf="!canEdit" class="questionTitleLink" [routerLink]="['/answers', question.id]">{{question.text}}</a>
+        <a *ngIf="!canEdit" class="questionTitleLink" [routerLink]="['/answers', question.id]"><span class="title">{{question.text}}</span> <span> <md-icon>keyboard_arrow_right</md-icon></span></a>
 
         <button md-icon-button [mdMenuTriggerFor]="questionMenu" *ngIf="canEdit">
             <md-icon>more_vert</md-icon>
