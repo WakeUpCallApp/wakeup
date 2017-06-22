@@ -4,17 +4,21 @@ import { environment } from '../../../environments/environment';
 
 import * as questionSet from './question-set.reducer';
 import * as quote from './quote.reducer';
+import * as topic from './topic.reducer';
 import { QuestionSet } from '../models/question-set.model';
+import { Topic } from '../models/topic.model';
 import { Quote } from '../models/quote.model';
 
 export interface State {
   questionSet: questionSet.State;
   quote: quote.State;
+  topic: topic.State;
 }
 
 const reducers = {
   questionSet: questionSet.reducer,
   quote: quote.reducer,
+  topic: topic.reducer,
 };
 
 const developmentReducer: ActionReducer<any> = combineReducers(reducers);
@@ -32,6 +36,9 @@ export function reducer(state: any, action: any) {
 // -------------------------------------------------------------------
 // Selectors
 // -------------------------------------------------------------------
+
+//QuestionSets
+
 export const getQuestionSetsState = (state: State): QuestionSet[] => state.questionSet.entities;
 export const getQuestionSetsSortedState = (state: State): QuestionSet[] => state.questionSet.entities.sort((qs1, qs2) => {
   return qs1.name.toLowerCase().localeCompare(qs2.name.toLowerCase());
@@ -49,3 +56,10 @@ export const getLoadingQuestionSetState = (state: State) : boolean => state.ques
 export const getCurrentQuestionSetState = (state: State) : QuestionSet => state.questionSet.currentQuestionSet;
 
 export const getQuotesState = (state: State): Quote[] => state.quote.entities;
+
+//Topics
+export const getTopicsState = (state: State): Topic[] => state.topic.entities;
+export const getTopicsSortedState = (state: State): Topic[] => state.topic.entities.sort((topic1, topic2) => {
+  return topic1.name.toLowerCase().localeCompare(topic2.name.toLowerCase());
+});
+export const getTopicSearchTerm = (state: State): string => state.topic.searchTerm;

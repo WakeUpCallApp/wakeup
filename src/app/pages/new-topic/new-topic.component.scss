@@ -1,0 +1,23 @@
+@import "~../../common/constants";
+.newTopic {
+    .createTopicForm {
+        display: flex;
+        flex-direction: column;
+        md-input-container {
+            margin-bottom: 26px;
+        }
+    }
+}
+
+.card-footer {
+    .createButton {
+        width: 200px;
+    }
+    .createButton:not(:disabled) {
+        background-color: $accent;
+    }
+    md-spinner {
+        height: 50px;
+        align-self: center;
+    }
+}

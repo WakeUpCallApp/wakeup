@@ -24,6 +24,7 @@ export class QuestionSetsComponent implements OnInit {
     this.questionSets$ = store.select(reducers.getQuestionSetsSortedState);
     this.searchTerm$ = store.select(reducers.getQuestionSetSearchTerm);
     this.filter$ = store.select(reducers.getQuestionSetFilter);
+    
     this.filteredList$ = Observable.combineLatest(
       this.questionSets$,
       this.searchTerm$,

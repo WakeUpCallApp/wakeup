@@ -1,8 +1,25 @@
-<div class="topics pageContent">
+<div class="newTopic pageContent">
   <wakeup-card>
     <div class="card-header">Create Topic</div>
     <div class="card-body">
-      
+      <form class="createTopicForm" #topicForm='ngForm'>
+        <md-input-container floatPlaceholder="always" dividerColor="{{ (topicNameVar.touched || topicNameVar.dirty) && !topicNameVar.valid ? 'warn' : 'primary' }}">
+          <input #topicNameVar placeholder="Name" type="text" maxlength="200" #titleInputHint mdInput name="name" required [(ngModel)]="topic.title">
+          <md-error>Name is required</md-error>
+          <md-hint align="end" aria-live="polite"> {{titleInputHint.value.length}} /200 </md-hint>
+        </md-input-container>
+        <md-input-container floatPlaceholder="always">
+          <textarea mdInput #descriptionInputHint maxlength="500" placeholder="Description" name="description" cols="30" rows="5" [(ngModel)]="topic.description">
+          </textarea>
+          <md-hint align="end" aria-live="polite"> {{descriptionInputHint.value.length}} /500 </md-hint>
+        </md-input-container>
+      </form>
+    </div>
+    <div class="card-footer">
+      <button *ngIf="!isCreating" md-button md-raised-button [disabled]="!topicForm.valid" class="createButton" (click)="createTopic()">
+    Create
+    </button>
+      <md-spinner class="spinner" *ngIf="isCreating"></md-spinner>
     </div>
   </wakeup-card>
 </div>

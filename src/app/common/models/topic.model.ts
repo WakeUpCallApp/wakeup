@@ -1,9 +1,9 @@
 export interface ITopic {
     id?: number;
-    name: string;
+    title: string;
     description: string;
     isDefault: boolean; 
-    questionSetList: number[];
+    questionSetList?: number[];
 }
 
 export interface TopicApi {

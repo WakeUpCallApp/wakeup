@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IQuestionSet, QuestionSet } from '../../common/models/question-set.model';
-import { QuestionSetService } from '../../common/services/question-set.service';
-import { Router } from '@angular/router';
+import { IQuestionSet} from '../../common/models/question-set.model';
 import { Store } from '@ngrx/store';
 
 import * as reducers from '../../common/reducers';
@@ -20,8 +18,7 @@ export class NewQuestionSetComponent implements OnInit {
     isDefault: false
   };
   isCreating = false;
-  constructor(private questionSetService: QuestionSetService,
-    private router: Router,
+  constructor(
     private store: Store<reducers.State>) { }
 
   ngOnInit() {

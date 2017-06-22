@@ -2,7 +2,15 @@
   <wakeup-card>
     <div class="card-header">Topics</div>
     <div class="card-body">
-      
+      <ul class="topicList">
+        <li *ngFor="let topic of filteredList$ | async">
+          <a mdRipple [routerLink]="['/topicDetails', topic.id]">
+            <div class="info" md-line>
+              <span class="title truncate">{{topic.name}}</span>
+            </div>
+          </a>
+        </li>
+      </ul>
     </div>
   </wakeup-card>
 </div>
