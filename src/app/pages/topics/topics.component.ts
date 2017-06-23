@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Topic } from "../../common/models/topic.model";
 import * as reducers from "../../common/reducers";
@@ -8,7 +8,8 @@ import { Observable } from "rxjs/Observable";
 @Component({
   selector: "wakeup-topics",
   templateUrl: "./topics.component.html",
-  styleUrls: ["./topics.component.scss"]
+  styleUrls: ["./topics.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TopicsComponent implements OnInit {
   topics$: Observable<Topic[]>;

@@ -14,6 +14,7 @@ import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import * as reducers from "../../common/reducers";
 import * as actions from "../../common/actions/topic.actions";
+import * as questionSetActions from '../../common/actions/question-set.actions';
 import { Topic } from "../../common/models/topic.model";
 @Component({
   selector: "wakeup-topic-details",
@@ -22,6 +23,7 @@ import { Topic } from "../../common/models/topic.model";
 })
 export class TopicDetailsComponent implements OnInit {
   currentTopic: Topic;
+  questionSets$
   actionsSubscription: Subscription;
   topicSubscription: Subscription;
   updateObject;
@@ -37,6 +39,8 @@ export class TopicDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.store.dispatch(new questionSetActions.LoadAction());
+    this.questionSets$ = this.store.select(reducers.getQuestionSetsSortedState);
     this.actionsSubscription = this.route.params
       .select<string>("id")
       .map(id => new actions.GetCurrentTopicAction(+id))
@@ -76,6 +80,11 @@ export class TopicDetailsComponent implements OnInit {
 
   updateTopic() {
     this.store.dispatch(new actions.UpdateAction(this.updateObject));
+  }
+  
+  associateQuestionSets(questionSetIds) {
+    this.updateObject.questionSetIds = questionSetIds;
+    this.updateTopic();
   }
 
   deleteTopic() {

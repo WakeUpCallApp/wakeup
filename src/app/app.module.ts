@@ -29,7 +29,7 @@ import { NewQuestionSetComponent } from './pages/new-question-set/new-question-s
 import { QuestionSetDetailsModule } from './pages/question-set-details/question-set-details.module';
 import { TopicsComponent } from './pages/topics/topics.component';
 import { NewTopicComponent } from './pages/new-topic/new-topic.component';
-import { TopicDetailsComponent } from './pages/topic-details/topic-details.component';
+import { TopicDetailsModule } from './pages/topic-details/topic-details.module';
 
 @NgModule({
   declarations: [
@@ -37,8 +37,7 @@ import { TopicDetailsComponent } from './pages/topic-details/topic-details.compo
     LandingComponent,
     NewQuestionSetComponent,
     TopicsComponent,
-    NewTopicComponent,
-    TopicDetailsComponent
+    NewTopicComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +49,7 @@ import { TopicDetailsComponent } from './pages/topic-details/topic-details.compo
     LoginModule,
     QuestionSetsModule,
     QuestionSetDetailsModule,
+    TopicDetailsModule,
     AppRoutingModule,
     StoreModule.provideStore(reducer),
     // must come AFTER `provideStore` call
@@ -58,6 +58,10 @@ import { TopicDetailsComponent } from './pages/topic-details/topic-details.compo
     EffectsModule.run(QuestionEffects),
     EffectsModule.run(QuoteEffects),
     EffectsModule.run(TopicEffects)
+  ],
+
+  exports: [
+    QuestionSetsModule,
   ],
   providers: [
     {

@@ -1,0 +1,12 @@
+.questionSetsDropDown{
+    md-input-container {
+        width: 100%;
+    }
+    .added {
+        list-style: none;
+
+        .item {
+            display: flex;
+        }
+    }
+}

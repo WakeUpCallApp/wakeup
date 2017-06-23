@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { MaterialModule } from "@angular/material";
 import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import { AuthenticationGuard } from "./guards/authentication.guard";
@@ -19,7 +19,7 @@ import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side
 import { WakeupCardComponent } from "./components/wakeup-card/wakeup-card.component";
 
 @NgModule({
-  imports: [MaterialModule, CommonModule, RouterModule],
+  imports: [MaterialModule, CommonModule, RouterModule, ReactiveFormsModule, FormsModule],
   declarations: [
     WakeupTopBarComponent,
     WakeupSideNavComponent,
@@ -39,7 +39,11 @@ import { WakeupCardComponent } from "./components/wakeup-card/wakeup-card.compon
     WakeupTopBarComponent,
     WakeupSideNavComponent,
     WakeupCardComponent,
-    MaterialModule
+    MaterialModule,
+    CommonModule, 
+    RouterModule, 
+    ReactiveFormsModule, 
+    FormsModule
   ]
 })
 export class WakeupCommonModule {}

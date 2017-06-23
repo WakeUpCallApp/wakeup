@@ -37,8 +37,14 @@
             </div>
         </wakeup-card>
     </section>
-
-    <section class="questionSets">
+    <section class="associateQuestionSet" *ngIf="!currentTopic.isDefault">
+        <wakeup-associate-question-set 
+        [questionSets]="questionSets$| async"
+        [selectedQuestionSets]="currentTopic.questionSets"
+        (update)="associateQuestionSets($event)">
+        </wakeup-associate-question-set>
+    </section>
+    <section class="questionSets" *ngIf="currentTopic.questionSets?.length">
         <md-card class="questionSetList mat-elevation-z3">
             <md-card-header>
                 <div class="title">
