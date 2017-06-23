@@ -1,0 +1,80 @@
+@import "~../../../../common/constants";
+.search {
+    width: 100%;
+    margin: 16px 0;
+}
+
+.topicList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid rgba(0, 0, 0, .06);
+    li {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        margin: 0;
+        padding: 0;
+        border-color: rgba(0, 0, 0, .06);
+        color: rgba(0, 0, 0, .54);
+        a {
+            box-sizing: border-box;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 47px;
+            text-decoration: none;
+            transition: all .3s;
+            position: relative;
+            @media(min-width: 407px) {
+                flex-direction: row;
+                align-items: center;
+            }
+            .info {
+                padding: 0 16px;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                .title {
+                    font-weight: bold;
+                }
+                .summary {
+                    display: flex;
+                    flex-direction: column;
+                    @media(min-width: 554px) {
+                        flex-direction: row;
+                    }
+                    span {
+                        margin-right: 10px;
+                        display: flex;
+                        align-items: center;
+                        md-icon {
+                            margin-right: 2px;
+                        }
+                    }
+                }
+            }
+            .inspire {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 16px;
+                .inspireIcon {
+                    width: 100%;
+                    height: 100%;
+                    font-size: 36px;
+                    text-align: center;
+                    color: $accent;
+                }
+            }
+            .inspire:hover {
+                background-color: rgba(0, 0, 0, .06);
+            }
+        }
+        a:hover {
+            background: #fafafa;
+            color: $primary;
+        }
+    }
+}

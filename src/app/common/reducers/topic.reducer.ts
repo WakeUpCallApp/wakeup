@@ -18,6 +18,8 @@ export const initialState: State = {
 
 export function reducer(state = initialState, action: Action): State {
   switch (action.type) {
+    case actions.ActionTypes.SEARCH_INPUT:
+      return Object.assign({}, state, { searchTerm: action.payload });
     case actions.ActionTypes.LOAD:
       return Object.assign({}, state, { isLoading: true });
     case actions.ActionTypes.LOAD_SUCCESS:

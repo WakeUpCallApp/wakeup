@@ -36,4 +36,8 @@ export class TopicsComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new actions.LoadAction());
   }
+
+  doSearch(val) {
+    this.store.dispatch(new actions.SearchAction(val));
+  }
 }

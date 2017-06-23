@@ -3,6 +3,7 @@ import { ITopic, Topic } from "../models/topic.model";
 import { type } from "../util";
 
 export const ActionTypes = {
+  SEARCH_INPUT: type("[Topic] Search"),
   LOAD: type("[Topic] Load"),
   LOAD_SUCCESS: type("[Topic] Load success"),
   LOAD_ERROR: type("[Topic] Load error"),
@@ -18,6 +19,12 @@ export const ActionTypes = {
   GET_CURRENT_TOPIC_SUCCESS: type("[Topic] Get current topic success"),
   GET_CURRENT_TOPIC_ERROR: type("[Topic] Get current topic error")
 };
+
+export class SearchAction implements Action {
+  type = ActionTypes.SEARCH_INPUT;
+
+  constructor(public payload: string) {}
+}
 
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;
@@ -107,6 +114,7 @@ export class GetCurrentTopicActionError implements Action {
  * so that reducers can easily compose action types
  */
 export type Actions =
+  | SearchAction
   | LoadAction
   | LoadActionSuccess
   | LoadActionError
