@@ -1,8 +1,4 @@
-import {
-  QuestionSet,
-  IQuestionSet,
-  QuestionSetApi
-} from "../models/question-set.model";
+import { QuestionSet, QuestionSetApi } from "../models/question-set.model";
 import { Question, IQuestion, QuestionApi } from "../models/question.model";
 import { Quote, QuoteApi } from "../models/quote.model";
 import { Topic, TopicApi } from "../models/topic.model";
@@ -64,5 +60,18 @@ export default class Parser {
       topicApi.quoteList,
       topicApi.isDefault
     );
+  }
+
+  static topicToApi(topic: Topic): TopicApi {
+    return {
+      _id: topic.id,
+      title: topic.name,
+      description: topic.description,
+      user: topic.user,
+      createDate: topic.createDate.toString(),
+      questionSetList: topic.questionSetIds,
+      quoteList: topic.quoteIds,
+      isDefault: topic.isDefault
+    };
   }
 }

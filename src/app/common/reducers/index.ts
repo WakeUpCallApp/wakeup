@@ -63,3 +63,5 @@ export const getTopicsSortedState = (state: State): Topic[] => state.topic.entit
   return topic1.name.toLowerCase().localeCompare(topic2.name.toLowerCase());
 });
 export const getTopicSearchTerm = (state: State): string => state.topic.searchTerm;
+
+export const getCurrentTopicState = (state: State) : Topic => state.topic.currentTopic;

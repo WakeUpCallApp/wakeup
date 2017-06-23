@@ -4,9 +4,9 @@
     <div class="card-body">
       <form class="createTopicForm" #topicForm='ngForm'>
         <md-input-container floatPlaceholder="always" dividerColor="{{ (topicNameVar.touched || topicNameVar.dirty) && !topicNameVar.valid ? 'warn' : 'primary' }}">
-          <input #topicNameVar placeholder="Name" type="text" maxlength="200" #titleInputHint mdInput name="name" required [(ngModel)]="topic.title">
+          <input #topicNameVar placeholder="Name" type="text" maxlength="200" #nameInputHint mdInput name="name" required [(ngModel)]="topic.name">
           <md-error>Name is required</md-error>
-          <md-hint align="end" aria-live="polite"> {{titleInputHint.value.length}} /200 </md-hint>
+          <md-hint align="end" aria-live="polite"> {{nameInputHint.value.length}} /200 </md-hint>
         </md-input-container>
         <md-input-container floatPlaceholder="always">
           <textarea mdInput #descriptionInputHint maxlength="500" placeholder="Description" name="description" cols="30" rows="5" [(ngModel)]="topic.description">

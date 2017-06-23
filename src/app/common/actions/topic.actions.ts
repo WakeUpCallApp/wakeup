@@ -82,7 +82,7 @@ export class UpdateActionError implements Action {
 export class DeleteAction implements Action {
   type = ActionTypes.DELETE;
 
-  constructor(public payload: string) {}
+  constructor(public payload: number) {}
 }
 
 export class DeleteActionSuccess implements Action {
@@ -94,7 +94,7 @@ export class DeleteActionSuccess implements Action {
 export class GetCurrentTopicAction implements Action {
   type = ActionTypes.GET_CURRENT_TOPIC;
 
-  constructor(public payload: Topic) {}
+  constructor(public payload: number) {}
 }
 
 export class GetCurrentTopicActionSuccess implements Action {

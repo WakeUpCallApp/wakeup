@@ -16,7 +16,7 @@ import { WakeupQuestionSetsListComponent } from './components/wakeup-question-se
     CommonModule,
     WakeupCommonModule
   ],
-  exports: [],
+  exports: [WakeupQuestionSetsListComponent],
   declarations: [
     QuestionSetsComponent,
     WakeupQuestionSetsListComponent

@@ -23,27 +23,22 @@ export function reducer(state = initialState, action: Action): State {
     case actions.ActionTypes.LOAD:
       return Object.assign({}, state, { isLoading: true });
     case actions.ActionTypes.LOAD_SUCCESS:
-      const questionSets = action.payload;
       return Object.assign({}, state, {
-        entities: questionSets,
+        entities: action.payload,
         isLoading: false
       });
     case actions.ActionTypes.GET_CURRENT_TOPIC_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestionSet: action.payload
+        currentTopic: action.payload
       });
 
     case actions.ActionTypes.CREATE_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestionSet: action.payload
+        currentTopic: action.payload
       });
     case actions.ActionTypes.UPDATE_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestionSet: Object.assign(
-          {},
-          state.currentTopic,
-          action.payload
-        )
+        currentTopic: Object.assign({}, state.currentTopic, action.payload)
       });
     default: {
       return state;

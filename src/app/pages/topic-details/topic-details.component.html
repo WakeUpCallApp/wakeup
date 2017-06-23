@@ -1,3 +1,55 @@
-<p>
-  topic-details works!
-</p>
+<div class="topicDetails pageContent">
+    <section class="details">
+        <wakeup-card class="summary">
+            <div class="card-header">
+                <span class="title">{{currentTopic.name}}</span>
+                <div class="actions">
+                    <button md-icon-button [mdMenuTriggerFor]="appMenu">
+                       <md-icon>more_vert</md-icon>
+                    </button>
+                    <md-menu #appMenu="mdMenu">
+                        <button md-menu-item> View Quotes </button>
+                        <button md-menu-item (click)="deleteTopic()"> Delete Topic </button>
+                    </md-menu>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="editable" *ngIf="!updateObject.isDefault">
+                    <md-input-container floatPlaceholder="always">
+                        <input #nameInput mdInput type="text" placeholder="Name" name="name" [(ngModel)]="updateObject.name" required>
+                        <span mdSuffix><md-icon>edit</md-icon></span>
+                        <md-error>Name is required</md-error>
+                    </md-input-container>
+                    <md-input-container floatPlaceholder="always">
+                        <textarea #descriptionInput mdInput placeholder="Description" name="description" [(ngModel)]="updateObject.description" rows="5">
+                        </textarea>
+                        <span mdSuffix><md-icon>edit</md-icon></span>
+                    </md-input-container>
+                </div>
+                <div class="readOnly" *ngIf="updateObject.isDefault">
+                    <div class="name">
+                        <label> Name </label> {{currentTopic.name}}
+                    </div>
+                    <div class="description">
+                        <label>Description </label> {{currentTopic.description ? currentTopic.description : 'None available'}}
+                    </div>
+                </div>
+            </div>
+        </wakeup-card>
+    </section>
+
+    <section class="questionSets">
+        <md-card class="questionSetList mat-elevation-z3">
+            <md-card-header>
+                <div class="title">
+                    <h1 class="cardTitle">Question Sets</h1>
+                </div>
+                <div class="actions">
+                </div>
+            </md-card-header>
+            <md-card-content class="list">
+                <wakeup-question-sets-list [questionSets]="currentTopic.questionSets"></wakeup-question-sets-list>
+            </md-card-content>
+        </md-card>
+    </section>
+</div>

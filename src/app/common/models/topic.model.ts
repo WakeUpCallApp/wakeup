@@ -1,6 +1,8 @@
+import { QuestionSet } from './question-set.model';
+
 export interface ITopic {
     id?: number;
-    title: string;
+    name: string;
     description: string;
     isDefault: boolean; 
     questionSetList?: number[];
@@ -12,7 +14,7 @@ export interface TopicApi {
     description: string;
     user: string;
     createDate: string;
-    questionSetList: number[];
+    questionSetList
     quoteList: number[];
     isDefault: boolean;
 }
@@ -26,7 +28,8 @@ export class Topic {
         public createDate: Date,
         public questionSetIds: number[],
         public quoteIds: number[],
-        public isDefault: boolean
+        public isDefault: boolean,
+        public questionSets?: QuestionSet[]
     ) { }
 
 }
