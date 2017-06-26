@@ -13,11 +13,19 @@ import { QuoteService } from "../services/quote.service";
 
 @Injectable()
 export class QuoteEffects {
-  @Effect() load$ = this.actions$
+  @Effect()
+  load$ = this.actions$
     .ofType(quote.ActionTypes.LOAD)
     .map(action => action.payload)
     .switchMap(() => this.quoteService.all())
     .map(result => new quote.LoadActionSuccess(result));
+
+  @Effect()
+  getByTopic$ = this.actions$
+    .ofType(quote.ActionTypes.GET_BY_TOPIC_ID)
+    .map(action => action.payload)
+    .switchMap(topicId => this.quoteService.get(topicId))
+    .map(result => new quote.GetByTopicIdActionSuccess(result));
 
   constructor(private quoteService: QuoteService, private actions$: Actions) {}
 }

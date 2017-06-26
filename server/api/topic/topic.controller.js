@@ -24,6 +24,7 @@
     })
       .exec()
       .then(function(defaultTopics) {
+        console.log(defaultTopics);
         DefaultTopic.find({
           user: userEmail
         })

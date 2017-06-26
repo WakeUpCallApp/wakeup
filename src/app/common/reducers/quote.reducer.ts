@@ -6,10 +6,12 @@ export interface State {
   entities: Quote[];
   isLoading: boolean;
   currentQuote: Quote;
+  quotesByTopic: Quote[];
 }
 
 export const initialState: State = {
   entities: [],
+  quotesByTopic: [],
   isLoading: false,
   currentQuote: <Quote>{}
 };
@@ -23,6 +25,10 @@ export function reducer(state = initialState, action: Action): State {
       return Object.assign({}, state, {
         entities: action.payload,
         isLoading: false
+      });
+    case actions.ActionTypes.GET_BY_TOPIC_ID_SUCCESS:
+      return Object.assign({}, state, {
+        quotesByTopic: action.payload
       });
     default: {
       return state;

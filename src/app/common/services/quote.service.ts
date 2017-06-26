@@ -18,9 +18,21 @@ export class QuoteService {
       .map(userTopics => {
         let allQuotes = [];
         userTopics.forEach(topic => {
-          allQuotes = allQuotes.concat(topic.quoteList.map(quoteApi => Parser.quoteFromApi(quoteApi)));
+          allQuotes = allQuotes.concat(
+            topic.quoteList.map(quoteApi => Parser.quoteFromApi(quoteApi))
+          );
         });
         return allQuotes;
+      })
+      .catch(this.handleError);
+  }
+
+  get(topicId: number): Observable<Quote[]> {
+    return this.http
+      .get(`/api/quotes/${topicId}`)
+      .map((response: Response) => response.json())
+      .map(quotes => {
+        return quotes.map(quoteApi => Parser.quoteFromApi(quoteApi));
       })
       .catch(this.handleError);
   }

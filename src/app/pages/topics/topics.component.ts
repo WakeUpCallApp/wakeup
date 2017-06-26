@@ -1,9 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Topic } from "../../common/models/topic.model";
 import * as reducers from "../../common/reducers";
 import * as actions from "../../common/actions/topic.actions";
 import { Observable } from "rxjs/Observable";
+import AppConstants from "../../common/app-constants";
 
 @Component({
   selector: "wakeup-topics",
@@ -15,7 +17,7 @@ export class TopicsComponent implements OnInit {
   topics$: Observable<Topic[]>;
   searchTerm$: Observable<string>;
   filteredList$: Observable<Topic[]>;
-  constructor(private store: Store<reducers.State>) {
+  constructor(private store: Store<reducers.State>, private router: Router) {
     this.topics$ = store.select(reducers.getTopicsSortedState);
     this.searchTerm$ = store.select(reducers.getTopicSearchTerm);
     this.filteredList$ = Observable.combineLatest(
@@ -40,5 +42,11 @@ export class TopicsComponent implements OnInit {
 
   doSearch(val) {
     this.store.dispatch(new actions.SearchAction(val));
+  }
+
+  goToQuotes(e, topicId: number) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    this.router.navigate([AppConstants.routes.QUOTES, topicId]);
   }
 }

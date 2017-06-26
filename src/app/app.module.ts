@@ -30,6 +30,7 @@ import { QuestionSetDetailsModule } from './pages/question-set-details/question-
 import { TopicsComponent } from './pages/topics/topics.component';
 import { NewTopicComponent } from './pages/new-topic/new-topic.component';
 import { TopicDetailsModule } from './pages/topic-details/topic-details.module';
+import { QuotesComponent } from './pages/quotes/quotes.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { TopicDetailsModule } from './pages/topic-details/topic-details.module';
     LandingComponent,
     NewQuestionSetComponent,
     TopicsComponent,
-    NewTopicComponent
+    NewTopicComponent,
+    QuotesComponent
   ],
   imports: [
     BrowserModule,

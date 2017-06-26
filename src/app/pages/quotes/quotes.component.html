@@ -1,0 +1,19 @@
+<div class="quotesContainer">
+  <div class="sideFilter">
+    Filter
+  </div>
+  <div class="quotes">
+    <wakeup-card>
+      <div class="card-header">Quotes</div>
+      <div class="card-body">
+        <ul class="quotesList">
+          <li *ngFor="let quote of quotes$ | async">
+            <a mdRipple [routerLink]="['/quoteDetails', quote.id]">
+            {{quote.text}}
+          </a>
+          </li>
+        </ul>
+      </div>
+    </wakeup-card>
+  </div>
+</div>

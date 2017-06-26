@@ -1,0 +1,13 @@
+.quotesContainer {
+    display: flex;
+    position: relative;
+    .sideFilter {
+        order: 1;
+        flex-basis: 20%;
+        position: fixed;
+        right: 0px;
+    }
+    .quotesList {
+        flex: 1;
+    }
+}

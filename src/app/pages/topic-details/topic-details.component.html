@@ -8,7 +8,7 @@
                        <md-icon>more_vert</md-icon>
                     </button>
                     <md-menu #appMenu="mdMenu">
-                        <button md-menu-item> View Quotes </button>
+                        <button md-menu-item [routerLink]="['/quotes',currentTopic.id]"> View Quotes </button>
                         <button md-menu-item (click)="deleteTopic()"> Delete Topic </button>
                     </md-menu>
                 </div>

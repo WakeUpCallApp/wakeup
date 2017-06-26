@@ -65,3 +65,6 @@ export const getTopicsSortedState = (state: State): Topic[] => state.topic.entit
 export const getTopicSearchTerm = (state: State): string => state.topic.searchTerm;
 
 export const getCurrentTopicState = (state: State) : Topic => state.topic.currentTopic;
+
+// Quotes
+export const getQuotesByTopic = (state: State): Quote[] => state.quote.quotesByTopic;
