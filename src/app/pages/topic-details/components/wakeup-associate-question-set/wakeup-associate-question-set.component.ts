@@ -21,44 +21,54 @@ export class WakeupAssociateQuestionSetComponent implements OnInit {
   @Output() update = new EventEmitter();
   availableQuestionSets = [];
   selected = [];
-
   searchText = "";
+  questionSetCtrl: FormControl = new FormControl();
+  filteredQuestionSets;
   constructor() {}
 
   filterQuestionSets(text: string) {
-    const query: string = (text || "").toLowerCase();
-    return this.availableQuestionSets
-      .filter(
-        questionSet =>
-          !this.selected.find(selected => selected === questionSet.name)
-      )
-      .filter(
-        questionSet => questionSet.name.toLowerCase().search(query) !== -1
-      );
+    const query: string = (text || "").toLowerCase().trim();
+    const displayQuestionSets = this.questionSets.filter(
+      questionSet =>
+        !this.selected.find(selected => selected === questionSet.name)
+    );
+    return query
+      ? displayQuestionSets.filter(
+          questionSet => questionSet.name.toLowerCase().trim().search(query) !== -1
+        )
+      : displayQuestionSets;
   }
 
   ngOnInit() {}
 
   ngOnChanges(change) {
-    if (
-      this.selectedQuestionSets &&
-      this.questionSets
-    ) {
-      this.availableQuestionSets = this.questionSets
-      .filter(questionSet =>!this.selectedQuestionSets.find(selected => selected.name === questionSet.name));
+    if (this.selectedQuestionSets && this.questionSets) {
+      this.availableQuestionSets = this.questionSets.filter(
+        questionSet =>
+          !this.selectedQuestionSets.find(
+            selected => selected.name === questionSet.name
+          )
+      );
       this.selected = this.selectedQuestionSets.map(selected => selected.name);
+      this.filteredQuestionSets = this.questionSetCtrl.valueChanges
+        .startWith(null)
+        .map(name => this.filterQuestionSets(name));
     }
   }
 
   addQuestionSet(item) {
     this.selected.push(item);
-    this.searchText = "";
+    this.resetAutocomplete();
+    this.questionSetCtrl.updateValueAndValidity();
+  }
+
+  resetAutocomplete() {
+    this.questionSetCtrl.reset();
   }
 
   removeQuestionSet(qs) {
-    this.selected = this.selected.filter(
-      questionSet => questionSet !== qs
-    );
+    this.selected = this.selected.filter(questionSet => questionSet !== qs);
+    this.questionSetCtrl.updateValueAndValidity();
   }
 
   handleClick() {
@@ -69,5 +79,6 @@ export class WakeupAssociateQuestionSetComponent implements OnInit {
         )
         .map(questionSet => questionSet.id)
     );
+    this.resetAutocomplete();
   }
 }

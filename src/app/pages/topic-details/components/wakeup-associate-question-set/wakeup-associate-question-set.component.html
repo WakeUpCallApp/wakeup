@@ -5,22 +5,24 @@
   <md-card-content class="content">
     <section class="row questionSetsDropDown">
       <md-input-container>
-        <input mdInput placeholder="Select question set" [mdAutocomplete]="auto">
+        <input mdInput name="searchText" 
+        placeholder="Select question set" 
+        [mdAutocomplete]="auto" 
+        [formControl]="questionSetCtrl">
       </md-input-container>
-      <md-autocomplete #auto="mdAutocomplete">
+      <md-autocomplete #auto="mdAutocomplete" md-min-length="0">
         <md-option (onSelectionChange)="addQuestionSet($event.source.value)" 
-        *ngFor="let questionSet of filterQuestionSets(searchText)" [value]="questionSet.name">
+        *ngFor="let questionSet of filteredQuestionSets | async" [value]="questionSet.name" title="add">
           {{ questionSet.name }}
         </md-option>
       </md-autocomplete>
       <ul class="added">
-        <li class="item" *ngFor="let selected of selected" (click)="removeQuestionSet(selected)">
+        <li class="item" *ngFor="let selected of selected" (click)="removeQuestionSet(selected)" title="remove">
           <span class="name truncate">{{selected}}</span>
           <span><md-icon>clear</md-icon></span>
         </li>
       </ul>
     </section>
     <button class="associateQuestionSetButton" md-button md-raised-button (click)="handleClick()">Update</button>
-
   </md-card-content>
 </md-card>

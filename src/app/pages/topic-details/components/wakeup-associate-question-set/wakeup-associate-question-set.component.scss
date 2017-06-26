@@ -1,12 +1,38 @@
-.questionSetsDropDown{
+@import "~../../../../common/constants";
+.content {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+
+    @media(min-width: 900px) {
+        flex-direction: row;
+    }
+}
+
+.questionSetsDropDown {
+    flex: 1;
+    width: 100%;
     md-input-container {
         width: 100%;
     }
     .added {
         list-style: none;
-
+        padding: 0px;
+        margin: 0px;
         .item {
             display: flex;
+            padding: 8px 26px;
+            justify-content: center;
+            align-items: center;
+        }
+        .item:hover {
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.05);
         }
     }
+}
+.associateQuestionSetButton{
+    margin-left: 16px;
+    margin-top: 8px;
+    background-color: $accent;
 }
