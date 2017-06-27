@@ -1,19 +1,29 @@
-<div class="quotesContainer">
-  <div class="sideFilter">
-    Filter
-  </div>
-  <div class="quotes">
-    <wakeup-card>
-      <div class="card-header">Quotes</div>
-      <div class="card-body">
-        <ul class="quotesList">
-          <li *ngFor="let quote of quotes$ | async">
-            <a mdRipple [routerLink]="['/quoteDetails', quote.id]">
-            {{quote.text}}
-          </a>
-          </li>
-        </ul>
+<div class="quotes pageContent">
+  <wakeup-card>
+    <div class="card-header">
+      <div class="title">Quotes</div>
+      <div class="actions">
+        <button md-icon-button [mdMenuTriggerFor]="quotesMenu">
+                       <md-icon>more_vert</md-icon>
+                    </button>
+        <md-menu #quotesMenu="mdMenu">
+          <button md-menu-item> Import Quotes </button>
+          <button md-menu-item> Export Quotes </button>
+        </md-menu>
+        <button class="addQuoteButton" md-mini-fab md-button md-raised-button><md-icon>add</md-icon></button>
       </div>
-    </wakeup-card>
-  </div>
-</div>
+    </div>
+    <div class="card-body">
+      <ul class="quotesList">
+        <li *ngFor="let quote of quotes$ | async">
+          <a mdRipple [routerLink]="['/quoteDetails', quote.id]">
+            <span class="text">
+              {{quote.text}}
+              </span>
+            <span class="author">
+              {{quote.author}}</span>  
+          </a>
+        </li>
+      </ul>
+    </div>
+  </wakeup-card>

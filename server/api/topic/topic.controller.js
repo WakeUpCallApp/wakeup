@@ -24,7 +24,6 @@
     })
       .exec()
       .then(function(defaultTopics) {
-        console.log(defaultTopics);
         DefaultTopic.find({
           user: userEmail
         })
@@ -66,7 +65,6 @@
     query.populate("questionSetList");
 
     query.where("_id", req.params.id);
-    //query.where('user', userEmail);
     query.exec(function(err, topic) {
       if (err) {
         return handleError(res, err);
