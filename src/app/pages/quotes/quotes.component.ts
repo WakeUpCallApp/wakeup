@@ -29,4 +29,8 @@ export class QuotesComponent implements OnInit {
     this.quotes$ = this.store.select(reducers.getQuotesByTopic);  
   }
 
+  goToCreateQuote() {
+    
+  }
+
 }

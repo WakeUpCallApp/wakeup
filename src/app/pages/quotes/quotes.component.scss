@@ -1,38 +1,53 @@
 @import "~../../common/constants";
-  .card-header {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      position: relative;
-      .title {
-          flex: 1;
-          word-wrap: break-word;
-          word-break: break-all;
-      }
-      .addQuoteButton {
-          position: absolute;
-          top: 27px;
-          right: 46px;
-      }
-  }
+.card-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    .title {
+        flex: 1;
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+}
 
-  .quotesList {
-      list-style: none;
-      li a {
-          text-decoration: none;
-          color: black;
-          display: flex;
-          background: rgba(0,0,0, 0.05);
-          flex-direction: column;
-          padding: 16px;
-          margin: 26px 0;
-          min-height: 60px;
-          .text {
-              font-size: 18px;
-              flex: 1;
-          }
-          .author {
-              color: $primary;
-          }
-      }
-  }
+.addQuoteButton {
+    z-index: 20;
+    position: sticky;
+    width: 65px;
+    height: 65px;
+    bottom: 16px;
+    left: 1800px;
+    display: flex;
+    justify-content: center;
+    md-icon {
+        font-size: 30px;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.quotesList {
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0;
+    li a {
+        text-decoration: none;
+        color: black;
+        display: flex;
+        background: rgba(0, 0, 0, 0.05);
+        flex-direction: column;
+        padding: 16px;
+        margin: 26px 0;
+        min-height: 60px;
+        .text {
+            font-size: 18px;
+            flex: 1;
+        }
+        .author {
+            color: $primary;
+        }
+    }
+    li a:hover {
+        background: rgba(0,0,0, 0.1);
+    }
+}

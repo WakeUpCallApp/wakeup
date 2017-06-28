@@ -3,27 +3,28 @@
     <div class="card-header">
       <div class="title">Quotes</div>
       <div class="actions">
-        <button md-icon-button [mdMenuTriggerFor]="quotesMenu">
+        <button md-icon-button [mdMenuTriggerFor]="quotesMenu" title="open menu">
                        <md-icon>more_vert</md-icon>
                     </button>
         <md-menu #quotesMenu="mdMenu">
           <button md-menu-item> Import Quotes </button>
           <button md-menu-item> Export Quotes </button>
         </md-menu>
-        <button class="addQuoteButton" md-mini-fab md-button md-raised-button><md-icon>add</md-icon></button>
       </div>
     </div>
     <div class="card-body">
       <ul class="quotesList">
         <li *ngFor="let quote of quotes$ | async">
-          <a mdRipple [routerLink]="['/quoteDetails', quote.id]">
-            <span class="text">
-              {{quote.text}}
-              </span>
-            <span class="author">
-              {{quote.author}}</span>  
+          <a [routerLink]="['/quoteDetails', quote.id]" title="see details">
+              <span class="text">
+              &ldquo; {{quote.text}} &ldquo;
+              </span> 
+              <span class="author">
+              {{quote.author ? quote.author : 'Unknown'}}</span>
           </a>
         </li>
       </ul>
     </div>
   </wakeup-card>
+</div>
+<button mdRipple (click)="gotoCreateQuote()" title="add quote" class="addQuoteButton" md-mini-fab md-button md-raised-button><md-icon>add</md-icon></button>
