@@ -6,7 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new-quote.component.scss']
 })
 export class NewQuoteComponent implements OnInit {
-
+  quote = {
+    author: '',
+    text: '',
+    source: ''
+  };
   constructor() { }
 
   ngOnInit() {

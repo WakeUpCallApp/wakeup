@@ -1,0 +1,9 @@
+.newQuote {
+    .createQuoteForm {
+        display: flex;
+        flex-direction: column;
+        md-input-container {
+            margin-bottom: 26px;
+        }
+    }
+}

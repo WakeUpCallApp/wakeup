@@ -2,8 +2,17 @@
   <wakeup-card>
     <div class="card-header">Create Quote</div>
     <div class="card-body">
-      <form class="createTopicForm" #quoteForm='ngForm'>
-        
+      <form class="createQuoteForm" #quoteForm='ngForm'>
+        <md-input-container floatPlaceholder="always">
+          <input placeholder="Text" type="text" mdInput name="text" required [(ngModel)]="quote.text">
+          <md-error>Text is required</md-error>
+        </md-input-container>
+        <md-input-container floatPlaceholder="always">
+          <input placeholder="Author" type="text" mdInput name="author" [(ngModel)]="quote.author">
+        </md-input-container>
+        <md-input-container floatPlaceholder="always">
+          <input placeholder="Source" type="text" mdInput name="source" [(ngModel)]="quote.source">
+        </md-input-container>
       </form>
     </div>
     <div class="card-footer">
