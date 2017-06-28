@@ -10,7 +10,8 @@ const appConstants = {
         QUESTION_SET_DETAILS: 'questionSetDetails',
         TOPICS: 'topics',
         TOPIC_DETAILS:'topicDetails',
-        QUOTES: 'quotes'
+        QUOTES: 'quotes',
+        NEW_QUOTE: 'newQuote'
     }
 };
 

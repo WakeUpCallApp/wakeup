@@ -1,0 +1,16 @@
+<div class="newQuote pageContent">
+  <wakeup-card>
+    <div class="card-header">Create Quote</div>
+    <div class="card-body">
+      <form class="createTopicForm" #quoteForm='ngForm'>
+        
+      </form>
+    </div>
+    <div class="card-footer">
+      <button *ngIf="!isCreating" md-button md-raised-button [disabled]="!quoteForm.valid" class="createButton" (click)="createQuote()">
+    Create
+    </button>
+      <md-spinner class="spinner" *ngIf="isCreating"></md-spinner>
+    </div>
+  </wakeup-card>
+</div>

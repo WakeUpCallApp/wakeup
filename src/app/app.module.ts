@@ -31,6 +31,7 @@ import { TopicsComponent } from './pages/topics/topics.component';
 import { NewTopicComponent } from './pages/new-topic/new-topic.component';
 import { TopicDetailsModule } from './pages/topic-details/topic-details.module';
 import { QuotesComponent } from './pages/quotes/quotes.component';
+import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { QuotesComponent } from './pages/quotes/quotes.component';
     NewQuestionSetComponent,
     TopicsComponent,
     NewTopicComponent,
-    QuotesComponent
+    QuotesComponent,
+    NewQuoteComponent
   ],
   imports: [
     BrowserModule,
