@@ -1,3 +1,4 @@
+@import "~../../common/constants";
 .newQuote {
     .createQuoteForm {
         display: flex;
@@ -5,5 +6,8 @@
         md-input-container {
             margin-bottom: 26px;
         }
+    }
+    .createButton:not(:disabled) {
+        background-color: $accent;
     }
 }

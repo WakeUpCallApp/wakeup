@@ -5,7 +5,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
 import Parser from "./parser";
-import { Quote, QuoteApi } from "../models/quote.model";
+import { Quote, QuoteApi, IQuote } from "../models/quote.model";
 
 @Injectable()
 export class QuoteService {
@@ -33,6 +33,24 @@ export class QuoteService {
       .map((response: Response) => response.json())
       .map(quotes => {
         return quotes.map(quoteApi => Parser.quoteFromApi(quoteApi));
+      })
+      .catch(this.handleError);
+  }
+
+  getSuggestions() {
+    return this.http
+      .get("/api/quotes/suggestions")
+      .map((response: Response) => response.json())
+      .map(suggestions => suggestions)
+      .catch(this.handleError);
+  }
+
+  create(quote: IQuote): Observable<Quote> {
+    return this.http
+      .post(`/api/quotes/${quote.topic}`, quote)
+      .map((response: Response) => response.json())
+      .map((quoteApi: QuoteApi) => {
+        return Parser.quoteFromApi(quoteApi);
       })
       .catch(this.handleError);
   }

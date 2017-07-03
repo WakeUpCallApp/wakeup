@@ -27,5 +27,19 @@ export class QuoteEffects {
     .switchMap(topicId => this.quoteService.get(topicId))
     .map(result => new quote.GetByTopicIdActionSuccess(result));
 
+  @Effect()
+  getSuggestions$ = this.actions$
+    .ofType(quote.ActionTypes.GET_SUGGESTIONS)
+    .switchMap(() => this.quoteService.getSuggestions())
+    .map(result => new quote.GetSuggestionsActionSuccess(result));
+
+  @Effect()
+  create$ = this.actions$
+    .ofType(quote.ActionTypes.CREATE)
+    .map(action => action.payload)
+    .switchMap(quote => this.quoteService.create(quote))
+    .map(result => new quote.CreateActionSuccess(result))
+    .catch(error => Observable.of(new quote.CreateActionError(error)));
+
   constructor(private quoteService: QuoteService, private actions$: Actions) {}
 }

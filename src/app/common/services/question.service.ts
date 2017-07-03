@@ -11,6 +11,17 @@ import { Question, IQuestion, QuestionApi } from "../models/question.model";
 export class QuestionService {
   constructor(private http: Http) {}
 
+  all(): Observable<Question[]> {
+    return this.http
+      .get("/api/questions/allQuestions")
+      .map((response: Response) => response.json())
+      .map((questionApiList: QuestionApi[]) => {
+        return questionApiList.map(questionApi =>
+          Parser.questionFromApi(questionApi)
+        );
+      });
+  }
+
   create(question: IQuestion): Observable<Question> {
     return this.http
       .post("/api/questions/", question)

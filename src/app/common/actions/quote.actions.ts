@@ -12,7 +12,9 @@ export const ActionTypes = {
   CREATE_SUCCESS: type("[Quote] Create success"),
   CREATE_ERROR: type("[Quote] Create error"),
   UPDATE: type("[Quote] Update"),
-  DELETE: type("[Quote] Delete")
+  DELETE: type("[Quote] Delete"),
+  GET_SUGGESTIONS: type('[Quote] Get Suggestions'),
+  GET_SUGGESTIONS_SUCCESS: type('[Quote] Get Suggestions Success')
 };
 
 export class GetByTopicIdAction implements Action {
@@ -72,6 +74,19 @@ export class DeleteAction implements Action {
   constructor(public payload: string) {}
 }
 
+export class GetSuggestionsAction implements Action {
+  type = ActionTypes.GET_SUGGESTIONS;
+  constructor() {
+
+  }
+}
+
+export class GetSuggestionsActionSuccess implements Action {
+  type = ActionTypes.GET_SUGGESTIONS_SUCCESS;
+  constructor(public payload) {
+  }
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -86,4 +101,6 @@ export type Actions =
   | CreateActionSuccess
   | CreateActionError
   | UpdateAction
-  | DeleteAction;
+  | DeleteAction
+  | GetSuggestionsAction
+  | GetSuggestionsActionSuccess;

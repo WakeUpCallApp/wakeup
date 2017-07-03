@@ -1,3 +1,11 @@
+export interface IQuote {
+  text: string;
+  source: string;
+  author: string;
+  topic: number;
+  questions: number[];
+}
+
 export interface QuoteApi {
   _id: number;
   text: string;

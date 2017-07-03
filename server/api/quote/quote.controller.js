@@ -354,32 +354,7 @@
             });
         });
     }
-
-    exports.getAllQuestions = function(req, res) {
-        var allQuestions = [];
-        var userEmail = req.user.email;
-        var query = QuestionSet.find({});
-        query.where('user', userEmail);
-        query.populate('questions');
-
-        query.exec(function(err, questionSets) {
-            if (err) {
-                return handleError(res, err);
-            }
-            questionSets.forEach(function(questionSet) {
-                var questions = questionSet.questions.map(function(question) {
-                    return {
-                        id: question._id,
-                        text: question.text,
-                        questionSet: questionSet.name
-                    };
-                });
-                allQuestions = allQuestions.concat(questions);
-            });
-            return res.status(200).json(allQuestions);
-        });
-    }
-
+    
     exports.importQuotes = function(req, res) {
         Topic.findOne({
             _id: req.params.topic

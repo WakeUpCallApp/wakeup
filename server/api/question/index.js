@@ -7,7 +7,7 @@
 
 
     var router = express.Router();
-
+    router.get('/allQuestions',auth.isAuthenticated(),controller.getAllQuestions); 
     router.get('/:questionSetId', auth.isAuthenticated(), controller.index);
     // router.get('/answers/:questionId', auth.isAuthenticated(), controller.getAnswerList);
     router.get('/question/:id', auth.isAuthenticated(), controller.show);

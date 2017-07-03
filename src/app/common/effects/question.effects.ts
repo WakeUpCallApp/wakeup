@@ -16,6 +16,11 @@ import { QuestionService } from '../services/question.service';
 @Injectable()
 export class QuestionEffects {
 
+  @Effect() load$ = this.actions$
+    .ofType(question.ActionTypes.LOAD)
+    .map(action => action.payload)
+    .switchMap(() => this.questionService.all())
+    .map(result => new question.LoadActionSuccess(result));
 
     constructor(
         private questionService: QuestionService,
