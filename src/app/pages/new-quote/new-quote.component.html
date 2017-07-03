@@ -9,44 +9,27 @@
           <md-hint align="end" aria-live="polite"> {{textVar.value.length}} / 1000 </md-hint>
         </md-input-container>
         <md-input-container floatPlaceholder="always">
-          <input
-          list ="suggestions"
-          autocomplete="off"
-           #authorVar 
-           maxlength="200" 
-           placeholder="Author" 
-           type="text" 
-           mdInput 
-           name="author" 
-           [(ngModel)]="quote.author">
-           <datalist id="suggestions">
-                <select>
+          <input list="suggestions" autocomplete="off" #authorVar maxlength="200" placeholder="Author" type="text" mdInput name="author"
+            [(ngModel)]="quote.author">
+          <datalist id="suggestions">
+            <select>
                     <option *ngFor="let suggestion of authors$ | async">{{suggestion}}</option>
                 </select>
-            </datalist>
+          </datalist>
           <md-hint align="end" aria-live="polite">
-            {{authorVar.value.length}} / 200    
+            {{authorVar.value.length}} / 200
           </md-hint>
         </md-input-container>
-        <md-input-container 
-        floatPlaceholder="always">
-          <input 
-          list="sourceSuggestions"
-          autocomplete="off" 
-          #sourceVar 
-          placeholder="Source" 
-          type="text" 
-          mdInput 
-          name="source"
-          maxlength="200" 
-          [(ngModel)]="quote.source">
-           <datalist id="sourceSuggestions">
-                <select>
+        <md-input-container floatPlaceholder="always">
+          <input list="sourceSuggestions" autocomplete="off" #sourceVar placeholder="Source" type="text" mdInput name="source" maxlength="200"
+            [(ngModel)]="quote.source">
+          <datalist id="sourceSuggestions">
+            <select>
                     <option *ngFor="let source of sources$ | async" >{{source}}</option>
                 </select>
-            </datalist>
+          </datalist>
           <md-hint align="end" aria-live="polite">
-             {{sourceVar.value.length}}  / 200
+            {{sourceVar.value.length}} / 200
           </md-hint>
         </md-input-container>
       </form>
