@@ -22,7 +22,7 @@ export class TopicService {
       .catch(this.handleError);
   }
 
-  create(topic: ITopic): Observable<Topic> {
+  create(topic): Observable<Topic> {
     return this.http
       .post("/api/topics", topic)
       .map((response: Response) => response.json())

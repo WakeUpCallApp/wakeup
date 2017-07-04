@@ -14,7 +14,14 @@
       <button class="addQuestionButton" md-button md-raised-button [disabled]="!question.text.trim()" (click)="handleClick()">Create</button>
     </section>
     <section class="row questionQuote">
-      Associate a quote <button md-mini-fab md-button md-raised-button (click)="openQuotes()"><md-icon>add</md-icon></button>
+      <div class="noQuote" *ngIf="!question.quote">
+        Associate a quote
+        <button md-mini-fab md-button md-raised-button (click)="openQuotesBrowser(question)"><md-icon>add</md-icon>
+        </button>
+      </div>
+      <div class="hasQuote" *ngIf="question.quote" (click)="removeQuote()" title="remove quote">
+        {{selectedQuoteText}} <span class="remove"><md-icon>clear</md-icon></span>
+      </div>
     </section>
   </md-card-content>
 </md-card>

@@ -168,10 +168,6 @@
                 '_id': 'descending'
             }
         }, function(err, answer) {
-            // console.log(answer);
-
-
-
             callback.call(null, answer);
         });
 

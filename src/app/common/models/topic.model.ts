@@ -1,11 +1,10 @@
 import { QuestionSet } from './question-set.model';
+import { Quote } from './quote.model';
 
 export interface ITopic {
-    id?: number;
-    name: string;
+    title: string;
     description: string;
     isDefault: boolean; 
-    questionSetList?: number[];
 }
 
 export interface TopicApi {
@@ -29,7 +28,8 @@ export class Topic {
         public questionSetIds: number[],
         public quoteIds: number[],
         public isDefault: boolean,
-        public questionSets?: QuestionSet[]
+        public questionSets?: QuestionSet[],
+        public quotes?: Quote[]
     ) { }
 
 }

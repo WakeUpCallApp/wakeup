@@ -89,6 +89,7 @@
       req.body._id = topicId;
       var userEmail = req.user.email;
       req.body.user = userEmail;
+      req.body.createDate = new Date();
       Topic.create(req.body, function(err, topic) {
         if (err) {
           return handleError(res, err);
@@ -100,7 +101,6 @@
 
   // Deletes a topic from the DB.
   exports.destroy = function(req, res) {
-    console.log(req.params.id);
     Topic.findById(req.params.id, function(err, topic) {
       if (err) {
         return handleError(res, err);

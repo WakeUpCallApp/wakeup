@@ -43,12 +43,16 @@
     </section>
 
     <section class="newQuestion" *ngIf="!currentQuestionSet.isDefault">
-        <wakeup-add-question (create)="addQuestion($event)" (openQuotesBrowser)="openQuotesBrowser($event)" [question]="newQuestion"></wakeup-add-question>
+        <wakeup-add-question (create)="addQuestion($event)" [question]="newQuestion"></wakeup-add-question>
     </section>
 
     <section class="questionList" *ngIf="currentQuestionSet.questions?.length">
-        <wakeup-question-list [questions]="currentQuestionSet.questions" [canEdit]="!currentQuestionSet.isDefault" (delete)="deleteQuestions($event)"
-            (edit)="editQuestion($event)">
+        <wakeup-question-list 
+        [questions]="currentQuestionSet.questions" 
+        [canEdit]="!currentQuestionSet.isDefault" 
+        (delete)="deleteQuestions($event)"
+        (edit)="editQuestion($event)"
+        (openQuotesBrowser)="openQuotesBrowser($event)">
         </wakeup-question-list>
     </section>
 

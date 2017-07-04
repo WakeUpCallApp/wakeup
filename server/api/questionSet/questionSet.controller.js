@@ -135,7 +135,6 @@
             if (!questionSet) {
                 return res.status(404).send('Not Found');
             }
-            //console.log(questionSet);
             return res.json(questionSet);
         });
     };

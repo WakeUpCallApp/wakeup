@@ -5,6 +5,7 @@ import * as reducers from "../../../../common/reducers";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import * as actions from "../../../../common/actions/quote.actions";
+import { Topic } from "../../../../common/models/topic.model";
 import { Quote } from "../../../../common/models/quote.model";
 
 @Component({
@@ -14,7 +15,10 @@ import { Quote } from "../../../../common/models/quote.model";
 })
 export class WakeupQuotesBrowserComponent implements OnInit {
   quotesSubscription: Subscription;
-  quotes: Quote[];
+  topics: Topic[];
+  currentTopic: Topic;
+  selectedQuoteId;
+  selectedQuoteText;
   constructor(
     private store: Store<reducers.State>,
     public dialogRef: MdDialogRef<WakeupQuotesBrowserComponent>
@@ -23,9 +27,10 @@ export class WakeupQuotesBrowserComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new actions.LoadAction());
     this.quotesSubscription = this.store
-      .select(reducers.getQuotesState)
-      .subscribe(quotesList => {
-        this.quotes = quotesList;
+      .select(reducers.getTopicsWithQuotesState)
+      .subscribe(topicsList => {
+        this.topics = topicsList;
+        this.currentTopic = this.getCurrentTopic();
       });
   }
 
@@ -34,6 +39,24 @@ export class WakeupQuotesBrowserComponent implements OnInit {
   }
 
   safeClose() {
-    this.dialogRef.close();
+    this.dialogRef.close({ selectedQuoteId: this.selectedQuoteId, selectedQuoteText: this.selectedQuoteText });
+  }
+
+  toggleSelectedQuote(quote) {
+    if (this.selectedQuoteId === quote.id) {
+      this.selectedQuoteId = "";
+    } else {
+      this.selectedQuoteId = quote.id;
+      this.selectedQuoteText = quote.text;
+    }
+  }
+
+  getCurrentTopic() {
+    return this.topics.find(topic => !!topic.quotes.find(quote => quote.id === this.selectedQuoteId))
+    || (this.topics.length ? this.topics[0] : <Topic>{});
+  }
+
+  isSelectedQuote(quote) {
+    return this.selectedQuoteId === quote.id;
   }
 }

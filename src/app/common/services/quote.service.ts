@@ -16,13 +16,13 @@ export class QuoteService {
       .get("/api/quotes/userQuotes/")
       .map((response: Response) => response.json())
       .map(userTopics => {
-        let allQuotes = [];
-        userTopics.forEach(topic => {
-          allQuotes = allQuotes.concat(
-            topic.quoteList.map(quoteApi => Parser.quoteFromApi(quoteApi))
+        return userTopics.map(topicApi => {
+          const topic = Parser.topicFromApi(topicApi);
+          topic.quotes = topicApi.quoteList.map(quoteApi =>
+            Parser.quoteFromApi(quoteApi)
           );
+          return topic;
         });
-        return allQuotes;
       })
       .catch(this.handleError);
   }

@@ -110,7 +110,6 @@ function createQuestionSet(defaultQuestionSet) {
             if (err) {
                 console.log(err);
             }
-            console.log(questionSet._id);
             addQuestions(defaultQuestions, questionSet._id);
             defaultTopic.questionSetList = [questionSet._id];
             createTopic(defaultTopic);
@@ -159,7 +158,6 @@ function createQuestion(questionObj) {
         var questionId = latestQuestionId + 1;
 
         questionObj._id = questionId;
-        console.log('createQuestion, questionId', questionObj._id, questionObj.questionSet);
         return Question.create(questionObj, function(err, question) {
             if (err) {
                 console.log(err);

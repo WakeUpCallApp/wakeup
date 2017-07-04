@@ -119,7 +119,6 @@
         query.where("_id", questionId);
         query.exec(function(err, question) {
             question.quote = undefined;
-            //console.log(question);
             question.save(question, function(err, question) {});
         });
     }

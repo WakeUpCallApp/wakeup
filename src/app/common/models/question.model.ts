@@ -2,7 +2,7 @@ export interface IQuestion{
 id: number;
 text: string;
 questionSet: number;
-quote?: number;
+quote?;
 }
 
 export interface QuestionApi {
@@ -10,7 +10,8 @@ export interface QuestionApi {
     text: string;
     date: string;
     questionSet: number;
-    answers: number[]
+    answers: number[],
+    quote: number
 }
 
 export class Question {
@@ -21,6 +22,6 @@ export class Question {
     public date: Date,
     public questionSetId: number,
     public answerIds: number[],
-    public quoteIds?: number[]) {
+    public quoteId?: number) {
     }
 } 

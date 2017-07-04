@@ -10,7 +10,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        @media(min-width: 1000px) {
+        @media (min-width: 1000px) {
             flex-direction: row;
             align-items: center;
             md-input-container {
@@ -22,7 +22,7 @@
         }
     }
     .addQuestionButton {
-        @media(min-width: 1000px) {
+        @media (min-width: 1000px) {
             margin-left: 26px;
         }
     }
@@ -33,5 +33,25 @@
         button {
             margin-left: 26px;
         }
+    }
+    .hasQuote {
+        padding: 26px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        width: 200px;
+        height: 100px;
+        cursor: pointer;
+        background-color: $primary;
+        color: white;
+        position: relative;
+
+        .remove {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+    .hasQuote:hover {
+        background-color: lighten($primary, 0.5);
+        color: black;
     }
 }

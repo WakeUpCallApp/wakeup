@@ -1,0 +1,34 @@
+@import "~../../../../common/constants";
+.topicDropDown {
+    display: flex;
+    align-items: center;
+    md-select {
+        width: 100%;
+        flex: 1;
+    }
+    .addQuoteButton {
+        margin-left: 16px;
+    }
+}
+
+.quoteList {
+    width: 100%;
+    ul {
+        list-style: none;
+        display: flex;
+    }
+    li {
+        padding: 26px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        width: 200px;
+        height: 100px;
+        cursor: pointer;
+    }
+    li:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+    li.selected {
+        background-color: $primary;
+        color: white;
+    }
+}

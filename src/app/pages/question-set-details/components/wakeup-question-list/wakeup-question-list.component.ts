@@ -10,6 +10,7 @@ export class WakeupQuestionListComponent implements OnInit {
   @Input() canEdit;
   @Output() delete = new EventEmitter();
   @Output() edit = new EventEmitter();
+  @Output() openQuotesBrowser = new EventEmitter();
   constructor() {}
 
   ngOnInit() {}
@@ -55,5 +56,9 @@ export class WakeupQuestionListComponent implements OnInit {
       (this.questions && this.questions.filter(question => question.checked)) ||
       []
     );
+  }
+
+  openQuotes(question) {
+    this.openQuotesBrowser.emit(question);
   }
 }

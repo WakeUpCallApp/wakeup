@@ -119,15 +119,6 @@ export class QuestionSetDetailsComponent implements OnInit {
     );
   }
 
-  openQuotesBrowser(question) {
-    let config: MdDialogConfig = {
-      disableClose: false,
-      width: "600px"
-    };
-    let dialogRef = this.dialog.open(WakeupQuotesBrowserComponent, config);
-    dialogRef.afterClosed().subscribe(result => (question.quote = result));
-  }
-
   editQuestion(question) {
     let config: MdDialogConfig = {
       disableClose: false,
@@ -138,6 +129,22 @@ export class QuestionSetDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.store.dispatch(new actions.EditQuestionAction(result));
+      }
+    });
+  }
+
+  openQuotesBrowser(question) {
+    let config: MdDialogConfig = {
+      disableClose: false,
+      width: "80%",
+      height: "80%"
+    };
+    let dialogRef = this.dialog.open(WakeupQuotesBrowserComponent, config);
+    dialogRef.componentInstance.selectedQuoteId = question.quoteId;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        question.quoteId = result.selectedQuoteId;
+        this.store.dispatch(new actions.EditQuestionAction(question));
       }
     });
   }

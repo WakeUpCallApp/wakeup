@@ -4,7 +4,7 @@
     <div class="card-body">
       <form class="createTopicForm" #topicForm='ngForm'>
         <md-input-container floatPlaceholder="always" dividerColor="{{ (topicNameVar.touched || topicNameVar.dirty) && !topicNameVar.valid ? 'warn' : 'primary' }}">
-          <input #topicNameVar placeholder="Name" type="text" maxlength="200" #nameInputHint mdInput name="name" required [(ngModel)]="topic.name">
+          <input #topicNameVar placeholder="Name" type="text" maxlength="200" #nameInputHint mdInput name="title" required [(ngModel)]="topic.title">
           <md-error>Name is required</md-error>
           <md-hint align="end" aria-live="polite"> {{nameInputHint.value.length}} /200 </md-hint>
         </md-input-container>

@@ -11,7 +11,7 @@ import * as actions from "../../common/actions/topic.actions";
 })
 export class NewTopicComponent implements OnInit {
   topic: ITopic = {
-    name: "",
+    title: "",
     description: "",
     isDefault: false
   };

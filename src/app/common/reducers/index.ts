@@ -66,7 +66,7 @@ export const getLoadingQuestionSetState = (state: State): boolean =>
 export const getCurrentQuestionSetState = (state: State): QuestionSet =>
   state.questionSet.currentQuestionSet;
 
-export const getQuotesState = (state: State): Quote[] => state.quote.entities;
+export const getTopicsWithQuotesState = (state: State): Topic[] => state.quote.topicsWithQuotes;
 
 //Topics
 export const getTopicsState = (state: State): Topic[] => state.topic.entities;

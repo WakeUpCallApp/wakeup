@@ -1,12 +1,26 @@
-
 <h2 md-dialog-title>Quotes</h2>
-<md-dialog-content><ul>
-  <li *ngFor="let quote of quotes">
-    {{quote.text}}
-  </li>
-</ul></md-dialog-content>
-<md-dialog-actions>
-  <button md-button md-dialog-close>Cancel</button>
-  <!-- Can optionally provide a result for the closing dialog. -->
-  <button md-button [md-dialog-close]="true">Ok</button>
-</md-dialog-actions>
+<md-dialog-content>
+  <div class="topicDropDown">
+    <md-select placeholder="Topic" [(ngModel)]="currentTopic">
+      <md-option *ngFor="let topic of topics" [value]="topic">
+        {{ topic.name }}
+      </md-option>
+    </md-select>
+    <button class="addQuoteButton" md-button (click)="safeClose()">Ok</button>
+  </div>
+  <div class="quoteList">
+    <ul>
+      <li *ngFor="let quote of currentTopic.quotes" 
+      [ngClass]="{'selected': isSelectedQuote(quote)}" 
+      (click)="toggleSelectedQuote(quote)"
+      >
+        <span class="quoteText truncate">{{quote.text}}</span>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="noQuotes" *ngIf="!currentTopic.quotes?.length">
+    There are no quotes for this topic
+  </div>
+
+</md-dialog-content>
