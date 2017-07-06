@@ -37,6 +37,16 @@ export class QuoteService {
       .catch(this.handleError);
   }
 
+  getById(quoteId): Observable<Quote> {
+    return this.http
+      .get(`/api/quotes/quote/${quoteId}`)
+      .map((response: Response) => response.json())
+      .map(quoteApi => {
+        return Parser.quoteFromApi(quoteApi);
+      })
+      .catch(this.handleError);
+  }
+
   getSuggestions() {
     return this.http
       .get("/api/quotes/suggestions")

@@ -1,0 +1,18 @@
+<div class="practiceSession">
+  <div class="content">
+    <div class="header"></div>
+    <div class="questionInfo">
+      <div class="questionText">{{currentQuestion?.text}}</div>
+      <div class="quoteText">{{(currentQuote| async)?.text }}</div>
+    </div>
+    <div class="inputArea">
+      <md-input-container floatPlaceholder="always">
+        <textarea maxlength="5000" mdInput rows="5" placeholder="Answer"></textarea>
+      </md-input-container>
+      <div class="actions">
+        <button md-button>Skip</button>
+        <button md-button md-raised-button class="saveButton" >Save</button>
+      </div>
+    </div>
+  </div>
+</div>

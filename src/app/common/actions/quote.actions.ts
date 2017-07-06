@@ -5,6 +5,8 @@ import { type } from "../util";
 export const ActionTypes = {
   GET_BY_TOPIC_ID: type("[Quote] Get By Topic Id"),
   GET_BY_TOPIC_ID_SUCCESS: type("[Quote] Get By Topic Id Success"),
+  GET_BY_ID: type("[Quote] Get By Id"),
+  GET_BY_ID_SUCCESS: type("[Quote] Get By Id Success"),
   LOAD: type("[Quote] Load"),
   LOAD_SUCCESS: type("[Quote] Load success"),
   LOAD_ERROR: type("[Quote] Load error"),
@@ -13,8 +15,8 @@ export const ActionTypes = {
   CREATE_ERROR: type("[Quote] Create error"),
   UPDATE: type("[Quote] Update"),
   DELETE: type("[Quote] Delete"),
-  GET_SUGGESTIONS: type('[Quote] Get Suggestions'),
-  GET_SUGGESTIONS_SUCCESS: type('[Quote] Get Suggestions Success')
+  GET_SUGGESTIONS: type("[Quote] Get Suggestions"),
+  GET_SUGGESTIONS_SUCCESS: type("[Quote] Get Suggestions Success")
 };
 
 export class GetByTopicIdAction implements Action {
@@ -25,6 +27,16 @@ export class GetByTopicIdAction implements Action {
 export class GetByTopicIdActionSuccess implements Action {
   type = ActionTypes.GET_BY_TOPIC_ID_SUCCESS;
   constructor(public payload: Quote[]) {}
+}
+
+export class GetByIdAction implements Action {
+  type = ActionTypes.GET_BY_ID;
+  constructor(public payload: number) {}
+}
+
+export class GetByIdActionSuccess implements Action {
+  type = ActionTypes.GET_BY_ID_SUCCESS;
+  constructor(public payload: Quote) {}
 }
 
 export class LoadAction implements Action {
@@ -76,15 +88,12 @@ export class DeleteAction implements Action {
 
 export class GetSuggestionsAction implements Action {
   type = ActionTypes.GET_SUGGESTIONS;
-  constructor() {
-
-  }
+  constructor() {}
 }
 
 export class GetSuggestionsActionSuccess implements Action {
   type = ActionTypes.GET_SUGGESTIONS_SUCCESS;
-  constructor(public payload) {
-  }
+  constructor(public payload) {}
 }
 
 /**
@@ -94,6 +103,8 @@ export class GetSuggestionsActionSuccess implements Action {
 export type Actions =
   | GetByTopicIdAction
   | GetByTopicIdActionSuccess
+  | GetByIdAction
+  | GetByIdActionSuccess
   | LoadAction
   | LoadActionSuccess
   | LoadActionError

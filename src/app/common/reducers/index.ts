@@ -5,7 +5,7 @@ import { environment } from "../../../environments/environment";
 import * as questionSet from "./question-set.reducer";
 import * as quote from "./quote.reducer";
 import * as topic from "./topic.reducer";
-import * as question from './question.reducer';
+import * as question from "./question.reducer";
 import { QuestionSet } from "../models/question-set.model";
 import { Topic } from "../models/topic.model";
 import { Quote } from "../models/quote.model";
@@ -66,7 +66,8 @@ export const getLoadingQuestionSetState = (state: State): boolean =>
 export const getCurrentQuestionSetState = (state: State): QuestionSet =>
   state.questionSet.currentQuestionSet;
 
-export const getTopicsWithQuotesState = (state: State): Topic[] => state.quote.topicsWithQuotes;
+export const getTopicsWithQuotesState = (state: State): Topic[] =>
+  state.quote.topicsWithQuotes;
 
 //Topics
 export const getTopicsState = (state: State): Topic[] => state.topic.entities;
@@ -81,6 +82,9 @@ export const getCurrentTopicState = (state: State): Topic =>
   state.topic.currentTopic;
 
 // Quotes
+export const getCurrentQuote = (state: State): Quote =>
+  state.quote.currentQuote;
+
 export const getQuotesByTopic = (state: State): Quote[] =>
   state.quote.quotesByTopic;
 export const getAuthorSuggestions = (state: State): string[] =>
@@ -88,6 +92,6 @@ export const getAuthorSuggestions = (state: State): string[] =>
 export const getSourceSuggestions = (state: State): string[] =>
   state.quote.suggestions.sources;
 
-// Questions 
+// Questions
 export const getQuestionsState = (state: State): Question[] =>
   state.question.entities;

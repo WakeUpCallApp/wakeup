@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
 import { Quote } from "../models/quote.model";
-import { Topic } from '../models/topic.model';
+import { Topic } from "../models/topic.model";
 import * as actions from "../actions/quote.actions";
 
 export interface State {
@@ -36,6 +36,10 @@ export function reducer(state = initialState, action: Action): State {
     case actions.ActionTypes.GET_SUGGESTIONS_SUCCESS:
       return Object.assign({}, state, {
         suggestions: action.payload
+      });
+    case actions.ActionTypes.GET_BY_ID_SUCCESS:
+      return Object.assign({}, state, {
+        currentQuote: action.payload
       });
     default: {
       return state;

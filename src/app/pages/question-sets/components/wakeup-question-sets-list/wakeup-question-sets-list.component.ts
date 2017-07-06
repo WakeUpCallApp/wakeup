@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
+import { Router } from "@angular/router";
+import appConstants from "../../../../common/app-constants";
 
 @Component({
   selector: "wakeup-question-sets-list",
@@ -7,12 +9,16 @@ import { Component, OnInit, Input } from "@angular/core";
 })
 export class WakeupQuestionSetsListComponent implements OnInit {
   @Input() questionSets;
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
   startQuestionSet(e, questionSet) {
     e.preventDefault();
     e.stopImmediatePropagation();
+    this.router.navigate([
+      appConstants.routes.PRACTICE_SESSION,
+      questionSet.id
+    ]);
   }
 }

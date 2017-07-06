@@ -53,13 +53,14 @@ export class AppComponent {
     return (
       this.authTokenService.isLoggedIn() &&
       location.pathname.indexOf(appConstants.routes.LANDING) === -1 &&
-      location.pathname.indexOf(appConstants.routes.LOGIN) === -1
+      location.pathname.indexOf(appConstants.routes.LOGIN) === -1 &&
+      location.pathname.indexOf(appConstants.routes.PRACTICE_SESSION) === -1
     );
   }
 
   logout(): void {
     this.loginService.logout();
     this.isOpen = false;
-    this.router.navigate(["/login"]);
+    this.router.navigate([appConstants.routes.LOGIN]);
   }
 }

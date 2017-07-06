@@ -11,7 +11,8 @@ const appConstants = {
         TOPICS: 'topics',
         TOPIC_DETAILS:'topicDetails',
         QUOTES: 'quotes',
-        NEW_QUOTE: 'newQuote'
+        NEW_QUOTE: 'newQuote',
+        PRACTICE_SESSION: 'practiceSession'
     }
 };
 

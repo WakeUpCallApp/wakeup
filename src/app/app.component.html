@@ -1,10 +1,11 @@
 <wakeup-top-bar 
+[hidden]="!canShowNavigation()"
 [isOpen]="isOpen"
  [loggedUser]="loginService.getCurrentUser()" 
  (onOpenMenu)="openMenu($event)" 
  (logout)="logout($event)">
 </wakeup-top-bar>
-<wakeup-side-nav [isOpen]="isOpen">
+<wakeup-side-nav [isOpen]="isOpen && canShowNavigation()">
 	<div class="app-container" role="application">
 		<router-outlet></router-outlet>
 	</div>

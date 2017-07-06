@@ -32,6 +32,7 @@ import { NewTopicComponent } from './pages/new-topic/new-topic.component';
 import { TopicDetailsModule } from './pages/topic-details/topic-details.module';
 import { QuotesComponent } from './pages/quotes/quotes.component';
 import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
+import { PracticeSessionComponent } from './pages/practice-session/practice-session.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
     TopicsComponent,
     NewTopicComponent,
     QuotesComponent,
-    NewQuoteComponent
+    NewQuoteComponent,
+    PracticeSessionComponent
   ],
   imports: [
     BrowserModule,

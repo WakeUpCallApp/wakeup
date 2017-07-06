@@ -28,6 +28,13 @@ export class QuoteEffects {
     .map(result => new quote.GetByTopicIdActionSuccess(result));
 
   @Effect()
+  getById$ = this.actions$
+    .ofType(quote.ActionTypes.GET_BY_ID)
+    .map(action => action.payload)
+    .switchMap(quoteId => this.quoteService.getById(quoteId))
+    .map(result => new quote.GetByIdActionSuccess(result));  
+
+  @Effect()
   getSuggestions$ = this.actions$
     .ofType(quote.ActionTypes.GET_SUGGESTIONS)
     .switchMap(() => this.quoteService.getSuggestions())

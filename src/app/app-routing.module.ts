@@ -11,7 +11,9 @@ import { TopicsComponent } from "./pages/topics/topics.component";
 import { NewTopicComponent } from "./pages/new-topic/new-topic.component";
 import { TopicDetailsComponent } from "./pages/topic-details/topic-details.component";
 import { QuotesComponent } from "./pages/quotes/quotes.component";
-import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
+import { NewQuoteComponent } from "./pages/new-quote/new-quote.component";
+import { PracticeSessionComponent } from "./pages/practice-session/practice-session.component";
+
 @NgModule({
   imports: [
     RouterModule.forRoot([
@@ -75,11 +77,20 @@ import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
           userDetails: UserDetailResolver
         }
       },
-      {path: "newQuote/:topidId",
+      {
+        path: "newQuote/:topidId",
         component: NewQuoteComponent,
         data: { title: "New Quote" },
         canActivate: [AuthenticationGuard],
-        resolve: { userDetails: UserDetailResolver }},
+        resolve: { userDetails: UserDetailResolver }
+      },
+      {
+        path: "practiceSession/:questionSetId",
+        component: PracticeSessionComponent,
+        data: { title: "Practice Question Set" },
+        canActivate: [AuthenticationGuard],
+        resolve: { userDetails: UserDetailResolver }
+      },
       { path: "", redirectTo: "questionSets", pathMatch: "full" },
       { path: "**", redirectTo: "questionSets", pathMatch: "full" }
     ])
