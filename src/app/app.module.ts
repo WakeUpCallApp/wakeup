@@ -11,10 +11,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MaterialModule } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { QuestionSetEffects, 
+import { 
+  QuestionSetEffects, 
   QuestionEffects, 
   QuoteEffects,
-TopicEffects } from './common/effects';
+  TopicEffects,
+  AnswerEffects } from './common/effects';
 
 import { reducer } from './common/reducers';
 
@@ -63,7 +65,8 @@ import { PracticeSessionComponent } from './pages/practice-session/practice-sess
     EffectsModule.run(QuestionSetEffects),
     EffectsModule.run(QuestionEffects),
     EffectsModule.run(QuoteEffects),
-    EffectsModule.run(TopicEffects)
+    EffectsModule.run(TopicEffects),
+    EffectsModule.run(AnswerEffects)
   ],
 
   exports: [

@@ -1,4 +1,5 @@
 <div class="practiceSession">
+  <button class="endSessionButton" (click)="endQuestionSet()" title="End Session" md-fab><i class="fa fa-power-off" aria-hidden="true"></i></button>
   <div class="content">
     <div class="header"></div>
     <div class="questionInfo">
@@ -7,11 +8,11 @@
     </div>
     <div class="inputArea">
       <md-input-container floatPlaceholder="always">
-        <textarea maxlength="5000" mdInput rows="5" placeholder="Answer"></textarea>
+        <textarea maxlength="5000" mdInput rows="3" placeholder="Answer" [(ngModel)]="answerText"></textarea>
       </md-input-container>
       <div class="actions">
-        <button md-button>Skip</button>
-        <button md-button md-raised-button class="saveButton" >Save</button>
+        <button md-button (click)="setNextQuestion()">Skip</button>
+        <button md-button (click)="saveAnswer()" [disabled]="!answerText?.trim()" md-raised-button class="saveButton" >Save</button>
       </div>
     </div>
   </div>

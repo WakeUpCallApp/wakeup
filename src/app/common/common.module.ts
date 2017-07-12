@@ -12,7 +12,8 @@ import {
   QuestionSetService,
   QuestionService,
   QuoteService,
-  TopicService
+  TopicService,
+  AnswerService,
 } from "./services";
 import { WakeupTopBarComponent } from "./components/wakeup-top-bar/wakeup-top-bar.component";
 import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side-nav.component";
@@ -32,6 +33,7 @@ import { WakeupCardComponent } from "./components/wakeup-card/wakeup-card.compon
     QuestionService,
     QuoteService,
     TopicService,
+    AnswerService,
     AuthenticationGuard,
     UserDetailResolver
   ],

@@ -12,6 +12,16 @@
     background-position: -327px 0px;
 }
 
+.endSessionButton {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+
+    i {
+        font-size: 26px;
+    }
+}
+
 .practiceSession {
     display: flex;
     align-items: center;
@@ -22,22 +32,30 @@
         padding: 26px;
         margin: 16px;
         display: flex;
+        flex-direction: column;
+        width: 500px;
+        box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+        border-radius: 26px;
     }
-    .questionInfo {
-        flex-basis: 50%;
+    .questionText, .quoteText {
+        margin-bottom: 16px;
     }
     .inputArea {
+        flex-direction: column;
+        display: flex;
+        height: 100%;
         md-input-container {
             width: 100%;
+            flex: 1;
         }
         textArea {
-            max-height: 300px;
-            height: 300px;
+            height: 200px;
+            max-height: 200px;
         }
         .actions {
-            float: right;
+            align-self: flex-end;
         }
-        .saveButton {
+        .saveButton:not(:disabled) {
             background-color: $accent;
         }
     }

@@ -6,9 +6,11 @@ import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import * as actions from "../../common/actions/question-set.actions";
 import * as quoteActions from "../../common/actions/quote.actions";
+import * as answerActions from "../../common/actions/answer.actions";
 
 import { QuestionSet } from "../../common/models/question-set.model";
 import { Quote } from "../../common/models/quote.model";
+import appConstants from "../../common/app-constants";
 
 @Component({
   selector: "wakeup-practice-session",
@@ -22,11 +24,13 @@ export class PracticeSessionComponent implements OnInit {
   currentQuestionIndex = 0;
   currentQuestion;
   currentQuote: Observable<Quote>;
+  questionsNo: number;
+  answerText: string;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.actionsSubscription = this.route.params
@@ -38,22 +42,53 @@ export class PracticeSessionComponent implements OnInit {
       .select(reducers.getCurrentQuestionSetState)
       .subscribe(currentQuestionSet => {
         this.currentQuestionSet = Object.assign({}, currentQuestionSet);
-        
-        this.currentQuestion = this.currentQuestionSet.questions
-          ? this.currentQuestionSet.questions[this.currentQuestionIndex]
-          : {};
-        
-        if (this.currentQuestion.quoteId) {
-          this.store.dispatch(
-            new quoteActions.GetByIdAction(this.currentQuestion.quoteId)
-          );
-          this.currentQuote = this.store.select(reducers.getCurrentQuote);
-        }
+        this.questionsNo = this.currentQuestionSet.questions ? this.currentQuestionSet.questions.length : 0;
+        this.setCurrentQuestion();
       });
   }
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
     this.qsSubscription.unsubscribe();
+  }
+
+  setCurrentQuestion() {
+    this.currentQuestion = this.currentQuestionSet.questions
+      ? this.currentQuestionSet.questions[this.currentQuestionIndex]
+      : {};
+
+    if (this.currentQuestion.quoteId) {
+      this.store.dispatch(
+        new quoteActions.GetByIdAction(this.currentQuestion.quoteId)
+      );
+      this.currentQuote = this.store.select(reducers.getCurrentQuote);
+    }
+    else {
+      this.currentQuote = null;
+    }
+  }
+
+  endQuestionSet() {
+    this.router.navigate([appConstants.routes.QUESTION_SET_DETAILS, this.currentQuestionSet.id])
+  }
+
+  setNextQuestion() {
+    if (this.currentQuestionIndex >= 0 &&
+      this.currentQuestionIndex < this.questionsNo - 1) {
+      this.currentQuestionIndex++;
+      this.setCurrentQuestion();
+    }
+    else {
+      this.endQuestionSet();
+    }
+  }
+
+  saveAnswer() {
+    this.store.dispatch(new answerActions.CreateAction({
+      question: this.currentQuestion.id,
+      text: this.answerText
+    }));
+    this.answerText = '';
+    this.setNextQuestion();
   }
 }
