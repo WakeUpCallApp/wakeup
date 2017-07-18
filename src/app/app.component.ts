@@ -16,7 +16,7 @@ export class AppComponent {
 
   constructor(
     private router: Router,
-    private loginService: LoginService,
+    public loginService: LoginService,
     private authTokenService: AuthTokenService,
     private activatedRoute: ActivatedRoute,
     private titleService: Title

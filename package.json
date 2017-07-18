@@ -12,7 +12,7 @@
     "dev": "nodemon server/app.js",
     "start": "--env=prod && node server/app.js",
     "startServerProduction": "ng build && node server/app.js",
-    "postinstall": "ng build -prod"
+    "postinstall": "ng build --target=production -e ${NODE_ENV:-production}"
   },
   "engines": {
     "node": "6.10.0",
@@ -58,7 +58,8 @@
     "path": "^0.12.7",
     "rxjs": "^5.1.0",
     "serve-favicon": "^2.4.3",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "typescript": "~2.2.0"
   },
   "devDependencies": {
     "@types/jasmine": "2.5.38",
@@ -76,7 +77,6 @@
     "nodemon": "^1.11.0",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
-    "tslint": "~4.5.0",
-    "typescript": "~2.2.0"
+    "tslint": "~4.5.0"
   }
 }

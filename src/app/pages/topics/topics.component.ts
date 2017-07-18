@@ -17,6 +17,7 @@ export class TopicsComponent implements OnInit {
   topics$: Observable<Topic[]>;
   searchTerm$: Observable<string>;
   filteredList$: Observable<Topic[]>;
+  search: string;
   constructor(private store: Store<reducers.State>, private router: Router) {
     this.topics$ = store.select(reducers.getTopicsSortedState);
     this.searchTerm$ = store.select(reducers.getTopicSearchTerm);

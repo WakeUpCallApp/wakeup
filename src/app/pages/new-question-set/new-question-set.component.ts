@@ -17,8 +17,7 @@ export class NewQuestionSetComponent implements OnInit {
     description: '',
     isDefault: false
   };
-  isCreating = false;
-  constructor(
+   constructor(
     private store: Store<reducers.State>) { }
 
   ngOnInit() {
