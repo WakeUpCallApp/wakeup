@@ -12,7 +12,7 @@
     "dev": "nodemon server/app.js",
     "start": "--env=prod && node server/app.js",
     "startServerProduction": "ng build && node server/app.js",
-    "postinstall": "ng build --target=production -e ${NODE_ENV:-production}"
+    "postinstall": "ng build --prod"
   },
   "engines": {
     "node": "6.10.0",
