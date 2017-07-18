@@ -14,6 +14,10 @@
     "startServerProduction": "ng build && node server/app.js",
     "postinstall": "ng build -prod"
   },
+  "engines": {
+    "node": "6.10.0",
+    "npm": "4.3.0"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^4.1.3",
