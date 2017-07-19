@@ -59,7 +59,8 @@
     "rxjs": "^5.1.0",
     "serve-favicon": "^2.4.3",
     "zone.js": "^0.8.4",
-    "typescript": "~2.2.0"
+    "typescript": "~2.2.0",
+    "morgan": "^1.8.2"
   },
   "devDependencies": {
     "@types/jasmine": "2.5.38",
@@ -73,7 +74,6 @@
     "karma-coverage-istanbul-reporter": "^0.2.0",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "morgan": "^1.8.2",
     "nodemon": "^1.11.0",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
