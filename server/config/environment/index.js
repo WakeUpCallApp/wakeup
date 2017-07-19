@@ -2,7 +2,7 @@
 
 var path = require('path');
 var _ = require('lodash');
-var domainUrl = process.env.NODE_ENV === 'development'? 'http://localhost:9000/' : 'production';
+var domainUrl = process.env.NODE_ENV === 'development'? 'http://localhost:9000/' : '';
 
 function requiredProcessEnv(name) {
   if(!process.env[name]) {
