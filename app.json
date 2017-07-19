@@ -1,0 +1,6 @@
+{
+  "name": "Wakeup Call App",
+  "description": "Inquiring application",
+  "repository": "https://github.com/WakeUpCallApp/wakeup",
+  "keywords": ["angular2", "express", "node"]
+}
