@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "dev": "nodemon server/app.js",
-    "start": "set NODE_ENV=production&&node server/app.js",
+    "start": "node server/app.js",
     "startServerProduction": "ng build && node server/app.js",
     "postinstall": "ng build --prod"
   },
