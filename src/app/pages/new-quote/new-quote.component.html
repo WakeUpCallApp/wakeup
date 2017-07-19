@@ -35,10 +35,9 @@
       </form>
     </div>
     <div class="card-footer">
-      <button *ngIf="!isCreating" md-button md-raised-button [disabled]="!quoteForm.valid" class="createButton" (click)="create()">
+      <button  md-button md-raised-button [disabled]="!quoteForm.valid" class="createButton" (click)="create()">
     Create
     </button>
-      <md-spinner class="spinner" *ngIf="isCreating"></md-spinner>
     </div>
   </wakeup-card>
 </div>
