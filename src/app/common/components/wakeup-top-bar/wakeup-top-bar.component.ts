@@ -9,7 +9,7 @@ import {
   Output
 } from '@angular/core';
 
-import { User } from '../../models/User.model';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'wakeup-top-bar',

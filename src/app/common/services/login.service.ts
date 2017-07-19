@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 import { AuthTokenService } from './authToken.service';
-import { User, Token } from '../models/User.model';
+import { User, Token } from '../models/user.model';
 
 @Injectable()
 export class LoginService {
