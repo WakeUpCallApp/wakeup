@@ -1,4 +1,7 @@
 @import "~../../common/constants";
+.quotes {
+    min-height: 70vh;
+}
 .card-header {
     display: flex;
     align-items: center;
@@ -7,6 +10,11 @@
         flex: 1;
         word-wrap: break-word;
         word-break: break-all;
+
+        small {
+            font-weight: bold;
+            color: $accent;
+        }
     }
 }
 
@@ -16,7 +24,7 @@
     width: 65px;
     height: 65px;
     bottom: 16px;
-    left: 1800px;
+    left: 1290px;
     display: flex;
     justify-content: center;
     md-icon {

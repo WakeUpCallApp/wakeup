@@ -69,7 +69,7 @@ import { PracticeSessionComponent } from "./pages/practice-session/practice-sess
         }
       },
       {
-        path: "quotes/:id",
+        path: "quotes/:topicId",
         component: QuotesComponent,
         data: { title: "Quotes" },
         canActivate: [AuthenticationGuard],

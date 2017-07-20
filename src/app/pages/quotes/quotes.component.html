@@ -1,7 +1,7 @@
 <div class="quotes pageContent">
   <wakeup-card>
     <div class="card-header">
-      <div class="title">Quotes</div>
+      <div class="title">Quotes <small>{{currentTopic?.name}}</small></div>
       <div class="actions">
         <button md-icon-button [mdMenuTriggerFor]="quotesMenu" title="open menu">
                        <md-icon>more_vert</md-icon>
@@ -13,6 +13,9 @@
       </div>
     </div>
     <div class="card-body">
+      <div class="emptyState" *ngIf="!(quotes$ | async).length">
+        There are no quotes for this topic
+      </div>
       <ul class="quotesList">
         <li *ngFor="let quote of quotes$ | async">
           <a [routerLink]="['/quoteDetails', quote.id]" title="see details">
@@ -27,7 +30,8 @@
     </div>
   </wakeup-card>
 </div>
-<button mdRipple 
+<button mdRipple
+   *ngIf="!currentTopic?.isDefault" 
    (click)="goToCreateQuote()" 
    title="add quote" 
    class="addQuoteButton" 
