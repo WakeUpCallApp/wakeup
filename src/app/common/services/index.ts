@@ -5,3 +5,4 @@ export { QuestionService } from './question.service';
 export { QuoteService } from './quote.service';
 export { TopicService } from './topic.service';
 export { AnswerService } from './answer.service';
+export { SessionConfigService } from './session-config.service';

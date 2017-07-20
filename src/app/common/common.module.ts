@@ -14,6 +14,7 @@ import {
   QuoteService,
   TopicService,
   AnswerService,
+  SessionConfigService,
 } from "./services";
 import { WakeupTopBarComponent } from "./components/wakeup-top-bar/wakeup-top-bar.component";
 import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side-nav.component";
@@ -28,6 +29,7 @@ import { WakeupCardComponent } from "./components/wakeup-card/wakeup-card.compon
   ],
   providers: [
     AuthTokenService,
+    SessionConfigService,
     LoginService,
     QuestionSetService,
     QuestionService,
@@ -42,10 +44,10 @@ import { WakeupCardComponent } from "./components/wakeup-card/wakeup-card.compon
     WakeupSideNavComponent,
     WakeupCardComponent,
     MaterialModule,
-    CommonModule, 
-    RouterModule, 
-    ReactiveFormsModule, 
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
     FormsModule
   ]
 })
-export class WakeupCommonModule {}
+export class WakeupCommonModule { }

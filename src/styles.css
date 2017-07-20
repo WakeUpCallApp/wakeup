@@ -53,6 +53,6 @@ textarea {
   min-width: 100%;
 }
 
-.mat-dialog-container {
-  max-width: none !important;
+.mat-dialog-content{
+  overflow: inherit !important;
 }

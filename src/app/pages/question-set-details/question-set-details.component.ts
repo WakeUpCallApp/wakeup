@@ -13,13 +13,16 @@ import { Store } from "@ngrx/store";
 import "@ngrx/core/add/operator/select";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
-
+import { SessionOptions } from "../../common/services/session-config.service";
 import { WakeupQuotesBrowserComponent } from "./components/wakeup-quotes-browser/wakeup-quotes-browser.component";
+import { WakeupSessionConfigComponent } from "./components/wakeup-session-config/wakeup-session-config.component";
 import { WakeupEditQuestionDialogComponent } from "./components/wakeup-edit-question-dialog/wakeup-edit-question-dialog.component";
+import { SessionConfigService } from "../../common/services/session-config.service";
 import { QuestionSet } from "../../common/models/question-set.model";
 import { IQuestion } from "../../common/models/question.model";
 import * as reducers from "../../common/reducers";
 import * as actions from "../../common/actions/question-set.actions";
+import appConstants from "../../common/app-constants";
 
 @Component({
   selector: "wakeup-question-set-details",
@@ -35,6 +38,7 @@ export class QuestionSetDetailsComponent implements OnInit {
   @ViewChild("nameInput") nameElRef: ElementRef;
   @ViewChild("descriptionInput") descriptionElRef: ElementRef;
   constructor(
+    private sessionConfigService: SessionConfigService,
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
     private router: Router,
@@ -42,7 +46,7 @@ export class QuestionSetDetailsComponent implements OnInit {
     private ngzone: NgZone,
     private cdref: ChangeDetectorRef,
     private appref: ApplicationRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.actionsSubscription = this.route.params
@@ -145,6 +149,22 @@ export class QuestionSetDetailsComponent implements OnInit {
       if (result) {
         question.quoteId = result.selectedQuoteId;
         this.store.dispatch(new actions.EditQuestionAction(question));
+      }
+    });
+  }
+
+  openPracticeSessionModel() {
+    let config: MdDialogConfig = {
+      disableClose: false,
+    };
+    let dialogRef = this.dialog.open(WakeupSessionConfigComponent, config);
+    dialogRef.afterClosed().subscribe((options: SessionOptions) => {
+      if (options) {
+        this.sessionConfigService.setOptions(options);
+        this.router.navigate([
+          appConstants.routes.PRACTICE_SESSION,
+          this.currentQuestionSet.id
+        ]);
       }
     });
   }

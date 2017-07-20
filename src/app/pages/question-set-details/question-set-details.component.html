@@ -37,7 +37,12 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button class="practiceQuestionSetButton" md-button md-button-raised>Practice Question Set</button>
+                <button 
+                *ngIf="currentQuestionSet.questions?.length"
+                class="practiceQuestionSetButton" 
+                md-button 
+                md-button-raised
+                (click)="openPracticeSessionModel()">Practice Question Set</button>
             </div>
         </wakeup-card>
     </section>

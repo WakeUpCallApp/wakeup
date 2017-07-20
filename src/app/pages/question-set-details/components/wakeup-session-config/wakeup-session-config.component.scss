@@ -1,0 +1,17 @@
+@import "~../../../../common/constants";
+.otherOptions {
+    display: flex;
+    flex-wrap: wrap;
+    [name='repeatQS'] {
+        flex: 1;
+    }
+}
+
+md-input-container {
+    width: 100%;
+}
+
+.startButton:not(:disabled) {
+    background-color: $accent;
+    margin-left: 8px;
+}
