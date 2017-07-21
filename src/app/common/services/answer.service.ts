@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { Http, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
-import Parser from "./parser";
-import { Answer, IAnswer, AnswerApi } from "../models/answer.model";
+import Parser from './parser';
+import { Answer, IAnswer, AnswerApi } from '../models/answer.model';
 
 @Injectable()
 export class AnswerService {
@@ -24,7 +24,7 @@ export class AnswerService {
 
   create(answer: IAnswer): Observable<Answer> {
     return this.http
-      .post("/api/answers/", answer)
+      .post('/api/answers/', answer)
       .map((response: Response) => response.json())
       .map((answerApi: AnswerApi) => {
         return Parser.answerFromApi(answerApi);
@@ -51,6 +51,6 @@ export class AnswerService {
 
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error || "Server error");
+    return Observable.throw(error || 'Server error');
   }
 }

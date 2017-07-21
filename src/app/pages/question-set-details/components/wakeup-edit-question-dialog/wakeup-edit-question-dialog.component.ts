@@ -1,10 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { MdDialogRef } from "@angular/material";
+import { Component, OnInit } from '@angular/core';
+import { MdDialogRef } from '@angular/material';
 
 @Component({
-  selector: "wakeup-wakeup-edit-question-dialog",
-  templateUrl: "./wakeup-edit-question-dialog.component.html",
-  styleUrls: ["./wakeup-edit-question-dialog.component.scss"]
+  selector: 'wakeup-edit-question-dialog',
+  templateUrl: './wakeup-edit-question-dialog.component.html',
+  styleUrls: ['./wakeup-edit-question-dialog.component.scss']
 })
 export class WakeupEditQuestionDialogComponent implements OnInit {
   question;

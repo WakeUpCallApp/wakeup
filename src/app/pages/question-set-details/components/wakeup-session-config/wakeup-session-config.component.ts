@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialogRef } from "@angular/material";
-import { SessionOptions } from "../../../../common/services/session-config.service";
+import { MdDialogRef } from '@angular/material';
+import { SessionOptions } from '../../../../common/services/session-config.service';
 @Component({
   selector: 'wakeup-session-config',
   templateUrl: './wakeup-session-config.component.html',

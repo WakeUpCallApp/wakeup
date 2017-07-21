@@ -18,12 +18,11 @@ export class UserDetailResolver implements Resolve<User> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
     if (!this.loginService.getCurrentUser() && this.authTokenService.isLoggedIn()) {
       return this.loginService.getUserDetails()
-      .catch(error => {
-        this.router.navigate([AppConstants.routes.LANDING]);
-        return Observable.of(error);
-      });
-    }
-    else if (!this.loginService.getCurrentUser()) {
+        .catch(error => {
+          this.router.navigate([AppConstants.routes.LANDING]);
+          return Observable.of(error);
+        });
+    } else if (!this.loginService.getCurrentUser()) {
       this.router.navigate([AppConstants.routes.LANDING]);
       return null;
     }

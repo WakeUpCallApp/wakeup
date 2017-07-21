@@ -1,6 +1,6 @@
-import { Action } from "@ngrx/store";
-import { Question } from "../models/question.model";
-import * as actions from "../actions/question.actions";
+import { Action } from '@ngrx/store';
+import { Question } from '../models/question.model';
+import * as actions from '../actions/question.actions';
 
 export interface State {
   entities: Question[];

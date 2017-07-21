@@ -1,14 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { QuestionSet } from "../../common/models/question-set.model";
-import * as reducers from "../../common/reducers";
-import * as actions from "../../common/actions/question-set.actions";
-import { Observable } from "rxjs/Observable";
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { QuestionSet } from '../../common/models/question-set.model';
+import * as reducers from '../../common/reducers';
+import * as actions from '../../common/actions/question-set.actions';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: "wakeup-question-sets",
-  templateUrl: "./question-sets.component.html",
-  styleUrls: ["./question-sets.component.scss"],
+  selector: 'wakeup-question-sets',
+  templateUrl: './question-sets.component.html',
+  styleUrls: ['./question-sets.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionSetsComponent implements OnInit {
@@ -24,7 +24,7 @@ export class QuestionSetsComponent implements OnInit {
     this.questionSets$ = store.select(reducers.getQuestionSetsSortedState);
     this.searchTerm$ = store.select(reducers.getQuestionSetSearchTerm);
     this.filter$ = store.select(reducers.getQuestionSetFilter);
-    
+
     this.filteredList$ = Observable.combineLatest(
       this.questionSets$,
       this.searchTerm$,
@@ -36,11 +36,11 @@ export class QuestionSetsComponent implements OnInit {
 
         return searchTerm
           ? filteredQuestionSets.filter(
-              questionSet =>
-                questionSet.name
-                  .toLocaleLowerCase()
-                  .indexOf(searchTerm.toLocaleLowerCase()) !== -1
-            )
+            questionSet =>
+              questionSet.name
+                .toLocaleLowerCase()
+                .indexOf(searchTerm.toLocaleLowerCase()) !== -1
+          )
           : filteredQuestionSets;
       }
     );

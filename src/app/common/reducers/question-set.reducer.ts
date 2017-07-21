@@ -1,6 +1,6 @@
-import { Action } from "@ngrx/store";
-import { QuestionSet } from "../models/question-set.model";
-import * as actions from "../actions/question-set.actions";
+import { Action } from '@ngrx/store';
+import { QuestionSet } from '../models/question-set.model';
+import * as actions from '../actions/question-set.actions';
 
 export interface State {
   entities: QuestionSet[];
@@ -14,12 +14,11 @@ export const initialState: State = {
   entities: [],
   isLoading: false,
   currentQuestionSet: <QuestionSet>{},
-  searchTerm: "",
+  searchTerm: '',
   filter: actions.Filter.ALL
 };
 
 export function reducer(state = initialState, action: Action): State {
-  let question;
   let updatedQuestionSet;
 
   switch (action.type) {
@@ -56,15 +55,13 @@ export function reducer(state = initialState, action: Action): State {
         )
       });
     case actions.ActionTypes.ADD_QUESTION_SUCCESS:
-      question = action.payload;
       updatedQuestionSet = Object.assign({}, state.currentQuestionSet, {
-        questions: [...state.currentQuestionSet.questions, question]
+        questions: [...state.currentQuestionSet.questions, action.payload]
       });
       return Object.assign({}, state, {
         currentQuestionSet: updatedQuestionSet
       });
     case actions.ActionTypes.EDIT_QUESTION_SUCCESS:
-      question = action.payload;
       updatedQuestionSet = Object.assign({}, state.currentQuestionSet, {
         questions: state.currentQuestionSet.questions.map(question => {
           if (question.id === action.payload.id) {

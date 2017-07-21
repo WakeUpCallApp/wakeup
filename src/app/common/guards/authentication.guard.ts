@@ -5,7 +5,7 @@ import appConstants from '../app-constants';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
-    constructor(private _router:Router, private authService: AuthTokenService) { }
+    constructor(private _router: Router, private authService: AuthTokenService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         if (!this.authService.isLoggedIn()) {

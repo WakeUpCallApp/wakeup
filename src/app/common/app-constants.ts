@@ -9,7 +9,7 @@ const appConstants = {
         QUESTION_SETS: 'questionSets',
         QUESTION_SET_DETAILS: 'questionSetDetails',
         TOPICS: 'topics',
-        TOPIC_DETAILS:'topicDetails',
+        TOPIC_DETAILS: 'topicDetails',
         QUOTES: 'quotes',
         NEW_QUOTE: 'newQuote',
         PRACTICE_SESSION: 'practiceSession'

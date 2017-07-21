@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
-import { Actions, Effect } from "@ngrx/effects";
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
 
-import "rxjs/add/operator/do";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/switchMap";
-import { Observable } from "rxjs/Observable";
-import AppConstants from "../app-constants";
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/switchMap';
+import { Observable } from 'rxjs/Observable';
+import AppConstants from '../app-constants';
 
-import * as quote from "../actions/quote.actions";
-import { QuoteService } from "../services/quote.service";
+import * as quote from '../actions/quote.actions';
+import { QuoteService } from '../services/quote.service';
 
 @Injectable()
 export class QuoteEffects {
@@ -32,7 +32,7 @@ export class QuoteEffects {
     .ofType(quote.ActionTypes.GET_BY_ID)
     .map(action => action.payload)
     .switchMap(quoteId => this.quoteService.getById(quoteId))
-    .map(result => new quote.GetByIdActionSuccess(result));  
+    .map(result => new quote.GetByIdActionSuccess(result));
 
   @Effect()
   getSuggestions$ = this.actions$

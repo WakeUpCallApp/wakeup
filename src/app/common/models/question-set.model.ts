@@ -4,7 +4,7 @@ export interface IQuestionSet {
     id?: number;
     name: string;
     description: string;
-    isDefault: boolean; 
+    isDefault: boolean;
 }
 
 export interface QuestionSetApi {
@@ -19,7 +19,7 @@ export interface QuestionSetApi {
 
 export class QuestionSet {
     constructor(
-        public id: number, 
+        public id: number,
         public name: string,
         public description: string,
         public user: string,
@@ -28,5 +28,4 @@ export class QuestionSet {
         public isDefault: boolean,
         public questions?: Question[]
     ) { }
-
 }

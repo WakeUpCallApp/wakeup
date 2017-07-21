@@ -15,5 +15,5 @@ export class Answer {
         public id: number,
         public questionid: number,
         public text: string,
-        public createDate: Date) {}
-} 
+        public createDate: Date) { }
+}

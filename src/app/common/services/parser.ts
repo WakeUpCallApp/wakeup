@@ -1,8 +1,8 @@
-import { QuestionSet, QuestionSetApi } from "../models/question-set.model";
-import { Question, IQuestion, QuestionApi } from "../models/question.model";
-import { Quote, QuoteApi } from "../models/quote.model";
-import { Topic, TopicApi } from "../models/topic.model";
-import { Answer, AnswerApi } from "../models/answer.model";
+import { QuestionSet, QuestionSetApi } from '../models/question-set.model';
+import { Question, IQuestion, QuestionApi } from '../models/question.model';
+import { Quote, QuoteApi } from '../models/quote.model';
+import { Topic, TopicApi } from '../models/topic.model';
+import { Answer, AnswerApi } from '../models/answer.model';
 
 export default class Parser {
   static questionFromApi(questionApi: QuestionApi): Question {
@@ -78,20 +78,20 @@ export default class Parser {
     };
   }
 
-  static answerFromApi(answer: AnswerApi) : Answer {
-      return new Answer(
-         answer._id,
-         answer.question,
-         answer.text,
-         new Date(answer.date));
+  static answerFromApi(answer: AnswerApi): Answer {
+    return new Answer(
+      answer._id,
+      answer.question,
+      answer.text,
+      new Date(answer.date));
   }
 
   static answerToApi(answer: Answer): AnswerApi {
-     return {
-        _id: answer.id,
-        question: answer.questionid,
-        text: answer.text,
-        date: answer.createDate.getTime()
-     }
+    return {
+      _id: answer.id,
+      question: answer.questionid,
+      text: answer.text,
+      date: answer.createDate.getTime()
+    };
   }
 }

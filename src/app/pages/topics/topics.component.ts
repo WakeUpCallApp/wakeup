@@ -1,16 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
-import { Router } from "@angular/router";
-import { Store } from "@ngrx/store";
-import { Topic } from "../../common/models/topic.model";
-import * as reducers from "../../common/reducers";
-import * as actions from "../../common/actions/topic.actions";
-import { Observable } from "rxjs/Observable";
-import AppConstants from "../../common/app-constants";
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Topic } from '../../common/models/topic.model';
+import * as reducers from '../../common/reducers';
+import * as actions from '../../common/actions/topic.actions';
+import { Observable } from 'rxjs/Observable';
+import AppConstants from '../../common/app-constants';
 
 @Component({
-  selector: "wakeup-topics",
-  templateUrl: "./topics.component.html",
-  styleUrls: ["./topics.component.scss"],
+  selector: 'wakeup-topics',
+  templateUrl: './topics.component.html',
+  styleUrls: ['./topics.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TopicsComponent implements OnInit {

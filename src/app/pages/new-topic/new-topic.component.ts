@@ -1,18 +1,18 @@
-import { Component, OnInit } from "@angular/core";
-import { ITopic } from "../../common/models/topic.model";
-import { Store } from "@ngrx/store";
-import * as reducers from "../../common/reducers";
-import * as actions from "../../common/actions/topic.actions";
+import { Component, OnInit } from '@angular/core';
+import { ITopic } from '../../common/models/topic.model';
+import { Store } from '@ngrx/store';
+import * as reducers from '../../common/reducers';
+import * as actions from '../../common/actions/topic.actions';
 
 @Component({
-  selector: "wakeup-new-topic",
-  templateUrl: "./new-topic.component.html",
-  styleUrls: ["./new-topic.component.scss"]
+  selector: 'wakeup-new-topic',
+  templateUrl: './new-topic.component.html',
+  styleUrls: ['./new-topic.component.scss']
 })
 export class NewTopicComponent implements OnInit {
   topic: ITopic = {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     isDefault: false
   };
   isCreating = false;

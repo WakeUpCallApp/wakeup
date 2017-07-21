@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
-import { MdDialog, MdDialogConfig } from "@angular/material";
-import { WakeupQuotesBrowserComponent } from "../wakeup-quotes-browser/wakeup-quotes-browser.component";
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { MdDialog, MdDialogConfig } from '@angular/material';
+import { WakeupQuotesBrowserComponent } from '../wakeup-quotes-browser/wakeup-quotes-browser.component';
 
 @Component({
-  selector: "wakeup-add-question",
-  templateUrl: "./wakeup-add-question.component.html",
-  styleUrls: ["./wakeup-add-question.component.scss"]
+  selector: 'wakeup-add-question',
+  templateUrl: './wakeup-add-question.component.html',
+  styleUrls: ['./wakeup-add-question.component.scss']
 })
 export class WakeupAddQuestionComponent implements OnInit {
   @Input() question;
@@ -20,12 +20,12 @@ export class WakeupAddQuestionComponent implements OnInit {
   }
 
   openQuotesBrowser(question) {
-    let config: MdDialogConfig = {
+    const config: MdDialogConfig = {
       disableClose: false,
-      width: "80%",
-      height: "80%"
+      width: '80%',
+      height: '80%'
     };
-    let dialogRef = this.dialog.open(WakeupQuotesBrowserComponent, config);
+    const dialogRef = this.dialog.open(WakeupQuotesBrowserComponent, config);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         question.quote = result.selectedQuoteId;

@@ -1,25 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Store } from "@ngrx/store";
-import * as reducers from "../../common/reducers";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
-import * as actions from "../../common/actions/question-set.actions";
-import * as quoteActions from "../../common/actions/quote.actions";
-import * as answerActions from "../../common/actions/answer.actions";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Title } from "@angular/platform-browser";
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as reducers from '../../common/reducers';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import * as actions from '../../common/actions/question-set.actions';
+import * as quoteActions from '../../common/actions/quote.actions';
+import * as answerActions from '../../common/actions/answer.actions';
 
-import { QuestionSet } from "../../common/models/question-set.model";
-import { Quote } from "../../common/models/quote.model";
-import appConstants from "../../common/app-constants";
-import { SessionConfigService, SessionOptions } from "../../common/services/session-config.service";
+import { QuestionSet } from '../../common/models/question-set.model';
+import { Quote } from '../../common/models/quote.model';
+import appConstants from '../../common/app-constants';
+import { SessionConfigService, SessionOptions } from '../../common/services/session-config.service';
 
 @Component({
-  selector: "wakeup-practice-session",
-  templateUrl: "./practice-session.component.html",
-  styleUrls: ["./practice-session.component.scss"]
+  selector: 'wakeup-practice-session',
+  templateUrl: './practice-session.component.html',
+  styleUrls: ['./practice-session.component.scss']
 })
-export class PracticeSessionComponent implements OnInit {
-  displayQuestion: boolean = true;
+export class PracticeSessionComponent implements OnInit, OnDestroy {
+  displayQuestion = true;
   currentQuestionSet: QuestionSet;
   actionsSubscription: Subscription;
   qsSubscription: Subscription;
@@ -34,14 +35,15 @@ export class PracticeSessionComponent implements OnInit {
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
     private router: Router,
-    private sessionConfigService: SessionConfigService
+    private sessionConfigService: SessionConfigService,
+    private titleService: Title
   ) {
     this.configOptions = this.sessionConfigService.getOptions() || <SessionOptions>{};
   }
 
   ngOnInit() {
     this.actionsSubscription = this.route.params
-      .select<string>("questionSetId")
+      .select<string>('questionSetId')
       .map(id => new actions.GetCurrentQSAction(id))
       .subscribe(this.store);
 
@@ -49,6 +51,7 @@ export class PracticeSessionComponent implements OnInit {
       .select(reducers.getCurrentQuestionSetState)
       .subscribe(currentQuestionSet => {
         this.currentQuestionSet = Object.assign({}, currentQuestionSet);
+        this.titleService.setTitle(`${this.currentQuestionSet.name} practice`);
         this.questionsNo = this.currentQuestionSet.questions ? this.currentQuestionSet.questions.length : 0;
         if (this.configOptions && this.configOptions.shuffleQuestions && this.questionsNo) {
           this.currentQuestionSet.questions = this.shuffle(this.currentQuestionSet.questions);
@@ -72,8 +75,7 @@ export class PracticeSessionComponent implements OnInit {
         new quoteActions.GetByIdAction(this.currentQuestion.quoteId)
       );
       this.currentQuote = this.store.select(reducers.getCurrentQuote);
-    }
-    else {
+    } else {
       this.currentQuote = null;
     }
     this.playQuestion();
@@ -81,7 +83,7 @@ export class PracticeSessionComponent implements OnInit {
 
   endQuestionSet() {
     clearTimeout(this.sessionTimer);
-    this.router.navigate([appConstants.routes.QUESTION_SET_DETAILS, this.currentQuestionSet.id])
+    this.router.navigate([appConstants.routes.QUESTION_SET_DETAILS, this.currentQuestionSet.id]);
   }
 
   setNextQuestion() {
@@ -92,15 +94,13 @@ export class PracticeSessionComponent implements OnInit {
         this.currentQuestionIndex++;
         this.setCurrentQuestion();
       });
-    }
-    else {
+    } else {
       if (this.configOptions.repeatQS) {
         this.displayQuestion = false;
         this.setQuestionTimeout(() => {
           this.resetQuestionSet();
         });
-      }
-      else {
+      } else {
         this.endQuestionSet();
       }
     }
@@ -108,7 +108,7 @@ export class PracticeSessionComponent implements OnInit {
 
   playQuestion() {
     this.displayQuestion = true;
-    var sound = new Audio("../../../assets/sounds/Bell-ding.mp3");
+    const sound = new Audio('../../../assets/sounds/Bell-ding.mp3');
     sound.play();
   }
 

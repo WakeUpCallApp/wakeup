@@ -1,7 +1,7 @@
-import { Action } from "@ngrx/store";
-import { Quote } from "../models/quote.model";
-import { Topic } from "../models/topic.model";
-import * as actions from "../actions/quote.actions";
+import { Action } from '@ngrx/store';
+import { Quote } from '../models/quote.model';
+import { Topic } from '../models/topic.model';
+import * as actions from '../actions/quote.actions';
 
 export interface State {
   topicsWithQuotes: Topic[];

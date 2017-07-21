@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { Http, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
-import Parser from "./parser";
-import { Question, IQuestion, QuestionApi } from "../models/question.model";
+import Parser from './parser';
+import { Question, IQuestion, QuestionApi } from '../models/question.model';
 
 @Injectable()
 export class QuestionService {
@@ -13,7 +13,7 @@ export class QuestionService {
 
   all(): Observable<Question[]> {
     return this.http
-      .get("/api/questions/allQuestions")
+      .get('/api/questions/allQuestions')
       .map((response: Response) => response.json())
       .map((questionApiList: QuestionApi[]) => {
         return questionApiList.map(questionApi =>
@@ -24,7 +24,7 @@ export class QuestionService {
 
   create(question: IQuestion): Observable<Question> {
     return this.http
-      .post("/api/questions/", question)
+      .post('/api/questions/', question)
       .map((response: Response) => response.json())
       .map((questionApi: QuestionApi) => {
         return Parser.questionFromApi(questionApi);
@@ -51,6 +51,6 @@ export class QuestionService {
 
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error || "Server error");
+    return Observable.throw(error || 'Server error');
   }
 }

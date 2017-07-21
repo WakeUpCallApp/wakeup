@@ -16,7 +16,7 @@ export class LoginWakeupCallComponent implements OnInit {
     email: '',
     password: ''
   };
-  isLoggingIn: boolean = false;
+  isLoggingIn = false;
   errorMessage: string;
   constructor(
     private loginService: LoginService,
@@ -41,13 +41,12 @@ export class LoginWakeupCallComponent implements OnInit {
         this.isLoggingIn = false;
         if (error.status === appConstants.errorCode.Unauthorized) {
           this.errorMessage = constants.wrongCredentials;
-        }
-        else {
+        } else {
           this.errorMessage = constants.genericError;
         }
       });
   }
   valuechange($event) {
-      this.errorMessage = undefined;
+    this.errorMessage = undefined;
   }
 }

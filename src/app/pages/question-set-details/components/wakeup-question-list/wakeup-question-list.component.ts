@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: "wakeup-question-list",
-  templateUrl: "./wakeup-question-list.component.html",
-  styleUrls: ["./wakeup-question-list.component.scss"]
+  selector: 'wakeup-question-list',
+  templateUrl: './wakeup-question-list.component.html',
+  styleUrls: ['./wakeup-question-list.component.scss']
 })
 export class WakeupQuestionListComponent implements OnInit {
   @Input() questions;

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
@@ -11,12 +11,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MaterialModule } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { 
-  QuestionSetEffects, 
-  QuestionEffects, 
+import {
+  QuestionSetEffects,
+  QuestionEffects,
   QuoteEffects,
   TopicEffects,
-  AnswerEffects } from './common/effects';
+  AnswerEffects
+} from './common/effects';
 
 import { reducer } from './common/reducers';
 
@@ -74,10 +75,10 @@ import { PracticeSessionComponent } from './pages/practice-session/practice-sess
   ],
   providers: [
     {
-            provide: Http,
-            useFactory: httpFactory,
-            deps: [XHRBackend, RequestOptions, Router]
-     }
+      provide: Http,
+      useFactory: httpFactory,
+      deps: [XHRBackend, RequestOptions, Router]
+    }
   ],
   bootstrap: [AppComponent]
 })

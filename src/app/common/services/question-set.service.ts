@@ -16,7 +16,7 @@ export class QuestionSetService {
             .map((questionSetApiList) => {
                 return questionSetApiList.map(questionSetApi => {
                     return Parser.questionSetFromApi(questionSetApi);
-                })
+                });
             })
             .catch(this.handleError);
     }
@@ -25,7 +25,7 @@ export class QuestionSetService {
         return this.http.post('/api/questionSet', questionSet)
             .map((response: Response) => response.json())
             .map((questionSetApi: QuestionSetApi) => {
-                return Parser.questionSetFromApi(questionSetApi)
+                return Parser.questionSetFromApi(questionSetApi);
             })
             .catch(this.handleError);
     }
@@ -47,10 +47,10 @@ export class QuestionSetService {
         return this.http.put(`/api/questionSet/${questionSet.id}`, questionSet)
             .map((response: Response) => response.json())
             .map((questionSetApi: QuestionSetApi) => {
-                const questionSet = Parser.questionSetFromApi(questionSetApi);
-                questionSet.questions = questionSetApi.questions.map(question => Parser.questionFromApi(question));;
-                questionSet.questionIds = questionSetApi.questions.map(question => question._id);
-                return questionSet;
+                const questionSetObj = Parser.questionSetFromApi(questionSetApi);
+                questionSetObj.questions = questionSetApi.questions.map(question => Parser.questionFromApi(question));
+                questionSetObj.questionIds = questionSetApi.questions.map(question => question._id);
+                return questionSetObj;
             })
             .catch(this.handleError);
     }
@@ -65,7 +65,4 @@ export class QuestionSetService {
         console.error(error);
         return Observable.throw(error || 'Server error');
     }
-
-    
-
 }

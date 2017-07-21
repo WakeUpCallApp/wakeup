@@ -1,8 +1,8 @@
-export interface IQuestion{
-id: number;
-text: string;
-questionSet: number;
-quote?;
+export interface IQuestion {
+    id: number;
+    text: string;
+    questionSet: number;
+    quote?;
 }
 
 export interface QuestionApi {
@@ -10,18 +10,18 @@ export interface QuestionApi {
     text: string;
     date: string;
     questionSet: number;
-    answers: number[],
-    quote: number
+    answers: number[];
+    quote: number;
 }
 
 export class Question {
-    checked: boolean = false;
+    checked = false;
     constructor(
-    public id: number,    
-    public text: string,
-    public date: Date,
-    public questionSetId: number,
-    public answerIds: number[],
-    public quoteId?: number) {
+        public id: number,
+        public text: string,
+        public date: Date,
+        public questionSetId: number,
+        public answerIds: number[],
+        public quoteId?: number) {
     }
-} 
+}

@@ -1,27 +1,27 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Store } from "@ngrx/store";
-import { ActivatedRoute, Router } from "@angular/router";
-import * as reducers from "../../common/reducers";
-import * as questionActions from "../../common/actions/question.actions";
-import * as actions from "../../common/actions/quote.actions";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
+import { Store } from '@ngrx/store';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as reducers from '../../common/reducers';
+import * as questionActions from '../../common/actions/question.actions';
+import * as actions from '../../common/actions/quote.actions';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: "wakeup-new-quote",
-  templateUrl: "./new-quote.component.html",
-  styleUrls: ["./new-quote.component.scss"]
+  selector: 'wakeup-new-quote',
+  templateUrl: './new-quote.component.html',
+  styleUrls: ['./new-quote.component.scss']
 })
-export class NewQuoteComponent implements OnInit {
+export class NewQuoteComponent implements OnInit, OnDestroy {
   actionsSubscription: Subscription;
   authors$: Observable<string[]>;
   sources$: Observable<string[]>;
 
   quote = {
-    author: "",
-    text: "",
-    source: "",
+    author: '',
+    text: '',
+    source: '',
     questions: [],
     topic: -1
   };
@@ -33,7 +33,7 @@ export class NewQuoteComponent implements OnInit {
 
   ngOnInit() {
     this.actionsSubscription = this.route.params
-      .select<string>("topidId")
+      .select<string>('topidId')
       .subscribe(topicId => {
         this.quote.topic = +topicId;
       });

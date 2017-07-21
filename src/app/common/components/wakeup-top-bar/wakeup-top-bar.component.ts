@@ -17,7 +17,7 @@ import { User } from '../../models/user.model';
   styleUrls: ['./wakeup-top-bar.component.scss']
 })
 export class WakeupTopBarComponent implements OnInit {
-  @Input() isOpen: boolean = true;
+  @Input() isOpen = true;
   @Input() loggedUser: User;
   @Output() onOpenMenu = new EventEmitter();
   @Output() logout = new EventEmitter();

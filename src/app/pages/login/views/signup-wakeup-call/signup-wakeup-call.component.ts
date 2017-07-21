@@ -18,7 +18,7 @@ export class SignupWakeupCallComponent implements OnInit {
     password: ''
   };
   errorMessage: string;
-  isSigningIn: boolean = false;
+  isSigningIn = false;
 
   constructor(private loginService: LoginService, private router: Router) { }
 
@@ -40,11 +40,9 @@ export class SignupWakeupCallComponent implements OnInit {
         this.isSigningIn = false;
         if (error.status === appConstants.errorCode.Unauthorized) {
           this.errorMessage = constants.wrongCredentials;
-        }
-        else if(error.status === appConstants.errorCode.UnprocessableEntity) {
+        } else if (error.status === appConstants.errorCode.UnprocessableEntity) {
           this.errorMessage = constants.uniqueEmailError;
-        }
-        else {
+        } else {
           this.errorMessage = constants.genericError;
         }
       });

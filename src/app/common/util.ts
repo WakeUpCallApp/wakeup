@@ -10,23 +10,25 @@
 
 const typeCache: { [label: string]: boolean } = {};
 export function type<T>(label: T | ''): T {
-  if (typeCache[<string>label]) {
-    throw new Error(`Action type "${label}" is not unique"`);
-  }
+    if (typeCache[<string>label]) {
+        throw new Error(`Action type "${label}" is not unique"`);
+    }
 
-  typeCache[<string>label] = true;
+    typeCache[<string>label] = true;
 
-  return <T>label;
+    return <T>label;
 }
 
 
 export function addEvent(object, type, callback) {
-    if (object == null || typeof(object) == 'undefined') return;
+    if (object == null || typeof (object) === 'undefined') {
+        return;
+    }
     if (object.addEventListener) {
         object.addEventListener(type, callback, false);
     } else if (object.attachEvent) {
-        object.attachEvent("on" + type, callback);
+        object.attachEvent('on' + type, callback);
     } else {
-        object["on"+type] = callback;
+        object['on' + type] = callback;
     }
 };

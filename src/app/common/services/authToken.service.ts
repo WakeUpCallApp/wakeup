@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { JwtHelper } from 'angular2-jwt';
 
 @Injectable()
-export class AuthTokenService{
+export class AuthTokenService {
   token;
   jwtHelper: JwtHelper = new JwtHelper();
 
-
-  constructor(){}
+  constructor() { }
 
   setToken(expToken) {
     localStorage.setItem('token', expToken);
@@ -28,12 +27,12 @@ export class AuthTokenService{
   }
 
   getUserInfo() {
-      const token = this.jwtHelper.decodeToken(this.getStoredToken());
-      return {
-        name: token.name,
-        id: token._id,
-        role: token.role
-      }
+    const token = this.jwtHelper.decodeToken(this.getStoredToken());
+    return {
+      name: token.name,
+      id: token._id,
+      role: token.role
+    };
   }
 
   isLoggedIn() {

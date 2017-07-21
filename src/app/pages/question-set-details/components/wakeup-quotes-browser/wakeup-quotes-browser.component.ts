@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { MdDialogRef } from "@angular/material";
-import { Store } from "@ngrx/store";
-import * as reducers from "../../../../common/reducers";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
-import * as actions from "../../../../common/actions/quote.actions";
-import { Topic } from "../../../../common/models/topic.model";
-import { Quote } from "../../../../common/models/quote.model";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MdDialogRef } from '@angular/material';
+import { Store } from '@ngrx/store';
+import * as reducers from '../../../../common/reducers';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import * as actions from '../../../../common/actions/quote.actions';
+import { Topic } from '../../../../common/models/topic.model';
+import { Quote } from '../../../../common/models/quote.model';
 
 @Component({
-  selector: "wakeup-quotes-browser",
-  templateUrl: "./wakeup-quotes-browser.component.html",
-  styleUrls: ["./wakeup-quotes-browser.component.scss"]
+  selector: 'wakeup-quotes-browser',
+  templateUrl: './wakeup-quotes-browser.component.html',
+  styleUrls: ['./wakeup-quotes-browser.component.scss']
 })
-export class WakeupQuotesBrowserComponent implements OnInit {
+export class WakeupQuotesBrowserComponent implements OnInit, OnDestroy {
   quotesSubscription: Subscription;
   topics: Topic[];
   currentTopic: Topic;
@@ -44,7 +44,7 @@ export class WakeupQuotesBrowserComponent implements OnInit {
 
   toggleSelectedQuote(quote) {
     if (this.selectedQuoteId === quote.id) {
-      this.selectedQuoteId = "";
+      this.selectedQuoteId = '';
     } else {
       this.selectedQuoteId = quote.id;
       this.selectedQuoteText = quote.text;

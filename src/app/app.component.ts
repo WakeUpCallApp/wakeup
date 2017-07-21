@@ -1,18 +1,18 @@
-import { Component } from "@angular/core";
-import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
-import { Title } from "@angular/platform-browser";
-import { LoginService } from "./common/services/login.service";
-import { AuthTokenService } from "./common/services/authToken.service";
-import appConstants from "./common/app-constants";
-import { addEvent } from "./common/util";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { LoginService } from './common/services/login.service';
+import { AuthTokenService } from './common/services/authToken.service';
+import appConstants from './common/app-constants';
+import { addEvent } from './common/util';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  public isOpen: boolean = false;
+export class AppComponent implements OnInit, OnDestroy{
+  public isOpen = false;
 
   constructor(
     private router: Router,
@@ -20,21 +20,21 @@ export class AppComponent {
     private authTokenService: AuthTokenService,
     private activatedRoute: ActivatedRoute,
     private titleService: Title
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.router.events
       .filter(event => event instanceof NavigationEnd)
       .map(() => this.activatedRoute)
       .map(route => {
-        while (route.firstChild) route = route.firstChild;
+        while (route.firstChild) { route = route.firstChild; }
         return route;
       })
-      .filter(route => route.outlet === "primary")
+      .filter(route => route.outlet === 'primary')
       .mergeMap(route => route.data)
-      .subscribe(event => this.titleService.setTitle(event["title"]));
+      .subscribe(event => this.titleService.setTitle(event['title']));
 
-    addEvent(window, "resize", e => {
+    addEvent(window, 'resize', e => {
       if (this.isOpen) {
         this.isOpen = window.innerWidth < 1000;
       }
@@ -42,7 +42,7 @@ export class AppComponent {
   }
 
   ngOnDestroy() {
-    window.document.removeEventListener("resize");
+    window.document.removeEventListener('resize');
   }
 
   openMenu(isOpen) {

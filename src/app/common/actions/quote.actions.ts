@@ -1,22 +1,22 @@
-import { Action } from "@ngrx/store";
-import { Quote, QuoteApi } from "../models/quote.model";
-import { type } from "../util";
+import { Action } from '@ngrx/store';
+import { Quote, QuoteApi } from '../models/quote.model';
+import { type } from '../util';
 
 export const ActionTypes = {
-  GET_BY_TOPIC_ID: type("[Quote] Get By Topic Id"),
-  GET_BY_TOPIC_ID_SUCCESS: type("[Quote] Get By Topic Id Success"),
-  GET_BY_ID: type("[Quote] Get By Id"),
-  GET_BY_ID_SUCCESS: type("[Quote] Get By Id Success"),
-  LOAD: type("[Quote] Load"),
-  LOAD_SUCCESS: type("[Quote] Load success"),
-  LOAD_ERROR: type("[Quote] Load error"),
-  CREATE: type("[Quote] Create"),
-  CREATE_SUCCESS: type("[Quote] Create success"),
-  CREATE_ERROR: type("[Quote] Create error"),
-  UPDATE: type("[Quote] Update"),
-  DELETE: type("[Quote] Delete"),
-  GET_SUGGESTIONS: type("[Quote] Get Suggestions"),
-  GET_SUGGESTIONS_SUCCESS: type("[Quote] Get Suggestions Success")
+  GET_BY_TOPIC_ID: type('[Quote] Get By Topic Id'),
+  GET_BY_TOPIC_ID_SUCCESS: type('[Quote] Get By Topic Id Success'),
+  GET_BY_ID: type('[Quote] Get By Id'),
+  GET_BY_ID_SUCCESS: type('[Quote] Get By Id Success'),
+  LOAD: type('[Quote] Load'),
+  LOAD_SUCCESS: type('[Quote] Load success'),
+  LOAD_ERROR: type('[Quote] Load error'),
+  CREATE: type('[Quote] Create'),
+  CREATE_SUCCESS: type('[Quote] Create success'),
+  CREATE_ERROR: type('[Quote] Create error'),
+  UPDATE: type('[Quote] Update'),
+  DELETE: type('[Quote] Delete'),
+  GET_SUGGESTIONS: type('[Quote] Get Suggestions'),
+  GET_SUGGESTIONS_SUCCESS: type('[Quote] Get Suggestions Success')
 };
 
 export class GetByTopicIdAction implements Action {
