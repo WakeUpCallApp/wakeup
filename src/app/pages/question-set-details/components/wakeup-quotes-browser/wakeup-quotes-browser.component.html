@@ -14,7 +14,7 @@
       [ngClass]="{'selected': isSelectedQuote(quote)}" 
       (click)="toggleSelectedQuote(quote)"
       >
-        <span class="quoteText truncate">{{quote.text}}</span>
+        <span class="quoteText truncate" title="{{quote.text}}">{{quote.text}}</span>
       </li>
     </ul>
   </div>

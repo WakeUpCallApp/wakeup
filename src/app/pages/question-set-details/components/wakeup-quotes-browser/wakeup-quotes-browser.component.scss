@@ -23,6 +23,7 @@
         width: 200px;
         height: 100px;
         cursor: pointer;
+        display: flex;
     }
     li:hover {
         background-color: rgba(0, 0, 0, 0.05);

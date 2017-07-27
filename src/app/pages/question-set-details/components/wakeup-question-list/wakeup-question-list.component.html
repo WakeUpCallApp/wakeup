@@ -29,12 +29,15 @@
     </h3>
     <hr>
     <ul>
-      <li *ngFor="let question of questions">
+      <li *ngFor="let question of questions; index as i">
         <md-checkbox *ngIf="canEdit" class="questionCheckbox" [(ngModel)]="question.checked">
           <span class="questionTitle">{{question.text}}</span>
         </md-checkbox>
 
-        <a *ngIf="!canEdit" class="questionTitleLink" [routerLink]="['/answers', question.id]"><span class="title">{{question.text}}</span> <span> <md-icon>keyboard_arrow_right</md-icon></span></a>
+        <a *ngIf="!canEdit" class="questionTitleLink" [routerLink]="['/answers', question.id]">
+          <span class="title">{{i+1}} . {{question.text}}</span> 
+          <span> <md-icon>keyboard_arrow_right</md-icon></span>
+        </a>
 
         <button md-icon-button [mdMenuTriggerFor]="questionMenu" *ngIf="canEdit">
             <md-icon>more_vert</md-icon>
