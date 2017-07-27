@@ -1,26 +1,28 @@
-import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Injectable } from "@angular/core";
+import { Actions, Effect } from "@ngrx/effects";
 
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/switchMap';
-import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
-import AppConstants from '../app-constants';
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/switchMap";
+import { Observable } from "rxjs/Observable";
+import { Router } from "@angular/router";
+import AppConstants from "../app-constants";
 
-import * as questionSet from '../actions/question-set.actions';
-import { QuestionSetService, QuestionService } from '../services';
+import * as questionSet from "../actions/question-set.actions";
+import { QuestionSetService, QuestionService } from "../services";
 
 @Injectable()
 export class QuestionSetEffects {
-  @Effect() load$ = this.actions$
+  @Effect()
+  load$ = this.actions$
     .ofType(questionSet.ActionTypes.LOAD)
     .map(action => action.payload)
     .switchMap(() => this.questionSetService.all())
     .map(result => new questionSet.LoadActionSuccess(result));
 
-  @Effect() create$ = this.actions$
+  @Effect()
+  create$ = this.actions$
     .ofType(questionSet.ActionTypes.CREATE)
     .map(action => action.payload)
     .switchMap(questionSet => this.questionSetService.create(questionSet))
@@ -39,14 +41,16 @@ export class QuestionSetEffects {
       return Observable.of(questionSet);
     });
 
-  @Effect() update$ = this.actions$
+  @Effect()
+  update$ = this.actions$
     .ofType(questionSet.ActionTypes.UPDATE)
     .map(action => action.payload)
     .switchMap(questionSet => this.questionSetService.update(questionSet))
     .map(result => new questionSet.UpdateActionSuccess(result))
     .catch(error => Observable.of(new questionSet.UpdateActionError(error)));
 
-  @Effect() delete$ = this.actions$
+  @Effect()
+  delete$ = this.actions$
     .ofType(questionSet.ActionTypes.DELETE)
     .map(action => action.payload)
     .switchMap(questionSet => this.questionSetService.delete(questionSet))
@@ -60,7 +64,8 @@ export class QuestionSetEffects {
       this.router.navigate([AppConstants.routes.QUESTION_SETS]);
     });
 
-  @Effect() getCurrentQS$ = this.actions$
+  @Effect()
+  getCurrentQS$ = this.actions$
     .ofType(questionSet.ActionTypes.GET_CURRENT_QUESTION_SET)
     .map(action => action.payload)
     .switchMap(id =>
@@ -72,19 +77,22 @@ export class QuestionSetEffects {
         )
     );
 
-  @Effect() addQuestion$ = this.actions$
+  @Effect()
+  addQuestion$ = this.actions$
     .ofType(questionSet.ActionTypes.ADD_QUESTION)
     .map(action => action.payload)
     .switchMap(question => this.questionService.create(question))
     .map(result => new questionSet.AddQuestionActionSuccess(result));
 
-  @Effect() questionHandling$ = this.actions$
+  @Effect()
+  questionHandling$ = this.actions$
     .ofType(questionSet.ActionTypes.EDIT_QUESTION)
     .map(action => action.payload)
     .switchMap(question => this.questionService.update(question))
     .map(result => new questionSet.EditQuestionActionSuccess(result));
 
-  @Effect() deleteQuestion$ = this.actions$
+  @Effect()
+  deleteQuestion$ = this.actions$
     .ofType(questionSet.ActionTypes.DELETE_QUESTION)
     .map(action => action.payload)
     .flatMap(question => this.questionService.delete(question))
@@ -98,6 +106,12 @@ export class QuestionSetEffects {
       this.router.navigate([AppConstants.routes.QUESTION_SETS]);
       return Observable.of(error);
     });
+
+  @Effect({ dispatch: false })
+  registerSession$ = this.actions$
+    .ofType(questionSet.ActionTypes.REGISTER_SESSION)
+    .map(action => action.payload)
+    .switchMap((questionSetId) => this.questionSetService.registerSession(questionSetId));
 
   constructor(
     private questionSetService: QuestionSetService,
