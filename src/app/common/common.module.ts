@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { UserDetailResolver } from './guards/user-details.resolver';
 import {
   LoginService,
@@ -37,6 +38,7 @@ import { WakeupCardComponent } from './components/wakeup-card/wakeup-card.compon
     TopicService,
     AnswerService,
     AuthenticationGuard,
+    CanDeactivateGuard,
     UserDetailResolver
   ],
   exports: [

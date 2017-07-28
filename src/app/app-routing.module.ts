@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AuthenticationGuard } from './common/guards/authentication.guard';
+import { CanDeactivateGuard } from './common/guards/can-deactivate.guard';
 import { UserDetailResolver } from './common/guards/user-details.resolver';
 import { LandingComponent } from './pages/landing/landing.component';
 import { QuestionSetsComponent } from './pages/question-sets/question-sets.component';
@@ -89,6 +90,7 @@ import { PracticeSessionComponent } from './pages/practice-session/practice-sess
         component: PracticeSessionComponent,
         data: { title: 'Practice Question Set' },
         canActivate: [AuthenticationGuard],
+        canDeactivate: [CanDeactivateGuard],
         resolve: { userDetails: UserDetailResolver }
       },
       { path: '', redirectTo: 'questionSets', pathMatch: 'full' },

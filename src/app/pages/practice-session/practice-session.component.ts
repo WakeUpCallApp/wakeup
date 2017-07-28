@@ -34,6 +34,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   answerText: string;
   private configOptions: SessionOptions = <SessionOptions>{};
   private sessionTimer;
+  private isSessionMode = false;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
@@ -69,12 +70,23 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
           );
         }
         this.setCurrentQuestion();
+        this.isSessionMode = true;
       });
   }
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
     this.qsSubscription.unsubscribe();
+  }
+
+  canDeactivate() {
+    console.log("i am navigating away");
+
+    if (this.isSessionMode) {
+      return window.confirm("Are you sure? The session will terminate.");
+    }
+
+    return true;
   }
 
   setCurrentQuestion() {
@@ -94,6 +106,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   }
 
   endQuestionSet() {
+    this.isSessionMode = false;
     clearTimeout(this.sessionTimer);
     this.store.dispatch(
       new actions.RegisterSessionAction(this.currentQuestionSet.id)

@@ -12,7 +12,8 @@
     "dev": "nodemon server/app.js",
     "start": "node server/app.js",
     "startServerProduction": "ng build && node server/app.js",
-    "postinstall": "ng build --prod"
+    "postinstall": "ng build --prod --stats-json --sm",
+    "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },
   "engines": {
     "node": "6.10.0",
@@ -79,6 +80,7 @@
     "nodemon": "^1.11.0",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
-    "tslint": "~4.5.0"
+    "tslint": "~4.5.0",
+    "webpack-bundle-analyzer": "^2.8.3"
   }
 }
