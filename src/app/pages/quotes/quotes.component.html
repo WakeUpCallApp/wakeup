@@ -8,7 +8,7 @@
                     </button>
         <md-menu #quotesMenu="mdMenu">
           <button md-menu-item> Import Quotes </button>
-          <button md-menu-item> Export Quotes </button>
+          <button md-menu-item *ngIf="(quotes$ | async).length"> Export Quotes </button>
         </md-menu>
       </div>
     </div>

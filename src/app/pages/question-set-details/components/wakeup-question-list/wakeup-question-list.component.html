@@ -45,7 +45,7 @@
         <md-menu #questionMenu="mdMenu">
           <button md-menu-item (click)="editQuestion(question)"> Edit </button>
           <button md-menu-item (click)="openQuotes(question)"> Add/Remove Quote </button>
-          <button md-menu-item> See answers </button>
+          <button md-menu-item [routerLink]="['/answers', question.id]"> See answers </button>
         </md-menu>
       </li>
     </ul>

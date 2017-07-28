@@ -14,6 +14,7 @@ import { TopicDetailsComponent } from './pages/topic-details/topic-details.compo
 import { QuotesComponent } from './pages/quotes/quotes.component';
 import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
 import { PracticeSessionComponent } from './pages/practice-session/practice-session.component';
+import { AnswersComponent } from './pages/answers/answers.component';
 
 @NgModule({
   imports: [
@@ -91,6 +92,13 @@ import { PracticeSessionComponent } from './pages/practice-session/practice-sess
         data: { title: 'Practice Question Set' },
         canActivate: [AuthenticationGuard],
         canDeactivate: [CanDeactivateGuard],
+        resolve: { userDetails: UserDetailResolver }
+      },
+      {
+        path: 'answers/:questionId',
+        component: AnswersComponent,
+        data: { title: 'Answers' },
+        canActivate: [AuthenticationGuard],
         resolve: { userDetails: UserDetailResolver }
       },
       { path: '', redirectTo: 'questionSets', pathMatch: 'full' },
