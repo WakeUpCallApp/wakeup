@@ -1,28 +1,32 @@
-import { ActionReducer, combineReducers } from '@ngrx/store';
-import { compose } from '@ngrx/core/compose';
-import { environment } from '../../../environments/environment';
+import { ActionReducer, combineReducers } from "@ngrx/store";
+import { compose } from "@ngrx/core/compose";
+import { environment } from "../../../environments/environment";
 
-import * as questionSet from './question-set.reducer';
-import * as quote from './quote.reducer';
-import * as topic from './topic.reducer';
-import * as question from './question.reducer';
-import { QuestionSet } from '../models/question-set.model';
-import { Topic } from '../models/topic.model';
-import { Quote } from '../models/quote.model';
-import { Question } from '../models/question.model';
+import * as questionSet from "./question-set.reducer";
+import * as quote from "./quote.reducer";
+import * as topic from "./topic.reducer";
+import * as question from "./question.reducer";
+import * as answer from "./answer.reducer";
+import { QuestionSet } from "../models/question-set.model";
+import { Topic } from "../models/topic.model";
+import { Quote } from "../models/quote.model";
+import { Question } from "../models/question.model";
+import { Answer } from "../models/answer.model";
 
 export interface State {
   questionSet: questionSet.State;
   quote: quote.State;
   topic: topic.State;
   question: question.State;
+  answer: answer.State;
 }
 
 const reducers = {
   questionSet: questionSet.reducer,
   quote: quote.reducer,
   topic: topic.reducer,
-  question: question.reducer
+  question: question.reducer,
+  answer: answer.reducer
 };
 
 const developmentReducer: ActionReducer<any> = combineReducers(reducers);
@@ -95,3 +99,9 @@ export const getSourceSuggestions = (state: State): string[] =>
 // Questions
 export const getQuestionsState = (state: State): Question[] =>
   state.question.entities;
+export const getCurrentQuestionState = (state: State): Question =>
+  state.question.currentQuestion;
+
+// Answers
+export const getAnswersState = (state: State): Answer[] =>
+  state.answer.entities;

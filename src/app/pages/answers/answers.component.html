@@ -1,3 +1,17 @@
-<p>
-  answers works!
-</p>
+<div class="answers pageContent" *ngIf="question$ | async as question">
+  <wakeup-card>
+    <div class="card-header">
+      <div class="title">Answers</div>
+    </div>
+    <div class="card-body">
+      <div class="summary">
+        {{question?.text}} {{question.quote?.text}}
+      </div>
+      <ul>
+        <li *ngFor="let answer of question.answers">
+          {{answer?.text}}
+        </li>
+      </ul>
+    </div>
+  </wakeup-card>
+</div>

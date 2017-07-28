@@ -1,15 +1,13 @@
 import { Action } from '@ngrx/store';
-import { Question } from '../models/question.model';
-import * as actions from '../actions/question.actions';
+import { Answer } from '../models/answer.model';
+import * as actions from '../actions/answer.actions';
 
 export interface State {
-  entities: Question[];
-  currentQuestion: Question;
+  entities: Answer[];
 }
 
 export const initialState: State = {
-  entities: [],
-  currentQuestion: <Question> {}
+  entities: []
 };
 
 export function reducer(state = initialState, action: Action): State {
@@ -19,10 +17,6 @@ export function reducer(state = initialState, action: Action): State {
         entities: action.payload,
         isLoading: false
       });
-    case actions.ActionTypes.GET_CURRENT_QUESTION_SUCCESS:
-      return Object.assign({}, state, {
-        currentQuestion: action.payload,
-      });  
     default: {
       return state;
     }

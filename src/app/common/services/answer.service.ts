@@ -11,9 +11,9 @@ import { Answer, IAnswer, AnswerApi } from '../models/answer.model';
 export class AnswerService {
   constructor(private http: Http) {}
 
-  all(questionSetId): Observable<Answer[]> {
+  all(questionId): Observable<Answer[]> {
     return this.http
-      .get(`/api/answers/${questionSetId}`)
+      .get(`/api/answers/${questionId}`)
       .map((response: Response) => response.json())
       .map((answerApiList: AnswerApi[]) => {
         return answerApiList.map(answerApi =>

@@ -6,6 +6,8 @@ export const ActionTypes = {
   LOAD: type('[Question] Load'),
   LOAD_SUCCESS: type('[Question] Load success'),
   LOAD_ERROR: type('[Question] Load error'),
+  GET_CURRENT_QUESTION: type('[Question] Get current question'),
+  GET_CURRENT_QUESTION_SUCCESS: type('[Question] Get current question success'),
   CREATE: type('[Question] Create'),
   CREATE_SUCCESS: type('[Question] Create success'),
   CREATE_ERROR: type('[Question] Create error'),
@@ -29,6 +31,16 @@ export class LoadActionError implements Action {
   type = ActionTypes.LOAD_ERROR;
 
   constructor(public payload) { }
+}
+
+export class GetCurrentQuestion implements Action {
+  type = ActionTypes.GET_CURRENT_QUESTION;
+  constructor(public payload: number) {}
+}
+
+export class GetCurrentQuestionSuccess implements Action {
+  type = ActionTypes.GET_CURRENT_QUESTION_SUCCESS;
+  constructor(public payload: Question) {}
 }
 
 export class CreateAction implements Action {
@@ -72,4 +84,6 @@ export type Actions
   | CreateActionSuccess
   | CreateActionError
   | UpdateAction
-  | DeleteAction;
+  | DeleteAction
+  | GetCurrentQuestion
+  | GetCurrentQuestionSuccess;

@@ -19,7 +19,7 @@ export const ActionTypes = {
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;
 
-  constructor(questionId) { }
+  constructor(public payload: number) { }
 }
 
 export class LoadActionSuccess implements Action {
