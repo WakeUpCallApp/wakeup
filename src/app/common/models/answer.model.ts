@@ -1,6 +1,9 @@
+import * as moment from 'moment';
+
 export interface IAnswer {
     text: string;
     question: number;
+    date;
 }
 
 export interface AnswerApi {
@@ -11,9 +14,12 @@ export interface AnswerApi {
 }
 
 export class Answer {
+    groupDay;
     constructor(
         public id: number,
         public questionid: number,
         public text: string,
-        public createDate: Date) { }
+        public createDate: Date) {
+            this.groupDay = moment(createDate).format('dddd, DD MMM YYYY');
+         }
 }

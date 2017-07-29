@@ -169,7 +169,8 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       new answerActions.CreateAction({
         question: this.currentQuestion.id,
-        text: this.answerText
+        text: this.answerText,
+        date: new Date().getTime(),
       })
     );
     this.answerText = "";

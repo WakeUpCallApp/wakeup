@@ -22,7 +22,10 @@
             "theme.scss",
             "../node_modules/font-awesome/css/font-awesome.css"
         ],
-        "scripts": [],
+        "scripts": [
+            "../node_modules/moment/min/moment.min.js",
+            "../node_modules/lodash/lodash.js"
+        ],
         "environmentSource": "environments/environment.ts",
         "environments": {
             "dev": "environments/environment.ts",

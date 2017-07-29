@@ -1,4 +1,5 @@
-import { Quote } from "./quote.model";
+import { Quote, QuoteApi } from './quote.model';
+import { AnswerApi } from './answer.model';
 
 export interface IQuestion {
   id: number;
@@ -12,8 +13,8 @@ export interface QuestionApi {
   text: string;
   date: string;
   questionSet: number;
-  answers: number[] | Object[];
-  quote: number | Object;
+  answers: number[] | Object[] | AnswerApi[];
+  quote: any;
 }
 
 export class Question {
@@ -24,6 +25,6 @@ export class Question {
     public date: Date,
     public questionSetId: number,
     public answers: number[] | Object[],
-    public quote?: number | Object
+    public quote?: any
   ) {}
 }

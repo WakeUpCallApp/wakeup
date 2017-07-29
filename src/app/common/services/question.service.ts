@@ -6,6 +6,8 @@ import "rxjs/add/operator/catch";
 
 import Parser from "./parser";
 import { Question, IQuestion, QuestionApi } from "../models/question.model";
+import { Answer, AnswerApi } from "../models/answer.model";
+import { QuoteApi } from "../models/quote.model";
 
 @Injectable()
 export class QuestionService {
@@ -27,8 +29,14 @@ export class QuestionService {
       .get(`/api/questions/question/${questionId}`)
       .map((response: Response) => response.json())
       .map((questionApi: QuestionApi) => {
-        const question = Parser.questionFromApi(questionApi);
-        question.quote = questionApi.quote;
+        const question: Question = Parser.questionFromApi(questionApi);
+        if (questionApi.quote) {
+          question.quote = Parser.quoteFromApi(questionApi.quote as QuoteApi);
+        }
+        const answers: Answer[] = (questionApi.answers as AnswerApi[]).map(
+          (answer: AnswerApi) => Parser.answerFromApi(answer)
+        );
+        question.answers = answers;
         return question;
       })
       .catch(this.handleError);

@@ -7,11 +7,12 @@
       <div class="summary">
         {{question?.text}} {{question.quote?.text}}
       </div>
-      <ul>
-        <li *ngFor="let answer of question.answers">
-          {{answer?.text}}
-        </li>
-      </ul>
+      <div *ngFor="let answerGroup of question.answers">
+        {{answerGroup.createDate}}
+        <ul>
+          <li *ngFor="let answer of answerGroup.answers"> {{answer.text}} </li>
+        </ul>
+      </div>
     </div>
   </wakeup-card>
 </div>

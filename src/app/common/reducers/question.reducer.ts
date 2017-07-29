@@ -1,6 +1,9 @@
-import { Action } from '@ngrx/store';
-import { Question } from '../models/question.model';
-import * as actions from '../actions/question.actions';
+import { Action } from "@ngrx/store";
+import { Question } from "../models/question.model";
+import * as actions from "../actions/question.actions";
+import Helper from "./helper";
+
+const helper = new Helper();
 
 export interface State {
   entities: Question[];
@@ -9,7 +12,7 @@ export interface State {
 
 export const initialState: State = {
   entities: [],
-  currentQuestion: <Question> {}
+  currentQuestion: <Question>{}
 };
 
 export function reducer(state = initialState, action: Action): State {
@@ -21,10 +24,20 @@ export function reducer(state = initialState, action: Action): State {
       });
     case actions.ActionTypes.GET_CURRENT_QUESTION_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestion: action.payload,
-      });  
+        currentQuestion: processQuestion(action.payload)
+      });
     default: {
       return state;
     }
   }
+}
+
+function processQuestion(question) {
+  const newQuestion = Object.assign({}, question);
+  newQuestion.answers = helper.groupAnswersByDate(question.answers);
+  newQuestion.answers = newQuestion.answers.map(answersGroup => {
+    answersGroup.answers = helper.sortAnswersByDate(answersGroup.answers);
+    return answersGroup;
+  });
+  return newQuestion;
 }
