@@ -55,7 +55,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
     this.qsSubscription = this.store
       .select(reducers.getCurrentQuestionSetState)
       .subscribe(currentQuestionSet => {
-        this.currentQuestionSet = Object.assign({}, currentQuestionSet);
+        this.currentQuestionSet = <QuestionSet>Object.assign({}, currentQuestionSet);
         this.titleService.setTitle(`${this.currentQuestionSet.name} practice`);
         this.questionsNo = this.currentQuestionSet.questions
           ? this.currentQuestionSet.questions.length

@@ -61,7 +61,7 @@ export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDes
     this.qsSubscription = this.store
       .select(reducers.getCurrentQuestionSetState)
       .subscribe(currentQuestionSet => {
-        this.currentQuestionSet = Object.assign({}, currentQuestionSet);
+        this.currentQuestionSet = <QuestionSet>Object.assign({}, currentQuestionSet);
         this.titleService.setTitle(`${this.currentQuestionSet.name} details`);
         this.updateObject = Object.assign({}, currentQuestionSet);
         this.newQuestion = this.getEmptyQuestion();

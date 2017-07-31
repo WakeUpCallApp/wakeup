@@ -1,6 +1,6 @@
-import { Action } from '@ngrx/store';
-import { QuestionSet } from '../models/question-set.model';
-import * as actions from '../actions/question-set.actions';
+import { Action } from "@ngrx/store";
+import { QuestionSet } from "../models/question-set.model";
+import * as actions from "../actions/question-set.actions";
 
 export interface State {
   entities: QuestionSet[];
@@ -14,7 +14,7 @@ export const initialState: State = {
   entities: [],
   isLoading: false,
   currentQuestionSet: <QuestionSet>{},
-  searchTerm: '',
+  searchTerm: "",
   filter: actions.Filter.ALL
 };
 
@@ -54,35 +54,56 @@ export function reducer(state = initialState, action: Action): State {
         )
       });
     case actions.ActionTypes.ADD_QUESTION_SUCCESS:
-      updatedQuestionSet = Object.assign({}, state.currentQuestionSet, {
-        questions: [...state.currentQuestionSet.questions, action.payload]
-      });
       return Object.assign({}, state, {
-        currentQuestionSet: updatedQuestionSet
-      });
-    case actions.ActionTypes.EDIT_QUESTION_SUCCESS:
-      updatedQuestionSet = Object.assign({}, state.currentQuestionSet, {
-        questions: state.currentQuestionSet.questions.map(question => {
-          if (question.id === action.payload.id) {
-            return Object.assign({}, question, action.payload);
-          }
-          return question;
-        })
-      });
-      return Object.assign({}, state, {
-        currentQuestionSet: updatedQuestionSet
-      });
-    case actions.ActionTypes.DELETE_QUESTION_SUCCESS:
-      updatedQuestionSet = Object.assign({}, state.currentQuestionSet, {
-        questions: state.currentQuestionSet.questions.filter(
-          question => question.id !== action.payload
+        currentQuestionSet: updateOnAddQuestion(
+          state.currentQuestionSet,
+          action.payload
         )
       });
+    case actions.ActionTypes.EDIT_QUESTION_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestionSet: updatedQuestionSet
+        currentQuestionSet: updateOnEditQuestion(
+          state.currentQuestionSet,
+          action.payload
+        )
+      });
+    case actions.ActionTypes.DELETE_QUESTION_SUCCESS:
+      return Object.assign({}, state, {
+        currentQuestionSet: updateOnDeleteQuestion(
+          state.currentQuestionSet,
+          action.payload
+        )
       });
     default: {
       return state;
     }
   }
+}
+
+function updateOnAddQuestion(questionSet, questionToAdd) {
+  const updatedQuestionSet = Object.assign({}, questionSet, {
+    questions: [...questionSet.questions, questionToAdd]
+  });
+  return updatedQuestionSet;
+}
+
+function updateOnEditQuestion(questionSet, questionToUpdate) {
+  const updatedQuestionSet = <QuestionSet>Object.assign({}, questionSet, {
+    questions: questionSet.questions.map(question => {
+      if (question.id === questionToUpdate.id) {
+        return Object.assign({}, question, questionToUpdate);
+      }
+      return question;
+    })
+  });
+  return updatedQuestionSet;
+}
+
+function updateOnDeleteQuestion(questionSet, questionToDelete) {
+  const updatedQuestionSet = Object.assign({}, questionSet, {
+    questions: questionSet.questions.filter(
+      question => question.id !== questionToDelete
+    )
+  });
+  return updatedQuestionSet;
 }

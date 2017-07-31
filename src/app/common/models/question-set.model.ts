@@ -26,6 +26,6 @@ export class QuestionSet {
         public practiceTimes: number,
         public questionIds: number[],
         public isDefault: boolean,
-        public questions?: Question[] | number
+        public questions?: Question[] | number[]
     ) { }
 }
