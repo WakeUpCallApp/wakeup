@@ -4,7 +4,7 @@ import { Title } from "@angular/platform-browser";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
-import { MdDialog, MdDialogConfig } from '@angular/material';
+import { MdDialog, MdDialogConfig } from "@angular/material";
 
 import * as reducers from "../../common/reducers";
 import * as quoteActions from "../../common/actions/quote.actions";
@@ -14,8 +14,7 @@ import { Quote } from "../../common/models/quote.model";
 import { Answer } from "../../common/models/answer.model";
 import { Question } from "../../common/models/question.model";
 import appConstants from "../../common/app-constants";
-import { WakeupEditAnswerDialogComponent } from "./components/wakeup-edit-answer-dialog/wakeup-edit-answer-dialog.component";
-
+import { WakeupAnswerDialogComponent } from "./components/wakeup-answer-dialog/wakeup-answer-dialog.component";
 
 @Component({
   selector: "wakeup-answers",
@@ -32,7 +31,7 @@ export class AnswersComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title,
-    private dialog: MdDialog,
+    private dialog: MdDialog
   ) {}
 
   ngOnInit() {
@@ -61,10 +60,7 @@ export class AnswersComponent implements OnInit {
       disableClose: false,
       width: "600px"
     };
-    const dialogRef = this.dialog.open(
-      WakeupEditAnswerDialogComponent,
-      config
-    );
+    const dialogRef = this.dialog.open(WakeupAnswerDialogComponent, config);
     dialogRef.componentInstance.answer = Object.assign({}, answer);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -75,5 +71,29 @@ export class AnswersComponent implements OnInit {
 
   deleteAnswer(answer) {
     this.store.dispatch(new actions.DeleteAction(answer.id));
+  }
+
+  createAnswer() {
+    const newAnswer = {
+      question: this.currentQuestionId,
+      text: ""
+    };
+    const config: MdDialogConfig = {
+      disableClose: false,
+      width: "600px"
+    };
+    const dialogRef = this.dialog.open(WakeupAnswerDialogComponent, config);
+    dialogRef.componentInstance.answer = Object.assign({}, newAnswer);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(
+          new actions.CreateAction(
+            Object.assign({}, newAnswer, result, {
+              date: new Date().getTime()
+            })
+          )
+        );
+      }
+    });
   }
 }

@@ -29,11 +29,15 @@ export function reducer(state = initialState, action: Action): State {
       });
     case answerActions.ActionTypes.UPDATE_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestion: updateAnswer(state.currentQuestion, action.payload)
+        currentQuestion: onUpdateAnswer(state.currentQuestion, action.payload)
       });
     case answerActions.ActionTypes.DELETE_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestion: deleteAnswer(state.currentQuestion, action.payload)
+        currentQuestion: onDeleteAnswer(state.currentQuestion, action.payload)
+      });
+    case answerActions.ActionTypes.CREATE_SUCCESS:
+      return Object.assign({}, state, {
+        currentQuestion: onCreateAnswer(state.currentQuestion, action.payload)
       });
     default: {
       return state;
@@ -51,7 +55,7 @@ function processQuestion(question) {
   return newQuestion;
 }
 
-function updateAnswer(currentQuestion, answerToUpdate) {
+function onUpdateAnswer(currentQuestion, answerToUpdate) {
   const updatedQuestion = Object.assign({}, currentQuestion);
   updatedQuestion.answers = updatedQuestion.answers.map(answer => {
     if (answer.id === answerToUpdate.id) {
@@ -62,10 +66,16 @@ function updateAnswer(currentQuestion, answerToUpdate) {
   return processQuestion(updatedQuestion);
 }
 
-function deleteAnswer(currentQuestion, answerToDelete) {
+function onDeleteAnswer(currentQuestion, answerToDelete) {
   const updatedQuestion = Object.assign({}, currentQuestion);
   updatedQuestion.answers = updatedQuestion.answers.filter(answer => {
     return answer.id !== answerToDelete;
   });
+  return processQuestion(updatedQuestion);
+}
+
+function onCreateAnswer(currentQuestion, answerToAdd) {
+  const updatedQuestion = Object.assign({}, currentQuestion);
+  updatedQuestion.answers = [...updatedQuestion.answers, answerToAdd];
   return processQuestion(updatedQuestion);
 }

@@ -6,7 +6,7 @@ import { CommonModule } from "@angular/common";
 
 import { WakeupCommonModule } from "../../common/common.module";
 import { AnswersComponent } from "./answers.component";
-import { WakeupEditAnswerDialogComponent } from "./components/wakeup-edit-answer-dialog/wakeup-edit-answer-dialog.component";
+import { WakeupAnswerDialogComponent } from "./components/wakeup-answer-dialog/wakeup-answer-dialog.component";
 @NgModule({
   imports: [
     RouterModule,
@@ -16,8 +16,8 @@ import { WakeupEditAnswerDialogComponent } from "./components/wakeup-edit-answer
     WakeupCommonModule
   ],
   exports: [],
-  declarations: [AnswersComponent, WakeupEditAnswerDialogComponent],
+  declarations: [AnswersComponent, WakeupAnswerDialogComponent],
   providers: [],
-  entryComponents: [WakeupEditAnswerDialogComponent]
+  entryComponents: [WakeupAnswerDialogComponent]
 })
 export class AnswersModule {}

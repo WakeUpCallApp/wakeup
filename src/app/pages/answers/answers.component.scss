@@ -42,3 +42,19 @@
         }
     }
 }
+
+.addAnswerButton {
+    z-index: 20;
+    position: sticky;
+    width: 65px;
+    height: 65px;
+    bottom: 16px;
+    left: 1290px;
+    display: flex;
+    justify-content: center;
+    md-icon {
+        font-size: 30px;
+        display: flex;
+        justify-content: center;
+    }
+}
