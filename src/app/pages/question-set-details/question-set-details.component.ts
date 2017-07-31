@@ -124,7 +124,7 @@ export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   deleteQuestions(questions) {
     questions.forEach(question =>
-      this.store.dispatch(new actions.DeleteQuestionAction(question.id))
+      this.store.dispatch(new actions.DeleteQuestionAction(question))
     );
   }
 

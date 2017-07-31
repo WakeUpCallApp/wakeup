@@ -13,6 +13,7 @@ export const ActionTypes = {
   CREATE_ERROR: type('[Question] Create error'),
   UPDATE: type('[Question] Update'),
   DELETE: type('[Question] Delete'),
+  DELETE_SUCCESS: type('[Question] Delete Success')
 };
 
 export class LoadAction implements Action {
@@ -69,7 +70,13 @@ export class UpdateAction implements Action {
 export class DeleteAction implements Action {
   type = ActionTypes.DELETE;
 
-  constructor(public payload: string) { }
+  constructor(public payload) { }
+}
+
+export class DeleteActionSuccess implements Action {
+  type = ActionTypes.DELETE_SUCCESS;
+
+  constructor(public payload) { }
 }
 
 /**
@@ -85,5 +92,6 @@ export type Actions
   | CreateActionError
   | UpdateAction
   | DeleteAction
+  | DeleteActionSuccess
   | GetCurrentQuestion
   | GetCurrentQuestionSuccess;

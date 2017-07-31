@@ -96,4 +96,12 @@ export class AnswersComponent implements OnInit {
       }
     });
   }
+
+  deleteQuestion() {
+    this.store.dispatch(new questionActions.DeleteAction(this.question));
+  }
+
+  deleteAnswers() {
+    this.store.dispatch(new actions.DeleteAllAction(this.currentQuestionId));
+  }
 }

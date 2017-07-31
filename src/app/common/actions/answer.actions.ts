@@ -13,7 +13,9 @@ export const ActionTypes = {
   UPDATE_SUCCESS: type("[Answer] Update Success"),
   UPDATE_ERROR: type("[Answer] Update Error"),
   DELETE: type("[Answer] Delete"),
-  DELETE_SUCCESS: type("[Answer] Delete Success")
+  DELETE_SUCCESS: type("[Answer] Delete Success"),
+  DELETE_ALL: type("[Answer] Delete all"),
+  DELETE_ALL_SUCCESS: type("[Answer] Delete all Success")
 };
 
 export class LoadAction implements Action {
@@ -80,6 +82,17 @@ export class DeleteActionSuccess implements Action {
   constructor(public payload: number) {}
 }
 
+export class DeleteAllAction implements Action {
+  type = ActionTypes.DELETE_ALL;
+
+  constructor(public payload: number) {}
+}
+
+export class DeleteAllActionSuccess implements Action {
+  type = ActionTypes.DELETE_ALL_SUCCESS;
+  constructor(public payload: number) {}
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -95,4 +108,6 @@ export type Actions =
   | UpdateActionSuccess
   | UpdateActionError
   | DeleteAction
-  | DeleteActionSuccess;
+  | DeleteActionSuccess
+  | DeleteAllAction
+  | DeleteAllActionSuccess;

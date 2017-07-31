@@ -10,7 +10,6 @@ export default class Parser {
       questionApi._id,
       questionApi.text,
       new Date(questionApi.date),
-      questionApi.questionSet,
       questionApi.answers,
       questionApi.quote,
     );
@@ -21,9 +20,9 @@ export default class Parser {
       _id: question.id,
       text: question.text,
       date: question.date.toString(),
-      questionSet: question.questionSetId,
       answers: question.answers,
-      quote: question.quote
+      quote: question.quote,
+      questionSet: (question.questionSet as QuestionSet).id
     };
   }
 

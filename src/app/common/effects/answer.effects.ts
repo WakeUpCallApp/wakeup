@@ -41,6 +41,13 @@ export class AnswerEffects {
     .switchMap(answer => this.answerService.delete(answer))
     .map((answerId) => new answer.DeleteActionSuccess(answerId));
 
+    @Effect() deleteAll$ = this.actions$
+    .ofType(answer.ActionTypes.DELETE_ALL)
+    .map(action => action.payload)
+    .switchMap(questionId => this.answerService.deleteAll(questionId))
+    .map((questionId) => new answer.DeleteAllActionSuccess(questionId));
+
+    
   constructor(
     private answerService: AnswerService,
     private actions$: Actions,

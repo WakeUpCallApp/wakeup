@@ -8,6 +8,7 @@ import Parser from "./parser";
 import { Question, IQuestion, QuestionApi } from "../models/question.model";
 import { Answer, AnswerApi } from "../models/answer.model";
 import { QuoteApi } from "../models/quote.model";
+import { QuestionSetApi } from "../models/question-set.model";
 
 @Injectable()
 export class QuestionService {
@@ -30,6 +31,7 @@ export class QuestionService {
       .map((response: Response) => response.json())
       .map((questionApi: QuestionApi) => {
         const question: Question = Parser.questionFromApi(questionApi);
+        question.questionSet = Parser.questionSetFromApi(questionApi.questionSet as QuestionSetApi);
         if (questionApi.quote) {
           question.quote = Parser.quoteFromApi(questionApi.quote as QuoteApi);
         }
@@ -62,10 +64,10 @@ export class QuestionService {
       .catch(this.handleError);
   }
 
-  delete(questionId: number): Observable<number> {
+  delete(question): Observable<number> {
     return this.http
-      .delete(`/api/questions/${questionId}`)
-      .map(() => questionId)
+      .delete(`/api/questions/${question.id}`)
+      .map(() => question)
       .catch(this.handleError);
   }
 

@@ -2,6 +2,15 @@
   <wakeup-card>
     <div class="card-header">
       <div class="title">Answers</div>
+      <div class="actions">
+        <button md-icon-button [mdMenuTriggerFor]="questionMenu">
+                       <md-icon>more_vert</md-icon>
+        </button>
+        <md-menu #questionMenu="mdMenu">
+          <button md-menu-item *ngIf="!question.questionSet?.isDefault" (click)="deleteQuestion()"> Delete Question </button>
+          <button md-menu-item *ngIf="question.answers?.length" (click)="deleteAnswers()"> Delete All Answers </button>
+        </md-menu>
+      </div>
     </div>
     <div class="card-body">
       <div class="summary">
@@ -14,6 +23,8 @@
       </div>
       <hr>
       <div class="answers">
+        <span *ngIf="!question.answers?.length">No answers available. <br>Please, click the + button to add an answer</span>
+
         <div *ngFor="let answerGroup of question.groupedAnswers">
           <span class="group">{{answerGroup.createDate}}</span>
           <ul>
@@ -36,12 +47,6 @@
     </div>
   </wakeup-card>
 </div>
-<button mdRipple
-   (click)="createAnswer()" 
-   title="add answer" 
-   class="addAnswerButton" 
-   md-mini-fab 
-   md-button 
-   md-raised-button>
+<button mdRipple (click)="createAnswer()" title="add answer" class="addAnswerButton" md-mini-fab md-button md-raised-button>
  <md-icon>add</md-icon>
 </button>

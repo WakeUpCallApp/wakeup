@@ -1,5 +1,6 @@
 import { Quote, QuoteApi } from './quote.model';
 import { AnswerApi } from './answer.model';
+import { QuestionSet, QuestionSetApi } from './question-set.model';
 
 export interface IQuestion {
   id: number;
@@ -12,18 +13,18 @@ export interface QuestionApi {
   _id: number;
   text: string;
   date: string;
-  questionSet: number;
+  questionSet: number | QuestionSetApi;
   answers: number[] | Object[] | AnswerApi[];
   quote: any;
 }
 
 export class Question {
   checked = false;
+  questionSet : number | QuestionSet;
   constructor(
     public id: number,
     public text: string,
     public date: Date,
-    public questionSetId: number,
     public answers: number[] | Object[],
     public quote?: any
   ) {}

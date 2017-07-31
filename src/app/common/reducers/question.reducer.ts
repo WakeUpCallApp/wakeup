@@ -39,6 +39,10 @@ export function reducer(state = initialState, action: Action): State {
       return Object.assign({}, state, {
         currentQuestion: onCreateAnswer(state.currentQuestion, action.payload)
       });
+    case answerActions.ActionTypes.DELETE_ALL:
+      return Object.assign({}, state, {
+        currentQuestion: onDeleteAllAnswers(state.currentQuestion)
+      });
     default: {
       return state;
     }
@@ -77,5 +81,11 @@ function onDeleteAnswer(currentQuestion, answerToDelete) {
 function onCreateAnswer(currentQuestion, answerToAdd) {
   const updatedQuestion = Object.assign({}, currentQuestion);
   updatedQuestion.answers = [...updatedQuestion.answers, answerToAdd];
+  return processQuestion(updatedQuestion);
+}
+
+function onDeleteAllAnswers(currentQuestion) {
+  const updatedQuestion = Object.assign({}, currentQuestion);
+  updatedQuestion.answers = [];
   return processQuestion(updatedQuestion);
 }

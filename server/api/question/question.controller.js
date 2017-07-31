@@ -33,6 +33,7 @@
     var query = Question.findOne({});
     query.populate("answers");
     query.populate("quote");
+    query.populate("questionSet");
     query.where("_id", req.params.id);
     query.exec(function(err, question) {
       if (err) {

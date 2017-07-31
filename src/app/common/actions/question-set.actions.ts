@@ -123,7 +123,7 @@ export class EditQuestionActionSuccess implements Action {
 export class DeleteQuestionAction implements Action {
   type = ActionTypes.DELETE_QUESTION;
 
-  constructor(public payload: number) {}
+  constructor(public payload) {}
 }
 
 export class DeleteQuestionActionSuccess implements Action {
