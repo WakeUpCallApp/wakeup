@@ -2,6 +2,7 @@
 .answers {
     min-height: 70vh;
 }
+
 .card-header {
     display: flex;
     align-items: center;
@@ -65,9 +66,24 @@
     left: 1290px;
     display: flex;
     justify-content: center;
-    md-icon {
-        font-size: 30px;
-        display: flex;
-        justify-content: center;
-    }
+}
+
+.prevQuestionButton {
+    z-index: 20;
+    position: sticky;
+    bottom: 300px;
+    left: 0px;
+}
+
+md-icon {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.nextQuestionButton {
+    z-index: 20;
+    position: sticky;
+    bottom: 300px;
+    left: 1290px;
 }

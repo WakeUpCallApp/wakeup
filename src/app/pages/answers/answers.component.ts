@@ -13,6 +13,7 @@ import * as questionActions from "../../common/actions/question.actions";
 import { Quote } from "../../common/models/quote.model";
 import { Answer } from "../../common/models/answer.model";
 import { Question } from "../../common/models/question.model";
+import { QuestionSet } from "../../common/models/question-set.model";
 import appConstants from "../../common/app-constants";
 import { WakeupAnswerDialogComponent } from "./components/wakeup-answer-dialog/wakeup-answer-dialog.component";
 
@@ -26,6 +27,8 @@ export class AnswersComponent implements OnInit {
   currentQuestionId;
   actionsSubscription: Subscription;
   questionSubscription: Subscription;
+  nextQuestionId: number;
+  prevQuestionId: number;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
@@ -47,6 +50,11 @@ export class AnswersComponent implements OnInit {
       .subscribe(question => {
         this.question = question;
         this.titleService.setTitle(`Answers ${question.text}`);
+        if (this.question.questionSet) {
+          const currentQuestionIndex = (this.question.questionSet as QuestionSet).questionIds.indexOf(question.id);
+          this.nextQuestionId = this.getNextQuestion(currentQuestionIndex);
+          this.prevQuestionId = this.getPrevQuestion(currentQuestionIndex);
+        }
       });
   }
 
@@ -103,5 +111,17 @@ export class AnswersComponent implements OnInit {
 
   deleteAnswers() {
     this.store.dispatch(new actions.DeleteAllAction(this.currentQuestionId));
+  }
+
+  getPrevQuestion(currentQuestionId): number {
+    return (this.question.questionSet as QuestionSet).questionIds[
+      currentQuestionId - 1
+    ];
+  }
+
+  getNextQuestion(currentQuestionId): number {
+    return (this.question.questionSet as QuestionSet).questionIds[
+      currentQuestionId + 1
+    ];
   }
 }

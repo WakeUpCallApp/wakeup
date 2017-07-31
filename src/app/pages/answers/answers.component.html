@@ -50,3 +50,11 @@
 <button mdRipple (click)="createAnswer()" title="add answer" class="addAnswerButton" md-mini-fab md-button md-raised-button>
  <md-icon>add</md-icon>
 </button>
+
+<button mdRipple *ngIf="prevQuestionId" [routerLink]="['/answers', prevQuestionId]" title="previous question" class="prevQuestionButton" md-icon-button>
+ <md-icon>keyboard_arrow_left</md-icon>
+</button>
+
+<button mdRipple *ngIf="nextQuestionId" [routerLink]="['/answers', nextQuestionId]" title="next question" class="nextQuestionButton" md-icon-button>
+ <md-icon>keyboard_arrow_right</md-icon>
+</button>
