@@ -1,18 +1,38 @@
-<div class="answers pageContent" *ngIf="question$ | async as question">
+<div class="answers pageContent" *ngIf="question">
   <wakeup-card>
     <div class="card-header">
       <div class="title">Answers</div>
     </div>
     <div class="card-body">
       <div class="summary">
-        {{question?.text}} {{question.quote?.text}}
+        <div class="name">
+          <label> Question </label> {{question?.text}}
+        </div>
+        <div class="quote" *ngIf="question.quote">
+          <label>Quote </label> {{question.quote?.text}}
+        </div>
       </div>
-      <div *ngFor="let answerGroup of question.answers">
-        {{answerGroup.createDate}}
-        <ul>
-          <li *ngFor="let answer of answerGroup.answers"> {{answer.text}} </li>
-        </ul>
+      <hr>
+      <div class="answers">
+        <div *ngFor="let answerGroup of question.groupedAnswers">
+          <span class="group">{{answerGroup.createDate}}</span>
+          <ul>
+            <li *ngFor="let answer of answerGroup.answers">
+
+              <span class="text">{{answer.text}}</span>
+              <button md-icon-button [mdMenuTriggerFor]="answerMenu">
+                 <md-icon>more_vert</md-icon>
+              </button>
+              <md-menu #answerMenu="mdMenu">
+                <button md-menu-item (click)="editAnswer(answer)"> Edit </button>
+                <button md-menu-item (click)="deleteAnswer(answer)"> Delete </button>
+              </md-menu>
+
+            </li>
+          </ul>
+        </div>
       </div>
+
     </div>
   </wakeup-card>
 </div>

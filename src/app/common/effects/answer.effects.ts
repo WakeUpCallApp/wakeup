@@ -39,7 +39,7 @@ export class AnswerEffects {
     .ofType(answer.ActionTypes.DELETE)
     .map(action => action.payload)
     .switchMap(answer => this.answerService.delete(answer))
-    .map(() => new answer.DeleteActionSuccess());
+    .map((answerId) => new answer.DeleteActionSuccess(answerId));
 
   constructor(
     private answerService: AnswerService,

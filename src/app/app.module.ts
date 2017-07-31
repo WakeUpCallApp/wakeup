@@ -36,7 +36,7 @@ import { TopicDetailsModule } from './pages/topic-details/topic-details.module';
 import { QuotesComponent } from './pages/quotes/quotes.component';
 import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
 import { PracticeSessionComponent } from './pages/practice-session/practice-session.component';
-import { AnswersComponent } from './pages/answers/answers.component';
+import { AnswersModule } from './pages/answers/answers.module';
 
 @NgModule({
   declarations: [
@@ -48,7 +48,6 @@ import { AnswersComponent } from './pages/answers/answers.component';
     QuotesComponent,
     NewQuoteComponent,
     PracticeSessionComponent,
-    AnswersComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +60,7 @@ import { AnswersComponent } from './pages/answers/answers.component';
     QuestionSetsModule,
     QuestionSetDetailsModule,
     TopicDetailsModule,
+	AnswersModule,
     AppRoutingModule,
     StoreModule.provideStore(reducer),
     // must come AFTER `provideStore` call

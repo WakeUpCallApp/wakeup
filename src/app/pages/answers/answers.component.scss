@@ -1,0 +1,44 @@
+@import "~../../common/constants";
+.summary {
+    display: flex;
+    flex-direction: column;
+    div.name {
+        padding-bottom: 16px;
+    }
+    >div {
+        display: flex;
+        flex-direction: column;
+        label {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: $primary;
+        }
+    }
+}
+
+.answers {
+    .group {
+        font-weight: bold;
+    }
+    ul {
+        list-style: none;
+        margin: 16px;
+        padding: 0;
+        border: 1px solid rgba(0, 0, 0, .06);
+        li {
+            display: flex;
+            align-items: center;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            margin: 0;
+            padding: 10px;
+            border-color: rgba(0, 0, 0, .06);
+            color: rgba(0, 0, 0, .74);
+
+            .text {
+                flex: 1;
+            }
+        }
+    }
+}
