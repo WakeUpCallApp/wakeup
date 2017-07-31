@@ -19,7 +19,7 @@
         <button md-mini-fab md-button md-raised-button (click)="openQuotesBrowser(question)"><md-icon>add</md-icon>
         </button>
       </div>
-      <div class="hasQuote" *ngIf="question.quote" (click)="removeQuote()" title="remove quote">
+      <div class="hasQuote truncate" *ngIf="question.quote" (click)="removeQuote()" title="remove quote">
         {{selectedQuoteText}} <span class="remove"><md-icon>clear</md-icon></span>
       </div>
     </section>

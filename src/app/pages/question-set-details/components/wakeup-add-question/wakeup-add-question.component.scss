@@ -39,6 +39,7 @@
         border: 1px solid rgba(0, 0, 0, 0.05);
         width: 200px;
         height: 100px;
+        min-width: 50%;
         cursor: pointer;
         background-color: $primary;
         color: white;
@@ -51,7 +52,6 @@
         }
     }
     .hasQuote:hover {
-        background-color: lighten($primary, 0.5);
-        color: black;
+        background-color: lighten($primary, 5%);
     }
 }
