@@ -1,3 +1,5 @@
+import { TopicApi, Topic } from "./topic.model";
+
 export interface IQuote {
   text: string;
   source: string;
@@ -12,7 +14,7 @@ export interface QuoteApi {
   source: string;
   date: string;
   author: string;
-  topic: number;
+  topic: number | TopicApi;
   questions;
   commentList;
 }
@@ -24,7 +26,7 @@ export class Quote {
     public source: string,
     public date: Date,
     public author: string,
-    public topicId: number,
+    public topic: number | Topic,
     public questionIds: number[],
     public commentList
   ) {}

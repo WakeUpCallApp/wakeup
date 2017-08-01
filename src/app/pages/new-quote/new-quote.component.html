@@ -1,16 +1,16 @@
 <div class="newQuote pageContent">
   <wakeup-card>
-    <div class="card-header">Create Quote</div>
+    <div class="card-header">Create Quote <small>{{(topic$ | async)?.name}}</small></div>
     <div class="card-body">
       <form class="createQuoteForm" #quoteForm='ngForm'>
         <md-input-container floatPlaceholder="always">
-          <textarea #textVar maxlength="1000" placeholder="Text" type="text" mdInput name="text" required [(ngModel)]="quote.text"></textarea>
+          <textarea [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" mdInput name="text" required ></textarea>
           <md-error>Text is required</md-error>
           <md-hint align="end" aria-live="polite"> {{textVar.value.length}} / 1000 </md-hint>
         </md-input-container>
+
         <md-input-container floatPlaceholder="always">
-          <input list="suggestions" autocomplete="off" #authorVar maxlength="200" placeholder="Author" type="text" mdInput name="author"
-            [(ngModel)]="quote.author">
+          <input  [(ngModel)]="quote.author" list="suggestions" autocomplete="off" #authorVar maxlength="200" placeholder="Author" type="text" mdInput name="author">
           <datalist id="suggestions">
             <select>
                     <option *ngFor="let suggestion of authors$ | async">{{suggestion}}</option>
@@ -20,9 +20,9 @@
             {{authorVar.value.length}} / 200
           </md-hint>
         </md-input-container>
+
         <md-input-container floatPlaceholder="always">
-          <input list="sourceSuggestions" autocomplete="off" #sourceVar placeholder="Source" type="text" mdInput name="source" maxlength="200"
-            [(ngModel)]="quote.source">
+          <input [(ngModel)]="quote.source" list="sourceSuggestions" autocomplete="off" #sourceVar placeholder="Source" type="text" mdInput name="source" maxlength="200">
           <datalist id="sourceSuggestions">
             <select>
                     <option *ngFor="let source of sources$ | async" >{{source}}</option>

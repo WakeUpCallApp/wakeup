@@ -111,7 +111,9 @@ export class QuestionSetEffects {
   registerSession$ = this.actions$
     .ofType(questionSet.ActionTypes.REGISTER_SESSION)
     .map(action => action.payload)
-    .switchMap((questionSetId) => this.questionSetService.registerSession(questionSetId));
+    .switchMap(questionSetId =>
+      this.questionSetService.registerSession(questionSetId)
+    );
 
   constructor(
     private questionSetService: QuestionSetService,

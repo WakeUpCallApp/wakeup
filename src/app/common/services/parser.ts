@@ -1,8 +1,9 @@
-import { QuestionSet, QuestionSetApi } from '../models/question-set.model';
-import { Question, IQuestion, QuestionApi } from '../models/question.model';
-import { Quote, QuoteApi } from '../models/quote.model';
-import { Topic, TopicApi } from '../models/topic.model';
-import { Answer, AnswerApi } from '../models/answer.model';
+import * as moment from 'moment';
+import { QuestionSet, QuestionSetApi } from "../models/question-set.model";
+import { Question, IQuestion, QuestionApi } from "../models/question.model";
+import { Quote, QuoteApi } from "../models/quote.model";
+import { Topic, TopicApi } from "../models/topic.model";
+import { Answer, AnswerApi } from "../models/answer.model";
 
 export default class Parser {
   static questionFromApi(questionApi: QuestionApi): Question {
@@ -11,7 +12,7 @@ export default class Parser {
       questionApi.text,
       new Date(questionApi.date),
       questionApi.answers,
-      questionApi.quote,
+      questionApi.quote
     );
   }
 
@@ -45,10 +46,23 @@ export default class Parser {
       quoteApi.source,
       new Date(quoteApi.date),
       quoteApi.author,
-      quoteApi.topic,
+      quoteApi.topic as number,
       quoteApi.questions,
       quoteApi.commentList
     );
+  }
+
+  static quoteToApi(quote: Quote): QuoteApi {
+    return {
+      _id: quote.id,
+      text: quote.text,
+      source: quote.source,
+      date: moment(quote.date).isValid() ? quote.date.toISOString() : undefined,
+      author: quote.author,
+      topic: (quote.topic as Topic).id,
+      questions: quote.questionIds,
+      commentList: quote.commentList
+    };
   }
 
   static topicFromApi(topicApi: TopicApi): Topic {
@@ -82,7 +96,8 @@ export default class Parser {
       answer._id,
       answer.question,
       answer.text,
-      new Date(answer.date));
+      new Date(answer.date)
+    );
   }
 
   static answerToApi(answer: Answer): AnswerApi {

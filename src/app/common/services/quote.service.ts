@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { Injectable } from "@angular/core";
+import { Http, Response } from "@angular/http";
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/catch";
 
-import Parser from './parser';
-import { Quote, QuoteApi, IQuote } from '../models/quote.model';
+import Parser from "./parser";
+import { Quote, QuoteApi, IQuote } from "../models/quote.model";
 
 @Injectable()
 export class QuoteService {
@@ -13,7 +13,7 @@ export class QuoteService {
 
   all(): Observable<Quote[]> {
     return this.http
-      .get('/api/quotes/userQuotes/')
+      .get("/api/quotes/userQuotes/")
       .map((response: Response) => response.json())
       .map(userTopics => {
         return userTopics.map(topicApi => {
@@ -37,19 +37,33 @@ export class QuoteService {
       .catch(this.handleError);
   }
 
+  update(quote: Quote): Observable<Quote> {
+    return this.http
+      .put(`/api/quotes/${quote.id}`, Parser.quoteToApi(quote))
+      .map((response: Response) => response.json())
+      .map(quoteApi => {
+        const quote = Parser.quoteFromApi(quoteApi);
+        quote.topic = Parser.topicFromApi(quoteApi.topic);
+        return quote;
+      })
+      .catch(this.handleError);
+  }
+
   getById(quoteId): Observable<Quote> {
     return this.http
       .get(`/api/quotes/quote/${quoteId}`)
       .map((response: Response) => response.json())
       .map(quoteApi => {
-        return Parser.quoteFromApi(quoteApi);
+        const quote = Parser.quoteFromApi(quoteApi);
+        quote.topic = Parser.topicFromApi(quoteApi.topic);
+        return quote;
       })
       .catch(this.handleError);
   }
 
   getSuggestions() {
     return this.http
-      .get('/api/quotes/suggestions')
+      .get("/api/quotes/suggestions")
       .map((response: Response) => response.json())
       .map(suggestions => suggestions)
       .catch(this.handleError);
@@ -67,6 +81,6 @@ export class QuoteService {
 
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error || 'Server error');
+    return Observable.throw(error || "Server error");
   }
 }

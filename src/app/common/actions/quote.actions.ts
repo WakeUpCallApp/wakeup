@@ -14,6 +14,8 @@ export const ActionTypes = {
   CREATE_SUCCESS: type('[Quote] Create success'),
   CREATE_ERROR: type('[Quote] Create error'),
   UPDATE: type('[Quote] Update'),
+  UPDATE_SUCCESS: type('[Quote] Update Success'),
+  UPDATE_ERROR: type('[Quote] Update Error'),
   DELETE: type('[Quote] Delete'),
   GET_SUGGESTIONS: type('[Quote] Get Suggestions'),
   GET_SUGGESTIONS_SUCCESS: type('[Quote] Get Suggestions Success')
@@ -80,6 +82,18 @@ export class UpdateAction implements Action {
   constructor(public payload: Quote) {}
 }
 
+export class UpdateActionSuccess implements Action {
+  type = ActionTypes.UPDATE_SUCCESS;
+
+  constructor(public payload: Quote) {}
+}
+
+export class UpdateActionError implements Action {
+  type = ActionTypes.UPDATE_ERROR;
+
+  constructor(public payload) {}
+}
+
 export class DeleteAction implements Action {
   type = ActionTypes.DELETE;
 
@@ -112,6 +126,8 @@ export type Actions =
   | CreateActionSuccess
   | CreateActionError
   | UpdateAction
+  | UpdateActionSuccess
+  | UpdateActionError
   | DeleteAction
   | GetSuggestionsAction
   | GetSuggestionsActionSuccess;

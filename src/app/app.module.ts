@@ -1,15 +1,15 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { HttpModule, Http, XHRBackend, RequestOptions } from "@angular/http";
 
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
-import { MaterialModule } from '@angular/material';
-import { Router } from '@angular/router';
+import { MaterialModule } from "@angular/material";
+import { Router } from "@angular/router";
 
 import {
   QuestionSetEffects,
@@ -17,26 +17,27 @@ import {
   QuoteEffects,
   TopicEffects,
   AnswerEffects
-} from './common/effects';
+} from "./common/effects";
 
-import { reducer } from './common/reducers';
+import { reducer } from "./common/reducers";
 
-import { httpFactory } from './config/http.factory';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { WakeupCommonModule } from './common/common.module';
-import { LandingComponent } from './pages/landing/landing.component';
-import { LoginModule } from './pages/login/login.module';
-import { QuestionSetsModule } from './pages/question-sets/question-sets.module';
-import { NewQuestionSetComponent } from './pages/new-question-set/new-question-set.component';
-import { QuestionSetDetailsModule } from './pages/question-set-details/question-set-details.module';
-import { TopicsComponent } from './pages/topics/topics.component';
-import { NewTopicComponent } from './pages/new-topic/new-topic.component';
-import { TopicDetailsModule } from './pages/topic-details/topic-details.module';
-import { QuotesComponent } from './pages/quotes/quotes.component';
-import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
-import { PracticeSessionComponent } from './pages/practice-session/practice-session.component';
-import { AnswersModule } from './pages/answers/answers.module';
+import { httpFactory } from "./config/http.factory";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { WakeupCommonModule } from "./common/common.module";
+import { LandingComponent } from "./pages/landing/landing.component";
+import { LoginModule } from "./pages/login/login.module";
+import { QuestionSetsModule } from "./pages/question-sets/question-sets.module";
+import { NewQuestionSetComponent } from "./pages/new-question-set/new-question-set.component";
+import { QuestionSetDetailsModule } from "./pages/question-set-details/question-set-details.module";
+import { TopicsComponent } from "./pages/topics/topics.component";
+import { NewTopicComponent } from "./pages/new-topic/new-topic.component";
+import { TopicDetailsModule } from "./pages/topic-details/topic-details.module";
+import { QuotesComponent } from "./pages/quotes/quotes.component";
+import { NewQuoteComponent } from "./pages/new-quote/new-quote.component";
+import { PracticeSessionComponent } from "./pages/practice-session/practice-session.component";
+import { AnswersModule } from "./pages/answers/answers.module";
+import { QuoteDetailsModule } from "./pages/quote-details/quote-details.module";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { AnswersModule } from './pages/answers/answers.module';
     NewTopicComponent,
     QuotesComponent,
     NewQuoteComponent,
-    PracticeSessionComponent,
+    PracticeSessionComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +61,8 @@ import { AnswersModule } from './pages/answers/answers.module';
     QuestionSetsModule,
     QuestionSetDetailsModule,
     TopicDetailsModule,
-	AnswersModule,
+    QuoteDetailsModule,
+    AnswersModule,
     AppRoutingModule,
     StoreModule.provideStore(reducer),
     // must come AFTER `provideStore` call
@@ -72,9 +74,7 @@ import { AnswersModule } from './pages/answers/answers.module';
     EffectsModule.run(AnswerEffects)
   ],
 
-  exports: [
-    QuestionSetsModule,
-  ],
+  exports: [QuestionSetsModule],
   providers: [
     {
       provide: Http,
@@ -84,4 +84,4 @@ import { AnswersModule } from './pages/answers/answers.module';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

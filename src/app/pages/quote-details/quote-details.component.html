@@ -1,0 +1,50 @@
+<div class="quoteDetails pageContent">
+  <wakeup-card>
+    <div class="card-header">
+      <div class="title">Quotes Details</div>
+    </div>
+    <div class="card-body" *ngIf="updateObject as quote">
+      <div class="row readOnly">
+        <label> Topic </label> {{quote.topic?.name}}
+      </div>
+      <div class="quoteForm">
+        <form class="editQuoteForm" #quoteForm='ngForm'>
+          <md-input-container floatPlaceholder="always">
+            <textarea [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" mdInput name="text" required></textarea>
+            <span mdSuffix><md-icon>edit</md-icon></span>
+            <md-error>Text is required</md-error>
+            <md-hint align="end" aria-live="polite"> {{textVar.value.length}} / 1000 </md-hint>
+          </md-input-container>
+
+          <md-input-container floatPlaceholder="always">
+            <input [(ngModel)]="quote.author" #authorVar list="suggestions" autocomplete="off" maxlength="200" placeholder="Author" type="text"
+              mdInput name="author">
+            <span mdSuffix><md-icon>edit</md-icon></span>
+            <datalist id="suggestions">
+              <select>
+                    <option *ngFor="let suggestion of authors$ | async">{{suggestion}}</option>
+                </select>
+            </datalist>
+            <md-hint align="end" aria-live="polite">
+              {{authorVar.value.length}} / 200
+            </md-hint>
+          </md-input-container>
+
+          <md-input-container floatPlaceholder="always">
+            <input [(ngModel)]="quote.source" #sourceVar list="sourceSuggestions" autocomplete="off" placeholder="Source" type="text"
+              mdInput name="source" maxlength="200">
+            <span mdSuffix><md-icon>edit</md-icon></span>
+            <datalist id="sourceSuggestions">
+              <select>
+                    <option *ngFor="let source of sources$ | async" >{{source}}</option>
+                </select>
+            </datalist>
+            <md-hint align="end" aria-live="polite">
+              {{sourceVar.value.length}} / 200
+            </md-hint>
+          </md-input-container>
+        </form>
+      </div>
+    </div>
+  </wakeup-card>
+</div>

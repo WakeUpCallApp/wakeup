@@ -15,6 +15,7 @@ import { QuotesComponent } from './pages/quotes/quotes.component';
 import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
 import { PracticeSessionComponent } from './pages/practice-session/practice-session.component';
 import { AnswersComponent } from './pages/answers/answers.component';
+import { QuoteDetailsComponent } from './pages/quote-details/quote-details.component';
 
 @NgModule({
   imports: [
@@ -85,6 +86,15 @@ import { AnswersComponent } from './pages/answers/answers.component';
         data: { title: 'New Quote' },
         canActivate: [AuthenticationGuard],
         resolve: { userDetails: UserDetailResolver }
+      },
+      {
+        path: 'quoteDetails/:id',
+        component: QuoteDetailsComponent,
+        data: { title: 'Quote Details' },
+        canActivate: [AuthenticationGuard],
+        resolve: {
+          userDetails: UserDetailResolver
+        }
       },
       {
         path: 'practiceSession/:questionSetId',

@@ -38,6 +38,7 @@ export function reducer(state = initialState, action: Action): State {
         suggestions: action.payload
       });
     case actions.ActionTypes.GET_BY_ID_SUCCESS:
+    case actions.ActionTypes.UPDATE_SUCCESS:
       return Object.assign({}, state, {
         currentQuote: action.payload
       });
