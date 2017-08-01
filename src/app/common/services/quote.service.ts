@@ -61,6 +61,16 @@ export class QuoteService {
       .catch(this.handleError);
   }
 
+  create(quote: IQuote): Observable<Quote> {
+    return this.http
+      .post(`/api/quotes/${quote.topic}`, quote)
+      .map((response: Response) => response.json())
+      .map((quoteApi: QuoteApi) => {
+        return Parser.quoteFromApi(quoteApi);
+      })
+      .catch(this.handleError);
+  }
+
   getSuggestions() {
     return this.http
       .get("/api/quotes/suggestions")
@@ -69,13 +79,29 @@ export class QuoteService {
       .catch(this.handleError);
   }
 
-  create(quote: IQuote): Observable<Quote> {
+  getComments(quoteId) {
     return this.http
-      .post(`/api/quotes/${quote.topic}`, quote)
+      .get(`/api/quotes/comments/${quoteId}`)
       .map((response: Response) => response.json())
-      .map((quoteApi: QuoteApi) => {
-        return Parser.quoteFromApi(quoteApi);
+      .map(commentsList => {
+        return commentsList;
       })
+      .catch(this.handleError);
+  }
+
+  addComment({comment, quoteId, isDefaultTopic}) {
+    return this.http
+      .put(`/api/quotes/addComment/${quoteId}/${isDefaultTopic}`, comment)
+      .map((response: Response) => response.json())
+      .map(comment => comment)
+      .catch(this.handleError);
+  }
+
+  deleteComment({quoteId, commentId}) {
+    return this.http
+      .delete(`/api/quotes/deleteComment/${quoteId}/${commentId}`)
+      .map((response: Response) => response.json())
+      .map(() => quoteId)
       .catch(this.handleError);
   }
 

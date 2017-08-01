@@ -1,0 +1,14 @@
+<md-card class="commentList mat-elevation-z3">
+  <md-card-header>
+    <div class="title">
+      <h1 class="cardTitle">Comments</h1>
+    </div>
+  </md-card-header>
+  <md-card-content class="list">
+    <ul>
+      <li *ngFor="let comment of comments; index as i">
+        {{comment.text}}
+      </li>
+    </ul>
+  </md-card-content>
+</md-card>

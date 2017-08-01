@@ -95,6 +95,7 @@ export const getAuthorSuggestions = (state: State): string[] =>
   state.quote.suggestions.authors;
 export const getSourceSuggestions = (state: State): string[] =>
   state.quote.suggestions.sources;
+export const getComments = (state: State) => state.quote.comments;
 
 // Questions
 export const getQuestionsState = (state: State): Question[] =>

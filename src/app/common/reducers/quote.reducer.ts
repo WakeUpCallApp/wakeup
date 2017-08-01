@@ -1,7 +1,7 @@
-import { Action } from '@ngrx/store';
-import { Quote } from '../models/quote.model';
-import { Topic } from '../models/topic.model';
-import * as actions from '../actions/quote.actions';
+import { Action } from "@ngrx/store";
+import { Quote } from "../models/quote.model";
+import { Topic } from "../models/topic.model";
+import * as actions from "../actions/quote.actions";
 
 export interface State {
   topicsWithQuotes: Topic[];
@@ -9,6 +9,7 @@ export interface State {
   currentQuote: Quote;
   quotesByTopic: Quote[];
   suggestions;
+  comments;
 }
 
 export const initialState: State = {
@@ -16,7 +17,8 @@ export const initialState: State = {
   quotesByTopic: [],
   isLoading: false,
   currentQuote: <Quote>{},
-  suggestions: {}
+  suggestions: {},
+  comments: []
 };
 
 export function reducer(state = initialState, action: Action): State {
@@ -28,6 +30,14 @@ export function reducer(state = initialState, action: Action): State {
       return Object.assign({}, state, {
         topicsWithQuotes: action.payload,
         isLoading: false
+      });
+    case actions.ActionTypes.GET_COMMENTS_SUCCESS:
+      return Object.assign({}, state, {
+        comments: action.payload
+      });
+    case actions.ActionTypes.CREATE_COMMENT_SUCCESS:
+      return Object.assign({}, state, {
+        comments: [...state.comments, action.payload]
       });
     case actions.ActionTypes.GET_BY_TOPIC_ID_SUCCESS:
       return Object.assign({}, state, {

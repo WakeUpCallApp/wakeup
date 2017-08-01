@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 
 import { WakeupCommonModule } from '../../common/common.module';
 import { QuoteDetailsComponent } from './quote-details.component';
+import { WakeupAddCommentComponent } from './components/wakeup-add-comment/wakeup-add-comment.component';
+import { WakeupCommentListComponent } from './components/wakeup-comment-list/wakeup-comment-list.component';
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import { QuoteDetailsComponent } from './quote-details.component';
   ],
   exports: [],
   declarations: [
-    QuoteDetailsComponent
+    QuoteDetailsComponent,
+    WakeupAddCommentComponent,
+    WakeupCommentListComponent
   ],
   providers: [],
   entryComponents: []

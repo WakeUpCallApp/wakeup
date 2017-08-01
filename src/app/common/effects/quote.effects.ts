@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect } from "@ngrx/effects";
+import { Router } from "@angular/router";
+
 
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
@@ -48,6 +50,41 @@ export class QuoteEffects {
     .map(result => new quoteActions.CreateActionSuccess(result))
     .catch(error => Observable.of(new quoteActions.CreateActionError(error)));
 
+  @Effect({ dispatch: false })
+  createSuccess$ = this.actions$
+    .ofType(quoteActions.ActionTypes.CREATE_SUCCESS)
+    .map(action => action.payload)
+    .map(quote => {
+      this.router.navigate([AppConstants.routes.QUOTE_DETAILS, quote.id]);
+    });
+
+  @Effect()
+  getComments$ = this.actions$
+    .ofType(quoteActions.ActionTypes.GET_COMMENTS)
+    .map(action => action.payload)
+    .switchMap(quoteId => this.quoteService.getComments(quoteId))
+    .map(result => new quoteActions.GetCommentsActionSuccess(result));
+
+  @Effect()
+  create_comment$ = this.actions$
+    .ofType(quoteActions.ActionTypes.CREATE_COMMENT)
+    .map(action => action.payload)
+    .switchMap(comment => this.quoteService.addComment(comment))
+    .map(result => new quoteActions.CreateCommentActionSuccess(result))
+    .catch(error =>
+      Observable.of(new quoteActions.CreateCommentActionError(error))
+    );
+
+  @Effect()
+  delete_comment$ = this.actions$
+    .ofType(quoteActions.ActionTypes.DELETE_COMMENT)
+    .map(action => action.payload)
+    .switchMap(comment => this.quoteService.deleteComment(comment))
+    .map(result => new quoteActions.DeleteCommentActionSuccess(result))
+    .catch(error =>
+      Observable.of(new quoteActions.DeleteCommentActionError(error))
+    );
+
   @Effect()
   updateS$ = this.actions$
     .ofType(quoteActions.ActionTypes.UPDATE)
@@ -56,8 +93,14 @@ export class QuoteEffects {
       this.quoteService
         .update(quote)
         .map(result => new quoteActions.UpdateActionSuccess(result))
-        .catch(error => Observable.of(new quoteActions.UpdateActionError(error)))
+        .catch(error =>
+          Observable.of(new quoteActions.UpdateActionError(error))
+        )
     );
 
-  constructor(private quoteService: QuoteService, private actions$: Actions) {}
+  constructor(
+    private quoteService: QuoteService,
+    private actions$: Actions,
+    private router: Router
+  ) {}
 }

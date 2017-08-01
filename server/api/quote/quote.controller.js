@@ -49,29 +49,6 @@
         for (var i = 0; i < quote.questions; i++) {
           addQuoteToQuestion(quote._id, quote.questions[i]);
         }
-        var commentObj = {
-          createDate: quote.date,
-          text: req.body.comment
-        };
-        delete req.body.comment;
-        if (commentObj.text !== "") {
-          Comment.create(commentObj, function(err, comment) {
-            if (err) {
-              return handleError(res, err);
-            }
-            Quote.update(
-              {
-                _id: quoteId
-              },
-              {
-                $addToSet: {
-                  commentList: comment._id
-                }
-              }
-            ).exec();
-          });
-        }
-
         return res.status(201).json(quote);
       });
     });
@@ -279,9 +256,8 @@
   exports.addComment = function(req, res) {
     var userEmail = req.user.email;
     var isDefaultTopic = req.params.isDefault;
-    if (isDefaultTopic) {
-      req.body.user = userEmail;
-    }
+    req.body.user = userEmail;
+
     var query = Quote.findOne({});
     query.where("_id", req.params.id);
     query.exec(function(err, quote) {

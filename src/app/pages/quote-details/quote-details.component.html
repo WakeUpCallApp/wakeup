@@ -7,7 +7,7 @@
       <div class="row readOnly">
         <label> Topic </label> {{quote.topic?.name}}
       </div>
-      <div class="quoteForm">
+      <section class="quoteForm">
         <form class="editQuoteForm" #quoteForm='ngForm'>
           <md-input-container floatPlaceholder="always">
             <textarea [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" mdInput name="text" required></textarea>
@@ -44,7 +44,14 @@
             </md-hint>
           </md-input-container>
         </form>
-      </div>
+      </section>
     </div>
   </wakeup-card>
+  <section class="newComment" *ngIf="newComment">
+    <wakeup-add-comment (create)="addComment($event)" [commentObject]="newComment"></wakeup-add-comment>
+  </section>
+  <section class="commentList" *ngIf="(comments$ | async) as comments">
+    <wakeup-comment-list *ngIf="comments.length" [comments]="comments" (delete)="deleteComment($event)">
+    </wakeup-comment-list>
+  </section>
 </div>

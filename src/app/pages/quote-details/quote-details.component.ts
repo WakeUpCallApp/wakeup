@@ -16,7 +16,8 @@ import { Subscription } from "rxjs/Subscription";
 import * as reducers from "../../common/reducers";
 import * as questionActions from "../../common/actions/question.actions";
 import * as actions from "../../common/actions/quote.actions";
-import { Quote } from "../../common/models/quote.model";
+import { Quote, CreateComment } from "../../common/models/quote.model";
+import { Topic } from "../../common/models/topic.model";
 
 @Component({
   selector: "wakeup-quote-details",
@@ -30,6 +31,8 @@ export class QuoteDetailsComponent implements OnInit {
   updateObject;
   authors$: Observable<string[]>;
   sources$: Observable<string[]>;
+  comments$: Observable<Comment[]>;
+  newComment: CreateComment;
   @ViewChild("textVar") textElRef: ElementRef;
   @ViewChild("authorVar") authorElRef: ElementRef;
   @ViewChild("sourceVar") sourceElRef: ElementRef;
@@ -46,15 +49,20 @@ export class QuoteDetailsComponent implements OnInit {
       .select<string>("id")
       .subscribe(quoteId => {
         this.store.dispatch(new actions.GetByIdAction(+quoteId));
+        this.store.dispatch(new actions.GetCommentsAction(+quoteId));
       });
     this.quoteSubscription = this.store
       .select(reducers.getCurrentQuote)
       .subscribe(quote => {
         this.currentQuote = quote;
         this.updateObject = Object.assign({}, this.currentQuote);
+        if (quote.topic) {
+          this.newComment = this.getEmptyComment();
+        }
       });
     this.authors$ = this.store.select(reducers.getAuthorSuggestions);
     this.sources$ = this.store.select(reducers.getSourceSuggestions);
+    this.comments$ = this.store.select(reducers.getComments);
 
     this.store.dispatch(new actions.GetSuggestionsAction());
   }
@@ -90,6 +98,33 @@ export class QuoteDetailsComponent implements OnInit {
   }
 
   updateQuote() {
-   this.store.dispatch(new actions.UpdateAction(this.updateObject)); 
+    this.store.dispatch(new actions.UpdateAction(this.updateObject));
+  }
+
+  addComment(commentObj) {
+    commentObj.comment.createDate = new Date();
+    this.store.dispatch(new actions.CreateCommentAction(commentObj));
+    this.newComment = this.getEmptyComment();
+  }
+
+  deleteComment(comment) {
+    this.store.dispatch(
+      new actions.DeleteCommentAction({
+        quoteId: this.currentQuote.id,
+        commentId: comment._id
+      })
+    );
+  }
+
+  getEmptyComment(): CreateComment {
+    const comment = {
+      createDate: undefined,
+      text: ""
+    };
+    return {
+      comment,
+      quoteId: this.currentQuote.id,
+      isDefaultTopic: (this.currentQuote.topic as Topic).isDefault
+    };
   }
 }
