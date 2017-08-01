@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 import { Store } from "@ngrx/store";
@@ -17,6 +17,11 @@ import { QuestionSet } from "../../common/models/question-set.model";
 import appConstants from "../../common/app-constants";
 import { WakeupAnswerDialogComponent } from "./components/wakeup-answer-dialog/wakeup-answer-dialog.component";
 
+enum KEY_CODE {
+  RIGHT_ARROW = 39,
+  LEFT_ARROW = 37
+}
+
 @Component({
   selector: "wakeup-answers",
   templateUrl: "./answers.component.html",
@@ -29,6 +34,7 @@ export class AnswersComponent implements OnInit {
   questionSubscription: Subscription;
   nextQuestionId: number;
   prevQuestionId: number;
+  openModal = false;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
@@ -51,7 +57,8 @@ export class AnswersComponent implements OnInit {
         this.question = question;
         this.titleService.setTitle(`Answers ${question.text}`);
         if (this.question.questionSet) {
-          const currentQuestionIndex = (this.question.questionSet as QuestionSet).questionIds.indexOf(question.id);
+          const currentQuestionIndex = (this.question
+            .questionSet as QuestionSet).questionIds.indexOf(question.id);
           this.nextQuestionId = this.getNextQuestion(currentQuestionIndex);
           this.prevQuestionId = this.getPrevQuestion(currentQuestionIndex);
         }
@@ -63,7 +70,22 @@ export class AnswersComponent implements OnInit {
     this.questionSubscription.unsubscribe();
   }
 
+  @HostListener("document:keyup", ["$event"])
+  onKeyUp(ev: KeyboardEvent) {
+    if (this.openModal) {
+      return;
+    }
+    if (ev.keyCode === KEY_CODE.RIGHT_ARROW && this.nextQuestionId) {
+      this.router.navigate([appConstants.routes.ANSWERS, this.nextQuestionId]);
+    }
+
+    if (ev.keyCode === KEY_CODE.LEFT_ARROW && this.prevQuestionId) {
+      this.router.navigate([appConstants.routes.ANSWERS, this.prevQuestionId]);
+    }
+  }
+
   editAnswer(answer) {
+    this.openModal = true;
     const config: MdDialogConfig = {
       disableClose: false,
       width: "600px"
@@ -71,6 +93,7 @@ export class AnswersComponent implements OnInit {
     const dialogRef = this.dialog.open(WakeupAnswerDialogComponent, config);
     dialogRef.componentInstance.answer = Object.assign({}, answer);
     dialogRef.afterClosed().subscribe(result => {
+      this.openModal = false;
       if (result) {
         this.store.dispatch(new actions.UpdateAction(result));
       }
@@ -82,6 +105,7 @@ export class AnswersComponent implements OnInit {
   }
 
   createAnswer() {
+    this.openModal = true;
     const newAnswer = {
       question: this.currentQuestionId,
       text: ""
@@ -93,6 +117,7 @@ export class AnswersComponent implements OnInit {
     const dialogRef = this.dialog.open(WakeupAnswerDialogComponent, config);
     dialogRef.componentInstance.answer = Object.assign({}, newAnswer);
     dialogRef.afterClosed().subscribe(result => {
+      this.openModal = false;
       if (result) {
         this.store.dispatch(
           new actions.CreateAction(
