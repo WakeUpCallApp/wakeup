@@ -7,7 +7,7 @@
       <div class="row readOnly">
         <label> Topic </label> {{quote.topic?.name}}
       </div>
-      <section class="quoteForm">
+      <section class="quoteForm" *ngIf="!quote.topic?.isDefault;else readOnlyQuote">
         <form class="editQuoteForm" #quoteForm='ngForm'>
           <md-input-container floatPlaceholder="always">
             <textarea [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" mdInput name="text" required></textarea>
@@ -45,6 +45,13 @@
           </md-input-container>
         </form>
       </section>
+      <ng-template class="readOnly" #readOnlyQuote>
+        <div class="row readOnly">
+          <label>Text</label> {{currentQuote.text}}
+        </div>
+        <div class="row readOnly" *ngIf="currentQuote.author"><label>Author</label> {{currentQuote.author}}</div>
+        <div class="row readOnly" *ngIf="currentQuote.source"><label>Source</label> {{currentQuote.source}}</div>
+      </ng-template>
     </div>
   </wakeup-card>
   <section class="newComment" *ngIf="newComment">

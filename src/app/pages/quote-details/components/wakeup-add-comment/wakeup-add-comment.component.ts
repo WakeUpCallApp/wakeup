@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { CreateComment} from "../../../../common/models/quote.model";
+import { ICreateComment } from "../../../../common/models/quote.model";
 
 @Component({
   selector: "wakeup-add-comment",
@@ -7,7 +7,7 @@ import { CreateComment} from "../../../../common/models/quote.model";
   styleUrls: ["./wakeup-add-comment.component.scss"]
 })
 export class WakeupAddCommentComponent implements OnInit {
-  @Input() commentObject: CreateComment;
+  @Input() commentObject: ICreateComment;
   @Output() create = new EventEmitter();
   constructor() {}
 

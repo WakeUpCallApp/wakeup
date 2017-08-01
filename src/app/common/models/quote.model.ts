@@ -6,7 +6,7 @@ export interface Comment {
   text: string;
 }
 
-export interface CreateComment {
+export interface ICreateComment {
   comment: Comment;
   quoteId: number;
   isDefaultTopic: boolean;

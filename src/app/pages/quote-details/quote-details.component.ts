@@ -16,7 +16,7 @@ import { Subscription } from "rxjs/Subscription";
 import * as reducers from "../../common/reducers";
 import * as questionActions from "../../common/actions/question.actions";
 import * as actions from "../../common/actions/quote.actions";
-import { Quote, CreateComment } from "../../common/models/quote.model";
+import { Quote, ICreateComment } from "../../common/models/quote.model";
 import { Topic } from "../../common/models/topic.model";
 
 @Component({
@@ -32,7 +32,7 @@ export class QuoteDetailsComponent implements OnInit {
   authors$: Observable<string[]>;
   sources$: Observable<string[]>;
   comments$: Observable<Comment[]>;
-  newComment: CreateComment;
+  newComment: ICreateComment;
   @ViewChild("textVar") textElRef: ElementRef;
   @ViewChild("authorVar") authorElRef: ElementRef;
   @ViewChild("sourceVar") sourceElRef: ElementRef;
@@ -116,7 +116,7 @@ export class QuoteDetailsComponent implements OnInit {
     );
   }
 
-  getEmptyComment(): CreateComment {
+  getEmptyComment(): ICreateComment {
     const comment = {
       createDate: undefined,
       text: ""
