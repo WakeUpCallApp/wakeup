@@ -1,4 +1,4 @@
-<div class="answers pageContent" *ngIf="question">
+<div class="answers-container pageContent" *ngIf="question">
   <wakeup-card>
     <div class="card-header">
       <div class="title">Answers</div>
@@ -23,7 +23,7 @@
       </div>
       <hr>
       <div class="answers">
-        <span *ngIf="!question.answers?.length">No answers available. <br>Please, click the + button to add an answer</span>
+        <span class="noAnswersMessage" *ngIf="!question.answers?.length">No answers available. <br>Please, click the + button to add an answer</span>
 
         <div *ngFor="let answerGroup of question.groupedAnswers">
           <span class="group">{{answerGroup.createDate}}</span>

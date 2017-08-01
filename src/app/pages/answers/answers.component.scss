@@ -1,5 +1,5 @@
 @import "~../../common/constants";
-.answers {
+.answers-container {
     min-height: 70vh;
 }
 
@@ -33,6 +33,13 @@
 }
 
 .answers {
+    .noAnswersMessage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 26px;
+        font-size: 17px;
+    }
     .group {
         font-weight: bold;
     }
