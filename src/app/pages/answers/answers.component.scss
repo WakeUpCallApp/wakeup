@@ -70,7 +70,7 @@
     width: 65px;
     height: 65px;
     bottom: 16px;
-    left: 100vw;
+    left: calc(100vw - 76px);
     display: flex;
     justify-content: center;
 }
@@ -80,6 +80,8 @@
     position: sticky;
     bottom: calc(100vh/2);
     left: 26px;
+    display: flex;
+    justify-content: center;
 }
 
 md-icon {
@@ -92,5 +94,7 @@ md-icon {
     z-index: 20;
     position: sticky;
     bottom: calc(100vh/2);
-    left: 100vw;
+    left: calc(100vw - 76px);
+    display: flex;
+    justify-content: center;
 }
