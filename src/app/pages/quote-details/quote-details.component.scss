@@ -1,10 +1,21 @@
 @import "~../../common/constants";
+.card-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    .title {
+        flex: 1;
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+}
+
 .editQuoteForm {
-  display: flex;
-  flex-direction: column;
-  md-input-container {
-    margin-bottom: 26px;
-  }
+    display: flex;
+    flex-direction: column;
+    md-input-container {
+        margin-bottom: 26px;
+    }
 }
 
 .readOnly {
@@ -12,9 +23,9 @@
     flex-direction: column;
     margin-bottom: 26px;
     label {
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 4px;
-      color: $primary;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 4px;
+        color: $primary;
     }
 }

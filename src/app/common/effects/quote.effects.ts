@@ -59,6 +59,22 @@ export class QuoteEffects {
     });
 
   @Effect()
+  delete$ = this.actions$
+    .ofType(quoteActions.ActionTypes.DELETE)
+    .map(action => action.payload)
+    .switchMap(quoteId => this.quoteService.delete(quoteId))
+    .map(result => new quoteActions.DeleteActionSuccess(result))
+    .catch(error => Observable.of(new quoteActions.DeleteActionError(error)));
+
+  @Effect({ dispatch: false })
+  deleteSuccess$ = this.actions$
+    .ofType(quoteActions.ActionTypes.DELETE_SUCCESS)
+    .map(action => action.payload)
+    .map(({topic}) => {
+      this.router.navigate([AppConstants.routes.QUOTES, topic.id]);
+    });  
+
+  @Effect()
   getComments$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_COMMENTS)
     .map(action => action.payload)

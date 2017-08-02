@@ -2,6 +2,14 @@
   <wakeup-card>
     <div class="card-header">
       <div class="title">Quotes Details</div>
+      <div class="actions" *ngIf="updateObject as quote">
+        <button md-icon-button [mdMenuTriggerFor]="appMenu" *ngIf="!quote.topic?.isDefault">
+           <md-icon>more_vert</md-icon>
+        </button>
+        <md-menu #appMenu="mdMenu">
+          <button md-menu-item (click)="deleteQuote()"> Delete Quote </button>
+        </md-menu>
+      </div>
     </div>
     <div class="card-body" *ngIf="updateObject as quote">
       <div class="row readOnly">

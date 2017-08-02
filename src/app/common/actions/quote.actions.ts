@@ -22,6 +22,8 @@ export const ActionTypes = {
   UPDATE_SUCCESS: type("[Quote] Update Success"),
   UPDATE_ERROR: type("[Quote] Update Error"),
   DELETE: type("[Quote] Delete"),
+  DELETE_SUCCESS: type("[Quote] Delete Success"),
+  DELETE_ERROR: type("[Quote] Delete Error"),
   DELETE_COMMENT: type("[Quote] Delete Comment"),
   DELETE_COMMENT_ERROR: type("[Quote] Delete Comment Error"),
   DELETE_COMMENT_SUCCESS: type("[Quote] Delete Comment Success"),
@@ -135,6 +137,18 @@ export class DeleteAction implements Action {
   constructor(public payload: string) {}
 }
 
+export class DeleteActionSuccess implements Action {
+  type = ActionTypes.DELETE_SUCCESS;
+
+  constructor(public payload) {}
+}
+
+export class DeleteActionError implements Action {
+  type = ActionTypes.DELETE_ERROR;
+
+  constructor(public payload) {}
+}
+
 export class DeleteCommentAction implements Action {
   type = ActionTypes.DELETE_COMMENT;
 
@@ -186,6 +200,8 @@ export type Actions =
   | UpdateActionSuccess
   | UpdateActionError
   | DeleteAction
+  | DeleteActionSuccess
+  | DeleteActionError
   | DeleteCommentAction
   | DeleteCommentActionError
   | DeleteCommentActionSuccess

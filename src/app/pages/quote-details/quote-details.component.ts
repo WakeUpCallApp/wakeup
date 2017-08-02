@@ -101,6 +101,10 @@ export class QuoteDetailsComponent implements OnInit {
     this.store.dispatch(new actions.UpdateAction(this.updateObject));
   }
 
+  deleteQuote() {
+    this.store.dispatch(new actions.DeleteAction(this.updateObject));
+  }
+
   addComment(commentObj) {
     commentObj.comment.createDate = new Date();
     this.store.dispatch(new actions.CreateCommentAction(commentObj));

@@ -37,6 +37,16 @@ export class QuoteService {
       .catch(this.handleError);
   }
 
+  create(quote: IQuote): Observable<Quote> {
+    return this.http
+      .post(`/api/quotes/${quote.topic}`, quote)
+      .map((response: Response) => response.json())
+      .map((quoteApi: QuoteApi) => {
+        return Parser.quoteFromApi(quoteApi);
+      })
+      .catch(this.handleError);
+  }
+
   update(quote: Quote): Observable<Quote> {
     return this.http
       .put(`/api/quotes/${quote.id}`, Parser.quoteToApi(quote))
@@ -44,6 +54,16 @@ export class QuoteService {
       .map(quoteApi => {
         const quote = Parser.quoteFromApi(quoteApi);
         quote.topic = Parser.topicFromApi(quoteApi.topic);
+        return quote;
+      })
+      .catch(this.handleError);
+  }
+
+  delete(quote: Quote): Observable<number> {
+    return this.http
+      .delete(`/api/quotes/${quote.id}`)
+      .map((response: Response) => response.json())
+      .map(() => {
         return quote;
       })
       .catch(this.handleError);
@@ -57,16 +77,6 @@ export class QuoteService {
         const quote = Parser.quoteFromApi(quoteApi);
         quote.topic = Parser.topicFromApi(quoteApi.topic);
         return quote;
-      })
-      .catch(this.handleError);
-  }
-
-  create(quote: IQuote): Observable<Quote> {
-    return this.http
-      .post(`/api/quotes/${quote.topic}`, quote)
-      .map((response: Response) => response.json())
-      .map((quoteApi: QuoteApi) => {
-        return Parser.quoteFromApi(quoteApi);
       })
       .catch(this.handleError);
   }
@@ -89,7 +99,7 @@ export class QuoteService {
       .catch(this.handleError);
   }
 
-  addComment({comment, quoteId, isDefaultTopic}) {
+  addComment({ comment, quoteId, isDefaultTopic }) {
     return this.http
       .put(`/api/quotes/addComment/${quoteId}/${isDefaultTopic}`, comment)
       .map((response: Response) => response.json())
@@ -97,7 +107,7 @@ export class QuoteService {
       .catch(this.handleError);
   }
 
-  deleteComment({quoteId, commentId}) {
+  deleteComment({ quoteId, commentId }) {
     return this.http
       .delete(`/api/quotes/deleteComment/${quoteId}/${commentId}`)
       .map((response: Response) => response.json())
