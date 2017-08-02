@@ -80,8 +80,6 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   }
 
   canDeactivate() {
-    console.log("i am navigating away");
-
     if (this.isSessionMode) {
       return window.confirm("Are you sure? The session will terminate.");
     }

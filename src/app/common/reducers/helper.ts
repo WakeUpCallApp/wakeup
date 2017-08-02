@@ -2,7 +2,7 @@ import { groupBy, chain, toPairs, zipObject } from "lodash";
 
 export default class Helper {
   groupAnswersByDate(answers) {
-    return chain(answers)
+    return chain(this.sortAnswersByDate(answers))
       .groupBy("groupDay")
       .toPairs()
       .map(currentItem => {

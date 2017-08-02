@@ -52,10 +52,7 @@ export function reducer(state = initialState, action: Action): State {
 function processQuestion(question) {
   const newQuestion = Object.assign({}, question);
   newQuestion.groupedAnswers = helper.groupAnswersByDate(question.answers);
-  newQuestion.groupedAnswers = newQuestion.groupedAnswers.map(answersGroup => {
-    answersGroup.answers = helper.sortAnswersByDate(answersGroup.answers);
-    return answersGroup;
-  });
+ 
   return newQuestion;
 }
 
@@ -80,7 +77,7 @@ function onDeleteAnswer(currentQuestion, answerToDelete) {
 
 function onCreateAnswer(currentQuestion, answerToAdd) {
   const updatedQuestion = Object.assign({}, currentQuestion);
-  updatedQuestion.answers = [...updatedQuestion.answers, answerToAdd];
+  updatedQuestion.answers = [...updatedQuestion.answers || [], answerToAdd];
   return processQuestion(updatedQuestion);
 }
 

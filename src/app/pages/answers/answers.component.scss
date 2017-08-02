@@ -70,7 +70,7 @@
     width: 65px;
     height: 65px;
     bottom: 16px;
-    left: 1290px;
+    left: 100vw;
     display: flex;
     justify-content: center;
 }
@@ -78,7 +78,7 @@
 .prevQuestionButton {
     z-index: 20;
     position: sticky;
-    bottom: 300px;
+    bottom: calc(100vh/2);
     left: 26px;
 }
 
@@ -91,6 +91,6 @@ md-icon {
 .nextQuestionButton {
     z-index: 20;
     position: sticky;
-    bottom: 300px;
-    left: 1290px;
+    bottom: calc(100vh/2);
+    left: 100vw;
 }

@@ -16,6 +16,9 @@ export class WakeupQuestionSetsListComponent implements OnInit {
   startQuestionSet(e, questionSet) {
     e.preventDefault();
     e.stopImmediatePropagation();
+    if (!questionSet.questionIds.length) {
+      return;
+    }
     this.router.navigate([
       appConstants.routes.PRACTICE_SESSION,
       questionSet.id
