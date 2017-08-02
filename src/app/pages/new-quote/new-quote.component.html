@@ -1,6 +1,13 @@
-<div class="newQuote pageContent">
+<div class="newQuote pageContent" *ngIf="topic$ | async as topic">
+   <div class="breadcrumbs" >
+    <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
+    <md-icon>keyboard_arrow_right</md-icon>
+    <a [routerLink]="['/quotes', topic?.id]"> Inspiration Page</a>
+    <md-icon>keyboard_arrow_right</md-icon> 
+    <span class="currentLink">New Quote</span>
+  </div>
   <wakeup-card>
-    <div class="card-header">Create Quote <small>{{(topic$ | async)?.name}}</small></div>
+    <div class="card-header">Create Quote <small>{{topic.name}}</small></div>
     <div class="card-body">
       <form class="createQuoteForm" #quoteForm='ngForm'>
         <md-input-container floatPlaceholder="always">

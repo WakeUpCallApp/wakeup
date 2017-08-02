@@ -1,4 +1,10 @@
 <div class="quoteDetails pageContent">
+  <div class="breadcrumbs" *ngIf="updateObject?.topic as topic">
+    <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
+    <md-icon>keyboard_arrow_right</md-icon>
+    <a [routerLink]="['/quotes', topic?.id]"> Inspiration Page</a>
+    <md-icon>keyboard_arrow_right</md-icon> <span class="currentLink">Quote Details</span>
+  </div>
   <wakeup-card>
     <div class="card-header">
       <div class="title">Quotes Details</div>

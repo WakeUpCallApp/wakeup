@@ -18,7 +18,7 @@
         "testTsconfig": "tsconfig.spec.json",
         "prefix": "wakeup",
         "styles": [
-            "styles.css",
+            "styles.scss",
             "theme.scss",
             "../node_modules/font-awesome/css/font-awesome.css"
         ],

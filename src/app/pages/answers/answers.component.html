@@ -1,4 +1,9 @@
 <div class="answers-container pageContent" *ngIf="question">
+   <div class="breadcrumbs" *ngIf="question.questionSet as questionSet">
+    <a [routerLink]="['/questionSetDetails', questionSet?.id]">{{questionSet?.name}}</a>
+    <md-icon>keyboard_arrow_right</md-icon>
+    <span class="currentLink">{{question.text}}</span>
+  </div>
   <wakeup-card>
     <div class="card-header">
       <div class="title">Answers</div>

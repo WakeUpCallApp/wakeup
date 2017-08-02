@@ -1,4 +1,9 @@
 <div class="quotes pageContent">
+  <div class="breadcrumbs" *ngIf="currentTopic as topic">
+    <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
+    <md-icon>keyboard_arrow_right</md-icon>
+    <span class="currentLink">Inspiration Page</span>
+  </div>
   <wakeup-card>
     <div class="card-header">
       <div class="title">Quotes <small>{{currentTopic?.name}}</small></div>
@@ -30,13 +35,7 @@
     </div>
   </wakeup-card>
 </div>
-<button mdRipple
-   *ngIf="!currentTopic?.isDefault" 
-   (click)="goToCreateQuote()" 
-   title="add quote" 
-   class="addQuoteButton" 
-   md-mini-fab 
-   md-button 
-   md-raised-button>
+<button mdRipple *ngIf="!currentTopic?.isDefault" (click)="goToCreateQuote()" title="add quote" class="addQuoteButton" md-mini-fab
+  md-button md-raised-button>
  <md-icon>add</md-icon>
 </button>
