@@ -7,7 +7,8 @@
   <md-card-content class="list">
     <ul>
       <li *ngFor="let comment of comments; index as i">
-        {{comment.text}}
+        <span class="text">{{comment.text}}</span> 
+        <span class="remove" (click)="onDelete(comment)"><md-icon>delete</md-icon></span>
       </li>
     </ul>
   </md-card-content>

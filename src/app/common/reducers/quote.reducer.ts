@@ -39,6 +39,10 @@ export function reducer(state = initialState, action: Action): State {
       return Object.assign({}, state, {
         comments: [...state.comments, action.payload]
       });
+    case actions.ActionTypes.DELETE_COMMENT_SUCCESS:
+      return Object.assign({}, state, {
+        comments: onDeleteComment(state.comments, action.payload)
+      });  
     case actions.ActionTypes.GET_BY_TOPIC_ID_SUCCESS:
       return Object.assign({}, state, {
         quotesByTopic: action.payload
@@ -56,4 +60,9 @@ export function reducer(state = initialState, action: Action): State {
       return state;
     }
   }
+}
+
+
+function onDeleteComment(commentList, commentToDelete) {
+    return commentList.filter(comment => comment.id !== commentToDelete.id);
 }

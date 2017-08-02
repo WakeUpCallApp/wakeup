@@ -1,0 +1,28 @@
+@import "~../../../../common/constants";
+.commentList {
+    .list ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border: 1px solid rgba(0, 0, 0, .06);
+    }
+    .list li {
+        padding: 16px;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-color: rgba(0, 0, 0, .06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .text {
+            flex: 1;
+        }
+        .remove {
+            cursor: pointer;
+        }
+    }
+    .list li:hover {
+        background: #fafafa;
+        color: $primary;
+    }
+}
