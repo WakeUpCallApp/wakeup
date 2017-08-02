@@ -12,6 +12,7 @@ import { Store } from "@ngrx/store";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
+import { Title } from "@angular/platform-browser";
 
 import * as reducers from "../../common/reducers";
 import * as questionActions from "../../common/actions/question.actions";
@@ -41,7 +42,8 @@ export class QuoteDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private ngzone: NgZone,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
@@ -58,6 +60,7 @@ export class QuoteDetailsComponent implements OnInit {
         this.updateObject = Object.assign({}, this.currentQuote);
         if (quote.topic) {
           this.newComment = this.getEmptyComment();
+          this.titleService.setTitle(`Quote Details: ${quote.text}`);
         }
       });
     this.authors$ = this.store.select(reducers.getAuthorSuggestions);
