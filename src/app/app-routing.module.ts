@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, PreloadAllModules } from '@angular/router';
 
 import { AuthenticationGuard } from './common/guards/authentication.guard';
 import { CanDeactivateGuard } from './common/guards/can-deactivate.guard';
@@ -7,15 +7,12 @@ import { UserDetailResolver } from './common/guards/user-details.resolver';
 import { LandingComponent } from './pages/landing/landing.component';
 import { QuestionSetsComponent } from './pages/question-sets/question-sets.component';
 import { NewQuestionSetComponent } from './pages/new-question-set/new-question-set.component';
-import { QuestionSetDetailsComponent } from './pages/question-set-details/question-set-details.component';
 import { TopicsComponent } from './pages/topics/topics.component';
 import { NewTopicComponent } from './pages/new-topic/new-topic.component';
 import { TopicDetailsComponent } from './pages/topic-details/topic-details.component';
 import { QuotesComponent } from './pages/quotes/quotes.component';
 import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
 import { PracticeSessionComponent } from './pages/practice-session/practice-session.component';
-import { AnswersComponent } from './pages/answers/answers.component';
-import { QuoteDetailsComponent } from './pages/quote-details/quote-details.component';
 
 @NgModule({
   imports: [
@@ -41,7 +38,7 @@ import { QuoteDetailsComponent } from './pages/quote-details/quote-details.compo
       },
       {
         path: 'questionSetDetails/:id',
-        component: QuestionSetDetailsComponent,
+        loadChildren: 'app/pages/question-set-details/question-set-details.module',
         data: { title: 'Question Set Details' },
         canActivate: [AuthenticationGuard],
         resolve: {
@@ -89,7 +86,7 @@ import { QuoteDetailsComponent } from './pages/quote-details/quote-details.compo
       },
       {
         path: 'quoteDetails/:id',
-        component: QuoteDetailsComponent,
+        loadChildren: 'app/pages/quote-details/quote-details.module',
         data: { title: 'Quote Details' },
         canActivate: [AuthenticationGuard],
         resolve: {
@@ -106,14 +103,16 @@ import { QuoteDetailsComponent } from './pages/quote-details/quote-details.compo
       },
       {
         path: 'answers/:questionId',
-        component: AnswersComponent,
+        loadChildren: 'app/pages/answers/answers.module',
         data: { title: 'Answers' },
         canActivate: [AuthenticationGuard],
         resolve: { userDetails: UserDetailResolver }
       },
       { path: '', redirectTo: 'questionSets', pathMatch: 'full' },
       { path: '**', redirectTo: 'questionSets', pathMatch: 'full' }
-    ])
+    ], {
+      preloadingStrategy: PreloadAllModules
+    })
   ],
   exports: [RouterModule]
 })

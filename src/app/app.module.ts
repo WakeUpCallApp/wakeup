@@ -29,15 +29,12 @@ import { LandingComponent } from "./pages/landing/landing.component";
 import { LoginModule } from "./pages/login/login.module";
 import { QuestionSetsModule } from "./pages/question-sets/question-sets.module";
 import { NewQuestionSetComponent } from "./pages/new-question-set/new-question-set.component";
-import { QuestionSetDetailsModule } from "./pages/question-set-details/question-set-details.module";
 import { TopicsComponent } from "./pages/topics/topics.component";
 import { NewTopicComponent } from "./pages/new-topic/new-topic.component";
 import { TopicDetailsModule } from "./pages/topic-details/topic-details.module";
 import { QuotesComponent } from "./pages/quotes/quotes.component";
 import { NewQuoteComponent } from "./pages/new-quote/new-quote.component";
 import { PracticeSessionComponent } from "./pages/practice-session/practice-session.component";
-import { AnswersModule } from "./pages/answers/answers.module";
-import { QuoteDetailsModule } from "./pages/quote-details/quote-details.module";
 
 @NgModule({
   declarations: [
@@ -58,11 +55,7 @@ import { QuoteDetailsModule } from "./pages/quote-details/quote-details.module";
     MaterialModule,
     WakeupCommonModule,
     LoginModule,
-    QuestionSetsModule,
-    QuestionSetDetailsModule,
     TopicDetailsModule,
-    QuoteDetailsModule,
-    AnswersModule,
     AppRoutingModule,
     StoreModule.provideStore(reducer),
     // must come AFTER `provideStore` call

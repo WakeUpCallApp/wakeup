@@ -11,6 +11,8 @@ import { WakeupQuestionListComponent } from './components/wakeup-question-list/w
 import { WakeupQuotesBrowserComponent } from './components/wakeup-quotes-browser/wakeup-quotes-browser.component';
 import { WakeupEditQuestionDialogComponent } from './components/wakeup-edit-question-dialog/wakeup-edit-question-dialog.component';
 import { WakeupSessionConfigComponent } from './components/wakeup-session-config/wakeup-session-config.component';
+import { routing } from './question-set-details.routing';
+
 
 @NgModule({
   imports: [
@@ -18,7 +20,8 @@ import { WakeupSessionConfigComponent } from './components/wakeup-session-config
     FormsModule,
     MaterialModule,
     CommonModule,
-    WakeupCommonModule
+    WakeupCommonModule,
+    routing
   ],
   exports: [],
   declarations: [
@@ -32,4 +35,4 @@ import { WakeupSessionConfigComponent } from './components/wakeup-session-config
   providers: [],
   entryComponents: [WakeupQuotesBrowserComponent,  WakeupEditQuestionDialogComponent, WakeupSessionConfigComponent]
 })
-export class QuestionSetDetailsModule {}
+export default class QuestionSetDetailsModule {}

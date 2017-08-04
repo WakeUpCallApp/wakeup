@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 
+import { routing } from './quote-details.routing';
 import { WakeupCommonModule } from '../../common/common.module';
 import { QuoteDetailsComponent } from './quote-details.component';
 import { WakeupAddCommentComponent } from './components/wakeup-add-comment/wakeup-add-comment.component';
@@ -15,7 +16,8 @@ import { WakeupCommentListComponent } from './components/wakeup-comment-list/wak
     FormsModule,
     MaterialModule,
     CommonModule,
-    WakeupCommonModule
+    WakeupCommonModule,
+    routing
   ],
   exports: [],
   declarations: [
@@ -26,4 +28,4 @@ import { WakeupCommentListComponent } from './components/wakeup-comment-list/wak
   providers: [],
   entryComponents: []
 })
-export class QuoteDetailsModule {}
+export default class QuoteDetailsModule {}
