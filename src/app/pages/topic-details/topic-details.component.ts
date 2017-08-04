@@ -7,7 +7,8 @@ import {
   ChangeDetectorRef,
   ApplicationRef,
   ViewChild,
-  ElementRef
+  ElementRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -21,7 +22,8 @@ import { Topic } from '../../common/models/topic.model';
 @Component({
   selector: 'wakeup-topic-details',
   templateUrl: './topic-details.component.html',
-  styleUrls: ['./topic-details.component.scss']
+  styleUrls: ['./topic-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   currentTopic: Topic;
@@ -53,6 +55,7 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(currentTopic => {
         this.currentTopic = Object.assign({}, currentTopic);
         this.updateObject = Object.assign({}, currentTopic);
+        this.cdref.detectChanges();
       });
   }
 
@@ -65,13 +68,11 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         .debounceTime(1000)
         .subscribe(keyboardEvent => {
           this.updateTopic();
-          this.cdref.detectChanges();
         });
       Observable.fromEvent(this.descriptionElRef.nativeElement, 'keyup')
         .debounceTime(1000)
         .subscribe(keyboardEvent => {
           this.updateTopic();
-          this.cdref.detectChanges();
         });
     });
   }

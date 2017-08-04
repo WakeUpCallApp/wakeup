@@ -10,6 +10,8 @@ import {
   QuestionSetApi
 } from "../models/question-set.model";
 
+import { Question } from '../models/question.model';
+
 @Injectable()
 export class QuestionSetService {
   constructor(private http: Http) {}
@@ -42,9 +44,11 @@ export class QuestionSetService {
       .map((response: Response) => response.json())
       .map((questionSetApi: QuestionSetApi) => {
         const questionSet = Parser.questionSetFromApi(questionSetApi);
-        questionSet.questions = questionSetApi.questions.map(question =>
-          Parser.questionFromApi(question)
-        );
+        questionSet.questions = questionSetApi.questions.map(question => {
+          const parsedQuestion = Parser.questionFromApi(question);
+          parsedQuestion.questionSet = questionSet;
+          return parsedQuestion;
+        });
         questionSet.questionIds = questionSetApi.questions.map(
           question => question._id
         );
@@ -53,15 +57,19 @@ export class QuestionSetService {
       .catch(this.handleError);
   }
 
-  update(questionSet: IQuestionSet): Observable<QuestionSet> {
+  update(questionSet: QuestionSet): Observable<QuestionSet> {
+    const parsedQuestionSet = Parser.questionSetToApi(questionSet);
+    parsedQuestionSet.questions = (questionSet.questions as Question[]).map(question => Parser.questionToApi(question));
     return this.http
-      .put(`/api/questionSet/${questionSet.id}`, questionSet)
+      .put(`/api/questionSet/${questionSet.id}`, parsedQuestionSet)
       .map((response: Response) => response.json())
       .map((questionSetApi: QuestionSetApi) => {
         const questionSetObj = Parser.questionSetFromApi(questionSetApi);
-        questionSetObj.questions = questionSetApi.questions.map(question =>
-          Parser.questionFromApi(question)
-        );
+        questionSetObj.questions = questionSetApi.questions.map(question => {
+          const parsedQuestion = Parser.questionFromApi(question);
+          parsedQuestion.questionSet = questionSet;
+          return parsedQuestion;
+        });
         questionSetObj.questionIds = questionSetApi.questions.map(
           question => question._id
         );
@@ -79,7 +87,7 @@ export class QuestionSetService {
 
   registerSession(questionSetId: number) {
     return this.http
-      .put(`/api/questionSet/session/${questionSetId}`, '')
+      .put(`/api/questionSet/session/${questionSetId}`, "")
       .map((response: Response) => response.json())
       .catch(this.handleError);
   }

@@ -39,6 +39,18 @@ export default class Parser {
     );
   }
 
+  static questionSetToApi(questionSet: QuestionSet): QuestionSetApi {
+    return {
+      _id:questionSet.id,
+      name: questionSet.name,
+      description: questionSet.description,
+      user: questionSet.user,
+      practiceTimes: questionSet.practiceTimes,
+      questions: questionSet.questions,
+      isDefault: questionSet.isDefault
+    };
+  }
+
   static quoteFromApi(quoteApi: QuoteApi): Quote {
     return new Quote(
       quoteApi._id,
