@@ -35,4 +35,4 @@ import { routing } from './question-set-details.routing';
   providers: [],
   entryComponents: [WakeupQuotesBrowserComponent,  WakeupEditQuestionDialogComponent, WakeupSessionConfigComponent]
 })
-export default class QuestionSetDetailsModule {}
+export class QuestionSetDetailsModule {}

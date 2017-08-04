@@ -38,7 +38,7 @@ import { PracticeSessionComponent } from './pages/practice-session/practice-sess
       },
       {
         path: 'questionSetDetails/:id',
-        loadChildren: 'app/pages/question-set-details/question-set-details.module',
+        loadChildren: 'app/pages/question-set-details/question-set-details.module#QuestionSetDetailsModule',
         data: { title: 'Question Set Details' },
         canActivate: [AuthenticationGuard],
         resolve: {
@@ -86,7 +86,7 @@ import { PracticeSessionComponent } from './pages/practice-session/practice-sess
       },
       {
         path: 'quoteDetails/:id',
-        loadChildren: 'app/pages/quote-details/quote-details.module',
+        loadChildren: 'app/pages/quote-details/quote-details.module#QuoteDetailsModule',
         data: { title: 'Quote Details' },
         canActivate: [AuthenticationGuard],
         resolve: {
@@ -103,7 +103,7 @@ import { PracticeSessionComponent } from './pages/practice-session/practice-sess
       },
       {
         path: 'answers/:questionId',
-        loadChildren: 'app/pages/answers/answers.module',
+        loadChildren: 'app/pages/answers/answers.module#AnswersModule',
         data: { title: 'Answers' },
         canActivate: [AuthenticationGuard],
         resolve: { userDetails: UserDetailResolver }

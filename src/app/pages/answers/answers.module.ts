@@ -22,4 +22,4 @@ import { WakeupAnswerDialogComponent } from "./components/wakeup-answer-dialog/w
   providers: [],
   entryComponents: [WakeupAnswerDialogComponent]
 })
-export default class AnswersModule {}
+export class AnswersModule {}

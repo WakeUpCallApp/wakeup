@@ -28,4 +28,4 @@ import { WakeupCommentListComponent } from './components/wakeup-comment-list/wak
   providers: [],
   entryComponents: []
 })
-export default class QuoteDetailsModule {}
+export class QuoteDetailsModule {}
