@@ -9,6 +9,7 @@ import { WakeupCommonModule } from '../../common/common.module';
 import { QuoteDetailsComponent } from './quote-details.component';
 import { WakeupAddCommentComponent } from './components/wakeup-add-comment/wakeup-add-comment.component';
 import { WakeupCommentListComponent } from './components/wakeup-comment-list/wakeup-comment-list.component';
+import { WakeupQuoteQuestionsComponent } from './components/wakeup-quote-questions/wakeup-quote-questions.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { WakeupCommentListComponent } from './components/wakeup-comment-list/wak
   declarations: [
     QuoteDetailsComponent,
     WakeupAddCommentComponent,
-    WakeupCommentListComponent
+    WakeupCommentListComponent,
+    WakeupQuoteQuestionsComponent
   ],
   providers: [],
   entryComponents: []

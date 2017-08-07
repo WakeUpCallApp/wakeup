@@ -1,0 +1,17 @@
+<md-card class="questionList mat-elevation-z3">
+  <md-card-header>
+    <div class="title">
+      <h1 class="cardTitle">Questions</h1>
+    </div>
+  </md-card-header>
+  <md-card-content>
+    <button class="addQuestion" md-mini-fab md-button md-raised-button (click)="openQuestionsBrowser()"><md-icon>add</md-icon>
+    </button>
+    <ul class="list">
+      <li *ngFor="let question of questions; index as i">
+        <span class="text">{{question.text}}</span>
+        <span class="remove" (click)="onRemove(question)"><md-icon>delete</md-icon></span>
+      </li>
+    </ul>
+  </md-card-content>
+</md-card>

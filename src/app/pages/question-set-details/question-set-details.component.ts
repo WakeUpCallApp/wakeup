@@ -149,10 +149,10 @@ export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDes
       height: '80%'
     };
     const dialogRef = this.dialog.open(WakeupQuotesBrowserComponent, config);
-    dialogRef.componentInstance.selectedQuoteId = question.quoteId;
+    dialogRef.componentInstance.selectedQuoteId = question.quote;
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        question.quoteId = result.selectedQuoteId;
+        question.quote = result.selectedQuoteId;
         this.store.dispatch(new actions.EditQuestionAction(question));
       }
     });

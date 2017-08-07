@@ -68,6 +68,9 @@
       </ng-template>
     </div>
   </wakeup-card>
+  <section class="question">
+   <wakeup-quote-questions [questions]="currentQuote.questions" (update)="updateQuoteOnQuestionsUpdate($event)"></wakeup-quote-questions>
+  </section>
   <section class="newComment" *ngIf="newComment">
     <wakeup-add-comment (create)="addComment($event)" [commentObject]="newComment"></wakeup-add-comment>
   </section>

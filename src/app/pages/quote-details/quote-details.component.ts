@@ -104,6 +104,13 @@ export class QuoteDetailsComponent implements OnInit {
     this.store.dispatch(new actions.UpdateAction(this.updateObject));
   }
 
+  updateQuoteOnQuestionsUpdate(questions) {
+    const updateObject = Object.assign({}, this.updateObject, {
+      questions
+    });
+    this.store.dispatch(new actions.UpdateAction(updateObject));
+  }
+
   deleteQuote() {
     this.store.dispatch(new actions.DeleteAction(this.updateObject));
   }

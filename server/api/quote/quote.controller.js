@@ -165,9 +165,14 @@
           return handleError(res, err);
         }
         updateQuoteInQuestions(prevArray, currArray, quote._id);
-        return Quote.populate(updated, { path: "topic" }, function(err, quote) {
-          return res.status(200).json(quote);
-        });
+        return Quote.populate(
+          updated,
+          [{ path: "topic" },
+          { path: "questions" }],
+          function(err, quote) {
+            return res.status(200).json(quote);
+          }
+        );
       });
     });
   };

@@ -59,7 +59,7 @@ export default class Parser {
       new Date(quoteApi.date),
       quoteApi.author,
       quoteApi.topic as number,
-      quoteApi.questions,
+      quoteApi.questions.map(questionApi => Parser.questionFromApi(questionApi)),
       quoteApi.commentList
     );
   }
@@ -72,7 +72,7 @@ export default class Parser {
       date: moment(quote.date).isValid() ? quote.date.toISOString() : undefined,
       author: quote.author,
       topic: (quote.topic as Topic).id,
-      questions: quote.questionIds,
+      questions: (quote.questions as Question[]).map(question => question.id),
       commentList: quote.commentList
     };
   }

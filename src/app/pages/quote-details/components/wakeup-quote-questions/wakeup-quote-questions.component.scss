@@ -1,0 +1,9 @@
+@import "~../../../../common/constants";
+.questionList {
+    margin-bottom: 26px;
+    .addQuestion {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+}

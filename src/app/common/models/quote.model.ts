@@ -1,4 +1,5 @@
 import { TopicApi, Topic } from "./topic.model";
+import { Question } from './question.model';
 
 export interface Comment {
   _id?: number;
@@ -39,7 +40,7 @@ export class Quote {
     public date: Date,
     public author: string,
     public topic: number | Topic,
-    public questionIds: number[],
+    public questions: number[] | Question[],
     public commentList
   ) {}
 }
