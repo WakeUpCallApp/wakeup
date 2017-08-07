@@ -16,6 +16,14 @@ export default class Parser {
     );
   }
 
+  static questionSummary(question) {
+    return {
+      id: question.id,
+      questionSet: question.questionSet,
+      text: question.text
+    };
+  }
+
   static questionToApi(question: Question): QuestionApi {
     return {
       _id: question.id,

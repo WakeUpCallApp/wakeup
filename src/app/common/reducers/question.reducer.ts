@@ -20,7 +20,7 @@ export function reducer(state = initialState, action: Action): State {
   switch (action.type) {
     case actions.ActionTypes.LOAD_SUCCESS:
       return Object.assign({}, state, {
-        entities: action.payload,
+        entities: helper.groupQuestionsByQuestionSet(action.payload),
         isLoading: false
       });
     case actions.ActionTypes.GET_CURRENT_QUESTION_SUCCESS:

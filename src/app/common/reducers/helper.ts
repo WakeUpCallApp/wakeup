@@ -23,4 +23,14 @@ export default class Helper {
       return 0;
     });
   }
+
+  groupQuestionsByQuestionSet(questions) {
+    return chain(questions.sort())
+      .groupBy("questionSet")
+      .toPairs()
+      .map(currentItem => {
+        return zipObject(["questionSet", "questions"], currentItem);
+      })
+      .value();
+  }
 }

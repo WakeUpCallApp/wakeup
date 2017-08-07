@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { MdDialog, MdDialogConfig } from '@angular/material';
+import { WakeupQuestionsBrowserComponent} from '../wakeup-questions-browser/wakeup-questions-browser.component';
 
 @Component({
   selector: "wakeup-quote-questions",
@@ -8,7 +10,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 export class WakeupQuoteQuestionsComponent implements OnInit {
   @Input() questions;
   @Output() update = new EventEmitter();
-  constructor() {}
+  constructor(private dialog: MdDialog) {}
 
   ngOnInit() {}
 
@@ -22,6 +24,16 @@ export class WakeupQuoteQuestionsComponent implements OnInit {
   onAddQuestion(question) {}
 
   openQuestionsBrowser() {
-    
+    const config: MdDialogConfig = {
+      disableClose: false,
+      width: '80%',
+      height: '80%'
+    };
+    const dialogRef = this.dialog.open(WakeupQuestionsBrowserComponent, config);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.update.emit(result);
+      }
+    });
   }
 }

@@ -10,6 +10,7 @@ import { QuoteDetailsComponent } from './quote-details.component';
 import { WakeupAddCommentComponent } from './components/wakeup-add-comment/wakeup-add-comment.component';
 import { WakeupCommentListComponent } from './components/wakeup-comment-list/wakeup-comment-list.component';
 import { WakeupQuoteQuestionsComponent } from './components/wakeup-quote-questions/wakeup-quote-questions.component';
+import { WakeupQuestionsBrowserComponent } from './components/wakeup-questions-browser/wakeup-questions-browser.component';
 
 @NgModule({
   imports: [
@@ -25,9 +26,10 @@ import { WakeupQuoteQuestionsComponent } from './components/wakeup-quote-questio
     QuoteDetailsComponent,
     WakeupAddCommentComponent,
     WakeupCommentListComponent,
-    WakeupQuoteQuestionsComponent
+    WakeupQuoteQuestionsComponent,
+    WakeupQuestionsBrowserComponent
   ],
   providers: [],
-  entryComponents: []
+  entryComponents: [WakeupQuestionsBrowserComponent]
 })
 export class QuoteDetailsModule {}

@@ -18,9 +18,9 @@ export class QuestionService {
     return this.http
       .get("/api/questions/allQuestions")
       .map((response: Response) => response.json())
-      .map((questionApiList: QuestionApi[]) => {
-        return questionApiList.map(questionApi =>
-          Parser.questionFromApi(questionApi)
+      .map((questionApiList) => {
+        return questionApiList.map(question =>
+          Parser.questionSummary(question)
         );
       });
   }
