@@ -21,8 +21,6 @@ export class WakeupQuoteQuestionsComponent implements OnInit {
     this.update.emit(questions);
   }
 
-  onAddQuestion(question) {}
-
   openQuestionsBrowser() {
     const config: MdDialogConfig = {
       disableClose: false,
@@ -30,6 +28,7 @@ export class WakeupQuoteQuestionsComponent implements OnInit {
       height: '80%'
     };
     const dialogRef = this.dialog.open(WakeupQuestionsBrowserComponent, config);
+     dialogRef.componentInstance.selectedQuestions = this.questions;
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.update.emit(result);

@@ -1,0 +1,45 @@
+@import "~../../../../common/constants";
+
+md-dialog-content {
+    margin-top: 46px;
+}
+
+.questionSetDropDown {
+    display: flex;
+    align-items: center;
+    md-select {
+        width: 100%;
+        flex: 1;
+    }
+    .addQuestionButton {
+        margin-left: 16px;
+    }
+}
+
+.questionList {
+    width: 100%;
+    ul {
+        list-style: none;
+        display: flex;
+    }
+    li {
+        padding: 26px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        width: 200px;
+        height: 100px;
+        cursor: pointer;
+        display: flex;
+    }
+    li:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+    li.selected {
+        background-color: $primary;
+        color: white;
+        margin: 0 1px;
+    }
+}
+
+.mat-dialog-container {
+    max-width: none !important;
+}

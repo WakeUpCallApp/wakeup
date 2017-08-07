@@ -110,9 +110,7 @@ import { PracticeSessionComponent } from './pages/practice-session/practice-sess
       },
       { path: '', redirectTo: 'questionSets', pathMatch: 'full' },
       { path: '**', redirectTo: 'questionSets', pathMatch: 'full' }
-    ], {
-      preloadingStrategy: PreloadAllModules
-    })
+    ])
   ],
   exports: [RouterModule]
 })
