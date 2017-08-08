@@ -74,7 +74,7 @@ exports.changePassword = function(req, res, next) {
         res.status(200).send('OK');
       });
     } else {
-      res.status(403).send('Forbidden');
+      res.status(500).send('Incorrect Password');
     }
   });
 };

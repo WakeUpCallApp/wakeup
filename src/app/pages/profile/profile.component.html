@@ -1,0 +1,23 @@
+<div class="profile pageContent">
+  <section class="details">
+    <wakeup-card class="summary">
+      <div class="card-header">
+        <span class="title">Profile</span>
+      </div>
+      <div class="card-body">
+        <form #profileForm='ngForm'>
+          <md-input-container floatPlaceholder="always">
+            <input mdInput type="password" placeholder="Old Password" name="oldPassword" [(ngModel)]="oldPassword" required>
+            <md-error>Old Password is required</md-error>
+          </md-input-container>
+          <md-input-container floatPlaceholder="always">
+            <input mdInput type="password" placeholder="New Password" name="newPassword" [(ngModel)]="newPassword" required>
+            <md-error>New Password is required</md-error>
+          </md-input-container>
+           <md-hint class="errorMessage">{{this.errorMessage}}</md-hint>
+          <button [disabled]="!profileForm.valid" class="saveChanges" md-button md-raised-button (click)="updatePassword()"> Save changes </button>
+        </form>
+      </div>
+    </wakeup-card>
+  </section>
+</div>

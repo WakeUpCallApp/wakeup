@@ -13,6 +13,7 @@ import { TopicDetailsComponent } from './pages/topic-details/topic-details.compo
 import { QuotesComponent } from './pages/quotes/quotes.component';
 import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
 import { PracticeSessionComponent } from './pages/practice-session/practice-session.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   imports: [
@@ -107,6 +108,15 @@ import { PracticeSessionComponent } from './pages/practice-session/practice-sess
         data: { title: 'Answers' },
         canActivate: [AuthenticationGuard],
         resolve: { userDetails: UserDetailResolver }
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        data: { title: 'Profile' },
+        canActivate: [AuthenticationGuard],
+        resolve: {
+          userDetails: UserDetailResolver
+        }
       },
       { path: '', redirectTo: 'questionSets', pathMatch: 'full' },
       { path: '**', redirectTo: 'questionSets', pathMatch: 'full' }

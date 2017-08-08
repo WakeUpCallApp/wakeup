@@ -43,13 +43,16 @@
         </button>
     </div>
     <md-menu #menu="mdMenu" [overlapTrigger]="false">
+      <button md-menu-item routerLink='/profile'>
+        <div class="menu-section">
+              View Profile
+        </div>
+     </button>
       <button md-menu-item>
-                <div class="menu-section">
-                     <div class="userInfo"> 
-                       <a [routerLink]="['profile']"> View Profile</a>
-                     </div>
-                 </div>
-            </button>
+        <div class="menu-section">
+              Change language
+        </div>
+     </button>
     </md-menu>
     <button md-button (click)="logoutUser()">Logout <i class="fa fa-sign-out"></i></button>
   </div>
