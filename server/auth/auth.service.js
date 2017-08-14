@@ -8,7 +8,7 @@ var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
 var validateJwt = expressJwt({ secret: config.secrets.session });
-var redirectDomain = process.env.NODE_ENV === 'development'? 'http://localhost:4200/' : '';
+var redirectDomain = process.env.NODE_ENV === 'development'? 'http://localhost:4200/' : process.env.DOMAIN;
 
 /**
  * Attaches the user object to the request if authenticated
