@@ -1,6 +1,9 @@
 import { Action } from "@ngrx/store";
 import { QuestionSet } from "../models/question-set.model";
 import * as actions from "../actions/question-set.actions";
+import Helper from "./helper";
+
+const helper = new Helper();
 
 export interface State {
   entities: QuestionSet[];
@@ -37,7 +40,7 @@ export function reducer(state = initialState, action: Action): State {
       });
     case actions.ActionTypes.GET_SESSION_DETAILS_SUCCESS:
       return Object.assign({}, state, {
-        sessionDetailsData: action.payload,
+        sessionDetailsData: getSessionDetails(action.payload),
         isLoading: false
       });
     case actions.ActionTypes.GET_CURRENT_QUESTION_SET_SUCCESS:
@@ -111,4 +114,14 @@ function updateOnDeleteQuestion(questionSet, questionToDelete) {
     )
   });
   return updatedQuestionSet;
+}
+
+function getSessionDetails(data) {
+  const sessionDetails = data.slice(0);
+  sessionDetails.forEach(question => {
+    question.answers = question.answers.length
+      ? helper.groupAnswersByDate(question.answers)
+      : [];
+  });
+  return sessionDetails;
 }

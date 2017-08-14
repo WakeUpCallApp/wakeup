@@ -1,0 +1,39 @@
+@import "~../../common/constants";
+.sessionDetails {
+  min-height: 70vh;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  .title {
+    flex: 1;
+    word-wrap: break-word;
+    word-break: break-all;
+
+    small {
+      font-weight: bold;
+      color: $accent;
+    }
+  }
+}
+.question {
+  margin-bottom: 26px;
+  .name {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  .quote {
+    padding: 16px;
+    color: $accent;
+
+    a {
+      text-decoration: none;
+      color: #ff9800;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+<div class="answers mat-elevation-z2">
+    <div class="group" *ngIf="currentGroup">
+        <div class="navigation">
+            <span class="dateText">{{currentGroup.createDate}}</span>
+            <md-icon [ngClass]="{'disabled': !answers[i+1]}" (click)="getPrevSession(i)" title="Previous">keyboard_arrow_left</md-icon>
+            <md-icon [ngClass]="{'disabled': !answers[i-1]}" (click)="getNextSession(i)" title="Next">keyboard_arrow_right</md-icon>
+        </div>
+        <ul class="list">
+            <li *ngFor="let answer of currentGroup.answers">
+                <span class="text">{{answer.text}}</span>
+                <span class="time">
+                    {{answer.createDate | date:'shortTime' }}
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="noAnswers" *ngIf="!currentGroup">
+    No answers available
+</div>

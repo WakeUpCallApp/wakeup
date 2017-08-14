@@ -1,0 +1,50 @@
+@import "~../../../../common/constants";
+ul {
+  list-style: none;
+  padding: 0;
+  li {
+    display: flex;
+    align-items: center;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    margin: 0;
+    padding: 16px;
+    border-color: rgba(0, 0, 0, .06);
+    color: rgba(0, 0, 0, .74);
+
+    .text {
+        flex: 1;
+    }
+    .time {
+        font-size: small;
+        color: rgba(0, 0, 0, .36);
+    }
+  }
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8px 8px 8px 0px;
+  border: 1px solid rgba(0, 0, 0, .06);
+  .dateText {
+    margin-left: 16px;
+    color: rgba(0, 0, 0, .34);
+    flex: 1;
+  }
+  md-icon {
+    cursor: pointer;
+    height: 34px;
+    width: 34px;
+    font-size: 34px;
+  }
+  md-icon.disabled {
+    color: rgba(0, 0, 0, .34);
+    cursor: not-allowed;
+  }
+}
+
+.noAnswers {
+  padding: 16px;
+}

@@ -72,9 +72,6 @@ export class QuestionSetService {
           parsedQuestion.questionSet = questionSet;
           return parsedQuestion;
         });
-        questionSetObj.questionIds = questionSetApi.questions.map(
-          question => question._id
-        );
         return questionSetObj;
       })
       .catch(this.handleError);
@@ -98,6 +95,14 @@ export class QuestionSetService {
     return this.http
       .get(`/api/questionSet/sessionAnswers/${questionSetId}`)
       .map((response: Response) => response.json())
+      .map(sessionDetails => {
+        sessionDetails.forEach(question => {
+          question.answers = question.answers.map(answerApi =>
+            Parser.answerFromApi(answerApi)
+          );
+        });
+        return sessionDetails;
+      })
       .catch(this.handleError);
   }
 

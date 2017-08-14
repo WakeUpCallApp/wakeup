@@ -17,6 +17,7 @@ export class SessionDetailsComponent implements OnInit, OnDestroy {
   actionsSubscription: Subscription;
   sessionData$: Observable<any>;
   currentQuestionSetName: string;
+  questionSetId;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
@@ -31,6 +32,7 @@ export class SessionDetailsComponent implements OnInit, OnDestroy {
       this.route.params.select<string>("questionSetName"),
       (id, name) => {
         this.currentQuestionSetName = name;
+        this.questionSetId = id;
         this.titleService.setTitle(`SessionDetails ${name}`);
         return new actions.GetSessionDetailsAction(+id);
       }

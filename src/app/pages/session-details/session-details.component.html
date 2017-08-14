@@ -1,3 +1,25 @@
-<p>
-  session-details works!
-</p>
+<div class="sessionDetails pageContent">
+  <div class="breadcrumbs" *ngIf="questionSetId">
+    <a [routerLink]="['/questionSetDetails', questionSetId]">{{currentQuestionSetName}}</a>
+    <md-icon>keyboard_arrow_right</md-icon>
+    <span class="currentLink">Session Details</span>
+  </div>
+  <wakeup-card>
+    <div class="card-header">
+      <span class="title">Session Details <small>{{currentQuestionSetName}}</small></span>
+    </div>
+    <div class="card-body">
+      <div class="question" *ngFor="let question of sessionData$ | async; let i = index">
+        <div class="name">{{i+1}}. {{question.text}}</div>
+        <div class="quote" *ngIf="question.quote">
+          <a [routerLink]="['/quoteDetails', question.quote._id]" title="see quote">
+            &#34;{{question.quote?.text}}&#34;
+          </a>
+        </div>
+        <div class="answers">
+          <wakeup-answers-list [answers]="question.answers"></wakeup-answers-list>
+        </div>
+      </div>
+    </div>
+  </wakeup-card>
+</div>
