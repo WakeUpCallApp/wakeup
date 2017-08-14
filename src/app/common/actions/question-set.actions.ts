@@ -34,7 +34,9 @@ export const ActionTypes = {
   UPDATE_ERROR: type("[QuestionSet] Update Error"),
   DELETE: type("[QuestionSet] Delete"),
   DELETE_SUCCESS: type("[QuestionSet] Delete Success"),
-  REGISTER_SESSION: type("[QuestionSet] Register Session")
+  REGISTER_SESSION: type("[QuestionSet] Register Session"),
+  GET_SESSION_DETAILS: type("[QuestionSet] Get Session Details"),
+  GET_SESSION_DETAILS_SUCCESS: type("[QuestionSet] Get Session Details Success"),
 };
 
 export class SearchAction implements Action {
@@ -173,6 +175,16 @@ export class RegisterSessionAction implements Action {
   constructor(public payload: number) {}
 }
 
+export class GetSessionDetailsAction implements Action {
+  type = ActionTypes.GET_SESSION_DETAILS;
+  constructor(public payload: number) {}
+}
+
+export class GetSessionDetailsActionSuccess implements Action {
+  type = ActionTypes.GET_SESSION_DETAILS_SUCCESS;
+  constructor(public payload) {}
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -198,4 +210,6 @@ export type Actions =
   | UpdateAction
   | DeleteAction
   | DeleteActionSuccess
-  | RegisterSessionAction;
+  | RegisterSessionAction
+  | GetSessionDetailsAction
+  | GetSessionDetailsActionSuccess;

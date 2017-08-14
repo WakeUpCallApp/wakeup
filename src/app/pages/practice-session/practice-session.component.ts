@@ -110,8 +110,9 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
       new actions.RegisterSessionAction(this.currentQuestionSet.id)
     );
     this.router.navigate([
-      appConstants.routes.QUESTION_SET_DETAILS,
-      this.currentQuestionSet.id
+      appConstants.routes.SESSION_DETAILS,
+      this.currentQuestionSet.id, 
+      this.currentQuestionSet.name
     ]);
   }
 

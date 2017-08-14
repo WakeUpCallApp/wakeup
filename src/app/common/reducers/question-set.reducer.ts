@@ -8,6 +8,7 @@ export interface State {
   currentQuestionSet: QuestionSet;
   searchTerm: string;
   filter: actions.Filter;
+  sessionDetailsData;
 }
 
 export const initialState: State = {
@@ -15,12 +16,11 @@ export const initialState: State = {
   isLoading: false,
   currentQuestionSet: <QuestionSet>{},
   searchTerm: "",
-  filter: actions.Filter.ALL
+  filter: actions.Filter.ALL,
+  sessionDetailsData: []
 };
 
 export function reducer(state = initialState, action: Action): State {
-  let updatedQuestionSet;
-
   switch (action.type) {
     case actions.ActionTypes.SEARCH_INPUT:
       return Object.assign({}, state, { searchTerm: action.payload });
@@ -33,6 +33,11 @@ export function reducer(state = initialState, action: Action): State {
     case actions.ActionTypes.LOAD_SUCCESS:
       return Object.assign({}, state, {
         entities: action.payload,
+        isLoading: false
+      });
+    case actions.ActionTypes.GET_SESSION_DETAILS_SUCCESS:
+      return Object.assign({}, state, {
+        sessionDetailsData: action.payload,
         isLoading: false
       });
     case actions.ActionTypes.GET_CURRENT_QUESTION_SET_SUCCESS:

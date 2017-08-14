@@ -14,6 +14,7 @@ import { QuotesComponent } from './pages/quotes/quotes.component';
 import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
 import { PracticeSessionComponent } from './pages/practice-session/practice-session.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { SessionDetailsComponent } from './pages/session-details/session-details.component';
 
 @NgModule({
   imports: [
@@ -106,6 +107,13 @@ import { ProfileComponent } from './pages/profile/profile.component';
         path: 'answers/:questionId',
         loadChildren: 'app/pages/answers/answers.module#AnswersModule',
         data: { title: 'Answers' },
+        canActivate: [AuthenticationGuard],
+        resolve: { userDetails: UserDetailResolver }
+      },
+      {
+        path: 'sessionDetails/:questionSetId/:questionSetName',
+        component: SessionDetailsComponent,
+        data: { title: 'Session Details' },
         canActivate: [AuthenticationGuard],
         resolve: { userDetails: UserDetailResolver }
       },

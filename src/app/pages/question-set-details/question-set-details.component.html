@@ -8,7 +8,8 @@
                        <md-icon>more_vert</md-icon>
                     </button>
                     <md-menu #appMenu="mdMenu">
-                        <button md-menu-item> View Practice Sessions </button>
+                        <button md-menu-item 
+                        [routerLink]="['/sessionDetails', currentQuestionSet.id, currentQuestionSet.name]"> View Practice Sessions </button>
                         <button md-menu-item (click)="deleteQuestionSet()"> Delete Question Set </button>
                     </md-menu>
                 </div>
@@ -21,7 +22,7 @@
                         <md-error>Name is required</md-error>
                     </md-input-container>
                     <md-input-container floatPlaceholder="always">
-                        <textarea #descriptionInput mdInput placeholder="Description" name="description" [(ngModel)]   ="updateObject.description" rows="5">
+                        <textarea #descriptionInput mdInput placeholder="Description" name="description" [(ngModel)]="updateObject.description" rows="5">
                         </textarea>
                         <span mdSuffix><md-icon>edit</md-icon></span>
                     </md-input-container>
@@ -37,12 +38,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button 
-                *ngIf="currentQuestionSet.questions?.length"
-                class="practiceQuestionSetButton" 
-                md-button 
-                md-button-raised
-                (click)="openPracticeSessionModel()">Practice Question Set</button>
+                <button *ngIf="currentQuestionSet.questions?.length" class="practiceQuestionSetButton" md-button md-button-raised (click)="openPracticeSessionModel()">Practice Question Set</button>
             </div>
         </wakeup-card>
     </section>
@@ -52,12 +48,8 @@
     </section>
 
     <section class="questionList" *ngIf="currentQuestionSet.questions?.length">
-        <wakeup-question-list 
-        [questions]="currentQuestionSet.questions" 
-        [canEdit]="!currentQuestionSet.isDefault" 
-        (delete)="deleteQuestions($event)"
-        (edit)="editQuestion($event)"
-        (openQuotesBrowser)="openQuotesBrowser($event)">
+        <wakeup-question-list [questions]="currentQuestionSet.questions" [canEdit]="!currentQuestionSet.isDefault" (delete)="deleteQuestions($event)"
+            (edit)="editQuestion($event)" (openQuotesBrowser)="openQuotesBrowser($event)">
         </wakeup-question-list>
     </section>
 

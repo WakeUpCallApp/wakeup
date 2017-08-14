@@ -10,7 +10,7 @@ import {
   QuestionSetApi
 } from "../models/question-set.model";
 
-import { Question } from '../models/question.model';
+import { Question } from "../models/question.model";
 
 @Injectable()
 export class QuestionSetService {
@@ -59,7 +59,9 @@ export class QuestionSetService {
 
   update(questionSet: QuestionSet): Observable<QuestionSet> {
     const parsedQuestionSet = Parser.questionSetToApi(questionSet);
-    parsedQuestionSet.questions = (questionSet.questions as Question[]).map(question => Parser.questionToApi(question));
+    parsedQuestionSet.questions = (questionSet.questions as Question[]).map(
+      question => Parser.questionToApi(question)
+    );
     return this.http
       .put(`/api/questionSet/${questionSet.id}`, parsedQuestionSet)
       .map((response: Response) => response.json())
@@ -88,6 +90,13 @@ export class QuestionSetService {
   registerSession(questionSetId: number) {
     return this.http
       .put(`/api/questionSet/session/${questionSetId}`, "")
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
+  }
+
+  getSessionDetailsData(questionSetId: number) {
+    return this.http
+      .get(`/api/questionSet/sessionAnswers/${questionSetId}`)
       .map((response: Response) => response.json())
       .catch(this.handleError);
   }

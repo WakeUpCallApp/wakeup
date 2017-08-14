@@ -115,6 +115,15 @@ export class QuestionSetEffects {
       this.questionSetService.registerSession(questionSetId)
     );
 
+  @Effect()
+  getSessionDetails$ = this.actions$
+    .ofType(questionSet.ActionTypes.GET_SESSION_DETAILS)
+    .map(action => action.payload)
+    .switchMap(questionSetId =>
+      this.questionSetService.getSessionDetailsData(questionSetId)
+    )
+    .map(result => new questionSet.GetSessionDetailsActionSuccess(result));
+
   constructor(
     private questionSetService: QuestionSetService,
     private questionService: QuestionService,

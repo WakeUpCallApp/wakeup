@@ -36,6 +36,7 @@ import { QuotesComponent } from "./pages/quotes/quotes.component";
 import { NewQuoteComponent } from "./pages/new-quote/new-quote.component";
 import { PracticeSessionComponent } from "./pages/practice-session/practice-session.component";
 import { ProfileComponent } from './pages/profile/profile.component';
+import { SessionDetailsComponent } from './pages/session-details/session-details.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     QuotesComponent,
     NewQuoteComponent,
     PracticeSessionComponent,
-    ProfileComponent
+    ProfileComponent,
+    SessionDetailsComponent
   ],
   imports: [
     BrowserModule,

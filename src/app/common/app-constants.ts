@@ -14,7 +14,8 @@ const appConstants = {
         QUOTE_DETAILS: 'quoteDetails',
         NEW_QUOTE: 'newQuote',
         PRACTICE_SESSION: 'practiceSession',
-        ANSWERS: 'answers'
+        ANSWERS: 'answers',
+        SESSION_DETAILS: 'sessionDetails',
     }
 };
 

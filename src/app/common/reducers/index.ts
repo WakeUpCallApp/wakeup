@@ -70,8 +70,8 @@ export const getLoadingQuestionSetState = (state: State): boolean =>
 export const getCurrentQuestionSetState = (state: State): QuestionSet =>
   state.questionSet.currentQuestionSet;
 
-export const getTopicsWithQuotesState = (state: State): Topic[] =>
-  state.quote.topicsWithQuotes;
+export const getSessionDetailsState = (state: State) =>
+  state.questionSet.sessionDetailsData;
 
 // Topics
 export const getTopicsState = (state: State): Topic[] => state.topic.entities;
@@ -96,6 +96,9 @@ export const getAuthorSuggestions = (state: State): string[] =>
 export const getSourceSuggestions = (state: State): string[] =>
   state.quote.suggestions.sources;
 export const getComments = (state: State) => state.quote.comments;
+
+export const getTopicsWithQuotesState = (state: State): Topic[] =>
+  state.quote.topicsWithQuotes;
 
 // Questions
 export const getQuestionsState = (state: State): Question[] =>
