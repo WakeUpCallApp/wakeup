@@ -3,17 +3,6 @@
     <div class="title">
       <h1 class="cardTitle">Questions</h1>
     </div>
-    <div class="actions">
-      <button *ngIf="canEdit" class="questionListMenu" md-icon-button [mdMenuTriggerFor]="questionsMenu">
-         <md-icon>more_vert</md-icon>
-      </button>
-      <md-menu #questionsMenu="mdMenu">
-        <button md-menu-item> <md-icon>file_upload</md-icon> Import Questions </button>
-        <button md-menu-item> <md-icon>file_download</md-icon> Export Questions </button>
-      </md-menu>
-
-      <button *ngIf="!canEdit" md-button md-raised-button> <md-icon>file_download</md-icon> Export Questions </button>
-    </div>
   </md-card-header>
   <md-card-content class="list">
     <h3 class="allQuestionsCheck" *ngIf="canEdit">

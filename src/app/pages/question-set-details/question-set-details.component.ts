@@ -8,38 +8,42 @@ import {
   ApplicationRef,
   ViewChild,
   ElementRef
-} from '@angular/core';
+} from "@angular/core";
 import { Title } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from '@angular/router';
-import { MdDialog, MdDialogConfig } from '@angular/material';
-import { Store } from '@ngrx/store';
-import '@ngrx/core/add/operator/select';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { SessionOptions } from '../../common/services/session-config.service';
-import { WakeupQuotesBrowserComponent } from './components/wakeup-quotes-browser/wakeup-quotes-browser.component';
-import { WakeupSessionConfigComponent } from './components/wakeup-session-config/wakeup-session-config.component';
-import { WakeupEditQuestionDialogComponent } from './components/wakeup-edit-question-dialog/wakeup-edit-question-dialog.component';
-import { SessionConfigService } from '../../common/services/session-config.service';
-import { QuestionSet } from '../../common/models/question-set.model';
-import { IQuestion } from '../../common/models/question.model';
-import * as reducers from '../../common/reducers';
-import * as actions from '../../common/actions/question-set.actions';
-import appConstants from '../../common/app-constants';
+import { ActivatedRoute, Router } from "@angular/router";
+import { MdDialog, MdDialogConfig } from "@angular/material";
+import { Store } from "@ngrx/store";
+import "@ngrx/core/add/operator/select";
+import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
+import { SessionOptions } from "../../common/services/session-config.service";
+import { WakeupQuotesBrowserComponent } from "./components/wakeup-quotes-browser/wakeup-quotes-browser.component";
+import { WakeupSessionConfigComponent } from "./components/wakeup-session-config/wakeup-session-config.component";
+import { WakeupEditQuestionDialogComponent } from "./components/wakeup-edit-question-dialog/wakeup-edit-question-dialog.component";
+import { WakeupImportFileComponent } from "../../common/components/wakeup-import-file/wakeup-import-file.component";
+import { SessionConfigService } from "../../common/services/session-config.service";
+import { QuestionSet } from "../../common/models/question-set.model";
+import { IQuestion } from "../../common/models/question.model";
+import * as reducers from "../../common/reducers";
+import * as actions from "../../common/actions/question-set.actions";
+import appConstants from "../../common/app-constants";
 
 @Component({
-  selector: 'wakeup-question-set-details',
-  templateUrl: './question-set-details.component.html',
-  styleUrls: ['./question-set-details.component.scss']
+  selector: "wakeup-question-set-details",
+  templateUrl: "./question-set-details.component.html",
+  styleUrls: ["./question-set-details.component.scss"]
 })
-export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class QuestionSetDetailsComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   currentQuestionSet: QuestionSet;
   newQuestion: IQuestion;
   actionsSubscription: Subscription;
   qsSubscription: Subscription;
   updateObject;
-  @ViewChild('nameInput') nameElRef: ElementRef;
-  @ViewChild('descriptionInput') descriptionElRef: ElementRef;
+  importSpinnerSubscription: Subscription;
+  importDialogRef;
+  @ViewChild("nameInput") nameElRef: ElementRef;
+  @ViewChild("descriptionInput") descriptionElRef: ElementRef;
   constructor(
     private sessionConfigService: SessionConfigService,
     private store: Store<reducers.State>,
@@ -50,21 +54,34 @@ export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDes
     private cdref: ChangeDetectorRef,
     private appref: ApplicationRef,
     private titleService: Title
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.actionsSubscription = this.route.params
-      .select<string>('id')
+      .select<string>("id")
       .map(id => new actions.GetCurrentQSAction(id))
       .subscribe(this.store);
 
     this.qsSubscription = this.store
       .select(reducers.getCurrentQuestionSetState)
       .subscribe(currentQuestionSet => {
-        this.currentQuestionSet = <QuestionSet>Object.assign({}, currentQuestionSet);
+        this.currentQuestionSet = <QuestionSet>Object.assign(
+          {},
+          currentQuestionSet
+        );
         this.titleService.setTitle(`${this.currentQuestionSet.name} details`);
         this.updateObject = Object.assign({}, currentQuestionSet);
         this.newQuestion = this.getEmptyQuestion();
+      });
+    this.importSpinnerSubscription = this.store
+      .select(reducers.getImportSpinner)
+      .subscribe(importSpinner => {
+        if (importSpinner) {
+          this.importDialogRef.componentInstance.importSpinner = importSpinner;
+        }
+        if (importSpinner === false) {
+          this.importDialogRef.close();
+        }
       });
   }
 
@@ -73,13 +90,13 @@ export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDes
       return;
     }
     this.ngzone.runOutsideAngular(() => {
-      Observable.fromEvent(this.nameElRef.nativeElement, 'keyup')
+      Observable.fromEvent(this.nameElRef.nativeElement, "keyup")
         .debounceTime(1000)
         .subscribe(keyboardEvent => {
           this.updateQuestionSet();
           this.cdref.detectChanges();
         });
-      Observable.fromEvent(this.descriptionElRef.nativeElement, 'keyup')
+      Observable.fromEvent(this.descriptionElRef.nativeElement, "keyup")
         .debounceTime(1000)
         .subscribe(keyboardEvent => {
           this.updateQuestionSet();
@@ -91,6 +108,7 @@ export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDes
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
     this.qsSubscription.unsubscribe();
+    this.importSpinnerSubscription.unsubscribe();
   }
 
   updateQuestionSet() {
@@ -104,7 +122,7 @@ export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDes
   getEmptyQuestion() {
     return {
       id: undefined,
-      text: '',
+      text: "",
       quote: undefined,
       questionSet: this.currentQuestionSet.id
     };
@@ -131,9 +149,12 @@ export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDes
   editQuestion(question) {
     const config: MdDialogConfig = {
       disableClose: false,
-      width: '600px'
+      width: "600px"
     };
-    const dialogRef = this.dialog.open(WakeupEditQuestionDialogComponent, config);
+    const dialogRef = this.dialog.open(
+      WakeupEditQuestionDialogComponent,
+      config
+    );
     dialogRef.componentInstance.question = Object.assign({}, question);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -145,8 +166,8 @@ export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDes
   openQuotesBrowser(question) {
     const config: MdDialogConfig = {
       disableClose: false,
-      width: '80%',
-      height: '80%'
+      width: "80%",
+      height: "80%"
     };
     const dialogRef = this.dialog.open(WakeupQuotesBrowserComponent, config);
     dialogRef.componentInstance.selectedQuoteId = question.quote;
@@ -158,9 +179,9 @@ export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDes
     });
   }
 
-  openPracticeSessionModel() {
+  openPracticeSessionModal() {
     const config: MdDialogConfig = {
-      disableClose: false,
+      disableClose: false
     };
     const dialogRef = this.dialog.open(WakeupSessionConfigComponent, config);
     dialogRef.afterClosed().subscribe((options: SessionOptions) => {
@@ -172,5 +193,24 @@ export class QuestionSetDetailsComponent implements OnInit, AfterViewInit, OnDes
         ]);
       }
     });
+  }
+
+  openImportQuestionsModal() {
+    const config: MdDialogConfig = {
+      disableClose: false
+    };
+    const dialogRef = this.dialog.open(WakeupImportFileComponent, config);
+    this.importDialogRef = dialogRef;
+    dialogRef.componentInstance.uploadFile = this.importQuestions.bind(this);
+    dialogRef.afterClosed().subscribe(() => {});
+  }
+
+  importQuestions(files) {
+    this.store.dispatch(
+      new actions.ImportQuestionsAction({
+        questionSetId: this.currentQuestionSet.id,
+        questions: files
+      })
+    );
   }
 }

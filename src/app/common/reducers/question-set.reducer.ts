@@ -12,6 +12,7 @@ export interface State {
   searchTerm: string;
   filter: actions.Filter;
   sessionDetailsData;
+  showImportSpinner;
 }
 
 export const initialState: State = {
@@ -20,7 +21,8 @@ export const initialState: State = {
   currentQuestionSet: <QuestionSet>{},
   searchTerm: "",
   filter: actions.Filter.ALL,
-  sessionDetailsData: []
+  sessionDetailsData: [],
+  showImportSpinner: undefined
 };
 
 export function reducer(state = initialState, action: Action): State {
@@ -82,6 +84,18 @@ export function reducer(state = initialState, action: Action): State {
           action.payload
         )
       });
+    case actions.ActionTypes.IMPORT_QUESTIONS:
+      return Object.assign({}, state, {
+        showImportSpinner: true
+      });
+    case actions.ActionTypes.IMPORT_QUESTIONS_SUCCESS:
+      return Object.assign({}, state, {
+        currentQuestionSet: updateOnImportQuestions(
+          state.currentQuestionSet,
+          action.payload
+        ),
+        showImportSpinner: false
+      });
     default: {
       return state;
     }
@@ -110,7 +124,7 @@ function updateOnEditQuestion(questionSet, questionToUpdate) {
 function updateOnDeleteQuestion(questionSet, questionToDelete) {
   const updatedQuestionSet = Object.assign({}, questionSet, {
     questions: questionSet.questions.filter(
-      question => question.id !== questionToDelete
+      question => question.id !== questionToDelete.id
     )
   });
   return updatedQuestionSet;
@@ -124,4 +138,11 @@ function getSessionDetails(data) {
       : [];
   });
   return sessionDetails;
+}
+
+function updateOnImportQuestions(questionSet, questionsToAdd) {
+  const updatedQuestionSet = Object.assign({}, questionSet, {
+    questions: questionSet.questions.concat(questionsToAdd)
+  });
+  return updatedQuestionSet;
 }

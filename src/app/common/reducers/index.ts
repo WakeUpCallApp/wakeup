@@ -73,6 +73,9 @@ export const getCurrentQuestionSetState = (state: State): QuestionSet =>
 export const getSessionDetailsState = (state: State) =>
   state.questionSet.sessionDetailsData;
 
+export const getImportSpinner = (state: State) =>
+  state.questionSet.showImportSpinner;
+
 // Topics
 export const getTopicsState = (state: State): Topic[] => state.topic.entities;
 export const getTopicsSortedState = (state: State): Topic[] =>

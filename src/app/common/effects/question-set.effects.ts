@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect } from "@ngrx/effects";
-
+import { Store } from "@ngrx/store";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
@@ -10,7 +10,12 @@ import { Router } from "@angular/router";
 import AppConstants from "../app-constants";
 
 import * as questionSet from "../actions/question-set.actions";
-import { QuestionSetService, QuestionService } from "../services";
+import * as reducers from "../reducers";
+import {
+  QuestionSetService,
+  QuestionService,
+  FileParsingService
+} from "../services";
 
 @Injectable()
 export class QuestionSetEffects {
@@ -39,6 +44,27 @@ export class QuestionSetEffects {
         questionSet.id
       ]);
       return Observable.of(questionSet);
+    });
+
+  @Effect({ dispatch: false })
+  importQuestions$ = this.actions$
+    .ofType(questionSet.ActionTypes.IMPORT_QUESTIONS)
+    .map(action => action.payload)
+    .map(data => {
+      this.fileParsing.parseCVS(data.questions[0], results => {
+        this.questionSetService
+          .importQuestions(data.questionSetId, results.data)
+          .subscribe(
+            result =>
+              this.store.dispatch(
+                new questionSet.ImportQuestionsActionSuccess(result)
+              ),
+            error =>
+              this.store.dispatch(
+                new questionSet.ImportQuestionsActionError(error)
+              )
+          );
+      });
     });
 
   @Effect()
@@ -127,7 +153,9 @@ export class QuestionSetEffects {
   constructor(
     private questionSetService: QuestionSetService,
     private questionService: QuestionService,
+    private fileParsing: FileParsingService,
     private actions$: Actions,
-    private router: Router
+    private router: Router,
+    private store: Store<reducers.State>
   ) {}
 }

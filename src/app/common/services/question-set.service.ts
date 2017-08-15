@@ -106,6 +106,16 @@ export class QuestionSetService {
       .catch(this.handleError);
   }
 
+  importQuestions(questionSetId, questions) {
+    return this.http.post(`/api/questions/importQuestions/${questionSetId}`, {
+      questions: questions
+    })
+    .map((response: Response) => response.json())
+    .map(apiQuestionsList => {
+      return apiQuestionsList.map(questionApi => Parser.questionFromApi(questionApi));
+    });
+  }
+
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error || "Server error");
