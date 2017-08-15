@@ -213,4 +213,19 @@ export class QuestionSetDetailsComponent
       })
     );
   }
+
+  exportQuestions() {
+    const exportData = (this.currentQuestionSet
+      .questions as any[]).map(question => {
+      return {
+        questionName: question.text
+      };
+    });
+    this.store.dispatch(
+      new actions.ExportQuestionsAction({
+        questions: exportData,
+        questionSetName: this.currentQuestionSet.name
+      })
+    );
+  }
 }

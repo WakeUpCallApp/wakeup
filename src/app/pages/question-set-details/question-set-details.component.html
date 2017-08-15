@@ -13,7 +13,10 @@
                         <md-icon>file_upload</md-icon>
                          Import Questions 
                         </button>
-                        <button md-menu-item> <md-icon>file_download</md-icon> Export Questions </button>
+                        <button md-menu-item (click)="exportQuestions()"> 
+                            <md-icon>file_download</md-icon>
+                             Export Questions
+                         </button>
                         <button md-menu-item (click)="deleteQuestionSet()"> Delete Question Set </button>
                     </md-menu>
                 </div>

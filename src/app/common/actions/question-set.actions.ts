@@ -39,7 +39,8 @@ export const ActionTypes = {
   GET_SESSION_DETAILS_SUCCESS: type("[QuestionSet] Get Session Details Success"),
   IMPORT_QUESTIONS: type('[QuestionSet] Import Questions'),
   IMPORT_QUESTIONS_SUCCESS: type('[QuestionSet] Import Questions Success'),
-  IMPORT_QUESTIONS_ERROR: type('[QuestionSet] Import Questions Error')
+  IMPORT_QUESTIONS_ERROR: type('[QuestionSet] Import Questions Error'),
+  EXPORT_QUESTIONS: type('[QuestionSet] Export Questions')
 };
 
 export class SearchAction implements Action {
@@ -203,6 +204,11 @@ export class ImportQuestionsActionError implements Action {
   constructor(public payload) {}
 }
 
+export class ExportQuestionsAction implements Action {
+  type = ActionTypes.EXPORT_QUESTIONS;
+  constructor(public payload) {}
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -233,4 +239,5 @@ export type Actions =
   | GetSessionDetailsActionSuccess
   | ImportQuestionsAction
   | ImportQuestionsActionSuccess
-  | ImportQuestionsActionError;
+  | ImportQuestionsActionError
+  | ExportQuestionsAction;

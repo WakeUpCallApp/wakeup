@@ -67,6 +67,17 @@ export class QuestionSetEffects {
       });
     });
 
+  @Effect({ dispatch: false })
+  exportQuestions$ = this.actions$
+    .ofType(questionSet.ActionTypes.EXPORT_QUESTIONS)
+    .map(action => action.payload)
+    .map(data => {
+      this.fileParsing.downloadCSV(
+        this.fileParsing.unparseCVS(data.questions, false),
+        data.questionSetName
+      );
+    });
+
   @Effect()
   update$ = this.actions$
     .ofType(questionSet.ActionTypes.UPDATE)
