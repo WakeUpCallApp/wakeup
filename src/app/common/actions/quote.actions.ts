@@ -28,7 +28,11 @@ export const ActionTypes = {
   DELETE_COMMENT_ERROR: type("[Quote] Delete Comment Error"),
   DELETE_COMMENT_SUCCESS: type("[Quote] Delete Comment Success"),
   GET_SUGGESTIONS: type("[Quote] Get Suggestions"),
-  GET_SUGGESTIONS_SUCCESS: type("[Quote] Get Suggestions Success")
+  GET_SUGGESTIONS_SUCCESS: type("[Quote] Get Suggestions Success"),
+  IMPORT_QUOTES: type('[Quote] Import Quotes'),
+  IMPORT_QUOTES_SUCCESS: type('[Quote] Import Quotes Success'),
+  IMPORT_QUOTES_ERROR: type('[Quote] Import Quotes Error'),
+  EXPORT_QUOTES: type('[Quote] Export Quotes')
 };
 
 export class GetByTopicIdAction implements Action {
@@ -176,6 +180,26 @@ export class GetSuggestionsActionSuccess implements Action {
   constructor(public payload) {}
 }
 
+export class ImportQuotesAction implements Action {
+  type = ActionTypes.IMPORT_QUOTES;
+  constructor(public payload) {}
+}
+
+export class ImportQuotesActionSuccess implements Action {
+  type = ActionTypes.IMPORT_QUOTES_SUCCESS;
+  constructor(public payload) {}
+}
+
+export class ImportQuotesActionError implements Action {
+  type = ActionTypes.IMPORT_QUOTES_ERROR;
+  constructor(public payload) {}
+}
+
+export class ExportQuotesAction implements Action {
+  type = ActionTypes.EXPORT_QUOTES;
+  constructor(public payload) {}
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -206,4 +230,8 @@ export type Actions =
   | DeleteCommentActionError
   | DeleteCommentActionSuccess
   | GetSuggestionsAction
-  | GetSuggestionsActionSuccess;
+  | GetSuggestionsActionSuccess
+  | ImportQuotesAction
+  | ImportQuotesActionError
+  | ImportQuotesActionSuccess
+  | ExportQuotesAction;

@@ -94,6 +94,10 @@ export const getCurrentQuote = (state: State): Quote =>
 
 export const getQuotesByTopic = (state: State): Quote[] =>
   state.quote.quotesByTopic;
+
+export const getQuotesImportSpinner = (state: State) =>
+  state.quote.importSpinner;
+
 export const getAuthorSuggestions = (state: State): string[] =>
   state.quote.suggestions.authors;
 export const getSourceSuggestions = (state: State): string[] =>

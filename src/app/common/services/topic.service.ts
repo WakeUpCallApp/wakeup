@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import Parser from './parser';
 import { Topic, ITopic, TopicApi } from '../models/topic.model';
+import { QuoteApi } from '../models/quote.model';
 
 @Injectable()
 export class TopicService {
@@ -41,6 +42,7 @@ export class TopicService {
         topic.questionSets = topicApi.questionSetList.map(questionSetApi =>
           Parser.questionSetFromApi(questionSetApi)
         );
+        topic.quotes = (topicApi.quoteList as QuoteApi[]).map(quoteApi => Parser.quoteFromApi(quoteApi));
         return topic;
       })
       .catch(this.handleError);

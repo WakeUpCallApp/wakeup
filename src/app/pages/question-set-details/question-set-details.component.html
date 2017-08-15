@@ -13,7 +13,7 @@
                         <md-icon>file_upload</md-icon>
                          Import Questions 
                         </button>
-                        <button md-menu-item (click)="exportQuestions()"> 
+                        <button *ngIf="currentQuestionSet.questions?.length" md-menu-item (click)="exportQuestions()"> 
                             <md-icon>file_download</md-icon>
                              Export Questions
                          </button>

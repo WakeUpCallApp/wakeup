@@ -12,17 +12,21 @@
                        <md-icon>more_vert</md-icon>
                     </button>
         <md-menu #quotesMenu="mdMenu">
-          <button md-menu-item> Import Quotes </button>
-          <button md-menu-item *ngIf="(quotes$ | async).length"> Export Quotes </button>
+          <button md-menu-item *ngIf="!currentTopic?.isDefault" (click)="openImportQuotesModal()"> 
+            Import Quotes 
+          </button>
+          <button md-menu-item *ngIf="currentTopic?.quotes?.length" (click)="exportQuotes()"> 
+            Export Quotes 
+          </button>
         </md-menu>
       </div>
     </div>
     <div class="card-body">
-      <div class="emptyState" *ngIf="!(quotes$ | async).length">
+      <div class="emptyState" *ngIf="!currentTopic?.quotes?.length">
         There are no quotes for this topic
       </div>
       <ul class="quotesList">
-        <li *ngFor="let quote of quotes$ | async">
+        <li *ngFor="let quote of currentTopic?.quotes">
           <a [routerLink]="['/quoteDetails', quote.id]" title="see details">
               <span class="text">
               &ldquo; {{quote.text}} &ldquo;

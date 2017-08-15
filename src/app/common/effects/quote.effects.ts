@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect } from "@ngrx/effects";
 import { Router } from "@angular/router";
-
-
+import { Store } from "@ngrx/store";
+import * as reducers from "../reducers";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
@@ -11,7 +11,7 @@ import { Observable } from "rxjs/Observable";
 import AppConstants from "../app-constants";
 
 import * as quoteActions from "../actions/quote.actions";
-import { QuoteService } from "../services/quote.service";
+import { QuoteService, FileParsingService } from "../services";
 
 @Injectable()
 export class QuoteEffects {
@@ -70,9 +70,9 @@ export class QuoteEffects {
   deleteSuccess$ = this.actions$
     .ofType(quoteActions.ActionTypes.DELETE_SUCCESS)
     .map(action => action.payload)
-    .map(({topic}) => {
+    .map(({ topic }) => {
       this.router.navigate([AppConstants.routes.QUOTES, topic.id]);
-    });  
+    });
 
   @Effect()
   getComments$ = this.actions$
@@ -114,9 +114,43 @@ export class QuoteEffects {
         )
     );
 
+  @Effect({ dispatch: false })
+  importQuotes$ = this.actions$
+    .ofType(quoteActions.ActionTypes.IMPORT_QUOTES)
+    .map(action => action.payload)
+    .map(data => {
+      this.fileParsing.parseCVS(data.quotes[0], results => {
+        this.quoteService
+          .importQuotes(data.topicId, results.data)
+          .subscribe(
+            result =>
+              this.store.dispatch(
+                new quoteActions.ImportQuotesActionSuccess(result)
+              ),
+            error =>
+              this.store.dispatch(
+                new quoteActions.ImportQuotesActionError(error)
+              )
+          );
+      }, true);
+    });
+
+  @Effect({ dispatch: false })
+  exportQuotes$ = this.actions$
+    .ofType(quoteActions.ActionTypes.EXPORT_QUOTES)
+    .map(action => action.payload)
+    .map(data => {
+      this.fileParsing.downloadCSV(
+        this.fileParsing.unparseCVS(data.quotes, true),
+        data.topicName
+      );
+    });
+
   constructor(
     private quoteService: QuoteService,
+    private fileParsing: FileParsingService,
     private actions$: Actions,
-    private router: Router
+    private router: Router,
+    private store: Store<reducers.State>
   ) {}
 }

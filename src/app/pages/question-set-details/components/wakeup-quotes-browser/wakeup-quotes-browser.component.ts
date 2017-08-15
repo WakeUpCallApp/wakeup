@@ -52,7 +52,7 @@ export class WakeupQuotesBrowserComponent implements OnInit, OnDestroy {
   }
 
   getCurrentTopic() {
-    return this.topics.find(topic => !!topic.quotes.find(quote => quote.id === this.selectedQuoteId))
+    return this.topics.find(topic => !!(topic.quotes as Quote[]).find(quote => quote.id === this.selectedQuoteId))
     || (this.topics.length ? this.topics[0] : <Topic>{});
   }
 

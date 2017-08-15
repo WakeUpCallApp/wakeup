@@ -14,7 +14,7 @@
               <span class="title truncate">{{topic.name}}</span>
               <span class="summary"> 
               <span> <md-icon>list</md-icon> {{topic.questionSetIds?.length}} Question Sets</span>
-              <span><md-icon> format_quote</md-icon>{{topic.quoteIds?.length}} Quotes</span>
+              <span><md-icon> format_quote</md-icon>{{topic.quotes?.length}} Quotes</span>
               </span>
             </div>
             <div title="See quotes" (click)="goToQuotes($event, topic.id)" class="inspire">

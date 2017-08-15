@@ -115,6 +115,18 @@ export class QuoteService {
       .catch(this.handleError);
   }
 
+  importQuotes(topicId, quotes) {
+    return this.http
+      .post(`/api/quotes/importQuotes/${topicId}`, {
+        quotes: quotes
+      })
+      .map((response: Response) => response.json())
+      .map(apiQuotesList => {
+        return apiQuotesList.map(quoteApi => Parser.quoteFromApi(quoteApi));
+      })
+      .catch(this.handleError);
+  }
+
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error || "Server error");

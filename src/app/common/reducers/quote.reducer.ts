@@ -10,6 +10,7 @@ export interface State {
   quotesByTopic: Quote[];
   suggestions;
   comments;
+  importSpinner;
 }
 
 export const initialState: State = {
@@ -18,7 +19,8 @@ export const initialState: State = {
   isLoading: false,
   currentQuote: <Quote>{},
   suggestions: {},
-  comments: []
+  comments: [],
+  importSpinner: undefined
 };
 
 export function reducer(state = initialState, action: Action): State {
@@ -42,7 +44,7 @@ export function reducer(state = initialState, action: Action): State {
     case actions.ActionTypes.DELETE_COMMENT_SUCCESS:
       return Object.assign({}, state, {
         comments: onDeleteComment(state.comments, action.payload)
-      });  
+      });
     case actions.ActionTypes.GET_BY_TOPIC_ID_SUCCESS:
       return Object.assign({}, state, {
         quotesByTopic: action.payload
@@ -56,13 +58,20 @@ export function reducer(state = initialState, action: Action): State {
       return Object.assign({}, state, {
         currentQuote: action.payload
       });
+    case actions.ActionTypes.IMPORT_QUOTES:
+      return Object.assign({}, state, {
+        importSpinner: true
+      });
+    case actions.ActionTypes.IMPORT_QUOTES_SUCCESS:
+      return Object.assign({}, state, {
+        importSpinner: false
+      });
     default: {
       return state;
     }
   }
 }
 
-
 function onDeleteComment(commentList, commentToDelete) {
-    return commentList.filter(comment => comment.id !== commentToDelete.id);
+  return commentList.filter(comment => comment.id !== commentToDelete.id);
 }

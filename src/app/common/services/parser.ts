@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import * as moment from "moment";
 import { QuestionSet, QuestionSetApi } from "../models/question-set.model";
 import { Question, IQuestion, QuestionApi } from "../models/question.model";
 import { Quote, QuoteApi } from "../models/quote.model";
@@ -49,7 +49,7 @@ export default class Parser {
 
   static questionSetToApi(questionSet: QuestionSet): QuestionSetApi {
     return {
-      _id:questionSet.id,
+      _id: questionSet.id,
       name: questionSet.name,
       description: questionSet.description,
       user: questionSet.user,
@@ -60,6 +60,11 @@ export default class Parser {
   }
 
   static quoteFromApi(quoteApi: QuoteApi): Quote {
+    const questions = quoteApi.questions
+      ? quoteApi.questions.map(questionApi =>
+          Parser.questionFromApi(questionApi)
+        )
+      : [];
     return new Quote(
       quoteApi._id,
       quoteApi.text,
@@ -67,7 +72,7 @@ export default class Parser {
       new Date(quoteApi.date),
       quoteApi.author,
       quoteApi.topic as number,
-      quoteApi.questions.map(questionApi => Parser.questionFromApi(questionApi)),
+      questions,
       quoteApi.commentList
     );
   }
@@ -93,8 +98,8 @@ export default class Parser {
       topicApi.user,
       new Date(topicApi.createDate),
       topicApi.questionSetList,
-      topicApi.quoteList,
-      topicApi.isDefault
+      topicApi.isDefault,
+      topicApi.quoteList as number[]
     );
   }
 
@@ -106,7 +111,7 @@ export default class Parser {
       user: topic.user,
       createDate: topic.createDate.toString(),
       questionSetList: topic.questionSetIds,
-      quoteList: topic.quoteIds,
+      quoteList: (topic.quotes as Quote[]).map(quote => quote.id),
       isDefault: topic.isDefault
     };
   }

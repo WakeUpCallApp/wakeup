@@ -5,9 +5,11 @@ import * as Papa from "papaparse/papaparse.min.js";
 export class FileParsingService {
   constructor() {}
 
-  parseCVS(file, callback) {
+  parseCVS(file, callback, csvHeader?) {
     Papa.parse(file, {
-      complete: callback
+      complete: callback,
+      header: csvHeader,
+      delimiter: ','
     });
   }
 

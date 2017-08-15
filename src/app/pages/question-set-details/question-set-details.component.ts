@@ -79,7 +79,7 @@ export class QuestionSetDetailsComponent
         if (importSpinner) {
           this.importDialogRef.componentInstance.importSpinner = importSpinner;
         }
-        if (importSpinner === false) {
+        if (importSpinner === false && this.importDialogRef) {
           this.importDialogRef.close();
         }
       });
