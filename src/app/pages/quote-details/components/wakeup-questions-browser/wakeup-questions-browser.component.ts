@@ -57,6 +57,8 @@ export class WakeupQuestionsBrowserComponent implements OnInit {
       qs =>
         qs.questions.find(q => selectedIds.indexOf(q.id) !== -1) !== undefined
     );
-    return questionSet ? questionSet : {};
+    return questionSet
+      ? questionSet
+      : this.questionSets.length ? this.questionSets[0] : {};
   }
 }

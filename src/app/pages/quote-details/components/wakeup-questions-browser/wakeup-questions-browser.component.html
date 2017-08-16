@@ -1,24 +1,21 @@
-<h2 md-dialog-title>Associate Questions</h2>
-<md-dialog-content *ngIf="currentQuestionSet"> 
-  <div class="questionSetDropDown">
-    <md-select placeholder="Question Set" [(ngModel)]="currentQuestionSet">
-      <md-option *ngFor="let questionSet of questionSets" [value]="questionSet">
-        {{ questionSet.questionSet }}
-      </md-option>
-    </md-select>
-    <button class="addQuestionButton" md-button (click)="safeClose()">Ok</button>
-  </div>
+<h2 class="header" md-dialog-title>
+  <span class="title"> Associate Questions</span>
+  <button class="addQuestionButton" md-button (click)="safeClose()">Ok</button>
+</h2>
+<md-dialog-content *ngIf="currentQuestionSet">
+  <md-select class="questionSetDropDown" placeholder="Question Set" [(ngModel)]="currentQuestionSet">
+    <md-option *ngFor="let questionSet of questionSets" [value]="questionSet">
+      {{ questionSet.questionSet }}
+    </md-option>
+  </md-select>
   <div class="questionList">
     <ul>
-      <li *ngFor="let question of currentQuestionSet.questions" 
-      [ngClass]="{'selected': isSelectedQuestion(question)}" 
-      (click)="toggleSelectedQuestion(question)"
-      >
+      <li *ngFor="let question of currentQuestionSet.questions" [ngClass]="{'selected': isSelectedQuestion(question)}" (click)="toggleSelectedQuestion(question)">
         <span class="questionText truncate" title="{{question.text}}">{{question.text}}</span>
       </li>
     </ul>
   </div>
-  
+
   <div class="noQuestions" *ngIf="!currentQuestionSet.questions?.length">
     There are no questions in this question set
   </div>

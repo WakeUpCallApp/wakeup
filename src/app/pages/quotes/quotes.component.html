@@ -13,10 +13,12 @@
                     </button>
         <md-menu #quotesMenu="mdMenu">
           <button md-menu-item *ngIf="!currentTopic?.isDefault" (click)="openImportQuotesModal()"> 
-            Import Quotes 
+              <md-icon>file_upload</md-icon> 
+              Import Quotes 
           </button>
           <button md-menu-item *ngIf="currentTopic?.quotes?.length" (click)="exportQuotes()"> 
-            Export Quotes 
+              <md-icon>file_download</md-icon> 
+              Export Quotes 
           </button>
         </md-menu>
       </div>

@@ -8,12 +8,12 @@
   <wakeup-card>
     <div class="card-header">
       <div class="title">Quotes Details</div>
-      <div class="actions" *ngIf="updateObject as quote">
-        <button md-icon-button [mdMenuTriggerFor]="appMenu" *ngIf="!quote.topic?.isDefault">
+      <div class="actions" *ngIf="!updateObject?.topic?.isDefault">
+        <button md-icon-button [mdMenuTriggerFor]="appMenu">
            <md-icon>more_vert</md-icon>
         </button>
         <md-menu #appMenu="mdMenu">
-          <button md-menu-item (click)="deleteQuote()"> Delete Quote </button>
+          <button md-menu-item (click)="deleteQuote()"> <md-icon>delete_forever</md-icon> Delete Quote </button>
         </md-menu>
       </div>
     </div>
@@ -24,7 +24,7 @@
       <section class="quoteForm" *ngIf="!quote.topic?.isDefault;else readOnlyQuote">
         <form class="editQuoteForm" #quoteForm='ngForm'>
           <md-input-container floatPlaceholder="always">
-            <textarea [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" mdInput name="text" required></textarea>
+            <textarea class="quoteText" [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" mdInput name="text" required></textarea>
             <span mdSuffix><md-icon>edit</md-icon></span>
             <md-error>Text is required</md-error>
             <md-hint align="end" aria-live="polite"> {{textVar.value.length}} / 1000 </md-hint>
