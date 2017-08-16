@@ -1,24 +1,22 @@
-<h2 md-dialog-title>Quotes</h2>
+<h2 md-dialog-title class="header">
+  <span class="title">Quotes</span>
+  <button class="addQuoteButton" md-button (click)="safeClose()">Ok</button>
+</h2>
 <md-dialog-content>
-  <div class="topicDropDown">
-    <md-select placeholder="Topic" [(ngModel)]="currentTopic">
-      <md-option *ngFor="let topic of topics" [value]="topic">
-        {{ topic.name }}
-      </md-option>
-    </md-select>
-    <button class="addQuoteButton" md-button (click)="safeClose()">Ok</button>
-  </div>
+  <md-select class="topicDropDown" placeholder="Topic" [(ngModel)]="currentTopic">
+    <md-option *ngFor="let topic of topics" [value]="topic">
+      {{ topic.name }}
+    </md-option>
+  </md-select>
   <div class="quoteList">
     <ul>
-      <li *ngFor="let quote of currentTopic.quotes" 
-      [ngClass]="{'selected': isSelectedQuote(quote)}" 
-      (click)="toggleSelectedQuote(quote)"
-      >
+      <li *ngFor="let quote of currentTopic.quotes" [ngClass]="{'selected': isSelectedQuote(quote)}" (click)="toggleSelectedQuote(quote)">
         <span class="quoteText truncate" title="{{quote.text}}">{{quote.text}}</span>
+        <span class="author">{{quote.author}}</span>
       </li>
     </ul>
   </div>
-  
+
   <div class="noQuotes" *ngIf="!currentTopic.quotes?.length">
     There are no quotes for this topic
   </div>
