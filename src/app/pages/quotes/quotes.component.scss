@@ -1,4 +1,6 @@
 @import "~../../common/constants";
+$quote-color: rgba(255, 224, 98, 0.3);
+
 .quotes {
     min-height: 70vh;
 }
@@ -42,7 +44,7 @@
         text-decoration: none;
         color: black;
         display: flex;
-        background: rgba(0, 0, 0, 0.05);
+        background: 	$quote-color;
         flex-direction: column;
         padding: 16px;
         margin: 26px 0;
@@ -56,6 +58,6 @@
         }
     }
     li a:hover {
-        background: rgba(0,0,0, 0.1);
+        background: darken(	$quote_color, 15%);
     }
 }

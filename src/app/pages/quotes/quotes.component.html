@@ -30,10 +30,11 @@
       <ul class="quotesList">
         <li *ngFor="let quote of currentTopic?.quotes">
           <a [routerLink]="['/quoteDetails', quote.id]" title="see details">
-              <span class="text">
-              &ldquo; {{quote.text}} &ldquo;
-              </span> 
-              <span class="author">
+            <md-icon>format_quote</md-icon>
+            <span class="text">
+             {{quote.text}}
+              </span>
+            <span class="author">
               {{quote.author ? quote.author : 'Unknown'}}</span>
           </a>
         </li>
