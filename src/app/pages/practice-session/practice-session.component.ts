@@ -92,9 +92,9 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
       ? this.currentQuestionSet.questions[this.currentQuestionIndex]
       : {};
 
-    if (this.currentQuestion.quoteId) {
+    if (this.currentQuestion.quote) {
       this.store.dispatch(
-        new quoteActions.GetByIdAction(this.currentQuestion.quoteId)
+        new quoteActions.GetByIdAction(this.currentQuestion.quote)
       );
       this.currentQuote = this.store.select(reducers.getCurrentQuote);
     } else {

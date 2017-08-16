@@ -1,10 +1,13 @@
 <div class="practiceSession">
   <button class="endSessionButton" (click)="endQuestionSet()" title="End Session" md-fab><i class="fa fa-power-off" aria-hidden="true"></i></button>
   <div class="content" *ngIf="displayQuestion">
-    <div class="header"></div>
+    <div class="header">{{(currentQuestionIndex+1)}}/{{questionsNo}}</div>
     <div class="questionInfo">
-      <div class="questionText">{{currentQuestion?.text}}</div>
-      <div class="quoteText">{{(currentQuote| async)?.text }}</div>
+      <div class="questionText">{{currentQuestionIndex+1}}. {{currentQuestion?.text}}</div>
+      <div class="quoteText" *ngIf="currentQuote">
+        <md-icon>format_quote</md-icon>
+        {{(currentQuote | async)?.text }}
+      </div>
     </div>
     <div class="inputArea">
       <md-input-container floatPlaceholder="always">
