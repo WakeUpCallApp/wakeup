@@ -33,6 +33,8 @@
 }
 
 .answers {
+    border-top: 1px solid rgba(0, 0, 0, .06);
+    margin-top: 26px;
     .noAnswersMessage {
         display: flex;
         align-items: center;

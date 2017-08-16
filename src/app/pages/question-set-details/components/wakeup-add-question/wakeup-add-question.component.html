@@ -20,7 +20,11 @@
         </button>
       </div>
       <div class="hasQuote truncate" *ngIf="question.quote" (click)="removeQuote()" title="remove quote">
-        {{selectedQuoteText}} <span class="remove"><md-icon>clear</md-icon></span>
+        <md-icon>format_quote</md-icon>
+        {{selectedQuoteText}}
+        <span class="remove">
+          <md-icon>clear</md-icon>
+        </span>
       </div>
     </section>
   </md-card-content>

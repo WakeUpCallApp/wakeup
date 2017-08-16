@@ -170,7 +170,7 @@ export class QuestionSetDetailsComponent
       height: "80%"
     };
     const dialogRef = this.dialog.open(WakeupQuotesBrowserComponent, config);
-    dialogRef.componentInstance.selectedQuoteId = question.quote;
+    dialogRef.componentInstance.initialQuoteId = question.quote;
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         question.quote = result.selectedQuoteId;

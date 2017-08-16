@@ -17,6 +17,7 @@ export class WakeupQuotesBrowserComponent implements OnInit, OnDestroy {
   quotesSubscription: Subscription;
   topics: Topic[];
   currentTopic: Topic;
+  initialQuoteId;
   selectedQuoteId;
   selectedQuoteText;
   constructor(
@@ -25,6 +26,7 @@ export class WakeupQuotesBrowserComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.selectedQuoteId = this.initialQuoteId;
     this.store.dispatch(new actions.LoadAction());
     this.quotesSubscription = this.store
       .select(reducers.getTopicsWithQuotesState)
@@ -39,7 +41,11 @@ export class WakeupQuotesBrowserComponent implements OnInit, OnDestroy {
   }
 
   safeClose() {
-    this.dialogRef.close({ selectedQuoteId: this.selectedQuoteId, selectedQuoteText: this.selectedQuoteText });
+    if (this.selectedQuoteId !== this.initialQuoteId) {
+      this.dialogRef.close({ selectedQuoteId: this.selectedQuoteId, selectedQuoteText: this.selectedQuoteText });
+    } else {
+      this.dialogRef.close();
+    }
   }
 
   toggleSelectedQuote(quote) {

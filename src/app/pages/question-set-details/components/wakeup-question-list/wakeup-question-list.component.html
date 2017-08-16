@@ -16,7 +16,6 @@
         <button [disabled]="!canDelete()" class="deleteQuestions" md-button md-raised-button (click)="deleteQuestions()">Delete</button>
       </div>
     </h3>
-    <hr>
     <ul>
       <li *ngFor="let question of questions; index as i">
         <md-checkbox *ngIf="canEdit" class="questionCheckbox" [(ngModel)]="question.checked">
