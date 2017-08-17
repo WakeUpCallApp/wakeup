@@ -4,8 +4,20 @@
             <div class="card-header">
                 <span class="title">{{currentQuestionSet.name}}</span>
                 <div class="actions">
-                    <button md-icon-button [mdMenuTriggerFor]="appMenu">
-                       <md-icon>more_vert</md-icon>
+                    <button 
+                    md-icon-button 
+                    mdTooltip="View Practice Sessions" 
+                    [routerLink]="['/sessionDetails', currentQuestionSet.id, currentQuestionSet.name]"> 
+                        <md-icon>question_answer</md-icon> 
+                    </button>
+                    <button 
+                    md-icon-button 
+                    mdTooltip="Delete Question Set" 
+                    (click)="deleteQuestionSet()">
+                     <md-icon>delete_forever</md-icon> 
+                    </button>
+                    <button md-button [mdMenuTriggerFor]="appMenu">
+                       <md-icon>more_horiz</md-icon> More
                     </button>
                     <md-menu #appMenu="mdMenu">
                         <button md-menu-item *ngIf="!currentQuestionSet.isDefault" (click)="openImportQuestionsModal()"> 
@@ -16,8 +28,6 @@
                                 <md-icon>file_download</md-icon>
                                  Export Questions
                         </button>
-                        <button md-menu-item [routerLink]="['/sessionDetails', currentQuestionSet.id, currentQuestionSet.name]"> <md-icon>question_answer</md-icon> View Practice Sessions </button>
-                        <button md-menu-item (click)="deleteQuestionSet()"> <md-icon>delete_forever</md-icon> Delete Question Set </button>
                     </md-menu>
                 </div>
             </div>

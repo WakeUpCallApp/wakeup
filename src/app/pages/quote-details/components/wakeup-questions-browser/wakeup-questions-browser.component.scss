@@ -29,6 +29,9 @@ md-select.questionSetDropDown {
 .addQuestionButton {
     margin-left: 16px;
 }
+.addQuestionButton:not(:disabled){
+    background: $accent;
+}
 
 .questionList {
     width: 100%;

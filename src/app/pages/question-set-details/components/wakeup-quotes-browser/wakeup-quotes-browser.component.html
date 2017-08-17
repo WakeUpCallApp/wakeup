@@ -1,6 +1,6 @@
 <h2 md-dialog-title class="header">
   <span class="title">Quotes</span>
-  <button class="addQuoteButton" md-button (click)="safeClose()">Ok</button>
+  <button class="addQuoteButton" md-button md-button-raised (click)="safeClose()">Save</button>
 </h2>
 <md-dialog-content>
   <md-select class="topicDropDown" placeholder="Topic" [(ngModel)]="currentTopic">

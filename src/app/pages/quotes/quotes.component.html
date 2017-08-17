@@ -8,8 +8,8 @@
     <div class="card-header">
       <div class="title">Quotes <small>{{currentTopic?.name}}</small></div>
       <div class="actions">
-        <button md-icon-button [mdMenuTriggerFor]="quotesMenu" title="open menu">
-                       <md-icon>more_vert</md-icon>
+        <button md-button [mdMenuTriggerFor]="quotesMenu" mdTooltip="More Actions">
+                       <md-icon>more_horiz</md-icon> More
                     </button>
         <md-menu #quotesMenu="mdMenu">
           <button md-menu-item *ngIf="!currentTopic?.isDefault" (click)="openImportQuotesModal()"> 
@@ -29,7 +29,7 @@
       </div>
       <ul class="quotesList">
         <li *ngFor="let quote of currentTopic?.quotes">
-          <a [routerLink]="['/quoteDetails', quote.id]" title="see details">
+          <a [routerLink]="['/quoteDetails', quote.id]" mdTooltip="see details">
             <md-icon>format_quote</md-icon>
             <span class="text">
              {{quote.text}}
@@ -42,7 +42,15 @@
     </div>
   </wakeup-card>
 </div>
-<button mdRipple *ngIf="!currentTopic?.isDefault" (click)="goToCreateQuote()" title="add quote" class="addQuoteButton" md-mini-fab
-  md-button md-raised-button>
+<button 
+  mdRipple
+  *ngIf="!currentTopic?.isDefault" 
+  (click)="goToCreateQuote()" 
+  mdTooltip="Create Quote" 
+  class="addQuoteButton" 
+  md-mini-fab
+  md-button md-raised-button
+  [mdTooltipPosition]="'above'"
+  [mdTooltipClass]="'tooltip'">
  <md-icon>add</md-icon>
 </button>

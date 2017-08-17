@@ -88,23 +88,3 @@ md-toolbar {
     margin-right: 8px;
     display: flex;
 }
-
-.menu-section {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    .userInfo {
-        display: flex;
-        flex-direction: column;
-    }
-}
-
-.icon {
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-}
-
-md-toolbar-row {
-    justify-content: space-between;
-}

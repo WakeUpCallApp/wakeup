@@ -8,7 +8,7 @@
     <ul>
       <li *ngFor="let comment of comments; index as i">
         <span class="text">{{comment.text}}</span> 
-        <span class="remove" (click)="onDelete(comment)"><md-icon>delete_forever</md-icon></span>
+        <span class="remove" mdTooltip="Delete Comment" (click)="onDelete(comment)"><md-icon>delete_forever</md-icon></span>
       </li>
     </ul>
   </md-card-content>

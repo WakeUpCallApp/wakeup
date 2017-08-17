@@ -1,5 +1,7 @@
 <div class="practiceSession">
-  <button class="endSessionButton" (click)="endQuestionSet()" title="End Session" md-fab><i class="fa fa-power-off" aria-hidden="true"></i></button>
+  <button mdTooltip="End Session"  [mdTooltipClass]="'tooltip'" class="endSessionButton" (click)="endQuestionSet()" md-fab>
+      <i class="fa fa-power-off" aria-hidden="true"></i>
+    </button>
   <div class="content" *ngIf="displayQuestion">
     <div class="header">{{(currentQuestionIndex+1)}}/{{questionsNo}}</div>
     <div class="questionInfo">
@@ -15,7 +17,7 @@
       </md-input-container>
       <div class="actions">
         <button md-button (click)="setNextQuestion()">Skip</button>
-        <button md-button (click)="saveAnswer()" [disabled]="!answerText?.trim()" md-raised-button class="saveButton" >Save</button>
+        <button md-button (click)="saveAnswer()" [disabled]="!answerText?.trim()" md-raised-button class="saveButton">Save</button>
       </div>
     </div>
   </div>

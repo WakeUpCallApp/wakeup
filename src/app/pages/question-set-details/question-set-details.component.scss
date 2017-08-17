@@ -10,6 +10,10 @@
                 word-wrap: break-word;
                 word-break: break-all;
             }
+            .actions {
+               display: flex;
+               flex-wrap: wrap;
+            }
         }
         .editable {
             display: flex;

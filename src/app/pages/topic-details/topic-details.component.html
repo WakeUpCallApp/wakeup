@@ -4,19 +4,18 @@
             <div class="card-header">
                 <span class="title">{{currentTopic.name}}</span>
                 <div class="actions">
-                    <button md-icon-button [mdMenuTriggerFor]="appMenu">
-                       <md-icon>more_vert</md-icon>
+                    <button 
+                    md-icon-button
+                    mdTooltip="View Quotes" 
+                    [routerLink]="['/quotes',currentTopic.id]"> 
+                            <md-icon>format_quote</md-icon>  
                     </button>
-                    <md-menu #appMenu="mdMenu">
-                        <button md-menu-item [routerLink]="['/quotes',currentTopic.id]"> 
-                            <md-icon>format_quote</md-icon> 
-                            Quotes 
-                        </button>
-                        <button md-menu-item (click)="deleteTopic()"> 
-                            <md-icon>delete_forever</md-icon> 
-                            Delete Topic 
-                        </button>
-                    </md-menu>
+                    <button 
+                    md-icon-button 
+                    (click)="deleteTopic()"
+                    mdTooltip="Delete Topic"> 
+                            <md-icon>delete_forever</md-icon>
+                    </button>
                 </div>
             </div>
             <div class="card-body">
@@ -44,10 +43,7 @@
         </wakeup-card>
     </section>
     <section class="associateQuestionSet" *ngIf="!currentTopic.isDefault">
-        <wakeup-associate-question-set 
-        [questionSets]="questionSets$| async"
-        [selectedQuestionSets]="currentTopic.questionSets"
-        (update)="associateQuestionSets($event)">
+        <wakeup-associate-question-set [questionSets]="questionSets$| async" [selectedQuestionSets]="currentTopic.questionSets" (update)="associateQuestionSets($event)">
         </wakeup-associate-question-set>
     </section>
     <section class="questionSets" *ngIf="currentTopic.questionSets?.length">

@@ -16,10 +16,15 @@
     <section class="row questionQuote">
       <div class="noQuote" *ngIf="!question.quote">
         Associate a quote
-        <button md-mini-fab md-button md-raised-button (click)="openQuotesBrowser(question)"><md-icon>add</md-icon>
+        <button 
+         md-mini-fab
+         md-button 
+         md-raised-button 
+         (click)="openQuotesBrowser(question)"
+         mdTooltip="Attach Quote"><md-icon>add</md-icon>
         </button>
       </div>
-      <div class="hasQuote truncate" *ngIf="question.quote" (click)="removeQuote()" title="remove quote">
+      <div class="hasQuote truncate" *ngIf="question.quote" (click)="removeQuote()" mdTooltip="Remove Quote">
         <md-icon>format_quote</md-icon>
         {{selectedQuoteText}}
         <span class="remove">

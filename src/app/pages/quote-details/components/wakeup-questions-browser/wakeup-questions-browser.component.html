@@ -1,6 +1,6 @@
 <h2 class="header" md-dialog-title>
   <span class="title"> Associate Questions</span>
-  <button class="addQuestionButton" md-button (click)="safeClose()">Ok</button>
+  <button class="addQuestionButton" md-button md-button-raised (click)="safeClose()">Save</button>
 </h2>
 <md-dialog-content *ngIf="currentQuestionSet">
   <md-select class="questionSetDropDown" placeholder="Question Set" [(ngModel)]="currentQuestionSet">

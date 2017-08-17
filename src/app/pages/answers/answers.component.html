@@ -1,5 +1,5 @@
 <div class="answers-container pageContent" *ngIf="question">
-   <div class="breadcrumbs" *ngIf="question.questionSet as questionSet">
+  <div class="breadcrumbs" *ngIf="question.questionSet as questionSet">
     <a [routerLink]="['/questionSetDetails', questionSet?.id]">{{questionSet?.name}}</a>
     <md-icon>keyboard_arrow_right</md-icon>
     <span class="currentLink">{{question.text}}</span>
@@ -8,12 +8,21 @@
     <div class="card-header">
       <div class="title">Answers</div>
       <div class="actions">
-        <button md-icon-button [mdMenuTriggerFor]="questionMenu">
-                       <md-icon>more_vert</md-icon>
+          <button 
+          *ngIf="question.answers?.length"
+          md-button  
+          mdTooltip="Delete all answers"
+          (click)="deleteAnswers()"> <md-icon>delete_forever</md-icon> All Answers </button>
+        <button 
+        *ngIf="!question.questionSet?.isDefault"
+        md-button 
+        [mdMenuTriggerFor]="questionMenu" 
+        mdTooltip="More actions">
+            <md-icon>more_horiz</md-icon> More
         </button>
         <md-menu #questionMenu="mdMenu">
-          <button md-menu-item *ngIf="!question.questionSet?.isDefault" (click)="deleteQuestion()"> Delete Question </button>
-          <button md-menu-item *ngIf="question.answers?.length" (click)="deleteAnswers()"> Delete All Answers </button>
+          <button md-menu-item (click)="deleteQuestion()">
+            <md-icon>delete_forever</md-icon> Delete Question </button>
         </md-menu>
       </div>
     </div>
@@ -28,37 +37,46 @@
       </div>
       <div class="answers">
         <span class="noAnswersMessage" *ngIf="!question.answers?.length">No answers available. <br>Please, click the + button to add an answer</span>
-
         <div *ngFor="let answerGroup of question.groupedAnswers">
           <span class="group">{{answerGroup.createDate}}</span>
           <ul>
             <li *ngFor="let answer of answerGroup.answers">
-
               <span class="text">{{answer.text}}</span>
-              <button md-icon-button [mdMenuTriggerFor]="answerMenu">
-                 <md-icon>more_vert</md-icon>
-              </button>
-              <md-menu #answerMenu="mdMenu">
-                <button md-menu-item (click)="editAnswer(answer)"> Edit </button>
-                <button md-menu-item (click)="deleteAnswer(answer)"> Delete </button>
-              </md-menu>
-
+              <div class="actions">
+                <button 
+                md-button 
+                (click)="editAnswer(answer)"
+                mdTooltip="Edit Answer"> <md-icon>edit</md-icon> Edit </button>
+                <button 
+                md-button 
+                (click)="deleteAnswer(answer)"
+                mdTooltip="Delete Answer"> <md-icon>delete_forever</md-icon> Delete </button>
+              </div>
             </li>
           </ul>
         </div>
       </div>
-
     </div>
   </wakeup-card>
 </div>
-<button mdRipple (click)="createAnswer()" title="add answer" class="addAnswerButton" md-mini-fab md-button md-raised-button>
+<button
+ mdRipple 
+(click)="createAnswer()"
+ mdTooltip="Add Answer"
+ [mdTooltipClass]="'tooltip'"
+ class="addAnswerButton"
+ md-mini-fab
+ md-button
+ md-raised-button>
  <md-icon>add</md-icon>
 </button>
 
-<button mdRipple *ngIf="prevQuestionId" [routerLink]="['/answers', prevQuestionId]" title="previous question" class="prevQuestionButton" md-icon-button>
+<button mdRipple *ngIf="prevQuestionId" [routerLink]="['/answers', prevQuestionId]" title="previous question" class="prevQuestionButton"
+  md-icon-button>
  <md-icon>keyboard_arrow_left</md-icon>
 </button>
 
-<button mdRipple *ngIf="nextQuestionId" [routerLink]="['/answers', nextQuestionId]" title="next question" class="nextQuestionButton" md-icon-button>
+<button mdRipple *ngIf="nextQuestionId" [routerLink]="['/answers', nextQuestionId]" title="next question" class="nextQuestionButton"
+  md-icon-button>
  <md-icon>keyboard_arrow_right</md-icon>
 </button>

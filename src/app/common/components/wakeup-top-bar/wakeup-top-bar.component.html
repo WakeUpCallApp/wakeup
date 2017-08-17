@@ -31,7 +31,7 @@
   </div>
   <div class="left small-screen">
     <div class="openMenu">
-      <button (click)="toggleSideNav()" md-mini-fab title="Show/Hide menu">
+      <button (click)="toggleSideNav()" md-mini-fab mdTooltip="Show/Hide menu">
       <md-icon>menu</md-icon>
       </button>
     </div>
@@ -45,12 +45,12 @@
     <md-menu #menu="mdMenu" [overlapTrigger]="false">
       <button md-menu-item routerLink='/profile'>
         <div class="menu-section">
-              View Profile
+              <md-icon>perm_identity</md-icon> Profile
         </div>
      </button>
       <button md-menu-item>
         <div class="menu-section">
-              Change language
+              <md-icon>language</md-icon> Change Language
         </div>
      </button>
     </md-menu>

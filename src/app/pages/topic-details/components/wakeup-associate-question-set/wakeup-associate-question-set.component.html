@@ -12,12 +12,12 @@
       </md-input-container>
       <md-autocomplete #auto="mdAutocomplete" md-min-length="0">
         <md-option (onSelectionChange)="addQuestionSet($event.source.value)" 
-        *ngFor="let questionSet of filteredQuestionSets | async" [value]="questionSet.name" title="add">
+        *ngFor="let questionSet of filteredQuestionSets | async" [value]="questionSet.name" mdTooltip="Add">
           {{ questionSet.name }}
         </md-option>
       </md-autocomplete>
       <ul class="added">
-        <li class="item" *ngFor="let selected of selected" (click)="removeQuestionSet(selected)" title="remove">
+        <li class="item" *ngFor="let selected of selected" (click)="removeQuestionSet(selected)" mdTooltip="Remove">
           <span class="name truncate">{{selected}}</span>
           <span><md-icon>clear</md-icon></span>
         </li>

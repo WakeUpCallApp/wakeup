@@ -9,12 +9,7 @@
     <div class="card-header">
       <div class="title">Quotes Details</div>
       <div class="actions" *ngIf="!updateObject?.topic?.isDefault">
-        <button md-icon-button [mdMenuTriggerFor]="appMenu">
-           <md-icon>more_vert</md-icon>
-        </button>
-        <md-menu #appMenu="mdMenu">
-          <button md-menu-item (click)="deleteQuote()"> <md-icon>delete_forever</md-icon> Delete Quote </button>
-        </md-menu>
+          <button md-icon-button mdTooltip="Delete Quote" (click)="deleteQuote()"> <md-icon>delete_forever</md-icon></button>
       </div>
     </div>
     <div class="card-body" *ngIf="updateObject as quote">
