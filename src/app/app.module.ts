@@ -36,7 +36,6 @@ import { QuotesComponent } from "./pages/quotes/quotes.component";
 import { NewQuoteComponent } from "./pages/new-quote/new-quote.component";
 import { PracticeSessionComponent } from "./pages/practice-session/practice-session.component";
 import { ProfileComponent } from './pages/profile/profile.component';
-import { SessionDetailsModule } from './pages/session-details/session-details.module';
 
 @NgModule({
   declarations: [
@@ -59,7 +58,6 @@ import { SessionDetailsModule } from './pages/session-details/session-details.mo
     WakeupCommonModule,
     LoginModule,
     TopicDetailsModule,
-    SessionDetailsModule,
     AppRoutingModule,
     StoreModule.provideStore(reducer),
     // must come AFTER `provideStore` call

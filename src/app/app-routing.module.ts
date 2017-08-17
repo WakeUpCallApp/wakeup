@@ -14,7 +14,6 @@ import { QuotesComponent } from './pages/quotes/quotes.component';
 import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
 import { PracticeSessionComponent } from './pages/practice-session/practice-session.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { SessionDetailsComponent } from './pages/session-details/session-details.component';
 
 @NgModule({
   imports: [
@@ -112,7 +111,7 @@ import { SessionDetailsComponent } from './pages/session-details/session-details
       },
       {
         path: 'sessionDetails/:questionSetId/:questionSetName',
-        component: SessionDetailsComponent,
+        loadChildren: 'app/pages/session-details/session-details.module#SessionDetailsModule',
         data: { title: 'Session Details' },
         canActivate: [AuthenticationGuard],
         resolve: { userDetails: UserDetailResolver }
