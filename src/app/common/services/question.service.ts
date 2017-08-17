@@ -16,7 +16,7 @@ export class QuestionService {
     return this.http
       .get("/api/questions/allQuestions")
       .map((response: Response) => response.json())
-      .map((questionApiList) => {
+      .map(questionApiList => {
         return questionApiList.map(question =>
           Parser.questionSummary(question)
         );
@@ -29,7 +29,9 @@ export class QuestionService {
       .map((response: Response) => response.json())
       .map((questionApi: QuestionApi) => {
         const question: Question = Parser.questionFromApi(questionApi);
-        question.questionSet = Parser.questionSetFromApi(questionApi.questionSet as QuestionSetApi);
+        question.questionSet = Parser.questionSetFromApi(
+          questionApi.questionSet as QuestionSetApi
+        );
         if (questionApi.quote) {
           question.quote = Parser.quoteFromApi(questionApi.quote as QuoteApi);
         }
@@ -47,7 +49,9 @@ export class QuestionService {
       .post("/api/questions/", question)
       .map((response: Response) => response.json())
       .map((questionApi: QuestionApi) => {
-        return Parser.questionFromApi(questionApi);
+        const question = Parser.questionFromApi(questionApi);
+        question.questionSet = questionApi.questionSet as number;
+        return question;
       })
       .catch(this.handleError);
   }

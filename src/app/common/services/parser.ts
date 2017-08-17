@@ -25,13 +25,17 @@ export default class Parser {
   }
 
   static questionToApi(question: Question): QuestionApi {
+    const questionSet =
+      question.questionSet instanceof Object
+        ? (question.questionSet as QuestionSet).id
+        : question.questionSet;
     return {
       _id: question.id,
       text: question.text,
       date: question.date.toString(),
       answers: question.answers,
       quote: question.quote,
-      questionSet: (question.questionSet as QuestionSet).id
+      questionSet: questionSet as number
     };
   }
 
