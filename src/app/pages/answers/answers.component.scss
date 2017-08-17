@@ -110,3 +110,13 @@
   display: flex;
   justify-content: center;
 }
+
+.quote {
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  a:hover {
+    color: $primary;
+  }
+}

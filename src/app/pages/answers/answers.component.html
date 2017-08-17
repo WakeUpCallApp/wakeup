@@ -8,16 +8,8 @@
     <div class="card-header">
       <div class="title">Answers</div>
       <div class="actions">
-          <button 
-          *ngIf="question.answers?.length"
-          md-button  
-          mdTooltip="Delete all answers"
-          (click)="deleteAnswers()"> <md-icon>delete_forever</md-icon> All Answers </button>
-        <button 
-        *ngIf="!question.questionSet?.isDefault"
-        md-button 
-        [mdMenuTriggerFor]="questionMenu" 
-        mdTooltip="More actions">
+        <button *ngIf="question.answers?.length" md-button mdTooltip="Delete all answers" (click)="deleteAnswers()"> <md-icon>delete_forever</md-icon> All Answers </button>
+        <button *ngIf="!question.questionSet?.isDefault" md-button [mdMenuTriggerFor]="questionMenu" mdTooltip="More actions">
             <md-icon>more_horiz</md-icon> More
         </button>
         <md-menu #questionMenu="mdMenu">
@@ -32,7 +24,10 @@
           <label> Question </label> {{question?.text}}
         </div>
         <div class="quote" *ngIf="question.quote">
-          <label>Quote </label> {{question.quote?.text}}
+          <label>Quote </label>
+          <a [routerLink]="['/quoteDetails', question.quote?.id]" 
+          mdTooltip="See quote">
+            <md-icon>format_quote</md-icon> {{question.quote?.text}}</a>
         </div>
       </div>
       <div class="answers">
@@ -43,14 +38,8 @@
             <li *ngFor="let answer of answerGroup.answers">
               <span class="text">{{answer.text}}</span>
               <div class="actions">
-                <button 
-                md-button 
-                (click)="editAnswer(answer)"
-                mdTooltip="Edit Answer"> <md-icon>edit</md-icon> Edit </button>
-                <button 
-                md-button 
-                (click)="deleteAnswer(answer)"
-                mdTooltip="Delete Answer"> <md-icon>delete_forever</md-icon> Delete </button>
+                <button md-button (click)="editAnswer(answer)" mdTooltip="Edit Answer"> <md-icon>edit</md-icon> Edit </button>
+                <button md-button (click)="deleteAnswer(answer)" mdTooltip="Delete Answer"> <md-icon>delete_forever</md-icon> Delete </button>
               </div>
             </li>
           </ul>
@@ -59,15 +48,8 @@
     </div>
   </wakeup-card>
 </div>
-<button
- mdRipple 
-(click)="createAnswer()"
- mdTooltip="Add Answer"
- [mdTooltipClass]="'tooltip'"
- class="addAnswerButton"
- md-mini-fab
- md-button
- md-raised-button>
+<button mdRipple (click)="createAnswer()" mdTooltip="Add Answer" [mdTooltipClass]="'tooltip'" class="addAnswerButton" md-mini-fab
+  md-button md-raised-button>
  <md-icon>add</md-icon>
 </button>
 
