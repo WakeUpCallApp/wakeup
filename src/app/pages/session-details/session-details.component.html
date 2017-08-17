@@ -12,7 +12,7 @@
       <div class="question" *ngFor="let question of sessionData$ | async; let i = index">
         <div class="name">{{i+1}}. {{question.text}}</div>
         <div class="quote" *ngIf="question.quote">
-          <a [routerLink]="['/quoteDetails', question.quote._id]" title="see quote">
+          <a [routerLink]="['/quoteDetails', question.quote._id]" mdTooltip="See Quote">
             &#34;{{question.quote?.text}}&#34;
           </a>
         </div>

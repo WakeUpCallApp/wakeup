@@ -17,7 +17,7 @@ ul {
     }
     .time {
         font-size: small;
-        color: rgba(0, 0, 0, .36);
+        color: rgba(0, 0, 0, .46);
     }
   }
 }
@@ -30,8 +30,9 @@ ul {
   border: 1px solid rgba(0, 0, 0, .06);
   .dateText {
     margin-left: 16px;
-    color: rgba(0, 0, 0, .34);
+    color: rgba(0, 0, 0, .64);
     flex: 1;
+    font-size: 14px;
   }
   md-icon {
     cursor: pointer;
