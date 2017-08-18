@@ -18,7 +18,9 @@ export class TopicsComponent implements OnInit {
   searchTerm$: Observable<string>;
   filteredList$: Observable<Topic[]>;
   search: string;
+  isLoading$;
   constructor(private store: Store<reducers.State>, private router: Router) {
+    this.isLoading$ = store.select(reducers.getLoadingTopicState);
     this.topics$ = store.select(reducers.getTopicsSortedState);
     this.searchTerm$ = store.select(reducers.getTopicSearchTerm);
     this.filteredList$ = Observable.combineLatest(

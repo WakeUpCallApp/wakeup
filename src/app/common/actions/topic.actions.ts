@@ -76,7 +76,9 @@ export class UpdateActionSuccess implements Action {
 export class UpdateActionError implements Action {
   type = ActionTypes.UPDATE_ERROR;
 
-  constructor(public payload) {}
+  constructor(public payload) {
+    console.log(payload);
+  }
 }
 
 export class DeleteAction implements Action {

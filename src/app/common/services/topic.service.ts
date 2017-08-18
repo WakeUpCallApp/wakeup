@@ -56,6 +56,7 @@ export class TopicService {
         topicObj.questionSets = topicApi.questionSetList.map(questionSetApi =>
           Parser.questionSetFromApi(questionSetApi)
         );
+        topicObj.quoteIds = topicApi.quoteList;
         return topicObj;
       })
       .catch(this.handleError);

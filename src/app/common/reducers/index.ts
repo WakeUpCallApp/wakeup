@@ -88,6 +88,9 @@ export const getTopicSearchTerm = (state: State): string =>
 export const getCurrentTopicState = (state: State): Topic =>
   state.topic.currentTopic;
 
+export const getLoadingTopicState = (state: State): boolean =>
+  state.topic.isLoading;
+
 // Quotes
 export const getCurrentQuote = (state: State): Quote =>
   state.quote.currentQuote;
@@ -107,7 +110,7 @@ export const getComments = (state: State) => state.quote.comments;
 export const getTopicsWithQuotesState = (state: State): Topic[] =>
   state.quote.topicsWithQuotes;
 
-  export const getLoadingQuoteState = (state: State): boolean =>
+export const getLoadingQuoteState = (state: State): boolean =>
   state.quote.isLoading;
 
 // Questions
@@ -116,8 +119,8 @@ export const getQuestionsState = (state: State): Question[] =>
 export const getCurrentQuestionState = (state: State): Question =>
   state.question.currentQuestion;
 
-  export const getLoadingQuestionState = (state: State): Question =>
-  state.question.isLoading;  
+export const getLoadingQuestionState = (state: State): Question =>
+  state.question.isLoading;
 
 // Answers
 export const getAnswersState = (state: State): Answer[] =>

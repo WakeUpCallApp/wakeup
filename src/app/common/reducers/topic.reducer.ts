@@ -20,25 +20,34 @@ export function reducer(state = initialState, action: Action): State {
   switch (action.type) {
     case actions.ActionTypes.SEARCH_INPUT:
       return Object.assign({}, state, { searchTerm: action.payload });
+
     case actions.ActionTypes.LOAD:
+    case actions.ActionTypes.CREATE:
+    case actions.ActionTypes.UPDATE:
+    case actions.ActionTypes.GET_CURRENT_TOPIC:
       return Object.assign({}, state, { isLoading: true });
+
     case actions.ActionTypes.LOAD_SUCCESS:
       return Object.assign({}, state, {
         entities: action.payload,
         isLoading: false
       });
+
     case actions.ActionTypes.GET_CURRENT_TOPIC_SUCCESS:
       return Object.assign({}, state, {
-        currentTopic: action.payload
+        currentTopic: action.payload,
+        isLoading: false
       });
 
     case actions.ActionTypes.CREATE_SUCCESS:
       return Object.assign({}, state, {
-        currentTopic: action.payload
+        currentTopic: action.payload,
+        isLoading: false
       });
     case actions.ActionTypes.UPDATE_SUCCESS:
       return Object.assign({}, state, {
-        currentTopic: Object.assign({}, state.currentTopic, action.payload)
+        currentTopic: Object.assign({}, state.currentTopic, action.payload),
+        isLoading: false
       });
     case quote.IMPORT_QUOTES_SUCCESS:
       return Object.assign({}, state, {

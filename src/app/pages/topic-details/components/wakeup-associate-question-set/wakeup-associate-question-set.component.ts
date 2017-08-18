@@ -6,15 +6,15 @@ import {
   SimpleChanges,
   Output,
   EventEmitter
-} from '@angular/core';
-import { FormControl } from '@angular/forms';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/map';
+} from "@angular/core";
+import { FormControl } from "@angular/forms";
+import "rxjs/add/operator/startWith";
+import "rxjs/add/operator/map";
 
 @Component({
-  selector: 'wakeup-associate-question-set',
-  templateUrl: './wakeup-associate-question-set.component.html',
-  styleUrls: ['./wakeup-associate-question-set.component.scss']
+  selector: "wakeup-associate-question-set",
+  templateUrl: "./wakeup-associate-question-set.component.html",
+  styleUrls: ["./wakeup-associate-question-set.component.scss"]
 })
 export class WakeupAssociateQuestionSetComponent implements OnInit, OnChanges {
   @Input() questionSets;
@@ -22,25 +22,32 @@ export class WakeupAssociateQuestionSetComponent implements OnInit, OnChanges {
   @Output() update = new EventEmitter();
   availableQuestionSets = [];
   selected = [];
-  searchText = '';
+  searchText = "";
   questionSetCtrl: FormControl = new FormControl();
   filteredQuestionSets;
   constructor() {}
 
   filterQuestionSets(text: string) {
-    const query: string = (text || '').toLowerCase().trim();
+    const query: string = (text || "").toLowerCase().trim();
     const displayQuestionSets = this.questionSets.filter(
       questionSet =>
         !this.selected.find(selected => selected === questionSet.name)
     );
     return query
       ? displayQuestionSets.filter(
-          questionSet => questionSet.name.toLowerCase().trim().search(query) !== -1
+          questionSet =>
+            questionSet.name.toLowerCase().trim().search(query) !== -1
         )
       : displayQuestionSets;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.questionSetCtrl.valueChanges.subscribe(value => {
+      if (value) {
+        this.handleUpdate();
+      }
+    });
+  }
 
   ngOnChanges(change) {
     if (this.selectedQuestionSets && this.questionSets) {
@@ -70,9 +77,10 @@ export class WakeupAssociateQuestionSetComponent implements OnInit, OnChanges {
   removeQuestionSet(qs) {
     this.selected = this.selected.filter(questionSet => questionSet !== qs);
     this.questionSetCtrl.updateValueAndValidity();
+    this.handleUpdate();
   }
 
-  handleClick() {
+  handleUpdate() {
     this.update.emit(
       this.questionSets
         .filter(questionSet =>

@@ -19,6 +19,7 @@ export interface TopicApi {
 }
 
 export class Topic {
+    quoteIds;
     constructor(
         public id: number,
         public name: string,
@@ -28,6 +29,6 @@ export class Topic {
         public questionSetIds: number[],
         public isDefault: boolean,
         public quotes?: Quote[] | number[],
-        public questionSets?: QuestionSet[] 
+        public questionSets?: QuestionSet[]
     ) { }
 }

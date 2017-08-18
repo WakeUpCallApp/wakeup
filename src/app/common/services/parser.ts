@@ -108,6 +108,9 @@ export default class Parser {
   }
 
   static topicToApi(topic: Topic): TopicApi {
+    const quotes = topic.quoteIds
+      ? topic.quoteIds
+      : (topic.quotes as Quote[]).map(quote => quote.id);
     return {
       _id: topic.id,
       title: topic.name,
@@ -115,7 +118,7 @@ export default class Parser {
       user: topic.user,
       createDate: topic.createDate.toString(),
       questionSetList: topic.questionSetIds,
-      quoteList: (topic.quotes as Quote[]).map(quote => quote.id),
+      quoteList: quotes,
       isDefault: topic.isDefault
     };
   }
