@@ -77,7 +77,6 @@ export class UpdateActionError implements Action {
   type = ActionTypes.UPDATE_ERROR;
 
   constructor(public payload) {
-    console.log(payload);
   }
 }
 

@@ -5,6 +5,7 @@ import * as reducers from "../../../../common/reducers";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import * as actions from "../../../../common/actions/question.actions";
+import isEqual from "lodash/isEqual";
 
 @Component({
   selector: "wakeup-questions-browser",
@@ -16,12 +17,14 @@ export class WakeupQuestionsBrowserComponent implements OnInit {
   questionSets;
   currentQuestionSet;
   selectedQuestions;
+  initialSelection;
   constructor(
     private store: Store<reducers.State>,
     public dialogRef: MdDialogRef<WakeupQuestionsBrowserComponent>
   ) {}
 
   ngOnInit() {
+    this.initialSelection = this.selectedQuestions;
     this.store.dispatch(new actions.LoadAction());
     this.allQuestionsSubscription = this.store
       .select(reducers.getQuestionsState)
@@ -34,7 +37,12 @@ export class WakeupQuestionsBrowserComponent implements OnInit {
   }
 
   safeClose() {
-    this.dialogRef.close(this.selectedQuestions);
+    const noDifference = isEqual(
+      this.selectedQuestions.map(q => q.id),
+      this.initialSelection.map(q => q.id)
+    );
+
+    this.dialogRef.close(noDifference ? undefined : this.selectedQuestions);
   }
 
   toggleSelectedQuestion(question) {
