@@ -29,63 +29,79 @@ export function reducer(state = initialState, action: Action): State {
   switch (action.type) {
     case actions.ActionTypes.SEARCH_INPUT:
       return Object.assign({}, state, { searchTerm: action.payload });
+
     case actions.ActionTypes.FILTER:
       return Object.assign({}, state, {
         filter: action.payload
       });
+
     case actions.ActionTypes.LOAD:
+    case actions.ActionTypes.UPDATE:
+    case actions.ActionTypes.GET_CURRENT_QUESTION_SET:
+    case actions.ActionTypes.CREATE:
+    case actions.ActionTypes.ADD_QUESTION:
+    case actions.ActionTypes.EDIT_QUESTION:
+    case actions.ActionTypes.DELETE_QUESTION:
       return Object.assign({}, state, { isLoading: true });
+
     case actions.ActionTypes.LOAD_SUCCESS:
       return Object.assign({}, state, {
         entities: action.payload,
         isLoading: false
       });
+
     case actions.ActionTypes.GET_SESSION_DETAILS_SUCCESS:
       return Object.assign({}, state, {
         sessionDetailsData: getSessionDetails(action.payload),
         isLoading: false
       });
-    case actions.ActionTypes.GET_CURRENT_QUESTION_SET:
-      return Object.assign({}, state, {
-        isLoading: true
-      });
+
     case actions.ActionTypes.GET_CURRENT_QUESTION_SET_SUCCESS:
       return Object.assign({}, state, {
         currentQuestionSet: action.payload,
         isLoading: false
       });
+
     case actions.ActionTypes.CREATE_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestionSet: action.payload
+        currentQuestionSet: action.payload,
+        isLoading: false
       });
+
     case actions.ActionTypes.UPDATE_SUCCESS:
       return Object.assign({}, state, {
         currentQuestionSet: Object.assign(
           {},
           state.currentQuestionSet,
           action.payload
-        )
+        ),
+        isLoading: false
       });
+
     case actions.ActionTypes.ADD_QUESTION_SUCCESS:
       return Object.assign({}, state, {
         currentQuestionSet: updateOnAddQuestion(
           state.currentQuestionSet,
           action.payload
-        )
+        ),
+        isLoading: false
       });
+
     case actions.ActionTypes.EDIT_QUESTION_SUCCESS:
       return Object.assign({}, state, {
         currentQuestionSet: updateOnEditQuestion(
           state.currentQuestionSet,
           action.payload
-        )
+        ),
+        isLoading: false
       });
     case actions.ActionTypes.DELETE_QUESTION_SUCCESS:
       return Object.assign({}, state, {
         currentQuestionSet: updateOnDeleteQuestion(
           state.currentQuestionSet,
           action.payload
-        )
+        ),
+        isLoading: false
       });
     case actions.ActionTypes.IMPORT_QUESTIONS:
       return Object.assign({}, state, {

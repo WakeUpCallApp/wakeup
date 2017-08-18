@@ -122,7 +122,7 @@ export class QuestionSetEffects {
     .map(result => new questionSet.AddQuestionActionSuccess(result));
 
   @Effect()
-  questionHandling$ = this.actions$
+  updateQuestion$ = this.actions$
     .ofType(questionSet.ActionTypes.EDIT_QUESTION)
     .map(action => action.payload)
     .switchMap(question => this.questionService.update(question))

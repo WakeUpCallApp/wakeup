@@ -39,6 +39,7 @@ export function reducer(state = initialState, action: Action): State {
     case actions.ActionTypes.DELETE_COMMENT:
     case actions.ActionTypes.GET_BY_TOPIC_ID:
     case actions.ActionTypes.CREATE:
+    case actions.ActionTypes.UPDATE:
       return Object.assign({}, state, {
         isLoading: true
       });
@@ -47,7 +48,7 @@ export function reducer(state = initialState, action: Action): State {
       return Object.assign({}, state, {
         isLoading: false
       });
-      
+
     case actions.ActionTypes.GET_COMMENTS_SUCCESS:
       return Object.assign({}, state, {
         comments: action.payload,
@@ -75,7 +76,8 @@ export function reducer(state = initialState, action: Action): State {
     case actions.ActionTypes.GET_BY_ID_SUCCESS:
     case actions.ActionTypes.UPDATE_SUCCESS:
       return Object.assign({}, state, {
-        currentQuote: action.payload
+        currentQuote: action.payload,
+        isLoading: false
       });
     case actions.ActionTypes.IMPORT_QUOTES:
       return Object.assign({}, state, {
