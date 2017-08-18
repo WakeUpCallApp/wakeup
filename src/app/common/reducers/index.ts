@@ -107,6 +107,9 @@ export const getComments = (state: State) => state.quote.comments;
 export const getTopicsWithQuotesState = (state: State): Topic[] =>
   state.quote.topicsWithQuotes;
 
+  export const getLoadingQuoteState = (state: State): boolean =>
+  state.quote.isLoading;
+
 // Questions
 export const getQuestionsState = (state: State): Question[] =>
   state.question.entities;

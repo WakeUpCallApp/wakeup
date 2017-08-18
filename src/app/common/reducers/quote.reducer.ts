@@ -33,21 +33,34 @@ export function reducer(state = initialState, action: Action): State {
         topicsWithQuotes: action.payload,
         isLoading: false
       });
+
+      case actions.ActionTypes.GET_COMMENTS:
+      case actions.ActionTypes.CREATE_COMMENT:
+      case actions.ActionTypes.DELETE_COMMENT:
+      case actions.ActionTypes.GET_BY_TOPIC_ID:
+      return Object.assign({}, state, {
+        isLoading: true
+      });
+
     case actions.ActionTypes.GET_COMMENTS_SUCCESS:
       return Object.assign({}, state, {
-        comments: action.payload
+        comments: action.payload,
+        isLoading: false
       });
     case actions.ActionTypes.CREATE_COMMENT_SUCCESS:
       return Object.assign({}, state, {
-        comments: [...state.comments, action.payload]
+        comments: [...state.comments, action.payload],
+        isLoading: false
       });
     case actions.ActionTypes.DELETE_COMMENT_SUCCESS:
       return Object.assign({}, state, {
-        comments: onDeleteComment(state.comments, action.payload)
+        comments: onDeleteComment(state.comments, action.payload),
+        isLoading: false
       });
     case actions.ActionTypes.GET_BY_TOPIC_ID_SUCCESS:
       return Object.assign({}, state, {
-        quotesByTopic: action.payload
+        quotesByTopic: action.payload,
+        isLoading: false
       });
     case actions.ActionTypes.GET_SUGGESTIONS_SUCCESS:
       return Object.assign({}, state, {

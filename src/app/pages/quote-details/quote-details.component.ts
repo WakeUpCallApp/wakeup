@@ -34,6 +34,7 @@ export class QuoteDetailsComponent implements OnInit {
   sources$: Observable<string[]>;
   comments$: Observable<Comment[]>;
   newComment: ICreateComment;
+  isLoading$;
   @ViewChild("textVar") textElRef: ElementRef;
   @ViewChild("authorVar") authorElRef: ElementRef;
   @ViewChild("sourceVar") sourceElRef: ElementRef;
@@ -47,6 +48,7 @@ export class QuoteDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
     this.actionsSubscription = this.route.params
       .select<string>("id")
       .subscribe(quoteId => {

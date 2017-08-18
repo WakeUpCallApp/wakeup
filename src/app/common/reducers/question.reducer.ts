@@ -26,6 +26,7 @@ export function reducer(state = initialState, action: Action): State {
         isLoading: false
       });
     case actions.ActionTypes.GET_CURRENT_QUESTION:
+    case actions.ActionTypes.DELETE:
     case answerActions.ActionTypes.UPDATE:
     case answerActions.ActionTypes.DELETE:
     case answerActions.ActionTypes.CREATE:
@@ -36,6 +37,10 @@ export function reducer(state = initialState, action: Action): State {
     case actions.ActionTypes.GET_CURRENT_QUESTION_SUCCESS:
       return Object.assign({}, state, {
         currentQuestion: processQuestion(action.payload),
+        isLoading: false
+      });
+    case actions.ActionTypes.DELETE_SUCCESS:
+      return Object.assign({}, state, {
         isLoading: false
       });
     case answerActions.ActionTypes.UPDATE_SUCCESS:
