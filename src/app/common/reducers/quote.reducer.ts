@@ -34,14 +34,20 @@ export function reducer(state = initialState, action: Action): State {
         isLoading: false
       });
 
-      case actions.ActionTypes.GET_COMMENTS:
-      case actions.ActionTypes.CREATE_COMMENT:
-      case actions.ActionTypes.DELETE_COMMENT:
-      case actions.ActionTypes.GET_BY_TOPIC_ID:
+    case actions.ActionTypes.GET_COMMENTS:
+    case actions.ActionTypes.CREATE_COMMENT:
+    case actions.ActionTypes.DELETE_COMMENT:
+    case actions.ActionTypes.GET_BY_TOPIC_ID:
+    case actions.ActionTypes.CREATE:
       return Object.assign({}, state, {
         isLoading: true
       });
 
+    case actions.ActionTypes.CREATE_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: false
+      });
+      
     case actions.ActionTypes.GET_COMMENTS_SUCCESS:
       return Object.assign({}, state, {
         comments: action.payload,

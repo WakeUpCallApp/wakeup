@@ -26,6 +26,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
   currentTopic: Topic;
   importSpinnerSubscription: Subscription;
   importDialogRef;
+  isLoading$;
   constructor(
     private store: Store<reducers.State>,
     private dialog: MdDialog,
@@ -35,6 +36,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
     this.actionsSubscription = this.route.params
       .select<string>("topicId")
       .map(id => {

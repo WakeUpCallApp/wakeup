@@ -28,6 +28,7 @@ export class NewQuoteComponent implements OnInit, OnDestroy {
     topic: -1,
     date: undefined
   };
+  isLoading$;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
@@ -35,6 +36,7 @@ export class NewQuoteComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
     this.actionsSubscription = this.route.params
       .select<string>('topidId')
       .subscribe(topicId => {

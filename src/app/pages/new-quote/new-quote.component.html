@@ -1,9 +1,9 @@
 <div class="newQuote pageContent" *ngIf="topic$ | async as topic">
-   <div class="breadcrumbs" >
+  <div class="breadcrumbs">
     <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
     <md-icon>keyboard_arrow_right</md-icon>
     <a [routerLink]="['/quotes', topic?.id]"> Inspiration Page</a>
-    <md-icon>keyboard_arrow_right</md-icon> 
+    <md-icon>keyboard_arrow_right</md-icon>
     <span class="currentLink">New Quote</span>
   </div>
   <wakeup-card>
@@ -11,13 +11,14 @@
     <div class="card-body">
       <form class="createQuoteForm" #quoteForm='ngForm'>
         <md-input-container floatPlaceholder="always">
-          <textarea [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" mdInput name="text" required ></textarea>
+          <textarea [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" mdInput name="text" required></textarea>
           <md-error>Text is required</md-error>
           <md-hint align="end" aria-live="polite"> {{textVar.value.length}} / 1000 </md-hint>
         </md-input-container>
 
         <md-input-container floatPlaceholder="always">
-          <input  [(ngModel)]="quote.author" list="suggestions" autocomplete="off" #authorVar maxlength="200" placeholder="Author" type="text" mdInput name="author">
+          <input [(ngModel)]="quote.author" list="suggestions" autocomplete="off" #authorVar maxlength="200" placeholder="Author" type="text"
+            mdInput name="author">
           <datalist id="suggestions">
             <select>
                     <option *ngFor="let suggestion of authors$ | async">{{suggestion}}</option>
@@ -29,7 +30,8 @@
         </md-input-container>
 
         <md-input-container floatPlaceholder="always">
-          <input [(ngModel)]="quote.source" list="sourceSuggestions" autocomplete="off" #sourceVar placeholder="Source" type="text" mdInput name="source" maxlength="200">
+          <input [(ngModel)]="quote.source" list="sourceSuggestions" autocomplete="off" #sourceVar placeholder="Source" type="text"
+            mdInput name="source" maxlength="200">
           <datalist id="sourceSuggestions">
             <select>
                     <option *ngFor="let source of sources$ | async" >{{source}}</option>
@@ -42,9 +44,13 @@
       </form>
     </div>
     <div class="card-footer">
-      <button  md-button md-raised-button [disabled]="!quoteForm.valid" class="createButton" (click)="create()">
-    Create
+      <button md-button md-raised-button 
+      [disabled]="!quoteForm.valid || (isLoading$ | async)" 
+      class="createButton" 
+      (click)="create()">
+        Create
     </button>
     </div>
   </wakeup-card>
 </div>
+<md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
