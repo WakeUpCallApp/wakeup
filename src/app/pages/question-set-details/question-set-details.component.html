@@ -53,15 +53,13 @@
             </div>
         </wakeup-card>
     </section>
-    <md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
     <section class="newQuestion" *ngIf="!currentQuestionSet.isDefault">
         <wakeup-add-question (create)="addQuestion($event)" [question]="newQuestion"></wakeup-add-question>
     </section>
-
     <section class="questionList" *ngIf="currentQuestionSet.questions?.length">
         <wakeup-question-list [questions]="currentQuestionSet.questions" [canEdit]="!currentQuestionSet.isDefault" (delete)="deleteQuestions($event)"
             (edit)="editQuestion($event)" (openQuotesBrowser)="openQuotesBrowser($event)">
         </wakeup-question-list>
     </section>
-
 </div>
+<md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
