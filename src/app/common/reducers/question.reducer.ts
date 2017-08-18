@@ -26,6 +26,10 @@ export function reducer(state = initialState, action: Action): State {
         isLoading: false
       });
     case actions.ActionTypes.GET_CURRENT_QUESTION:
+    case answerActions.ActionTypes.UPDATE:
+    case answerActions.ActionTypes.DELETE:
+    case answerActions.ActionTypes.CREATE:
+    case answerActions.ActionTypes.DELETE_ALL:
       return Object.assign({}, state, {
         isLoading: true
       });
@@ -36,19 +40,23 @@ export function reducer(state = initialState, action: Action): State {
       });
     case answerActions.ActionTypes.UPDATE_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestion: onUpdateAnswer(state.currentQuestion, action.payload)
+        currentQuestion: onUpdateAnswer(state.currentQuestion, action.payload),
+        isLoading: false
       });
     case answerActions.ActionTypes.DELETE_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestion: onDeleteAnswer(state.currentQuestion, action.payload)
+        currentQuestion: onDeleteAnswer(state.currentQuestion, action.payload),
+        isLoading: false
       });
     case answerActions.ActionTypes.CREATE_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestion: onCreateAnswer(state.currentQuestion, action.payload)
+        currentQuestion: onCreateAnswer(state.currentQuestion, action.payload),
+        isLoading: false
       });
-    case answerActions.ActionTypes.DELETE_ALL:
+    case answerActions.ActionTypes.DELETE_ALL_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestion: onDeleteAllAnswers(state.currentQuestion)
+        currentQuestion: onDeleteAllAnswers(state.currentQuestion),
+        isLoading: false
       });
     default: {
       return state;
