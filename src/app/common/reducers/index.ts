@@ -113,6 +113,12 @@ export const getQuestionsState = (state: State): Question[] =>
 export const getCurrentQuestionState = (state: State): Question =>
   state.question.currentQuestion;
 
+  export const getLoadingQuestionState = (state: State): Question =>
+  state.question.isLoading;  
+
 // Answers
 export const getAnswersState = (state: State): Answer[] =>
   state.answer.entities;
+
+export const getLoadingAnswersState = (state: State): boolean =>
+  state.answer.isLoading;

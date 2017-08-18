@@ -35,6 +35,7 @@ export class AnswersComponent implements OnInit {
   nextQuestionId: number;
   prevQuestionId: number;
   openModal = false;
+  isLoading$;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
@@ -44,6 +45,7 @@ export class AnswersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isLoading$ = this.store.select(reducers.getLoadingQuestionState);
     this.actionsSubscription = this.route.params
       .select<string>("questionId")
       .map(id => {

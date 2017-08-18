@@ -25,11 +25,11 @@
         </div>
         <div class="quote" *ngIf="question.quote">
           <label>Quote </label>
-          <a [routerLink]="['/quoteDetails', question.quote?.id]" 
-          mdTooltip="See quote">
+          <a [routerLink]="['/quoteDetails', question.quote?.id]" mdTooltip="See quote">
             <md-icon>format_quote</md-icon> {{question.quote?.text}}</a>
         </div>
       </div>
+      <md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
       <div class="answers">
         <span class="noAnswersMessage" *ngIf="!question.answers?.length">No answers available. <br>Please, click the + button to add an answer</span>
         <div *ngFor="let answerGroup of question.groupedAnswers">

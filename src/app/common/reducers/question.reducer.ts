@@ -9,11 +9,13 @@ const helper = new Helper();
 export interface State {
   entities: Question[];
   currentQuestion: Question;
+  isLoading;
 }
 
 export const initialState: State = {
   entities: [],
-  currentQuestion: <Question>{}
+  currentQuestion: <Question>{},
+  isLoading: false
 };
 
 export function reducer(state = initialState, action: Action): State {
@@ -23,9 +25,14 @@ export function reducer(state = initialState, action: Action): State {
         entities: helper.groupQuestionsByQuestionSet(action.payload),
         isLoading: false
       });
+    case actions.ActionTypes.GET_CURRENT_QUESTION:
+      return Object.assign({}, state, {
+        isLoading: true
+      });
     case actions.ActionTypes.GET_CURRENT_QUESTION_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestion: processQuestion(action.payload)
+        currentQuestion: processQuestion(action.payload),
+        isLoading: false
       });
     case answerActions.ActionTypes.UPDATE_SUCCESS:
       return Object.assign({}, state, {
@@ -52,7 +59,7 @@ export function reducer(state = initialState, action: Action): State {
 function processQuestion(question) {
   const newQuestion = Object.assign({}, question);
   newQuestion.groupedAnswers = helper.groupAnswersByDate(question.answers);
- 
+
   return newQuestion;
 }
 
@@ -77,7 +84,7 @@ function onDeleteAnswer(currentQuestion, answerToDelete) {
 
 function onCreateAnswer(currentQuestion, answerToAdd) {
   const updatedQuestion = Object.assign({}, currentQuestion);
-  updatedQuestion.answers = [...updatedQuestion.answers || [], answerToAdd];
+  updatedQuestion.answers = [...(updatedQuestion.answers || []), answerToAdd];
   return processQuestion(updatedQuestion);
 }
 
