@@ -42,6 +42,7 @@ export class QuestionSetDetailsComponent
   updateObject;
   importSpinnerSubscription: Subscription;
   importDialogRef;
+  isLoading$;
   @ViewChild("nameInput") nameElRef: ElementRef;
   @ViewChild("descriptionInput") descriptionElRef: ElementRef;
   constructor(
@@ -83,6 +84,7 @@ export class QuestionSetDetailsComponent
           this.importDialogRef.close();
         }
       });
+      this.isLoading$ = this.store.select(reducers.getLoadingQuestionSetState);  
   }
 
   ngAfterViewInit() {

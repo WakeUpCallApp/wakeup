@@ -45,12 +45,15 @@ export function reducer(state = initialState, action: Action): State {
         sessionDetailsData: getSessionDetails(action.payload),
         isLoading: false
       });
-    case actions.ActionTypes.GET_CURRENT_QUESTION_SET_SUCCESS:
-      const currentQuestionSet = action.payload;
+    case actions.ActionTypes.GET_CURRENT_QUESTION_SET:
       return Object.assign({}, state, {
-        currentQuestionSet: currentQuestionSet
+        isLoading: true
       });
-
+    case actions.ActionTypes.GET_CURRENT_QUESTION_SET_SUCCESS:
+      return Object.assign({}, state, {
+        currentQuestionSet: action.payload,
+        isLoading: false
+      });
     case actions.ActionTypes.CREATE_SUCCESS:
       return Object.assign({}, state, {
         currentQuestionSet: action.payload
