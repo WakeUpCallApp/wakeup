@@ -11,7 +11,11 @@ import { Observable } from "rxjs/Observable";
 import AppConstants from "../app-constants";
 
 import * as quoteActions from "../actions/quote.actions";
-import { QuoteService, FileParsingService } from "../services";
+import {
+  QuoteService,
+  FileParsingService,
+  NotificationService
+} from "../services";
 
 @Injectable()
 export class QuoteEffects {
@@ -34,7 +38,20 @@ export class QuoteEffects {
     .ofType(quoteActions.ActionTypes.GET_BY_ID)
     .map(action => action.payload)
     .switchMap(quoteId => this.quoteService.getById(quoteId))
-    .map(result => new quoteActions.GetByIdActionSuccess(result));
+    .map(result => new quoteActions.GetByIdActionSuccess(result))
+    .catch(error => Observable.of(new quoteActions.GetByIdActionError(error)));
+
+  @Effect({ dispatch: false })
+  httpErrors$ = this.actions$
+    .ofType(quoteActions.ActionTypes.GET_BY_ID_ERROR)
+    .map(action => action.payload)
+    .map(error => {
+      if (error.status === AppConstants.errorCode.NotFound) {
+        this.notificationService.notifyError("Quote not found");
+      }
+      this.router.navigate([AppConstants.routes.TOPICS]);
+      return Observable.of(error);
+    });
 
   @Effect()
   getSuggestions$ = this.actions$
@@ -47,8 +64,14 @@ export class QuoteEffects {
     .ofType(quoteActions.ActionTypes.CREATE)
     .map(action => action.payload)
     .switchMap(quote => this.quoteService.create(quote))
-    .map(result => new quoteActions.CreateActionSuccess(result))
-    .catch(error => Observable.of(new quoteActions.CreateActionError(error)));
+    .map(result => {
+      this.notificationService.notifySuccess("Quote successfully created");
+      return new quoteActions.CreateActionSuccess(result);
+    })
+    .catch(error => {
+      this.notificationService.notifyError("Quote could not be created");
+      return Observable.of(new quoteActions.CreateActionError(error));
+    });
 
   @Effect({ dispatch: false })
   createSuccess$ = this.actions$
@@ -63,8 +86,14 @@ export class QuoteEffects {
     .ofType(quoteActions.ActionTypes.DELETE)
     .map(action => action.payload)
     .switchMap(quoteId => this.quoteService.delete(quoteId))
-    .map(result => new quoteActions.DeleteActionSuccess(result))
-    .catch(error => Observable.of(new quoteActions.DeleteActionError(error)));
+    .map(result => {
+      this.notificationService.notifySuccess("Quote successfully deleted");
+      return new quoteActions.DeleteActionSuccess(result);
+    })
+    .catch(error => {
+      this.notificationService.notifyError("Quote could not be deleted");
+      return Observable.of(new quoteActions.DeleteActionError(error));
+    });
 
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
@@ -86,20 +115,28 @@ export class QuoteEffects {
     .ofType(quoteActions.ActionTypes.CREATE_COMMENT)
     .map(action => action.payload)
     .switchMap(comment => this.quoteService.addComment(comment))
-    .map(result => new quoteActions.CreateCommentActionSuccess(result))
-    .catch(error =>
-      Observable.of(new quoteActions.CreateCommentActionError(error))
-    );
+    .map(result => {
+      this.notificationService.notifySuccess("Comment successfully created");
+      return new quoteActions.CreateCommentActionSuccess(result);
+    })
+    .catch(error => {
+      this.notificationService.notifyError("Comment could not be created");
+      return Observable.of(new quoteActions.CreateCommentActionError(error));
+    });
 
   @Effect()
   delete_comment$ = this.actions$
     .ofType(quoteActions.ActionTypes.DELETE_COMMENT)
     .map(action => action.payload)
     .switchMap(comment => this.quoteService.deleteComment(comment))
-    .map(result => new quoteActions.DeleteCommentActionSuccess(result))
-    .catch(error =>
-      Observable.of(new quoteActions.DeleteCommentActionError(error))
-    );
+    .map(result => {
+      this.notificationService.notifySuccess("Comment successfully deleted");
+      return new quoteActions.DeleteCommentActionSuccess(result);
+    })
+    .catch(error => {
+      this.notificationService.notifyError("Comment could not be deleted");
+      return Observable.of(new quoteActions.DeleteCommentActionError(error));
+    });
 
   @Effect()
   updateS$ = this.actions$
@@ -108,10 +145,14 @@ export class QuoteEffects {
     .switchMap(quote =>
       this.quoteService
         .update(quote)
-        .map(result => new quoteActions.UpdateActionSuccess(result))
-        .catch(error =>
-          Observable.of(new quoteActions.UpdateActionError(error))
-        )
+        .map(result => {
+          this.notificationService.notifySuccess("Quote successfully updated");
+          return new quoteActions.UpdateActionSuccess(result);
+        })
+        .catch(error => {
+          this.notificationService.notifyError("Quote could not be updated");
+          return Observable.of(new quoteActions.UpdateActionError(error));
+        })
     );
 
   @Effect({ dispatch: false })
@@ -119,20 +160,28 @@ export class QuoteEffects {
     .ofType(quoteActions.ActionTypes.IMPORT_QUOTES)
     .map(action => action.payload)
     .map(data => {
-      this.fileParsing.parseCVS(data.quotes[0], results => {
-        this.quoteService
-          .importQuotes(data.topicId, results.data)
-          .subscribe(
-            result =>
-              this.store.dispatch(
+      this.fileParsing.parseCVS(
+        data.quotes[0],
+        results => {
+          this.quoteService.importQuotes(data.topicId, results.data).subscribe(
+            result => {
+              this.notificationService.notifySuccess(
+                "Quotes successfully imported"
+              );
+              return this.store.dispatch(
                 new quoteActions.ImportQuotesActionSuccess(result)
-              ),
-            error =>
-              this.store.dispatch(
+              );
+            },
+            error => {
+              this.notificationService.notifyError("Could not import quotes");
+              return this.store.dispatch(
                 new quoteActions.ImportQuotesActionError(error)
-              )
+              );
+            }
           );
-      }, true);
+        },
+        true
+      );
     });
 
   @Effect({ dispatch: false })
@@ -149,6 +198,7 @@ export class QuoteEffects {
   constructor(
     private quoteService: QuoteService,
     private fileParsing: FileParsingService,
+    private notificationService: NotificationService,
     private actions$: Actions,
     private router: Router,
     private store: Store<reducers.State>

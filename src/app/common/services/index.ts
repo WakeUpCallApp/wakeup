@@ -7,3 +7,4 @@ export { TopicService } from "./topic.service";
 export { AnswerService } from "./answer.service";
 export { SessionConfigService } from "./session-config.service";
 export { FileParsingService } from "./file-parsing";
+export { NotificationService } from './notification.service';

@@ -14,7 +14,8 @@ import * as reducers from "../reducers";
 import {
   QuestionSetService,
   QuestionService,
-  FileParsingService
+  FileParsingService,
+  NotificationService
 } from "../services";
 
 @Injectable()
@@ -31,8 +32,16 @@ export class QuestionSetEffects {
     .ofType(questionSet.ActionTypes.CREATE)
     .map(action => action.payload)
     .switchMap(questionSet => this.questionSetService.create(questionSet))
-    .map(result => new questionSet.CreateActionSuccess(result))
-    .catch(error => Observable.of(new questionSet.CreateActionError(error)));
+    .map(result => {
+      this.notificationService.notifySuccess(
+        "Question Set successfully created"
+      );
+      return new questionSet.CreateActionSuccess(result);
+    })
+    .catch(error => {
+      this.notificationService.notifyError("Question Set could not be created");
+      return Observable.of(new questionSet.CreateActionError(error));
+    });
 
   @Effect({ dispatch: false })
   createSuccess$ = this.actions$
@@ -83,15 +92,28 @@ export class QuestionSetEffects {
     .ofType(questionSet.ActionTypes.UPDATE)
     .map(action => action.payload)
     .switchMap(questionSet => this.questionSetService.update(questionSet))
-    .map(result => new questionSet.UpdateActionSuccess(result))
-    .catch(error => Observable.of(new questionSet.UpdateActionError(error)));
+    .map(result => {
+      this.notificationService.notifySuccess(
+        "Question Set successfully updated"
+      );
+      return new questionSet.UpdateActionSuccess(result);
+    })
+    .catch(error => {
+      this.notificationService.notifyError("Question Set could not be updated");
+      return Observable.of(new questionSet.UpdateActionError(error));
+    });
 
   @Effect()
   delete$ = this.actions$
     .ofType(questionSet.ActionTypes.DELETE)
     .map(action => action.payload)
     .switchMap(questionSet => this.questionSetService.delete(questionSet))
-    .map(() => new questionSet.DeleteActionSuccess());
+    .map(() => {
+      this.notificationService.notifySuccess(
+        "Question Set successfully deleted"
+      );
+      return new questionSet.DeleteActionSuccess();
+    });
 
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
@@ -119,27 +141,37 @@ export class QuestionSetEffects {
     .ofType(questionSet.ActionTypes.ADD_QUESTION)
     .map(action => action.payload)
     .switchMap(question => this.questionService.create(question))
-    .map(result => new questionSet.AddQuestionActionSuccess(result));
+    .map(result => {
+      this.notificationService.notifySuccess("Question successfully added");
+      return new questionSet.AddQuestionActionSuccess(result);
+    });
 
   @Effect()
   updateQuestion$ = this.actions$
     .ofType(questionSet.ActionTypes.EDIT_QUESTION)
     .map(action => action.payload)
     .switchMap(question => this.questionService.update(question))
-    .map(result => new questionSet.EditQuestionActionSuccess(result));
+    .map(result => {
+      this.notificationService.notifySuccess("Question successfully updated");
+      return new questionSet.EditQuestionActionSuccess(result);
+    });
 
   @Effect()
   deleteQuestion$ = this.actions$
     .ofType(questionSet.ActionTypes.DELETE_QUESTION)
     .map(action => action.payload)
     .flatMap(question => this.questionService.delete(question))
-    .map(result => new questionSet.DeleteQuestionActionSuccess(result));
+    .map(result => {
+      this.notificationService.notifySuccess("Question successfully deleted");
+      return new questionSet.DeleteQuestionActionSuccess(result);
+    });
 
   @Effect({ dispatch: false })
   httpErrors$ = this.actions$
     .ofType(questionSet.ActionTypes.GET_CURRENT_QUESTION_SET_ERROR)
     .map(action => action.payload)
     .map(error => {
+      this.notificationService.notifyError('Question Set not found');
       this.router.navigate([AppConstants.routes.QUESTION_SETS]);
       return Observable.of(error);
     });
@@ -148,9 +180,12 @@ export class QuestionSetEffects {
   registerSession$ = this.actions$
     .ofType(questionSet.ActionTypes.REGISTER_SESSION)
     .map(action => action.payload)
-    .switchMap(questionSetId =>
-      this.questionSetService.registerSession(questionSetId)
-    );
+    .switchMap(questionSetId => {
+      this.notificationService.notifySuccess(
+        "Practice session ended successfully"
+      );
+      return this.questionSetService.registerSession(questionSetId);
+    });
 
   @Effect()
   getSessionDetails$ = this.actions$
@@ -165,6 +200,7 @@ export class QuestionSetEffects {
     private questionSetService: QuestionSetService,
     private questionService: QuestionService,
     private fileParsing: FileParsingService,
+    private notificationService: NotificationService,
     private actions$: Actions,
     private router: Router,
     private store: Store<reducers.State>

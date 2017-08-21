@@ -105,9 +105,10 @@ export class GetCurrentTopicActionSuccess implements Action {
 }
 
 export class GetCurrentTopicActionError implements Action {
-  type = ActionTypes.UPDATE_ERROR;
+  type = ActionTypes.GET_CURRENT_TOPIC_ERROR;
 
-  constructor(public payload) {}
+  constructor(public payload) {
+  }
 }
 
 /**

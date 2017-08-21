@@ -1,54 +1,79 @@
-import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Injectable } from "@angular/core";
+import { Actions, Effect } from "@ngrx/effects";
 
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/switchMap';
-import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
-import AppConstants from '../app-constants';
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/switchMap";
+import { Observable } from "rxjs/Observable";
+import { Router } from "@angular/router";
+import AppConstants from "../app-constants";
 
-import * as answer from '../actions/answer.actions';
-import { AnswerService} from '../services';
+import * as answer from "../actions/answer.actions";
+import { AnswerService, NotificationService } from "../services";
 
 @Injectable()
 export class AnswerEffects {
-  @Effect() load$ = this.actions$
+  @Effect()
+  load$ = this.actions$
     .ofType(answer.ActionTypes.LOAD)
     .map(action => action.payload)
-    .switchMap((questionId) => this.answerService.all(questionId))
+    .switchMap(questionId => this.answerService.all(questionId))
     .map(result => new answer.LoadActionSuccess(result));
 
-  @Effect() create$ = this.actions$
+  @Effect()
+  create$ = this.actions$
     .ofType(answer.ActionTypes.CREATE)
     .map(action => action.payload)
     .switchMap(answer => this.answerService.create(answer))
-    .map(result => new answer.CreateActionSuccess(result))
-    .catch(error => Observable.of(new answer.CreateActionError(error)));
+    .map(result => {
+      this.notificationService.notifySuccess("Answer successfully created");
+      return new answer.CreateActionSuccess(result);
+    })
+    .catch(error => {
+      this.notificationService.notifyError("Answer could not be created");
+      return Observable.of(new answer.CreateActionError(error));
+    });
 
-
-  @Effect() update$ = this.actions$
+  @Effect()
+  update$ = this.actions$
     .ofType(answer.ActionTypes.UPDATE)
     .map(action => action.payload)
     .switchMap(answer => this.answerService.update(answer))
-    .map(result => new answer.UpdateActionSuccess(result))
-    .catch(error => Observable.of(new answer.UpdateActionError(error)));
+    .map(result => {
+      this.notificationService.notifySuccess("Answer successfully updated");
+      return new answer.UpdateActionSuccess(result);
+    })
+    .catch(error => {
+      this.notificationService.notifyError(
+        "Answer could not be successfully updated"
+      );
+      return Observable.of(new answer.UpdateActionError(error));
+    });
 
-  @Effect() delete$ = this.actions$
+  @Effect()
+  delete$ = this.actions$
     .ofType(answer.ActionTypes.DELETE)
     .map(action => action.payload)
     .switchMap(answer => this.answerService.delete(answer))
-    .map((answerId) => new answer.DeleteActionSuccess(answerId));
+    .map(answerId => {
+      this.notificationService.notifySuccess("Answer successfully deleted");
+      return new answer.DeleteActionSuccess(answerId);
+    });
 
-    @Effect() deleteAll$ = this.actions$
+  @Effect()
+  deleteAll$ = this.actions$
     .ofType(answer.ActionTypes.DELETE_ALL)
     .map(action => action.payload)
     .switchMap(questionId => this.answerService.deleteAll(questionId))
-    .map((questionId) => new answer.DeleteAllActionSuccess(questionId));
+    .map(questionId => {
+      this.notificationService.notifySuccess("Answers successfully deleted");
+      return new answer.DeleteAllActionSuccess(questionId);
+    });
 
   constructor(
     private answerService: AnswerService,
+    private notificationService: NotificationService,
     private actions$: Actions,
     private router: Router
   ) {}

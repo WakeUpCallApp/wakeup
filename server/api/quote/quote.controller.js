@@ -305,7 +305,10 @@
       if (err) {
         return handleError(res, err);
       }
-      if (quote.commentList.length > 0 && quote.commentList[0].user) {
+      if(!quote) {
+        return res.status(404);
+      }
+      if (quote.commentList && quote.commentList.length > 0 && quote.commentList[0].user) {
         comments = quote.commentList.filter(function(comment) {
           return comment.user === userEmail;
         });

@@ -7,6 +7,7 @@ export const ActionTypes = {
   GET_BY_TOPIC_ID_SUCCESS: type("[Quote] Get By Topic Id Success"),
   GET_BY_ID: type("[Quote] Get By Id"),
   GET_BY_ID_SUCCESS: type("[Quote] Get By Id Success"),
+  GET_BY_ID_ERROR: type("[Quote] Get By Id Error"),
   GET_COMMENTS: type("[Quote] Get Comments"),
   GET_COMMENTS_SUCCESS: type("[Quote] Get Comments Success"),
   LOAD: type("[Quote] Load"),
@@ -53,6 +54,11 @@ export class GetByIdAction implements Action {
 export class GetByIdActionSuccess implements Action {
   type = ActionTypes.GET_BY_ID_SUCCESS;
   constructor(public payload: Quote) {}
+}
+
+export class GetByIdActionError implements Action {
+  type = ActionTypes.GET_BY_ID_ERROR;
+  constructor(public payload) {}
 }
 
 export class GetCommentsAction implements Action {
@@ -209,6 +215,7 @@ export type Actions =
   | GetByTopicIdActionSuccess
   | GetByIdAction
   | GetByIdActionSuccess
+  | GetByIdActionError
   | GetCommentsAction
   | GetCommentsActionSuccess
   | LoadAction

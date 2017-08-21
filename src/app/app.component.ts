@@ -1,17 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { LoginService } from './common/services/login.service';
-import { AuthTokenService } from './common/services/authToken.service';
-import appConstants from './common/app-constants';
-import { addEvent } from './common/util';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
+import { MdSnackBar, MdSnackBarConfig } from "@angular/material";
+import { Title } from "@angular/platform-browser";
+import { LoginService } from "./common/services/login.service";
+import { AuthTokenService } from "./common/services/authToken.service";
+import appConstants from "./common/app-constants";
+import { addEvent } from "./common/util";
+import { NotificationService } from "app/common/services";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent implements OnInit, OnDestroy {
   public isOpen = false;
 
   constructor(
@@ -19,30 +21,40 @@ export class AppComponent implements OnInit, OnDestroy{
     public loginService: LoginService,
     private authTokenService: AuthTokenService,
     private activatedRoute: ActivatedRoute,
-    private titleService: Title
-  ) { }
+    private titleService: Title,
+    private snackBar: MdSnackBar,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit() {
     this.router.events
       .filter(event => event instanceof NavigationEnd)
       .map(() => this.activatedRoute)
       .map(route => {
-        while (route.firstChild) { route = route.firstChild; }
+        while (route.firstChild) {
+          route = route.firstChild;
+        }
         return route;
       })
-      .filter(route => route.outlet === 'primary')
+      .filter(route => route.outlet === "primary")
       .mergeMap(route => route.data)
-      .subscribe(event => this.titleService.setTitle(event['title']));
+      .subscribe(event => this.titleService.setTitle(event["title"]));
 
-    addEvent(window, 'resize', e => {
+    addEvent(window, "resize", e => {
       if (this.isOpen) {
         this.isOpen = window.innerWidth < 1000;
       }
     });
+
+    this.notificationService.subj_notification.subscribe(
+      (notification: any) => {
+        this.openSnackBar(notification);
+      }
+    );
   }
 
   ngOnDestroy() {
-    window.document.removeEventListener('resize');
+    window.document.removeEventListener("resize");
   }
 
   openMenu(isOpen) {
@@ -62,5 +74,12 @@ export class AppComponent implements OnInit, OnDestroy{
     this.loginService.logout();
     this.isOpen = false;
     this.router.navigate([appConstants.routes.LOGIN]);
+  }
+
+  openSnackBar({ message, action = "", config }) {
+    const conf= new MdSnackBarConfig();
+    conf.duration = 10000;
+    conf.extraClasses = [config.extraClass];
+    this.snackBar.open(message, action, conf);
   }
 }

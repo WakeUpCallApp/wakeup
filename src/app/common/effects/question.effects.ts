@@ -10,7 +10,7 @@ import AppConstants from "../app-constants";
 import { Router } from "@angular/router";
 
 import * as question from "../actions/question.actions";
-import { QuestionService } from "../services/question.service";
+import { QuestionService, NotificationService } from "../services";
 
 @Injectable()
 export class QuestionEffects {
@@ -26,14 +26,28 @@ export class QuestionEffects {
     .ofType(question.ActionTypes.GET_CURRENT_QUESTION)
     .map(action => action.payload)
     .switchMap(id => this.questionService.get(id))
-    .map(result => new question.GetCurrentQuestionSuccess(result));
+    .map(result => new question.GetCurrentQuestionSuccess(result))
+    .catch(error => Observable.of(new question.GetCurrentQuestionError(error)));
+
+  @Effect({ dispatch: false })
+  httpErrors$ = this.actions$
+    .ofType(question.ActionTypes.GET_CURRENT_QUESTION_ERROR)
+    .map(action => action.payload)
+    .map(error => {
+      this.notificationService.notifyError("Question not found");
+      this.router.navigate([AppConstants.routes.QUESTION_SETS]);
+      return Observable.of(error);
+    });
 
   @Effect()
   delete$ = this.actions$
     .ofType(question.ActionTypes.DELETE)
     .map(action => action.payload)
     .switchMap(question => this.questionService.delete(question))
-    .map(result => new question.DeleteActionSuccess(result));
+    .map(result => {
+      this.notificationService.notifySuccess("Question successfully deleted");
+      return new question.DeleteActionSuccess(result);
+    });
 
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
@@ -48,6 +62,7 @@ export class QuestionEffects {
 
   constructor(
     private questionService: QuestionService,
+    private notificationService: NotificationService,
     private actions$: Actions,
     private router: Router
   ) {}
