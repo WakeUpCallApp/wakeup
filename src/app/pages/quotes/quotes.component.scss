@@ -26,13 +26,9 @@ $quote-color: rgba(255, 224, 98, 0.3);
     width: 65px;
     height: 65px;
     bottom: 16px;
-    left: calc(100vw - 76px);
-    display: flex;
-    justify-content: center;
+    left: calc(100vw - 96px);
     md-icon {
-        font-size: 30px;
-        display: flex;
-        justify-content: center;
+        margin: 0 auto;
     }
 }
 

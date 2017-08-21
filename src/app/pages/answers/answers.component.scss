@@ -81,9 +81,7 @@
   width: 65px;
   height: 65px;
   bottom: 16px;
-  left: calc(100vw - 76px);
-  display: flex;
-  justify-content: center;
+  left: calc(100vw - 96px);
 }
 
 .prevQuestionButton {
@@ -106,7 +104,7 @@
   z-index: 20;
   position: sticky;
   bottom: calc(100vh/2);
-  left: calc(100vw - 76px);
+  left: calc(100vw - 96px);
   display: flex;
   justify-content: center;
 }
