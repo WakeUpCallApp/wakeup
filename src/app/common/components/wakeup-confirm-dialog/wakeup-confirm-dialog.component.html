@@ -1,0 +1,6 @@
+<div class="confirmDialog">
+    <p class="title"><md-icon color="warn"> warning</md-icon>{{ title }}</p>
+    <p class="message">{{ message }}</p>
+    <button type="button" md-button (click)="dialogRef.close()">Cancel</button>
+    <button class="okButton" type="button" md-raised-button (click)="dialogRef.close(true)">OK</button>
+</div>

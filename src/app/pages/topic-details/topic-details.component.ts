@@ -19,6 +19,7 @@ import * as reducers from "../../common/reducers";
 import * as actions from "../../common/actions/topic.actions";
 import * as questionSetActions from "../../common/actions/question-set.actions";
 import { Topic } from "../../common/models/topic.model";
+import { DialogService } from "../../common/services/dialog.service";
 @Component({
   selector: "wakeup-topic-details",
   templateUrl: "./topic-details.component.html",
@@ -40,7 +41,8 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private ngzone: NgZone,
     private cdref: ChangeDetectorRef,
-    private appref: ApplicationRef
+    private appref: ApplicationRef,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
@@ -92,7 +94,13 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.updateTopic();
   }
 
-  deleteTopic() {
+  onDeleteTopic() {
+    this.dialogService.openDialog(
+      "Are you sure you want to delete this topic?",
+      this.deleteTopic.bind(this)
+    );
+  }
+  private deleteTopic() {
     this.store.dispatch(new actions.DeleteAction(this.currentTopic.id));
   }
 }

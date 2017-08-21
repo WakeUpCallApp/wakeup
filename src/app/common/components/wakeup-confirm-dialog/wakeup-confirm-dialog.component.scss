@@ -1,0 +1,20 @@
+@import '~../../constants.scss';
+
+.title {
+    display: flex;
+    margin-top: 0;
+    margin-bottom: 46px;
+    font-weight: bold;
+    font-size: 17px;
+    md-icon {
+        margin-right: 8px;
+    }
+}
+.message{
+    margin-bottom: 46px;
+}
+
+.okButton {
+    background-color: $warn;
+    color: white;
+}

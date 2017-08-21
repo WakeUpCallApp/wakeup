@@ -19,6 +19,7 @@ import * as questionActions from "../../common/actions/question.actions";
 import * as actions from "../../common/actions/quote.actions";
 import { Quote, ICreateComment } from "../../common/models/quote.model";
 import { Topic } from "../../common/models/topic.model";
+import { DialogService } from "../../common/services/dialog.service";
 
 @Component({
   selector: "wakeup-quote-details",
@@ -44,7 +45,8 @@ export class QuoteDetailsComponent implements OnInit {
     private router: Router,
     private ngzone: NgZone,
     private cdref: ChangeDetectorRef,
-    private titleService: Title
+    private titleService: Title,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
@@ -113,7 +115,14 @@ export class QuoteDetailsComponent implements OnInit {
     this.store.dispatch(new actions.UpdateAction(updateObject));
   }
 
-  deleteQuote() {
+  onDeleteQuote() {
+    this.dialogService.openDialog(
+      "Are you sure you want to delete this quote",
+      this.deleteQuote.bind(this)
+    );
+  }
+
+  private deleteQuote() {
     this.store.dispatch(new actions.DeleteAction(this.updateObject));
   }
 
@@ -121,6 +130,13 @@ export class QuoteDetailsComponent implements OnInit {
     commentObj.comment.createDate = new Date();
     this.store.dispatch(new actions.CreateCommentAction(commentObj));
     this.newComment = this.getEmptyComment();
+  }
+
+  onDeleteComment(comment) {
+    this.dialogService.openDialog(
+      "Are you sure you want to delete this commment?",
+      () => this.deleteComment.call(this, comment)
+    );
   }
 
   deleteComment(comment) {

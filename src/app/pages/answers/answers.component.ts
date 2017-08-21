@@ -16,6 +16,7 @@ import { Question } from "../../common/models/question.model";
 import { QuestionSet } from "../../common/models/question-set.model";
 import appConstants from "../../common/app-constants";
 import { WakeupAnswerDialogComponent } from "./components/wakeup-answer-dialog/wakeup-answer-dialog.component";
+import { DialogService } from "../../common/services/dialog.service";
 
 enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -41,7 +42,8 @@ export class AnswersComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title,
-    private dialog: MdDialog
+    private dialog: MdDialog,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
@@ -101,8 +103,13 @@ export class AnswersComponent implements OnInit {
       }
     });
   }
-
-  deleteAnswer(answer) {
+  onDeleteAnswer(answer) {
+    this.dialogService.openDialog(
+      "Are you sure you want to delete this answer?",
+      () => this.deleteAnswer.call(this, answer)
+    );
+  }
+  private deleteAnswer(answer) {
     this.store.dispatch(new actions.DeleteAction(answer.id));
   }
 
@@ -132,11 +139,25 @@ export class AnswersComponent implements OnInit {
     });
   }
 
-  deleteQuestion() {
+  onDeleteQuestion() {
+    this.dialogService.openDialog(
+      "Are you sure you want to delete this question?",
+      this.deleteQuestion.bind(this)
+    );
+  }
+
+  private deleteQuestion() {
     this.store.dispatch(new questionActions.DeleteAction(this.question));
   }
 
-  deleteAnswers() {
+  onDeleteAnswers() {
+    this.dialogService.openDialog(
+      "Are you sure you want to delete all answers?",
+      this.deleteAnswers.bind(this)
+    );
+  }
+
+  private deleteAnswers() {
     this.store.dispatch(new actions.DeleteAllAction(this.currentQuestionId));
   }
 

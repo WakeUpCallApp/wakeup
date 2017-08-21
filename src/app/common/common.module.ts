@@ -17,12 +17,14 @@ import {
   AnswerService,
   SessionConfigService,
   FileParsingService,
-  NotificationService
+  NotificationService,
+  DialogService
 } from "./services";
 import { WakeupTopBarComponent } from "./components/wakeup-top-bar/wakeup-top-bar.component";
 import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side-nav.component";
 import { WakeupCardComponent } from "./components/wakeup-card/wakeup-card.component";
 import { WakeupImportFileComponent } from "./components/wakeup-import-file/wakeup-import-file.component";
+import { WakeupConfirmDialogComponent } from './components/wakeup-confirm-dialog/wakeup-confirm-dialog.component';
 
 @NgModule({
   imports: [
@@ -36,7 +38,8 @@ import { WakeupImportFileComponent } from "./components/wakeup-import-file/wakeu
     WakeupTopBarComponent,
     WakeupSideNavComponent,
     WakeupCardComponent,
-    WakeupImportFileComponent
+    WakeupImportFileComponent,
+    WakeupConfirmDialogComponent
   ],
   providers: [
     AuthTokenService,
@@ -51,7 +54,8 @@ import { WakeupImportFileComponent } from "./components/wakeup-import-file/wakeu
     CanDeactivateGuard,
     UserDetailResolver,
     FileParsingService,
-    NotificationService
+    NotificationService,
+    DialogService
   ],
   exports: [
     WakeupTopBarComponent,
@@ -63,6 +67,6 @@ import { WakeupImportFileComponent } from "./components/wakeup-import-file/wakeu
     ReactiveFormsModule,
     FormsModule
   ],
-  entryComponents: [WakeupImportFileComponent]
+  entryComponents: [WakeupImportFileComponent, WakeupConfirmDialogComponent]
 })
 export class WakeupCommonModule {}

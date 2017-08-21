@@ -9,7 +9,7 @@
     <div class="card-header">
       <div class="title">Quotes Details</div>
       <div class="actions" *ngIf="!updateObject?.topic?.isDefault">
-          <button md-icon-button mdTooltip="Delete Quote" (click)="deleteQuote()"> <md-icon>delete_forever</md-icon></button>
+          <button md-icon-button mdTooltip="Delete Quote" (click)="onDeleteQuote()"> <md-icon>delete_forever</md-icon></button>
       </div>
     </div>
     <div class="card-body" *ngIf="updateObject as quote">
@@ -70,7 +70,7 @@
     <wakeup-add-comment (create)="addComment($event)" [commentObject]="newComment"></wakeup-add-comment>
   </section>
   <section class="commentList" *ngIf="(comments$ | async) as comments">
-    <wakeup-comment-list *ngIf="comments.length" [comments]="comments" (delete)="deleteComment($event)">
+    <wakeup-comment-list *ngIf="comments.length" [comments]="comments" (delete)="onDeleteComment($event)">
     </wakeup-comment-list>
   </section>
 </div>

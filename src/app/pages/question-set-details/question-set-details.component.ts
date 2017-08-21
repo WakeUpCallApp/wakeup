@@ -22,6 +22,7 @@ import { WakeupSessionConfigComponent } from "./components/wakeup-session-config
 import { WakeupEditQuestionDialogComponent } from "./components/wakeup-edit-question-dialog/wakeup-edit-question-dialog.component";
 import { WakeupImportFileComponent } from "../../common/components/wakeup-import-file/wakeup-import-file.component";
 import { SessionConfigService } from "../../common/services/session-config.service";
+import { DialogService } from "../../common/services/dialog.service";
 import { QuestionSet } from "../../common/models/question-set.model";
 import { IQuestion } from "../../common/models/question.model";
 import * as reducers from "../../common/reducers";
@@ -54,7 +55,8 @@ export class QuestionSetDetailsComponent
     private ngzone: NgZone,
     private cdref: ChangeDetectorRef,
     private appref: ApplicationRef,
-    private titleService: Title
+    private titleService: Title,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
@@ -84,7 +86,7 @@ export class QuestionSetDetailsComponent
           this.importDialogRef.close();
         }
       });
-      this.isLoading$ = this.store.select(reducers.getLoadingQuestionSetState);  
+    this.isLoading$ = this.store.select(reducers.getLoadingQuestionSetState);
   }
 
   ngAfterViewInit() {
@@ -117,7 +119,14 @@ export class QuestionSetDetailsComponent
     this.store.dispatch(new actions.UpdateAction(this.updateObject));
   }
 
-  deleteQuestionSet() {
+  onQuestionSetDelete() {
+    this.dialogService.openDialog(
+      "Are you sure you want to delete this question set?",
+      this.deleteQuestionSet.bind(this)
+    );
+  }
+
+  private deleteQuestionSet() {
     this.store.dispatch(new actions.DeleteAction(this.currentQuestionSet.id));
   }
 
@@ -142,7 +151,14 @@ export class QuestionSetDetailsComponent
     this.newQuestion = this.getEmptyQuestion();
   }
 
-  deleteQuestions(questions) {
+  onDeleteQuestions(questions) {
+    this.dialogService.openDialog(
+      "Are you sure you want to delete these questions?",
+      () => this.deleteQuestions.call(this, questions)
+    );
+  }
+
+  private deleteQuestions(questions) {
     questions.forEach(question =>
       this.store.dispatch(new actions.DeleteQuestionAction(question))
     );

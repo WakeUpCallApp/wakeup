@@ -7,7 +7,7 @@
                     <button md-icon-button mdTooltip="View Practice Sessions" [routerLink]="['/sessionDetails', currentQuestionSet.id, currentQuestionSet.name]"> 
                         <md-icon>question_answer</md-icon> 
                     </button>
-                    <button md-icon-button mdTooltip="Delete Question Set" (click)="deleteQuestionSet()">
+                    <button md-icon-button mdTooltip="Delete Question Set" (click)="onQuestionSetDelete()">
                      <md-icon>delete_forever</md-icon> 
                     </button>
                     <button md-button [mdMenuTriggerFor]="appMenu">
@@ -57,7 +57,7 @@
         <wakeup-add-question (create)="addQuestion($event)" [question]="newQuestion"></wakeup-add-question>
     </section>
     <section class="questionList" *ngIf="currentQuestionSet.questions?.length">
-        <wakeup-question-list [questions]="currentQuestionSet.questions" [canEdit]="!currentQuestionSet.isDefault" (delete)="deleteQuestions($event)"
+        <wakeup-question-list [questions]="currentQuestionSet.questions" [canEdit]="!currentQuestionSet.isDefault" (delete)="onDeleteQuestions($event)"
             (edit)="editQuestion($event)" (openQuotesBrowser)="openQuotesBrowser($event)">
         </wakeup-question-list>
     </section>

@@ -8,12 +8,12 @@
     <div class="card-header">
       <div class="title">Answers</div>
       <div class="actions">
-        <button *ngIf="question.answers?.length" md-button mdTooltip="Delete all answers" (click)="deleteAnswers()"> <md-icon>delete_forever</md-icon> All Answers </button>
+        <button *ngIf="question.answers?.length" md-button mdTooltip="Delete all answers" (click)="onDeleteAnswers()"> <md-icon>delete_forever</md-icon> All Answers </button>
         <button *ngIf="!question.questionSet?.isDefault" md-button [mdMenuTriggerFor]="questionMenu" mdTooltip="More actions">
             <md-icon>more_horiz</md-icon> More
         </button>
         <md-menu #questionMenu="mdMenu">
-          <button md-menu-item (click)="deleteQuestion()">
+          <button md-menu-item (click)="onDeleteQuestion()">
             <md-icon>delete_forever</md-icon> Delete Question </button>
         </md-menu>
       </div>
@@ -38,7 +38,7 @@
               <span class="text">{{answer.text}}</span>
               <div class="actions">
                 <button color="accent" md-icon-button (click)="editAnswer(answer)" mdTooltip="Edit Answer"> <md-icon>edit</md-icon></button>
-                <button color="warn" md-icon-button (click)="deleteAnswer(answer)" mdTooltip="Delete Answer"> <md-icon>delete_forever</md-icon></button>
+                <button color="warn" md-icon-button (click)="onDeleteAnswer(answer)" mdTooltip="Delete Answer"> <md-icon>delete_forever</md-icon></button>
               </div>
             </li>
           </ul>
