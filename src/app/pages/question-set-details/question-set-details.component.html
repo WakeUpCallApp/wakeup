@@ -29,13 +29,13 @@
                 <div class="editable" *ngIf="!updateObject.isDefault">
                     <md-input-container floatPlaceholder="always">
                         <input #nameInput mdInput type="text" placeholder="Name" name="name" [(ngModel)]="updateObject.name" required>
-                        <span mdSuffix><md-icon>edit</md-icon></span>
+                        <span mdSuffix><md-icon color="accent">edit</md-icon></span>
                         <md-error>Name is required</md-error>
                     </md-input-container>
                     <md-input-container floatPlaceholder="always">
                         <textarea #descriptionInput mdInput placeholder="Description" name="description" [(ngModel)]="updateObject.description" rows="5">
                         </textarea>
-                        <span mdSuffix><md-icon>edit</md-icon></span>
+                        <span mdSuffix><md-icon color="accent">edit</md-icon></span>
                     </md-input-container>
                 </div>
                 <div class="readOnly" *ngIf="updateObject.isDefault">

@@ -37,8 +37,8 @@
             <li *ngFor="let answer of answerGroup.answers">
               <span class="text">{{answer.text}}</span>
               <div class="actions">
-                <button md-button (click)="editAnswer(answer)" mdTooltip="Edit Answer"> <md-icon>edit</md-icon> Edit </button>
-                <button md-button (click)="deleteAnswer(answer)" mdTooltip="Delete Answer"> <md-icon>delete_forever</md-icon> Delete </button>
+                <button color="accent" md-icon-button (click)="editAnswer(answer)" mdTooltip="Edit Answer"> <md-icon>edit</md-icon></button>
+                <button color="warn" md-icon-button (click)="deleteAnswer(answer)" mdTooltip="Delete Answer"> <md-icon>delete_forever</md-icon></button>
               </div>
             </li>
           </ul>

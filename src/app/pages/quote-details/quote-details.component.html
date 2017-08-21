@@ -20,7 +20,7 @@
         <form class="editQuoteForm" #quoteForm='ngForm'>
           <md-input-container floatPlaceholder="always">
             <textarea class="quoteText" [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" mdInput name="text" required></textarea>
-            <span mdSuffix><md-icon>edit</md-icon></span>
+            <span mdSuffix><md-icon color="accent">edit</md-icon></span>
             <md-error>Text is required</md-error>
             <md-hint align="end" aria-live="polite"> {{textVar.value.length}} / 1000 </md-hint>
           </md-input-container>
@@ -28,7 +28,7 @@
           <md-input-container floatPlaceholder="always">
             <input [(ngModel)]="quote.author" #authorVar list="suggestions" autocomplete="off" maxlength="200" placeholder="Author" type="text"
               mdInput name="author">
-            <span mdSuffix><md-icon>edit</md-icon></span>
+            <span mdSuffix><md-icon color="accent">edit</md-icon></span>
             <datalist id="suggestions">
               <select>
                     <option *ngFor="let suggestion of authors$ | async">{{suggestion}}</option>
@@ -42,7 +42,7 @@
           <md-input-container floatPlaceholder="always">
             <input [(ngModel)]="quote.source" #sourceVar list="sourceSuggestions" autocomplete="off" placeholder="Source" type="text"
               mdInput name="source" maxlength="200">
-            <span mdSuffix><md-icon>edit</md-icon></span>
+            <span mdSuffix><md-icon color="accent">edit</md-icon></span>
             <datalist id="sourceSuggestions">
               <select>
                     <option *ngFor="let source of sources$ | async" >{{source}}</option>

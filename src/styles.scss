@@ -99,6 +99,14 @@ md-input-container, .mat-card-content {
   left: 50%;
 }
 
+.primary {
+  color: $primary !important;
+}
+
+.accent {
+  color: $accent !important;
+}
+
 .toast {
   font-size: 16px;
   color: white;

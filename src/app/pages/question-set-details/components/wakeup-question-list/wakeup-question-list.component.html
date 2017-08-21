@@ -27,13 +27,13 @@
           <span> <md-icon>keyboard_arrow_right</md-icon></span>
         </a>
         <div *ngIf="canEdit" class="actions">
-          <button md-button mdTooltip="See Answers" [routerLink]="['/answers', question.id]"> <md-icon>message</md-icon> answers </button>
+          <button color="primary" md-button mdTooltip="See Answers" [routerLink]="['/answers', question.id]"> <md-icon>message</md-icon> answers </button>
           <button md-button mdTooltip="More Actions" [mdMenuTriggerFor]="questionMenu" >
                 <md-icon>more_horiz</md-icon> More
             </button>
           <md-menu #questionMenu="mdMenu">
-            <button md-menu-item (click)="editQuestion(question)">  <md-icon>edit</md-icon> Edit </button>
-            <button md-menu-item (click)="openQuotes(question)">  <md-icon>format_quote</md-icon> Add/Remove Quote </button>
+            <button md-menu-item (click)="editQuestion(question)">  <md-icon class="accent">edit</md-icon> Edit </button>
+            <button md-menu-item (click)="openQuotes(question)">  <md-icon class="primary">format_quote</md-icon> Add/Remove Quote </button>
           </md-menu>
 
         </div>
