@@ -13,9 +13,14 @@ import { Question } from "../models/question.model";
 
 @Injectable()
 export class QuestionSetService {
+  questionSets;
+  populatedQuestionSets;
   constructor(private http: Http) {}
 
   all(): Observable<QuestionSet[]> {
+    if (this.questionSets) {
+      return Observable.of(this.questionSets);
+    }
     return this.http
       .get("/api/questionSet")
       .map((response: Response) => response.json())
@@ -24,6 +29,7 @@ export class QuestionSetService {
           return Parser.questionSetFromApi(questionSetApi);
         });
       })
+      .do(questionSets => (this.questionSets = questionSets))
       .catch(this.handleError);
   }
 
@@ -38,6 +44,12 @@ export class QuestionSetService {
   }
 
   get(id: number): Observable<QuestionSet> {
+    const cached = this.populatedQuestionSets
+      ? this.findQuestionSet(id)
+      : undefined;
+    if (cached) {
+      return Observable.of(cached);
+    }
     return this.http
       .get(`/api/questionSet/${id}`)
       .map((response: Response) => response.json())
@@ -53,6 +65,12 @@ export class QuestionSetService {
         );
         return questionSet;
       })
+      .do(
+        qs =>
+          (this.populatedQuestionSets = [qs].concat(
+            this.populatedQuestionSets || []
+          ))
+      )
       .catch(this.handleError);
   }
 
@@ -106,13 +124,25 @@ export class QuestionSetService {
   }
 
   importQuestions(questionSetId, questions) {
-    return this.http.post(`/api/questions/importQuestions/${questionSetId}`, {
-      questions: questions
-    })
-    .map((response: Response) => response.json())
-    .map(apiQuestionsList => {
-      return apiQuestionsList.map(questionApi => Parser.questionFromApi(questionApi));
-    });
+    return this.http
+      .post(`/api/questions/importQuestions/${questionSetId}`, {
+        questions: questions
+      })
+      .map((response: Response) => response.json())
+      .map(apiQuestionsList => {
+        return apiQuestionsList.map(questionApi =>
+          Parser.questionFromApi(questionApi)
+        );
+      });
+  }
+
+  clearCache() {
+    this.questionSets = undefined;
+    this.populatedQuestionSets = undefined;
+  }
+
+  findQuestionSet(questionSetId) {
+    return this.populatedQuestionSets.find(qs => qs.id === +questionSetId);
   }
 
   private handleError(error: Response) {

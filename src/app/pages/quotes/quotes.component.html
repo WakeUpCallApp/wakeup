@@ -28,8 +28,8 @@
         There are no quotes for this topic
       </div>
       <ul class="quotesList">
-        <li *ngFor="let quote of currentTopic?.quotes">
-          <a [routerLink]="['/quoteDetails', quote.id]" mdTooltip="see details">
+        <li *ngFor="let quote of quotes">
+          <a [routerLink]="['/quoteDetails', quote.id, currentTopic.id]" mdTooltip="see details">
             <md-icon>format_quote</md-icon>
             <span class="text">
              {{quote.text}}

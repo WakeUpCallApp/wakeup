@@ -60,6 +60,17 @@ export class QuestionEffects {
       ]);
     });
 
+  @Effect({ dispatch: false })
+  invalidateCache = this.actions$
+    .ofType(
+      question.ActionTypes.CREATE_SUCCESS,
+      question.ActionTypes.DELETE_SUCCESS
+    )
+    .map(() => {
+      console.log("clear cache");
+      this.questionService.clearCache();
+    });
+
   constructor(
     private questionService: QuestionService,
     private notificationService: NotificationService,

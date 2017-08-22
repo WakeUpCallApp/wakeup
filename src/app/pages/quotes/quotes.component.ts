@@ -27,6 +27,8 @@ export class QuotesComponent implements OnInit, OnDestroy {
   importSpinnerSubscription: Subscription;
   importDialogRef;
   isLoading$;
+  quotesSubscription;
+  quotes;
   constructor(
     private store: Store<reducers.State>,
     private dialog: MdDialog,
@@ -65,12 +67,16 @@ export class QuotesComponent implements OnInit, OnDestroy {
           this.importDialogRef.close();
         }
       });
+    this.quotesSubscription = this.store
+      .select(reducers.getQuotesByTopic)
+      .subscribe(quotes => (this.quotes = quotes));
   }
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
     this.topicSubscription.unsubscribe();
     this.importSpinnerSubscription.unsubscribe();
+    this.quotesSubscription.unsubscribe();
   }
 
   goToCreateQuote() {
@@ -97,7 +103,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
   }
 
   exportQuotes() {
-    const exportData = (this.currentTopic.quotes as any[]).map(quote => {
+    const exportData = (this.quotes as any[]).map(quote => {
       return {
         author: quote.author,
         text: quote.text,

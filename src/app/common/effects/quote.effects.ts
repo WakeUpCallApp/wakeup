@@ -103,6 +103,20 @@ export class QuoteEffects {
       this.router.navigate([AppConstants.routes.QUOTES, topic.id]);
     });
 
+  @Effect({ dispatch: false })
+  invalidateCache = this.actions$
+    .ofType(
+      quoteActions.ActionTypes.CREATE_SUCCESS,
+      quoteActions.ActionTypes.UPDATE_SUCCESS,
+      quoteActions.ActionTypes.DELETE_SUCCESS,
+      quoteActions.ActionTypes.CREATE_COMMENT_SUCCESS,
+      quoteActions.ActionTypes.DELETE_COMMENT_SUCCESS
+    )
+    .map(() => {
+      console.log('clear cache');
+      this.quoteService.clearCache();
+    });
+
   @Effect()
   getComments$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_COMMENTS)

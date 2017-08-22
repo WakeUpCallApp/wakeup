@@ -60,8 +60,6 @@
   exports.show = function(req, res) {
     var userEmail = req.user.email;
     var query = Topic.findOne({});
-
-    query.populate("quoteList");
     query.populate("questionSetList");
 
     query.where("_id", req.params.id);

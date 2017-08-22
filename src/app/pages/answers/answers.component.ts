@@ -10,6 +10,7 @@ import * as reducers from "../../common/reducers";
 import * as quoteActions from "../../common/actions/quote.actions";
 import * as actions from "../../common/actions/answer.actions";
 import * as questionActions from "../../common/actions/question.actions";
+import * as answerActions from "../../common/actions/answer.actions";
 import { Quote } from "../../common/models/quote.model";
 import { Answer } from "../../common/models/answer.model";
 import { Question } from "../../common/models/question.model";
@@ -37,6 +38,8 @@ export class AnswersComponent implements OnInit {
   prevQuestionId: number;
   openModal = false;
   isLoading$;
+  answers;
+  answerSubscription;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
@@ -47,11 +50,12 @@ export class AnswersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.isLoading$ = this.store.select(reducers.getLoadingQuestionState);
+    this.isLoading$ = this.store.select(reducers.getLoadingAnswersState);
     this.actionsSubscription = this.route.params
       .select<string>("questionId")
       .map(id => {
         this.currentQuestionId = id;
+        this.store.dispatch(new answerActions.LoadAction(+id));
         return new questionActions.GetCurrentQuestion(+id);
       })
       .subscribe(this.store);
@@ -67,11 +71,19 @@ export class AnswersComponent implements OnInit {
           this.prevQuestionId = this.getPrevQuestion(currentQuestionIndex);
         }
       });
+    this.answerSubscription = this.store
+      .select(reducers.getGroupedAnswersState)
+      .subscribe(answers => {
+        if (answers.constructor === Array) {
+          this.answers = answers;
+        }
+      });
   }
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
     this.questionSubscription.unsubscribe();
+    this.answerSubscription.unsubscribe();
   }
 
   @HostListener("document:keyup", ["$event"])

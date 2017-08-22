@@ -40,7 +40,6 @@ import { ProfileComponent } from './pages/profile/profile.component';
       {
         path: 'questionSetDetails/:id',
         loadChildren: 'app/pages/question-set-details/question-set-details.module#QuestionSetDetailsModule',
-        data: { title: 'Question Set Details' },
         canActivate: [AuthenticationGuard],
         resolve: {
           userDetails: UserDetailResolver
@@ -63,7 +62,6 @@ import { ProfileComponent } from './pages/profile/profile.component';
       {
         path: 'topicDetails/:id',
         component: TopicDetailsComponent,
-        data: { title: 'Topic Details' },
         canActivate: [AuthenticationGuard],
         resolve: {
           userDetails: UserDetailResolver
@@ -72,7 +70,6 @@ import { ProfileComponent } from './pages/profile/profile.component';
       {
         path: 'quotes/:topicId',
         component: QuotesComponent,
-        data: { title: 'Quotes' },
         canActivate: [AuthenticationGuard],
         resolve: {
           userDetails: UserDetailResolver
@@ -86,9 +83,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
         resolve: { userDetails: UserDetailResolver }
       },
       {
-        path: 'quoteDetails/:id',
+        path: 'quoteDetails/:id/:topicId',
         loadChildren: 'app/pages/quote-details/quote-details.module#QuoteDetailsModule',
-        data: { title: 'Quote Details' },
         canActivate: [AuthenticationGuard],
         resolve: {
           userDetails: UserDetailResolver
@@ -97,7 +93,6 @@ import { ProfileComponent } from './pages/profile/profile.component';
       {
         path: 'practiceSession/:questionSetId',
         component: PracticeSessionComponent,
-        data: { title: 'Practice Question Set' },
         canActivate: [AuthenticationGuard],
         canDeactivate: [CanDeactivateGuard],
         resolve: { userDetails: UserDetailResolver }
@@ -105,14 +100,12 @@ import { ProfileComponent } from './pages/profile/profile.component';
       {
         path: 'answers/:questionId',
         loadChildren: 'app/pages/answers/answers.module#AnswersModule',
-        data: { title: 'Answers' },
         canActivate: [AuthenticationGuard],
         resolve: { userDetails: UserDetailResolver }
       },
       {
         path: 'sessionDetails/:questionSetId/:questionSetName',
         loadChildren: 'app/pages/session-details/session-details.module#SessionDetailsModule',
-        data: { title: 'Session Details' },
         canActivate: [AuthenticationGuard],
         resolve: { userDetails: UserDetailResolver }
       },

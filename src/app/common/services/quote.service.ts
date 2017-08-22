@@ -7,9 +7,16 @@ import { Quote, QuoteApi, IQuote } from "../models/quote.model";
 
 @Injectable()
 export class QuoteService {
+  private suggestions;
+  private userQuotes;
+  private quotes;
+  private comments;
   constructor(private http: Http) {}
 
   all(): Observable<Quote[]> {
+    if (this.userQuotes) {
+      return Observable.of(this.userQuotes);
+    }
     return this.http
       .get("/api/quotes/userQuotes/")
       .map((response: Response) => response.json())
@@ -22,15 +29,23 @@ export class QuoteService {
           return topic;
         });
       })
+      .do(quotes => (this.userQuotes = quotes))
       .catch(this.handleError);
   }
 
   get(topicId: number): Observable<Quote[]> {
+    const cachedQuotes = this.quotes ? this.findByTopic(topicId) : undefined;
+    if (cachedQuotes) {
+      return Observable.of(cachedQuotes);
+    }
     return this.http
       .get(`/api/quotes/${topicId}`)
       .map((response: Response) => response.json())
       .map(quotes => {
         return quotes.map(quoteApi => Parser.quoteFromApi(quoteApi));
+      })
+      .do(quotes => {
+        this.quotes = [...quotes].concat(this.quotes || []);
       })
       .catch(this.handleError);
   }
@@ -68,6 +83,10 @@ export class QuoteService {
   }
 
   getById(quoteId): Observable<Quote> {
+    const cachedQuote = this.quotes ? this.findQuote(quoteId) : undefined;
+    if (cachedQuote) {
+      return Observable.of(cachedQuote);
+    }
     return this.http
       .get(`/api/quotes/quote/${quoteId}`)
       .map((response: Response) => response.json())
@@ -80,20 +99,28 @@ export class QuoteService {
   }
 
   getSuggestions() {
+    if (this.suggestions) {
+      return Observable.of(this.suggestions);
+    }
     return this.http
       .get("/api/quotes/suggestions")
       .map((response: Response) => response.json())
       .map(suggestions => suggestions)
+      .do(suggestions => (this.suggestions = suggestions))
       .catch(this.handleError);
   }
 
   getComments(quoteId) {
+    if (this.comments) {
+      return Observable.of(this.comments);
+    }
     return this.http
       .get(`/api/quotes/comments/${quoteId}`)
       .map((response: Response) => response.json())
       .map(commentsList => {
         return commentsList;
       })
+      .do(comments => (this.comments = comments))
       .catch(this.handleError);
   }
 
@@ -123,6 +150,22 @@ export class QuoteService {
         return apiQuotesList.map(quoteApi => Parser.quoteFromApi(quoteApi));
       })
       .catch(this.handleError);
+  }
+
+  clearCache() {
+    this.suggestions = undefined;
+    this.userQuotes = undefined;
+    this.comments = undefined;
+    this.quotes = undefined;
+  }
+
+  private findByTopic(topicId) {
+    const quotes = this.quotes.filter(quote => quote.topic === topicId);
+    return quotes.length ? quotes : undefined;
+  }
+
+  private findQuote(quoteId) {
+    return this.quotes.find(quote => quote.id === quoteId);
   }
 
   private handleError(error: Response) {

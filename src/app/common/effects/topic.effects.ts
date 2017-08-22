@@ -101,6 +101,18 @@ export class TopicEffects {
       return Observable.of(error);
     });
 
+  @Effect({ dispatch: false })
+  invalidateCache = this.actions$
+    .ofType(
+      topic.ActionTypes.CREATE_SUCCESS,
+      topic.ActionTypes.UPDATE_SUCCESS,
+      topic.ActionTypes.DELETE_SUCCESS
+    )
+    .map(() => {
+      console.log('clear cache');
+      this.topicService.clearCache();
+    });
+
   constructor(
     private topicService: TopicService,
     private notificationService: NotificationService,

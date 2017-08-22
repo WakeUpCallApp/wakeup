@@ -71,6 +71,19 @@ export class AnswerEffects {
       return new answer.DeleteAllActionSuccess(questionId);
     });
 
+  @Effect({ dispatch: false })
+  invalidateCache = this.actions$
+    .ofType(
+      answer.ActionTypes.CREATE_SUCCESS,
+      answer.ActionTypes.UPDATE_SUCCESS,
+      answer.ActionTypes.DELETE_SUCCESS,
+      answer.ActionTypes.DELETE_ALL_SUCCESS
+    )
+    .map(() => {
+      console.log("clear cache");
+      this.answerService.clearCache();
+    });
+
   constructor(
     private answerService: AnswerService,
     private notificationService: NotificationService,

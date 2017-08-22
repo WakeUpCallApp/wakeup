@@ -10,6 +10,7 @@ import {
   ElementRef,
   ChangeDetectionStrategy
 } from "@angular/core";
+import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import "@ngrx/core/add/operator/select";
@@ -42,7 +43,8 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     private ngzone: NgZone,
     private cdref: ChangeDetectorRef,
     private appref: ApplicationRef,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
@@ -59,6 +61,7 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(currentTopic => {
         this.currentTopic = Object.assign({}, currentTopic);
         this.updateObject = Object.assign({}, currentTopic);
+        this.titleService.setTitle(`${this.currentTopic.name} details`);
         this.cdref.detectChanges();
       });
   }

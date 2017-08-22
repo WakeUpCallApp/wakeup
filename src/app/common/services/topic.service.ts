@@ -1,30 +1,36 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Injectable } from "@angular/core";
+import { Http, Response } from "@angular/http";
+import { Observable } from "rxjs/Observable";
 
-import Parser from './parser';
-import { Topic, ITopic, TopicApi } from '../models/topic.model';
-import { QuoteApi } from '../models/quote.model';
+import Parser from "./parser";
+import { Topic, ITopic, TopicApi } from "../models/topic.model";
+import { QuoteApi } from "../models/quote.model";
 
 @Injectable()
 export class TopicService {
-  constructor(private http: Http) { }
+  topics;
+  populatedTopics;
+  constructor(private http: Http) {}
 
   all(): Observable<Topic[]> {
+    if (this.topics) {
+      return Observable.of(this.topics);
+    }
     return this.http
-      .get('/api/topics')
+      .get("/api/topics")
       .map((response: Response) => response.json())
       .map(topicApiList => {
         return topicApiList.map(topicApi => {
           return Parser.topicFromApi(topicApi);
         });
       })
+      .do(topics => (this.topics = topics))
       .catch(this.handleError);
   }
 
   create(topic): Observable<Topic> {
     return this.http
-      .post('/api/topics', topic)
+      .post("/api/topics", topic)
       .map((response: Response) => response.json())
       .map((topicApi: TopicApi) => {
         return Parser.topicFromApi(topicApi);
@@ -33,6 +39,10 @@ export class TopicService {
   }
 
   get(id: number): Observable<Topic> {
+    const cachedTopic = this.populatedTopics ? this.findTopic(id) : undefined;
+    if (cachedTopic) {
+      return Observable.of(cachedTopic);
+    }
     return this.http
       .get(`/api/topics/${id}`)
       .map((response: Response) => response.json())
@@ -41,9 +51,12 @@ export class TopicService {
         topic.questionSets = topicApi.questionSetList.map(questionSetApi =>
           Parser.questionSetFromApi(questionSetApi)
         );
-        topic.quotes = (topicApi.quoteList as QuoteApi[]).map(quoteApi => Parser.quoteFromApi(quoteApi));
+        topic.quotes = (topicApi.quoteList as QuoteApi[]).map(quoteApi =>
+          Parser.quoteFromApi(quoteApi)
+        );
         return topic;
       })
+      .do(topic => (this.populatedTopics = [topic].concat(this.populatedTopics || [])))
       .catch(this.handleError);
   }
 
@@ -69,8 +82,17 @@ export class TopicService {
       .catch(this.handleError);
   }
 
+  findTopic(topicId) {
+    return this.populatedTopics.find(topic => topic.id === +topicId);
+  }
+
+  clearCache() {
+    this.topics = undefined;
+    this.populatedTopics = undefined;
+  }
+
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error || 'Server error');
+    return Observable.throw(error || "Server error");
   }
 }

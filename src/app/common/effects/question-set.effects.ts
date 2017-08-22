@@ -167,11 +167,26 @@ export class QuestionSetEffects {
     });
 
   @Effect({ dispatch: false })
+  invalidateCache = this.actions$
+    .ofType(
+      questionSet.ActionTypes.CREATE_SUCCESS,
+      questionSet.ActionTypes.UPDATE_SUCCESS,
+      questionSet.ActionTypes.DELETE_SUCCESS,
+      questionSet.ActionTypes.ADD_QUESTION_SUCCESS,
+      questionSet.ActionTypes.EDIT_QUESTION_SUCCESS,
+      questionSet.ActionTypes.DELETE_QUESTION_SUCCESS
+    )
+    .map(() => {
+      console.log("clear cache");
+      this.questionSetService.clearCache();
+    });
+
+  @Effect({ dispatch: false })
   httpErrors$ = this.actions$
     .ofType(questionSet.ActionTypes.GET_CURRENT_QUESTION_SET_ERROR)
     .map(action => action.payload)
     .map(error => {
-      this.notificationService.notifyError('Question Set not found');
+      this.notificationService.notifyError("Question Set not found");
       this.router.navigate([AppConstants.routes.QUESTION_SETS]);
       return Observable.of(error);
     });

@@ -10,9 +10,14 @@ import { QuestionSetApi } from "../models/question-set.model";
 
 @Injectable()
 export class QuestionService {
+  allQuestions;
+  populatedQuestions;
   constructor(private http: Http) {}
 
   all(): Observable<Question[]> {
+    if (this.allQuestions) {
+      return Observable.of(this.allQuestions);
+    }
     return this.http
       .get("/api/questions/allQuestions")
       .map((response: Response) => response.json())
@@ -20,10 +25,18 @@ export class QuestionService {
         return questionApiList.map(question =>
           Parser.questionSummary(question)
         );
-      });
+      })
+      .do(questions => (this.allQuestions = questions))
+      .catch(this.handleError);
   }
 
   get(questionId): Observable<Question> {
+    const cached = this.populatedQuestions
+      ? this.findQuestion(questionId)
+      : undefined;
+    if (cached) {
+      return Observable.of(cached);
+    }
     return this.http
       .get(`/api/questions/question/${questionId}`)
       .map((response: Response) => response.json())
@@ -35,12 +48,14 @@ export class QuestionService {
         if (questionApi.quote) {
           question.quote = Parser.quoteFromApi(questionApi.quote as QuoteApi);
         }
-        const answers: Answer[] = (questionApi.answers as AnswerApi[]).map(
-          (answer: AnswerApi) => Parser.answerFromApi(answer)
-        );
-        question.answers = answers;
         return question;
       })
+      .do(
+        question =>
+          (this.populatedQuestions = [question].concat(
+            this.populatedQuestions || []
+          ))
+      )
       .catch(this.handleError);
   }
 
@@ -71,6 +86,14 @@ export class QuestionService {
       .delete(`/api/questions/${question.id}`)
       .map(() => question)
       .catch(this.handleError);
+  }
+
+  findQuestion(id) {
+    return this.populatedQuestions.find(q => q.id === +id);
+  }
+
+  clearCache() {
+    this.allQuestions = undefined;
   }
 
   private handleError(error: Response) {

@@ -38,7 +38,12 @@ export class AppComponent implements OnInit, OnDestroy {
       })
       .filter(route => route.outlet === "primary")
       .mergeMap(route => route.data)
-      .subscribe(event => this.titleService.setTitle(event["title"]));
+      .subscribe(event => {
+        const title = event['title'];
+        if (title) {
+          this.titleService.setTitle(title);
+        }
+      });
 
     addEvent(window, "resize", e => {
       if (this.isOpen) {
@@ -77,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   openSnackBar({ message, action = "", config }) {
-    const conf= new MdSnackBarConfig();
+    const conf = new MdSnackBarConfig();
     conf.duration = 10000;
     conf.extraClasses = [config.extraClass];
     this.snackBar.open(message, action, conf);

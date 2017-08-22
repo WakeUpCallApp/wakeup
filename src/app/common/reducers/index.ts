@@ -126,5 +126,8 @@ export const getLoadingQuestionState = (state: State): Question =>
 export const getAnswersState = (state: State): Answer[] =>
   state.answer.entities;
 
+export const getGroupedAnswersState = (state: State) =>
+  state.answer.groupedAnswers;
+
 export const getLoadingAnswersState = (state: State): boolean =>
   state.answer.isLoading;

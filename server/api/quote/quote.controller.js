@@ -25,6 +25,7 @@
   exports.index = function(req, res) {
     var query = Quote.find({});
     query.where("topic", req.params.topicId);
+    query.populate("questions");
     query.exec(function(err, quotes) {
       if (err) {
         return handleError(res, err);
@@ -167,8 +168,7 @@
         updateQuoteInQuestions(prevArray, currArray, quote._id);
         return Quote.populate(
           updated,
-          [{ path: "topic" },
-          { path: "questions" }],
+          [{ path: "topic" }, { path: "questions" }],
           function(err, quote) {
             return res.status(200).json(quote);
           }
@@ -305,10 +305,14 @@
       if (err) {
         return handleError(res, err);
       }
-      if(!quote) {
+      if (!quote) {
         return res.status(404);
       }
-      if (quote.commentList && quote.commentList.length > 0 && quote.commentList[0].user) {
+      if (
+        quote.commentList &&
+        quote.commentList.length > 0 &&
+        quote.commentList[0].user
+      ) {
         comments = quote.commentList.filter(function(comment) {
           return comment.user === userEmail;
         });

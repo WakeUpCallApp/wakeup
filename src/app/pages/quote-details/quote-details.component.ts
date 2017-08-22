@@ -17,6 +17,7 @@ import { Title } from "@angular/platform-browser";
 import * as reducers from "../../common/reducers";
 import * as questionActions from "../../common/actions/question.actions";
 import * as actions from "../../common/actions/quote.actions";
+import * as topicActions from "../../common/actions/topic.actions";
 import { Quote, ICreateComment } from "../../common/models/quote.model";
 import { Topic } from "../../common/models/topic.model";
 import { DialogService } from "../../common/services/dialog.service";
@@ -34,6 +35,8 @@ export class QuoteDetailsComponent implements OnInit {
   authors$: Observable<string[]>;
   sources$: Observable<string[]>;
   comments$: Observable<Comment[]>;
+  topicSubscription: Subscription;
+  topic: Topic;
   newComment: ICreateComment;
   isLoading$;
   @ViewChild("textVar") textElRef: ElementRef;
@@ -51,20 +54,33 @@ export class QuoteDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
-    this.actionsSubscription = this.route.params
-      .select<string>("id")
-      .subscribe(quoteId => {
+    this.actionsSubscription = Observable.combineLatest(
+      this.route.params.select<string>("id"),
+      this.route.params.select<string>("topicId"),
+      (quoteId, topicId) => {
+        this.store.dispatch(new topicActions.GetCurrentTopicAction(+topicId));
         this.store.dispatch(new actions.GetByIdAction(+quoteId));
-        this.store.dispatch(new actions.GetCommentsAction(+quoteId));
-      });
+        return new actions.GetCommentsAction(+quoteId);
+      }
+    ).subscribe(this.store);
+
     this.quoteSubscription = this.store
       .select(reducers.getCurrentQuote)
       .subscribe(quote => {
         this.currentQuote = quote;
         this.updateObject = Object.assign({}, this.currentQuote);
-        if (quote.topic) {
+        if (quote.text) {
+          this.titleService.setTitle(
+            `Quote Details: ${quote.text.substring(0, 60)}...`
+          );
+        }
+      });
+    this.topicSubscription = this.store
+      .select(reducers.getCurrentTopicState)
+      .subscribe(topic => {
+        if (topic) {
+          this.topic = topic;
           this.newComment = this.getEmptyComment();
-          this.titleService.setTitle(`Quote Details: ${quote.text}`);
         }
       });
     this.authors$ = this.store.select(reducers.getAuthorSuggestions);
@@ -102,6 +118,8 @@ export class QuoteDetailsComponent implements OnInit {
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
+    this.topicSubscription.unsubscribe();
+    this.quoteSubscription.unsubscribe();
   }
 
   updateQuote() {
@@ -156,7 +174,7 @@ export class QuoteDetailsComponent implements OnInit {
     return {
       comment,
       quoteId: this.currentQuote.id,
-      isDefaultTopic: (this.currentQuote.topic as Topic).isDefault
+      isDefaultTopic: this.topic.isDefault
     };
   }
 }

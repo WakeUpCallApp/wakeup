@@ -1,5 +1,5 @@
 <div class="quoteDetails pageContent">
-  <div class="breadcrumbs" *ngIf="updateObject?.topic as topic">
+  <div class="breadcrumbs" *ngIf="topic">
     <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
     <md-icon>keyboard_arrow_right</md-icon>
     <a [routerLink]="['/quotes', topic?.id]"> Inspiration Page</a>
@@ -8,13 +8,13 @@
   <wakeup-card>
     <div class="card-header">
       <div class="title">Quotes Details</div>
-      <div class="actions" *ngIf="!updateObject?.topic?.isDefault">
+      <div class="actions" *ngIf="!topic?.isDefault">
           <button md-icon-button mdTooltip="Delete Quote" (click)="onDeleteQuote()"> <md-icon>delete_forever</md-icon></button>
       </div>
     </div>
     <div class="card-body" *ngIf="updateObject as quote">
       <div class="row readOnly">
-        <label> Topic </label> {{quote.topic?.name}}
+        <label> Topic </label> {{topic?.name}}
       </div>
       <section class="quoteForm" *ngIf="!quote.topic?.isDefault;else readOnlyQuote">
         <form class="editQuoteForm" #quoteForm='ngForm'>

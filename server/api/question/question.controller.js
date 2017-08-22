@@ -31,7 +31,6 @@
   // Get a single question
   exports.show = function(req, res) {
     var query = Question.findOne({});
-    query.populate("answers");
     query.populate("quote");
     query.populate("questionSet");
     query.where("_id", req.params.id);
