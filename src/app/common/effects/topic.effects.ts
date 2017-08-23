@@ -1,16 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect } from "@ngrx/effects";
 
-import "rxjs/add/operator/do";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/switchMap";
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 import AppConstants from "../app-constants";
 
 import * as topic from "../actions/topic.actions";
-import { TopicService, NotificationService } from "../services";
+import { TopicService } from "../services/topic.service";
+import { NotificationService } from "../services/notification.service";
 
 @Injectable()
 export class TopicEffects {
@@ -109,7 +106,7 @@ export class TopicEffects {
       topic.ActionTypes.DELETE_SUCCESS
     )
     .map(() => {
-      console.log('clear cache');
+      console.log("clear cache");
       this.topicService.clearCache();
     });
 

@@ -1,17 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect } from "@ngrx/effects";
 
-import "rxjs/add/operator/do";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/switchMap";
 import { Observable } from "rxjs/Observable";
 import AppConstants from "../app-constants";
 import { Router } from "@angular/router";
 
 import * as question from "../actions/question.actions";
-import * as questionSet from '../actions/question-set.actions';
-import { QuestionService, NotificationService } from "../services";
+import * as questionSet from "../actions/question-set.actions";
+import { QuestionService } from "../services/question.service";
+import { NotificationService } from "../services/notification.service";
 
 @Injectable()
 export class QuestionEffects {

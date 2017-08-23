@@ -3,19 +3,14 @@ import { Actions, Effect } from "@ngrx/effects";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import * as reducers from "../reducers";
-import "rxjs/add/operator/do";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/switchMap";
+
 import { Observable } from "rxjs/Observable";
 import AppConstants from "../app-constants";
 
 import * as quoteActions from "../actions/quote.actions";
-import {
-  QuoteService,
-  FileParsingService,
-  NotificationService
-} from "../services";
+import { QuoteService } from "../services/quote.service";
+import { NotificationService } from "../services/notification.service";
+import { FileParsingService } from "../services/file-parsing";
 
 @Injectable()
 export class QuoteEffects {
@@ -113,7 +108,7 @@ export class QuoteEffects {
       quoteActions.ActionTypes.DELETE_COMMENT_SUCCESS
     )
     .map(() => {
-      console.log('clear cache');
+      console.log("clear cache");
       this.quoteService.clearCache();
     });
 

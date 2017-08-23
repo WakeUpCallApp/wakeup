@@ -1,16 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect } from "@ngrx/effects";
 
-import "rxjs/add/operator/do";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/switchMap";
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 import AppConstants from "../app-constants";
 
 import * as answer from "../actions/answer.actions";
-import { AnswerService, NotificationService } from "../services";
+import { AnswerService } from "../services/answer.service";
+import { NotificationService } from "../services/notification.service";
 
 @Injectable()
 export class AnswerEffects {
