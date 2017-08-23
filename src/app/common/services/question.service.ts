@@ -94,6 +94,7 @@ export class QuestionService {
 
   clearCache() {
     this.allQuestions = undefined;
+    this.populatedQuestions = undefined;
   }
 
   private handleError(error: Response) {

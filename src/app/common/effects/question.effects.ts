@@ -10,6 +10,7 @@ import AppConstants from "../app-constants";
 import { Router } from "@angular/router";
 
 import * as question from "../actions/question.actions";
+import * as questionSet from '../actions/question-set.actions';
 import { QuestionService, NotificationService } from "../services";
 
 @Injectable()
@@ -64,7 +65,10 @@ export class QuestionEffects {
   invalidateCache = this.actions$
     .ofType(
       question.ActionTypes.CREATE_SUCCESS,
-      question.ActionTypes.DELETE_SUCCESS
+      question.ActionTypes.DELETE_SUCCESS,
+      questionSet.ActionTypes.ADD_QUESTION_SUCCESS,
+      questionSet.ActionTypes.DELETE_QUESTION_SUCCESS,
+      questionSet.ActionTypes.EDIT_QUESTION_SUCCESS
     )
     .map(() => {
       console.log("clear cache");

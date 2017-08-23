@@ -8,7 +8,7 @@
     <div class="card-header">
       <div class="title">Answers</div>
       <div class="actions">
-        <button *ngIf="question.answers?.length" md-button mdTooltip="Delete all answers" (click)="onDeleteAnswers()"> <md-icon>delete_forever</md-icon> All Answers </button>
+        <button *ngIf="answers?.length" md-button mdTooltip="Delete all answers" (click)="onDeleteAnswers()"> <md-icon>delete_forever</md-icon> All Answers </button>
         <button *ngIf="!question.questionSet?.isDefault" md-button [mdMenuTriggerFor]="questionMenu" mdTooltip="More actions">
             <md-icon>more_horiz</md-icon> More
         </button>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="answers">
-        <span class="noAnswersMessage" *ngIf="!question.answers?.length">No answers available. <br>Please, click the + button to add an answer</span>
+        <span class="noAnswersMessage" *ngIf="!answers?.length">No answers available. <br>Please, click the + button to add an answer</span>
         <div *ngFor="let answerGroup of answers">
           <span class="group">{{answerGroup.createDate}}</span>
           <ul>
