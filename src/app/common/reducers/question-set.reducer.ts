@@ -156,7 +156,9 @@ function getSessionDetails(data) {
       ? helper.groupAnswersByDate(question.answers)
       : [];
   });
-  return sessionDetails;
+  return sessionDetails.sort((q1, q2) => {
+    return parseInt(q1._id) - parseInt(q2._id);
+  });
 }
 
 function updateOnImportQuestions(questionSet, questionsToAdd) {
