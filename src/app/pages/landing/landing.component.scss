@@ -38,7 +38,7 @@ header .appName {
 }
 
 .sectionTitle {
-    font-size: 50px;
+    font-size: 2em;
     margin-left: 10px;
 }
 
@@ -56,7 +56,7 @@ header .intro header {
 
 .createAccountButton {
     height: 50px;
-    width: 300px;
+    max-width: 300px;
     font-size: 24px;
     background-color: $accent;
     cursor: pointer;
@@ -85,8 +85,8 @@ header .intro header {
 }
 
 #About .content li {
-    font-size: 24px;
     margin-left: 10px;
+    font-size: 1.4em;
     margin-right: 10px;
 }
 
@@ -118,7 +118,7 @@ header .intro header {
     flex: 1;
     display: flex;
     flex-direction: column;
-    font-size: 30px;
+    font-size: 1.4em;
     margin-bottom: 40px;
 }
 
