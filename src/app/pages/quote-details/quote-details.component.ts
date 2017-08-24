@@ -29,13 +29,12 @@ import { DialogService } from "../../common/services/dialog.service";
 })
 export class QuoteDetailsComponent implements OnInit {
   actionsSubscription: Subscription;
-  quoteSubscription: Subscription;
+  dataSubscription: Subscription;
   currentQuote: Quote;
   updateObject;
   authors$: Observable<string[]>;
   sources$: Observable<string[]>;
   comments$: Observable<Comment[]>;
-  topicSubscription: Subscription;
   topic: Topic;
   newComment: ICreateComment;
   isLoading$;
@@ -50,7 +49,7 @@ export class QuoteDetailsComponent implements OnInit {
     private cdref: ChangeDetectorRef,
     private titleService: Title,
     private dialogService: DialogService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
@@ -64,9 +63,10 @@ export class QuoteDetailsComponent implements OnInit {
       }
     ).subscribe(this.store);
 
-    this.quoteSubscription = this.store
-      .select(reducers.getCurrentQuote)
-      .subscribe(quote => {
+    this.dataSubscription = Observable.combineLatest(
+      this.store.select(reducers.getCurrentQuote),
+      this.store.select(reducers.getCurrentTopicState),
+      (quote, topic) => {
         this.currentQuote = quote;
         this.updateObject = Object.assign({}, this.currentQuote);
         if (quote.text) {
@@ -74,15 +74,13 @@ export class QuoteDetailsComponent implements OnInit {
             `Quote Details: ${quote.text.substring(0, 60)}...`
           );
         }
-      });
-    this.topicSubscription = this.store
-      .select(reducers.getCurrentTopicState)
-      .subscribe(topic => {
         if (topic) {
           this.topic = topic;
           this.newComment = this.getEmptyComment();
         }
-      });
+      }
+    ).subscribe();
+
     this.authors$ = this.store.select(reducers.getAuthorSuggestions);
     this.sources$ = this.store.select(reducers.getSourceSuggestions);
     this.comments$ = this.store.select(reducers.getComments);
@@ -118,8 +116,7 @@ export class QuoteDetailsComponent implements OnInit {
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
-    this.topicSubscription.unsubscribe();
-    this.quoteSubscription.unsubscribe();
+    this.dataSubscription.unsubscribe();
   }
 
   updateQuote() {

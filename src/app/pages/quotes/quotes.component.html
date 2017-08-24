@@ -42,8 +42,8 @@
     </div>
   </wakeup-card>
 </div>
-<button mdRipple *ngIf="!currentTopic?.isDefault" (click)="goToCreateQuote()" mdTooltip="Create Quote" class="addQuoteButton"
-  md-mini-fab md-button md-raised-button [mdTooltipPosition]="'above'" [mdTooltipClass]="'tooltip'">
+<button tabindex="0" mdRipple *ngIf="!currentTopic?.isDefault" (click)="goToCreateQuote()" mdTooltip="Create Quote" class="addQuoteButton"
+  md-mini-fab [mdTooltipPosition]="'above'" [mdTooltipClass]="'tooltip'">
  <md-icon>add</md-icon>
 </button>
 <md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>

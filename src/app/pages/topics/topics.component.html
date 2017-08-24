@@ -17,7 +17,8 @@
               <span><md-icon> format_quote</md-icon>{{topic.quotes?.length}} Quotes</span>
               </span>
             </div>
-            <div mdTooltip="See Quotes" (click)="goToQuotes($event, topic.id)" class="inspire">
+            <div role="button" tabindex="0" aria-label="See Quotes" mdTooltip="See Quotes" (keyup.enter)="goToQuotes($event, topic.id)" (click)="goToQuotes($event, topic.id)"
+              class="inspire">
               <span class="text">Get Inspired</span>
               <md-icon class="inspireIcon">lightbulb_outline</md-icon>
             </div>

@@ -45,6 +45,11 @@ export function reducer(state = initialState, action: Action): State {
       });
 
     case actions.ActionTypes.CREATE_SUCCESS:
+    case actions.ActionTypes.CREATE_COMMENT_ERROR:
+    case actions.ActionTypes.DELETE_COMMENT_ERROR:
+    case actions.ActionTypes.GET_BY_TOPIC_ID:
+    case actions.ActionTypes.CREATE_ERROR:
+    case actions.ActionTypes.UPDATE_ERROR:
       return Object.assign({}, state, {
         isLoading: false
       });

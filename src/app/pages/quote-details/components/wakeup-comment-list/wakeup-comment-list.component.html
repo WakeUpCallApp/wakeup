@@ -6,9 +6,10 @@
   </md-card-header>
   <md-card-content class="list">
     <ul>
-      <li *ngFor="let comment of comments; index as i">
-        <span class="text">{{comment.text}}</span> 
-        <span class="remove" mdTooltip="Delete Comment" (click)="onDelete(comment)"><md-icon color="warn">delete_forever</md-icon></span>
+      <li *ngFor="let comment of comments; index as i" tabindex="0">
+        <span class="text">{{comment.text}}</span>
+        <span tabindex="0" role="button" aria-label="remove comment" (keyup.enter)="onDelete(comment)" class="remove" mdTooltip="Delete Comment"
+          (click)="onDelete(comment)"><md-icon color="warn">delete_forever</md-icon></span>
       </li>
     </ul>
   </md-card-content>
