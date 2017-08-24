@@ -30,6 +30,7 @@
         background-color: $accent;
     }
     .questionQuote {
+        display: flex;
         button {
             margin-left: 26px;
         }
@@ -49,8 +50,9 @@
             position: absolute;
             top: 0;
             right: 0;
-        }
+        }  
     }
+    
     .hasQuote:hover {
         background-color: lighten($primary, 5%);
     }

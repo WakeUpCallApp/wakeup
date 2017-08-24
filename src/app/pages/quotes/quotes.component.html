@@ -30,10 +30,10 @@
       <ul class="quotesList">
         <li *ngFor="let quote of quotes">
           <a [routerLink]="['/quoteDetails', quote.id, currentTopic.id]" mdTooltip="see details">
-            <md-icon>format_quote</md-icon>
-            <span class="text">
-             {{quote.text}}
-              </span>
+            <!-- <md-icon>format_quote</md-icon> -->
+            <blockquote class="text">
+              {{quote.text}}
+            </blockquote>
             <span class="author">
               {{quote.author ? quote.author : 'Unknown'}}</span>
           </a>
@@ -42,16 +42,8 @@
     </div>
   </wakeup-card>
 </div>
-<button 
-  mdRipple
-  *ngIf="!currentTopic?.isDefault" 
-  (click)="goToCreateQuote()" 
-  mdTooltip="Create Quote" 
-  class="addQuoteButton" 
-  md-mini-fab
-  md-button md-raised-button
-  [mdTooltipPosition]="'above'"
-  [mdTooltipClass]="'tooltip'">
+<button mdRipple *ngIf="!currentTopic?.isDefault" (click)="goToCreateQuote()" mdTooltip="Create Quote" class="addQuoteButton"
+  md-mini-fab md-button md-raised-button [mdTooltipPosition]="'above'" [mdTooltipClass]="'tooltip'">
  <md-icon>add</md-icon>
 </button>
 <md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
