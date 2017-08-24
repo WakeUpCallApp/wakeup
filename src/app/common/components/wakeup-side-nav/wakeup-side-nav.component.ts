@@ -5,7 +5,8 @@ import {
   Input,
   SimpleChanges,
   ViewChild,
-  EventEmitter
+  EventEmitter,
+  Output
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { MdSidenav } from '@angular/material';
@@ -17,6 +18,7 @@ import { MdSidenav } from '@angular/material';
 })
 export class WakeupSideNavComponent implements OnInit, OnChanges {
   @Input() isOpen;
+  @Output() onClose = new EventEmitter();
   @ViewChild('sidenav') sidenav: MdSidenav;
 
   constructor() { }
@@ -25,12 +27,16 @@ export class WakeupSideNavComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes['isOpen'] && !changes['isOpen'].isFirstChange) {
-      this.openSidenav();
+      this.toggleSidenav();
     }
   }
 
-  openSidenav() {
+  toggleSidenav() {
     this.sidenav.toggle();
+  }
+
+  closeSidenav() {
+    this.onClose.emit();
   }
 
 }

@@ -1,5 +1,5 @@
 <md-sidenav-container class="container">
-    <md-sidenav #sidenav [opened]="isOpen" mode="side" class='mat-elevation-z5'>
+    <md-sidenav #sidenav [(opened)]="isOpen" mode="push" class='mat-elevation-z5' (close)="closeSidenav()">
         <div class="sidenav-content" class="sidenav">
             <div class="logo">
                 <img src="/../../../assets/images/heart.png" alt='logo'>
