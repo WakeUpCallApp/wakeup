@@ -57,7 +57,7 @@ export class QuestionSetDetailsComponent
     private appref: ApplicationRef,
     private titleService: Title,
     private dialogService: DialogService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.actionsSubscription = this.route.params
@@ -96,13 +96,19 @@ export class QuestionSetDetailsComponent
     this.ngzone.runOutsideAngular(() => {
       Observable.fromEvent(this.nameElRef.nativeElement, "keyup")
         .debounceTime(1000)
-        .subscribe(keyboardEvent => {
+        .subscribe((keyboardEvent: any) => {
+          if (keyboardEvent.keyCode === 9) {
+            return;
+          }
           this.updateQuestionSet();
           this.cdref.detectChanges();
         });
       Observable.fromEvent(this.descriptionElRef.nativeElement, "keyup")
         .debounceTime(1000)
-        .subscribe(keyboardEvent => {
+        .subscribe((keyboardEvent: any) => {
+          if (keyboardEvent.keyCode === 9) {
+            return;
+          }
           this.updateQuestionSet();
           this.cdref.detectChanges();
         });
@@ -220,7 +226,7 @@ export class QuestionSetDetailsComponent
     const dialogRef = this.dialog.open(WakeupImportFileComponent, config);
     this.importDialogRef = dialogRef;
     dialogRef.componentInstance.uploadFile = this.importQuestions.bind(this);
-    dialogRef.afterClosed().subscribe(() => {});
+    dialogRef.afterClosed().subscribe(() => { });
   }
 
   importQuestions(files) {
@@ -235,10 +241,10 @@ export class QuestionSetDetailsComponent
   exportQuestions() {
     const exportData = (this.currentQuestionSet
       .questions as any[]).map(question => {
-      return {
-        questionName: question.text
-      };
-    });
+        return {
+          questionName: question.text
+        };
+      });
     this.store.dispatch(
       new actions.ExportQuestionsAction({
         questions: exportData,

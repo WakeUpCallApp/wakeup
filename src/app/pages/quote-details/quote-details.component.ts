@@ -95,19 +95,28 @@ export class QuoteDetailsComponent implements OnInit {
     this.ngzone.runOutsideAngular(() => {
       Observable.fromEvent(this.textElRef.nativeElement, "keyup")
         .debounceTime(1000)
-        .subscribe(keyboardEvent => {
+        .subscribe((keyboardEvent: any) => {
+          if (keyboardEvent.keyCode === 9) {
+            return;
+          }
           this.updateQuote();
           this.cdref.detectChanges();
         });
       Observable.fromEvent(this.authorElRef.nativeElement, "keyup")
         .debounceTime(1000)
-        .subscribe(keyboardEvent => {
+        .subscribe((keyboardEvent: any) => {
+          if (keyboardEvent.keyCode === 9) {
+            return;
+          }
           this.updateQuote();
           this.cdref.detectChanges();
         });
       Observable.fromEvent(this.sourceElRef.nativeElement, "keyup")
         .debounceTime(1000)
-        .subscribe(keyboardEvent => {
+        .subscribe((keyboardEvent: any) => {
+          if (keyboardEvent.keyCode === 9) {
+            return;
+          }
           this.updateQuote();
           this.cdref.detectChanges();
         });

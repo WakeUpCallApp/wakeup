@@ -45,7 +45,7 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     private appref: ApplicationRef,
     private dialogService: DialogService,
     private titleService: Title
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isLoading$ = this.store.select(reducers.getLoadingTopicState);
@@ -73,12 +73,18 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ngzone.runOutsideAngular(() => {
       Observable.fromEvent(this.nameElRef.nativeElement, "keyup")
         .debounceTime(1000)
-        .subscribe(keyboardEvent => {
+        .subscribe((keyboardEvent: any) => {
+          if (keyboardEvent.keyCode === 9) {
+            return;
+          }
           this.updateTopic();
         });
       Observable.fromEvent(this.descriptionElRef.nativeElement, "keyup")
         .debounceTime(1000)
-        .subscribe(keyboardEvent => {
+        .subscribe((keyboardEvent: any) => {
+          if (keyboardEvent.keyCode === 9) {
+            return;
+          }
           this.updateTopic();
         });
     });
