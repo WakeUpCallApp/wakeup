@@ -32,16 +32,6 @@ const reducers = {
 const developmentReducer: ActionReducer<any> = combineReducers(reducers);
 const productionReducer: ActionReducer<any> = combineReducers(reducers);
 
-const rootReducer =  (state, action) => {
-  if (action.type === 'USER_LOGOUT') {
-    state = undefined
-  }
-
-  return reducer(state, action);
-}
-
-export default rootReducer;
-
 export function reducer(state: any, action: any) {
   if (environment.production) {
     return productionReducer(state, action);
