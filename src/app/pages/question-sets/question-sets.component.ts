@@ -59,6 +59,11 @@ export class QuestionSetsComponent implements OnInit {
     this.store.dispatch(new actions.LoadAction());
   }
 
+  ngOnDestroy() {
+    this.store.dispatch(new actions.FilterAction(this.all));
+    this.store.dispatch(new actions.SearchAction(undefined));
+  }
+
   doSearch(val) {
     this.store.dispatch(new actions.SearchAction(val));
   }

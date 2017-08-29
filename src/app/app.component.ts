@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
 import { MdSnackBar, MdSnackBarConfig } from "@angular/material";
 import { Title } from "@angular/platform-browser";
+import { Store } from '@ngrx/store';
+import * as reducers from './common/reducers';
 import { LoginService } from "./common/services/login.service";
 import { AuthTokenService } from "./common/services/authToken.service";
 import appConstants from "./common/app-constants";
@@ -23,7 +25,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
     private snackBar: MdSnackBar,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private store: Store<reducers.State>
   ) {}
 
   ngOnInit() {
@@ -76,6 +79,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
+    this.store.dispatch({type:'USER_LOGOUT'});
     this.loginService.logout();
     this.isOpen = false;
     this.router.navigate([appConstants.routes.LOGIN]);

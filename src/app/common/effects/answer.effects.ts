@@ -74,7 +74,8 @@ export class AnswerEffects {
       answer.ActionTypes.CREATE_SUCCESS,
       answer.ActionTypes.UPDATE_SUCCESS,
       answer.ActionTypes.DELETE_SUCCESS,
-      answer.ActionTypes.DELETE_ALL_SUCCESS
+      answer.ActionTypes.DELETE_ALL_SUCCESS,
+      "USER_LOGOUT"
     )
     .map(() => {
       console.log("clear cache");

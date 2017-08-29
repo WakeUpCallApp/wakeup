@@ -103,7 +103,8 @@ export class TopicEffects {
     .ofType(
       topic.ActionTypes.CREATE_SUCCESS,
       topic.ActionTypes.UPDATE_SUCCESS,
-      topic.ActionTypes.DELETE_SUCCESS
+      topic.ActionTypes.DELETE_SUCCESS,
+      "USER_LOGOUT"
     )
     .map(() => {
       console.log("clear cache");

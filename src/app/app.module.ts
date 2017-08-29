@@ -19,7 +19,7 @@ import {
   AnswerEffects
 } from "./common/effects";
 
-import { reducer } from "./common/reducers";
+import  rootReducer  from "./common/reducers";
 
 import { httpFactory } from "./config/http.factory";
 import { AppRoutingModule } from "./app-routing.module";
@@ -59,7 +59,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
     LoginModule,
     TopicDetailsModule,
     AppRoutingModule,
-    StoreModule.provideStore(reducer),
+    StoreModule.provideStore(rootReducer),
     // must come AFTER `provideStore` call
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(QuestionSetEffects),

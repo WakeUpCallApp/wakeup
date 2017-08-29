@@ -105,7 +105,8 @@ export class QuoteEffects {
       quoteActions.ActionTypes.UPDATE_SUCCESS,
       quoteActions.ActionTypes.DELETE_SUCCESS,
       quoteActions.ActionTypes.CREATE_COMMENT_SUCCESS,
-      quoteActions.ActionTypes.DELETE_COMMENT_SUCCESS
+      quoteActions.ActionTypes.DELETE_COMMENT_SUCCESS,
+      "USER_LOGOUT"
     )
     .map(() => {
       console.log("clear cache");

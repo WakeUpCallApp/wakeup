@@ -43,6 +43,10 @@ export class TopicsComponent implements OnInit {
     this.store.dispatch(new actions.LoadAction());
   }
 
+  ngOnDestroy() {
+    this.store.dispatch(new actions.SearchAction(undefined));
+  }
+
   doSearch(val) {
     this.store.dispatch(new actions.SearchAction(val));
   }

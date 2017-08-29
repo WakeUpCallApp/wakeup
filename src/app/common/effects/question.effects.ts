@@ -65,7 +65,8 @@ export class QuestionEffects {
       question.ActionTypes.DELETE_SUCCESS,
       questionSet.ActionTypes.ADD_QUESTION_SUCCESS,
       questionSet.ActionTypes.DELETE_QUESTION_SUCCESS,
-      questionSet.ActionTypes.EDIT_QUESTION_SUCCESS
+      questionSet.ActionTypes.EDIT_QUESTION_SUCCESS,
+      "USER_LOGOUT"
     )
     .map(() => {
       console.log("clear cache");
