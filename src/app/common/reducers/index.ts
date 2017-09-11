@@ -123,6 +123,9 @@ export const getLoadingQuestionState = (state: State): Question =>
   state.question.isLoading;
 
 // Answers
+export const getIndexedDBState = (state: State): boolean =>
+  state.answer.isIndexedDBOpen;
+
 export const getAnswersState = (state: State): Answer[] =>
   state.answer.entities;
 

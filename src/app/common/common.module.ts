@@ -18,7 +18,8 @@ import {
   SessionConfigService,
   FileParsingService,
   NotificationService,
-  DialogService
+  DialogService,
+  AnswerFactory
 } from "./services";
 import { WakeupTopBarComponent } from "./components/wakeup-top-bar/wakeup-top-bar.component";
 import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side-nav.component";
@@ -55,7 +56,8 @@ import { WakeupConfirmDialogComponent } from './components/wakeup-confirm-dialog
     UserDetailResolver,
     FileParsingService,
     NotificationService,
-    DialogService
+    DialogService,
+    AnswerFactory
   ],
   exports: [
     WakeupTopBarComponent,

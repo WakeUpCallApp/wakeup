@@ -76,12 +76,18 @@
 }
 
 .addAnswerButton {
-  z-index: 20;
+  z-index: 2220;
   position: sticky;
   width: 65px;
   height: 65px;
   bottom: 16px;
   left: calc(100vw - 96px);
+  border-radius: 59px;
+  background-color: orange;
+  border: none;
+  box-shadow: 0 4px 6px -3px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  user-select: none;
+  cursor: pointer;
 }
 
 .prevQuestionButton {

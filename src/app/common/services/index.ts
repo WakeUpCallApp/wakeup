@@ -9,3 +9,4 @@ export { SessionConfigService } from "./session-config.service";
 export { FileParsingService } from "./file-parsing";
 export { NotificationService } from './notification.service';
 export { DialogService } from './dialog.service';
+export { AnswerFactory } from './answer-indexeddb.service';

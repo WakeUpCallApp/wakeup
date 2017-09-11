@@ -16,7 +16,8 @@ import {
   QuestionEffects,
   QuoteEffects,
   TopicEffects,
-  AnswerEffects
+  AnswerEffects,
+  AnswerEffectsIndexedDB
 } from "./common/effects";
 
 import  {reducer}  from "./common/reducers";
@@ -66,7 +67,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
     EffectsModule.run(QuestionEffects),
     EffectsModule.run(QuoteEffects),
     EffectsModule.run(TopicEffects),
-    EffectsModule.run(AnswerEffects)
+    EffectsModule.run(AnswerEffectsIndexedDB)
   ],
 
   exports: [QuestionSetsModule],

@@ -18,6 +18,7 @@ import { QuestionSet } from "../../common/models/question-set.model";
 import appConstants from "../../common/app-constants";
 import { WakeupAnswerDialogComponent } from "./components/wakeup-answer-dialog/wakeup-answer-dialog.component";
 import { DialogService } from "../../common/services/dialog.service";
+import { AuthTokenService } from '../../common/services/authToken.service';
 
 enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -40,14 +41,16 @@ export class AnswersComponent implements OnInit {
   isLoading$;
   answers;
   answerSubscription;
+  indexedDBSubscription;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title,
     private dialog: MdDialog,
-    private dialogService: DialogService
-  ) {}
+    private dialogService: DialogService,
+    private auth: AuthTokenService
+  ) { }
 
   ngOnInit() {
     this.isLoading$ = this.store.select(reducers.getLoadingAnswersState);
@@ -55,7 +58,7 @@ export class AnswersComponent implements OnInit {
       .select<string>("questionId")
       .map(id => {
         this.currentQuestionId = id;
-        this.store.dispatch(new answerActions.LoadAction(+id));
+        this.store.dispatch(new answerActions.OpenIndexedDbAction());
         return new questionActions.GetCurrentQuestion(+id);
       })
       .subscribe(this.store);
@@ -78,12 +81,19 @@ export class AnswersComponent implements OnInit {
           this.answers = answers;
         }
       });
+    this.indexedDBSubscription = this.store.select(reducers.getIndexedDBState)
+      .subscribe((isOpen) => {
+        if (isOpen) {
+          this.store.dispatch(new answerActions.LoadAction(+this.currentQuestionId));
+        }
+      });
   }
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
     this.questionSubscription.unsubscribe();
     this.answerSubscription.unsubscribe();
+    this.indexedDBSubscription.unsubscribe();
   }
 
   @HostListener("document:keyup", ["$event"])
@@ -122,13 +132,13 @@ export class AnswersComponent implements OnInit {
     );
   }
   private deleteAnswer(answer) {
-    this.store.dispatch(new actions.DeleteAction(answer.id));
+    this.store.dispatch(new actions.DeleteAction(answer._id));
   }
 
   createAnswer() {
     this.openModal = true;
     const newAnswer = {
-      question: this.currentQuestionId,
+      questionId: +this.currentQuestionId,
       text: ""
     };
     const config: MdDialogConfig = {
@@ -170,7 +180,10 @@ export class AnswersComponent implements OnInit {
   }
 
   private deleteAnswers() {
-    this.store.dispatch(new actions.DeleteAllAction(this.currentQuestionId));
+    this.store.dispatch(new actions.DeleteAllAction(
+      { questionId: +this.currentQuestionId, 
+        userId: this.auth.getUserInfo().id 
+      }));
   }
 
   getPrevQuestion(currentQuestionId): number {

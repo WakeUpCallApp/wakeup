@@ -3,6 +3,9 @@ import { IAnswer, Answer } from "../models/answer.model";
 import { type } from "../util";
 
 export const ActionTypes = {
+  OPEN_INDEXED_DB: type("[Answer] Open indexed db"),
+  OPEN_INDEXED_DB_SUCCESS: type("[Answer] Open indexed db success"),
+  OPEN_INDEXED_DB_ERROR: type("[Answer] Open indexed db error"),
   LOAD: type("[Answer] Load"),
   LOAD_SUCCESS: type("[Answer] Load success"),
   LOAD_ERROR: type("[Answer] Load error"),
@@ -17,6 +20,23 @@ export const ActionTypes = {
   DELETE_ALL: type("[Answer] Delete all"),
   DELETE_ALL_SUCCESS: type("[Answer] Delete all Success")
 };
+
+export class OpenIndexedDbAction implements Action {
+   type = ActionTypes.OPEN_INDEXED_DB;
+   constructor() {
+     console.log(this.type);
+   }
+}
+
+export class OpenIndexedDbActionSuccess implements Action {
+  type = ActionTypes.OPEN_INDEXED_DB_SUCCESS;
+  constructor() {}
+}
+
+export class OpenIndexedDbActionError implements Action {
+  type = ActionTypes.OPEN_INDEXED_DB_ERROR;
+  constructor(public payload) {}
+}
 
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;
@@ -44,13 +64,16 @@ export class CreateAction implements Action {
 export class CreateActionSuccess implements Action {
   type = ActionTypes.CREATE_SUCCESS;
 
-  constructor(public payload: Answer) {}
+  constructor(public payload: Answer) {
+  }
 }
 
 export class CreateActionError implements Action {
   type = ActionTypes.CREATE_ERROR;
 
-  constructor(public payload) {}
+  constructor(public payload) {
+    console.log(payload);
+  }
 }
 
 export class UpdateAction implements Action {
@@ -85,7 +108,7 @@ export class DeleteActionSuccess implements Action {
 export class DeleteAllAction implements Action {
   type = ActionTypes.DELETE_ALL;
 
-  constructor(public payload: number) {}
+  constructor(public payload) {}
 }
 
 export class DeleteAllActionSuccess implements Action {
@@ -98,6 +121,9 @@ export class DeleteAllActionSuccess implements Action {
  * so that reducers can easily compose action types
  */
 export type Actions =
+  | OpenIndexedDbAction
+  | OpenIndexedDbActionSuccess
+  | OpenIndexedDbActionError
   | LoadAction
   | LoadActionSuccess
   | LoadActionError

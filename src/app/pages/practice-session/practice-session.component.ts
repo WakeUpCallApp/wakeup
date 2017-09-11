@@ -16,6 +16,7 @@ import {
   SessionConfigService,
   SessionOptions
 } from "../../common/services/session-config.service";
+import { LoginService } from '../../common/services/login.service';
 
 @Component({
   selector: "wakeup-practice-session",
@@ -40,7 +41,8 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private sessionConfigService: SessionConfigService,
-    private titleService: Title
+    private titleService: Title,
+    private loginService: LoginService
   ) {
     this.configOptions =
       this.sessionConfigService.getOptions() || (<SessionOptions>{});
@@ -72,6 +74,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
         this.setCurrentQuestion();
         this.isSessionMode = true;
       });
+    this.store.dispatch(new answerActions.OpenIndexedDbAction());
   }
 
   ngOnDestroy() {
@@ -111,7 +114,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
     );
     this.router.navigate([
       appConstants.routes.SESSION_DETAILS,
-      this.currentQuestionSet.id, 
+      this.currentQuestionSet.id,
       this.currentQuestionSet.name
     ]);
   }
@@ -167,9 +170,10 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   saveAnswer() {
     this.store.dispatch(
       new answerActions.CreateAction({
-        question: this.currentQuestion.id,
+        questionId: this.currentQuestion.id,
         text: this.answerText,
         date: new Date().getTime(),
+        userId: this.loginService.getCurrentUser()._id
       })
     );
     this.answerText = "";

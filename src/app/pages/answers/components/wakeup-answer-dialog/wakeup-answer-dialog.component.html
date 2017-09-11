@@ -1,4 +1,4 @@
-<h2 md-dialog-title>{{ answer.id ? 'Update' : 'Create'}} Answer</h2>
+<h2 md-dialog-title>{{ answer._id ? 'Update' : 'Create'}} Answer</h2>
 <md-dialog-content class="editAnswer">
   <form class="content">
     <md-input-container floatPlaceholder="always">
@@ -27,6 +27,6 @@
     md-button 
     md-raised-button
     (click)="handleClick()">
-    {{answer.id? 'Update' : 'Create' }}
+    {{answer._id? 'Update' : 'Create' }}
     </button>
 </md-dialog-actions>

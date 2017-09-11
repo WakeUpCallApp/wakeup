@@ -9,12 +9,14 @@ export interface State {
   entities: Answer[];
   isLoading;
   groupedAnswers;
+  isIndexedDBOpen;
 }
 
 export const initialState: State = {
   entities: [],
   isLoading: false,
-  groupedAnswers: {}
+  groupedAnswers: {},
+  isIndexedDBOpen: false
 };
 
 export function reducer(state = initialState, action: Action): State {
@@ -27,6 +29,11 @@ export function reducer(state = initialState, action: Action): State {
     case actions.ActionTypes.DELETE_ALL: {
       return Object.assign({}, state, {
         isLoading: true
+      });
+    }
+    case actions.ActionTypes.OPEN_INDEXED_DB_SUCCESS: {
+      return Object.assign({}, state, {
+        isIndexedDBOpen: true
       });
     }
     case actions.ActionTypes.LOAD_SUCCESS:
@@ -70,7 +77,7 @@ export function reducer(state = initialState, action: Action): State {
 
 function onUpdateAnswer(answers, answerToUpdate) {
   return answers.map(answer => {
-    if (answer.id === answerToUpdate.id) {
+    if (answer._id === answerToUpdate._id) {
       answer = Object.assign({}, answerToUpdate);
     }
     return answer;
@@ -79,7 +86,7 @@ function onUpdateAnswer(answers, answerToUpdate) {
 
 function onDeleteAnswer(answers, answerToDelete) {
   return answers.filter(answer => {
-    return answer.id !== answerToDelete;
+    return answer._id !== answerToDelete;
   });
 }
 

@@ -2,8 +2,9 @@ import * as moment from 'moment';
 
 export interface IAnswer {
     text: string;
-    question: number;
+    questionId: number;
     date;
+    userId;
 }
 
 export interface AnswerApi {
