@@ -41,7 +41,6 @@ export class AnswersComponent implements OnInit {
   isLoading$;
   answers;
   answerSubscription;
-  indexedDBSubscription;
   constructor(
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
@@ -54,14 +53,20 @@ export class AnswersComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading$ = this.store.select(reducers.getLoadingAnswersState);
-    this.actionsSubscription = this.route.params
-      .select<string>("questionId")
-      .map(id => {
-        this.currentQuestionId = id;
-        this.store.dispatch(new answerActions.OpenIndexedDbAction());
-        return new questionActions.GetCurrentQuestion(+id);
-      })
-      .subscribe(this.store);
+    this.store.dispatch(new answerActions.OpenIndexedDbAction());
+    this.actionsSubscription =
+      Observable.combineLatest(
+        this.route.params.select<string>("questionId"),
+        this.store.select(reducers.getIndexedDBState),
+        ((id, isDbOpen) => {
+          this.currentQuestionId = id;
+          if (isDbOpen) {
+            this.store.dispatch(new answerActions.LoadAction(+this.currentQuestionId));
+          }
+          return new questionActions.GetCurrentQuestion(+id);
+        }))
+        .subscribe(this.store);
+        
     this.questionSubscription = this.store
       .select(reducers.getCurrentQuestionState)
       .subscribe(question => {
@@ -81,19 +86,12 @@ export class AnswersComponent implements OnInit {
           this.answers = answers;
         }
       });
-    this.indexedDBSubscription = this.store.select(reducers.getIndexedDBState)
-      .subscribe((isOpen) => {
-        if (isOpen) {
-          this.store.dispatch(new answerActions.LoadAction(+this.currentQuestionId));
-        }
-      });
   }
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
     this.questionSubscription.unsubscribe();
     this.answerSubscription.unsubscribe();
-    this.indexedDBSubscription.unsubscribe();
   }
 
   @HostListener("document:keyup", ["$event"])
@@ -145,7 +143,7 @@ export class AnswersComponent implements OnInit {
       disableClose: false,
       width: "600px"
     };
-    const dialogRef = this.dialog.open(WakeupAnswerDialogComponent, config);
+    const dialogRef: any = this.dialog.open(WakeupAnswerDialogComponent, config);
     dialogRef.componentInstance.answer = Object.assign({}, newAnswer);
     dialogRef.afterClosed().subscribe(result => {
       this.openModal = false;
@@ -181,8 +179,9 @@ export class AnswersComponent implements OnInit {
 
   private deleteAnswers() {
     this.store.dispatch(new actions.DeleteAllAction(
-      { questionId: +this.currentQuestionId, 
-        userId: this.auth.getUserInfo().id 
+      {
+        questionId: +this.currentQuestionId,
+        userId: this.auth.getUserInfo().id
       }));
   }
 

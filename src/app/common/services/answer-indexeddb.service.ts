@@ -1,12 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Answer, IAnswer, AnswerApi } from "../models/answer.model";
+import { QuestionSetService } from "app/common/services";
+import { Observable } from 'rxjs/Observable';
+import Parser from "./parser";
 
 @Injectable()
 export class AnswerFactory {
     db = null;
     lastIndex = 0;
 
-    constructor() {
+    constructor(
+        private questionSetService: QuestionSetService) {
         if (!('indexedDB' in window)) {
             alert('This browser doesn\'t support IndexedDB');
             return;
@@ -60,10 +64,10 @@ export class AnswerFactory {
             const request = store.put(answer);
 
             return new Promise((resolve, reject) => {
-                request.onsuccess = (e) =>{
+                request.onsuccess = (e) => {
                     console.log(answer);
                     resolve(answer);
-                } 
+                }
                 request.onerror = (e) => reject(e);
             });
         });
@@ -83,7 +87,7 @@ export class AnswerFactory {
         });
     }
 
-    getAnswers(questionId): Promise<Answer[]> {
+    getAnswers(questionId): Promise<any[]> {
         if (this.db === null) {
             Promise.reject('IndexDB is not opened yet');
         }
@@ -97,7 +101,7 @@ export class AnswerFactory {
             request.onsuccess = function (e) {
                 const result = e.target.result;
                 if (result === null || result === undefined) {
-                    resolve(answers);
+                    resolve(answers.map(answerApi => Parser.answerFromApi(answerApi)));
                 } else {
                     answers.push(result.value);
                     result.continue();
@@ -149,6 +153,21 @@ export class AnswerFactory {
                 console.log(e);
             }
         });
+    }
+
+    getSessionDetailsData(questionSetId) {
+        const promises = [];
+        return this.questionSetService.getSessionDetailsData(questionSetId).toPromise()
+            .then(questions => {
+                questions = questions.map(question => {
+                    return this.getAnswers(question._id).then((answers => {
+                        question.answers = question.answers
+                            .concat(answers);
+                        return question;
+                    }));
+                });
+                return questions;
+            });
     }
 
     getLastIndex() {

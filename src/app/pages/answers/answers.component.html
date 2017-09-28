@@ -32,7 +32,7 @@
       <div class="answers">
         <span class="noAnswersMessage" *ngIf="!answers?.length">No answers available. <br>Please, click the + button to add an answer</span>
         <div *ngFor="let answerGroup of answers">
-          <span class="group">{{answerGroup.createDate}}</span>
+          <span class="group">{{answerGroup.date}}</span>
           <ul>
             <li *ngFor="let answer of answerGroup.answers">
               <span class="text">{{answer.text}}</span>

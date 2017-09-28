@@ -126,7 +126,7 @@ export default class Parser {
   static answerFromApi(answer: AnswerApi): Answer {
     return new Answer(
       answer._id,
-      answer.question,
+      answer.question || (answer as any).questionId,
       answer.text,
       new Date(answer.date)
     );

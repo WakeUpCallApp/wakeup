@@ -13,8 +13,8 @@ export default class Helper {
 
   sortAnswersByDate(answers) {
     return answers.sort((answer1, answer2) => {
-      const date1 = answer1.date;
-      const date2 = answer2.date;
+      const date1 = answer1.createDate;
+      const date2 = answer2.createDate;
       if (date1 < date2) {
         return 1;
       } else if (date1 > date2) {

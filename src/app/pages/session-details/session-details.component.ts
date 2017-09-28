@@ -6,6 +6,7 @@ import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import * as reducers from "../../common/reducers";
 import * as actions from "../../common/actions/question-set.actions";
+import * as answerActions from '../../common/actions/answer.actions';
 import { QuestionSet } from "../../common/models/question-set.model";
 
 @Component({
@@ -23,18 +24,24 @@ export class SessionDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title
-  ) {}
+  ) { }
 
   ngOnInit() {
+    this.store.dispatch(new answerActions.OpenIndexedDbAction());
+
     this.sessionData$ = this.store.select(reducers.getSessionDetailsState);
     this.actionsSubscription = Observable.combineLatest(
       this.route.params.select<string>("questionSetId"),
       this.route.params.select<string>("questionSetName"),
-      (id, name) => {
+      this.store.select(reducers.getIndexedDBState),
+      (id, name, isDbOpen) => {
         this.currentQuestionSetName = name;
         this.questionSetId = id;
         this.titleService.setTitle(`SessionDetails ${name}`);
-        return new actions.GetSessionDetailsAction(+id);
+        if (isDbOpen) {
+          return new actions.GetSessionDetailsAction(+id);
+        }
+        return {type:'NOT_READY'};
       }
     ).subscribe(this.store);
   }

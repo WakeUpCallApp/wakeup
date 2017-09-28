@@ -12,6 +12,7 @@ import { QuestionSetService } from "../services/question-set.service";
 import { QuestionService } from "../services/question.service";
 import { FileParsingService } from "../services/file-parsing";
 import { NotificationService } from "../services/notification.service";
+import { AnswerFactory } from "app/common/services";
 
 @Injectable()
 export class QuestionSetEffects {
@@ -59,14 +60,14 @@ export class QuestionSetEffects {
         this.questionSetService
           .importQuestions(data.questionSetId, results.data)
           .subscribe(
-            result =>
-              this.store.dispatch(
-                new questionSet.ImportQuestionsActionSuccess(result)
-              ),
-            error =>
-              this.store.dispatch(
-                new questionSet.ImportQuestionsActionError(error)
-              )
+          result =>
+            this.store.dispatch(
+              new questionSet.ImportQuestionsActionSuccess(result)
+            ),
+          error =>
+            this.store.dispatch(
+              new questionSet.ImportQuestionsActionError(error)
+            )
           );
       });
     });
@@ -164,13 +165,13 @@ export class QuestionSetEffects {
   @Effect({ dispatch: false })
   invalidateCache = this.actions$
     .ofType(
-      questionSet.ActionTypes.CREATE_SUCCESS,
-      questionSet.ActionTypes.UPDATE_SUCCESS,
-      questionSet.ActionTypes.DELETE_SUCCESS,
-      questionSet.ActionTypes.ADD_QUESTION_SUCCESS,
-      questionSet.ActionTypes.EDIT_QUESTION_SUCCESS,
-      questionSet.ActionTypes.DELETE_QUESTION_SUCCESS,
-      "USER_LOGOUT"
+    questionSet.ActionTypes.CREATE_SUCCESS,
+    questionSet.ActionTypes.UPDATE_SUCCESS,
+    questionSet.ActionTypes.DELETE_SUCCESS,
+    questionSet.ActionTypes.ADD_QUESTION_SUCCESS,
+    questionSet.ActionTypes.EDIT_QUESTION_SUCCESS,
+    questionSet.ActionTypes.DELETE_QUESTION_SUCCESS,
+    "USER_LOGOUT"
     )
     .map(() => {
       console.log("clear cache");
@@ -203,9 +204,10 @@ export class QuestionSetEffects {
     .ofType(questionSet.ActionTypes.GET_SESSION_DETAILS)
     .map(action => action.payload)
     .switchMap(questionSetId =>
-      this.questionSetService.getSessionDetailsData(questionSetId)
+      this.answerIndexedDbService.getSessionDetailsData(questionSetId)
     )
-    .map(result => new questionSet.GetSessionDetailsActionSuccess(result));
+    .flatMap(promises => Observable.forkJoin(...promises))
+    .map(data => new questionSet.GetSessionDetailsActionSuccess(data));
 
   constructor(
     private questionSetService: QuestionSetService,
@@ -214,6 +216,7 @@ export class QuestionSetEffects {
     private notificationService: NotificationService,
     private actions$: Actions,
     private router: Router,
-    private store: Store<reducers.State>
-  ) {}
+    private store: Store<reducers.State>,
+    private answerIndexedDbService: AnswerFactory
+  ) { }
 }
