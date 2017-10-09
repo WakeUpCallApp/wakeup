@@ -2,11 +2,11 @@ import { Injectable } from "@angular/core";
 import { Http, Response } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 
-import { AuthTokenService } from "./authToken.service";
-import { User, Token } from "../models/user.model";
+import { AuthTokenService } from "../authToken.service";
+import { User, Token } from "../../models/user.model";
 
 @Injectable()
-export class LoginService {
+export class LoginApi {
   private currentUser;
   private identityUrl = "/api/users/me";
   constructor(private http: Http, private authService: AuthTokenService) {}

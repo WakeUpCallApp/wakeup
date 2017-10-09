@@ -7,23 +7,30 @@ import { Router } from "@angular/router";
 
 import * as question from "../actions/question.actions";
 import * as questionSet from "../actions/question-set.actions";
-import { QuestionService } from "../services/question.service";
+import { QuestionApi } from "../services/api/question.api";
 import { NotificationService } from "../services/notification.service";
 
 @Injectable()
 export class QuestionEffects {
+  constructor(
+    private questionApi: QuestionApi,
+    private notificationService: NotificationService,
+    private actions$: Actions,
+    private router: Router
+  ) {}
+  
   @Effect()
   load$ = this.actions$
     .ofType(question.ActionTypes.LOAD)
     .map(action => action.payload)
-    .switchMap(() => this.questionService.all())
+    .switchMap(() => this.questionApi.all())
     .map(result => new question.LoadActionSuccess(result));
 
   @Effect()
   get$ = this.actions$
     .ofType(question.ActionTypes.GET_CURRENT_QUESTION)
     .map(action => action.payload)
-    .switchMap(id => this.questionService.get(id))
+    .switchMap(id => this.questionApi.get(id))
     .map(result => new question.GetCurrentQuestionSuccess(result))
     .catch(error => Observable.of(new question.GetCurrentQuestionError(error)));
 
@@ -41,7 +48,7 @@ export class QuestionEffects {
   delete$ = this.actions$
     .ofType(question.ActionTypes.DELETE)
     .map(action => action.payload)
-    .switchMap(question => this.questionService.delete(question))
+    .switchMap(question => this.questionApi.delete(question))
     .map(result => {
       this.notificationService.notifySuccess("Question successfully deleted");
       return new question.DeleteActionSuccess(result);
@@ -70,13 +77,8 @@ export class QuestionEffects {
     )
     .map(() => {
       console.log("clear cache");
-      this.questionService.clearCache();
+      this.questionApi.clearCache();
     });
 
-  constructor(
-    private questionService: QuestionService,
-    private notificationService: NotificationService,
-    private actions$: Actions,
-    private router: Router
-  ) {}
+
 }

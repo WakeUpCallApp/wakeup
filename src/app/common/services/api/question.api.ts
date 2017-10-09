@@ -3,16 +3,21 @@ import { Http, Response } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 
 import Parser from "./parser";
-import { Question, IQuestion, QuestionApi } from "../models/question.model";
-import { Answer, AnswerApi } from "../models/answer.model";
-import { QuoteApi } from "../models/quote.model";
-import { QuestionSetApi } from "../models/question-set.model";
+import {
+  Question,
+  IQuestion,
+  IQuestionApi,
+  Answer,
+  IQuoteApi,
+  IQuestionSetApi
+} from "../../models";
+
 
 @Injectable()
-export class QuestionService {
+export class QuestionApi {
   allQuestions;
   populatedQuestions;
-  constructor(private http: Http) {}
+  constructor(private http: Http) { }
 
   all(): Observable<Question[]> {
     if (this.allQuestions) {
@@ -40,21 +45,21 @@ export class QuestionService {
     return this.http
       .get(`/api/questions/question/${questionId}`)
       .map((response: Response) => response.json())
-      .map((questionApi: QuestionApi) => {
+      .map((questionApi: IQuestionApi) => {
         const question: Question = Parser.questionFromApi(questionApi);
         question.questionSet = Parser.questionSetFromApi(
-          questionApi.questionSet as QuestionSetApi
+          questionApi.questionSet as IQuestionSetApi
         );
         if (questionApi.quote) {
-          question.quote = Parser.quoteFromApi(questionApi.quote as QuoteApi);
+          question.quote = Parser.quoteFromApi(questionApi.quote as IQuoteApi);
         }
         return question;
       })
       .do(
-        question =>
-          (this.populatedQuestions = [question].concat(
-            this.populatedQuestions || []
-          ))
+      question =>
+        (this.populatedQuestions = [question].concat(
+          this.populatedQuestions || []
+        ))
       )
       .catch(this.handleError);
   }
@@ -63,7 +68,7 @@ export class QuestionService {
     return this.http
       .post("/api/questions/", question)
       .map((response: Response) => response.json())
-      .map((questionApi: QuestionApi) => {
+      .map((questionApi: IQuestionApi) => {
         const question = Parser.questionFromApi(questionApi);
         question.questionSet = questionApi.questionSet as number;
         return question;
@@ -75,7 +80,7 @@ export class QuestionService {
     return this.http
       .put(`/api/questions/${question.id}`, Parser.questionToApi(question))
       .map((response: Response) => response.json())
-      .map((questionApi: QuestionApi) => {
+      .map((questionApi: IQuestionApi) => {
         return Parser.questionFromApi(questionApi);
       })
       .catch(this.handleError);

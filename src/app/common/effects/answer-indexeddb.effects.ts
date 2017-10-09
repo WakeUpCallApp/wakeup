@@ -6,11 +6,17 @@ import { Router } from "@angular/router";
 import AppConstants from "../app-constants";
 
 import * as answer from "../actions/answer.actions";
-import { AnswerFactory } from "../services/answer-indexeddb.service";
+import { AnswersIndexedDbApi } from "../services/api/answer-indexeddb.api";
 import { NotificationService } from "../services/notification.service";
 
 @Injectable()
 export class AnswerEffectsIndexedDB {
+  constructor(
+    private answerService: AnswersIndexedDbApi,
+    private notificationService: NotificationService,
+    private actions$: Actions,
+    private router: Router
+  ) { }
   @Effect()
   openIndexedDb$ = this.actions$
     .ofType(answer.ActionTypes.OPEN_INDEXED_DB)
@@ -91,11 +97,4 @@ export class AnswerEffectsIndexedDB {
   //       console.log("clear cache");
   //       this.answerService.clearCache();
   //     });
-
-  constructor(
-    private answerService: AnswerFactory,
-    private notificationService: NotificationService,
-    private actions$: Actions,
-    private router: Router
-  ) { }
 }

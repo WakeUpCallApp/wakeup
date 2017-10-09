@@ -6,23 +6,30 @@ import { Router } from "@angular/router";
 import AppConstants from "../app-constants";
 
 import * as topic from "../actions/topic.actions";
-import { TopicService } from "../services/topic.service";
+import { TopicApi } from "../services/api/topic.api";
 import { NotificationService } from "../services/notification.service";
 
 @Injectable()
 export class TopicEffects {
+  constructor(
+    private topicApi: TopicApi,
+    private notificationService: NotificationService,
+    private actions$: Actions,
+    private router: Router
+  ) {}
+
   @Effect()
   load$ = this.actions$
     .ofType(topic.ActionTypes.LOAD)
     .map(action => action.payload)
-    .switchMap(() => this.topicService.all())
+    .switchMap(() => this.topicApi.all())
     .map(result => new topic.LoadActionSuccess(result));
 
   @Effect()
   create$ = this.actions$
     .ofType(topic.ActionTypes.CREATE)
     .map(action => action.payload)
-    .switchMap(topic => this.topicService.create(topic))
+    .switchMap(topic => this.topicApi.create(topic))
     .map(result => {
       this.notificationService.notifySuccess("Topic succcessfully created");
       return new topic.CreateActionSuccess(result);
@@ -45,7 +52,7 @@ export class TopicEffects {
   update$ = this.actions$
     .ofType(topic.ActionTypes.UPDATE)
     .map(action => action.payload)
-    .switchMap(topic => this.topicService.update(topic))
+    .switchMap(topic => this.topicApi.update(topic))
     .map(result => {
       this.notificationService.notifySuccess("Topic successfully updated");
       return new topic.UpdateActionSuccess(result);
@@ -59,7 +66,7 @@ export class TopicEffects {
   delete$ = this.actions$
     .ofType(topic.ActionTypes.DELETE)
     .map(action => action.payload)
-    .switchMap(topic => this.topicService.delete(topic))
+    .switchMap(topic => this.topicApi.delete(topic))
     .map(() => {
       this.notificationService.notifySuccess("Topic successfully deleted");
       return new topic.DeleteActionSuccess();
@@ -78,7 +85,7 @@ export class TopicEffects {
     .ofType(topic.ActionTypes.GET_CURRENT_TOPIC)
     .map(action => action.payload)
     .switchMap(id =>
-      this.topicService
+      this.topicApi
         .get(id)
         .map(result => new topic.GetCurrentTopicActionSuccess(result))
         .catch(error =>
@@ -108,13 +115,6 @@ export class TopicEffects {
     )
     .map(() => {
       console.log("clear cache");
-      this.topicService.clearCache();
+      this.topicApi.clearCache();
     });
-
-  constructor(
-    private topicService: TopicService,
-    private notificationService: NotificationService,
-    private actions$: Actions,
-    private router: Router
-  ) {}
 }

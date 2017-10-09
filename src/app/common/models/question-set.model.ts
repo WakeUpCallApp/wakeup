@@ -7,7 +7,7 @@ export interface IQuestionSet {
     isDefault: boolean;
 }
 
-export interface QuestionSetApi {
+export interface IQuestionSetApi {
     _id: number;
     name: string;
     description: string;

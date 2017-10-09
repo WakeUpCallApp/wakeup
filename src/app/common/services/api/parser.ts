@@ -1,12 +1,12 @@
 import * as moment from "moment";
-import { QuestionSet, QuestionSetApi } from "../models/question-set.model";
-import { Question, IQuestion, QuestionApi } from "../models/question.model";
-import { Quote, QuoteApi } from "../models/quote.model";
-import { Topic, TopicApi } from "../models/topic.model";
-import { Answer, AnswerApi } from "../models/answer.model";
+import { QuestionSet, IQuestionSetApi } from "../../models/question-set.model";
+import { Question, IQuestion, IQuestionApi } from "../../models/question.model";
+import { Quote, IQuoteApi } from "../../models/quote.model";
+import { Topic, ITopicApi } from "../../models/topic.model";
+import { Answer, IAnswerApi } from "../../models/answer.model";
 
 export default class Parser {
-  static questionFromApi(questionApi: QuestionApi): Question {
+  static questionFromApi(questionApi: IQuestionApi): Question {
     return new Question(
       questionApi._id,
       questionApi.text,
@@ -24,7 +24,7 @@ export default class Parser {
     };
   }
 
-  static questionToApi(question: Question): QuestionApi {
+  static questionToApi(question: Question): IQuestionApi {
     const questionSet =
       question.questionSet instanceof Object
         ? (question.questionSet as QuestionSet).id
@@ -39,7 +39,7 @@ export default class Parser {
     };
   }
 
-  static questionSetFromApi(questionSetApi: QuestionSetApi): QuestionSet {
+  static questionSetFromApi(questionSetApi: IQuestionSetApi): QuestionSet {
     return new QuestionSet(
       questionSetApi._id,
       questionSetApi.name,
@@ -51,7 +51,7 @@ export default class Parser {
     );
   }
 
-  static questionSetToApi(questionSet: QuestionSet): QuestionSetApi {
+  static questionSetToApi(questionSet: QuestionSet): IQuestionSetApi {
     return {
       _id: questionSet.id,
       name: questionSet.name,
@@ -63,7 +63,7 @@ export default class Parser {
     };
   }
 
-  static quoteFromApi(quoteApi: QuoteApi): Quote {
+  static quoteFromApi(quoteApi: IQuoteApi): Quote {
     const questions = quoteApi.questions
       ? quoteApi.questions.map(questionApi =>
           Parser.questionFromApi(questionApi)
@@ -81,7 +81,7 @@ export default class Parser {
     );
   }
 
-  static quoteToApi(quote: Quote): QuoteApi {
+  static quoteToApi(quote: Quote): IQuoteApi {
     return {
       _id: quote.id,
       text: quote.text,
@@ -94,7 +94,7 @@ export default class Parser {
     };
   }
 
-  static topicFromApi(topicApi: TopicApi): Topic {
+  static topicFromApi(topicApi: ITopicApi): Topic {
     return new Topic(
       topicApi._id,
       topicApi.title,
@@ -107,7 +107,7 @@ export default class Parser {
     );
   }
 
-  static topicToApi(topic: Topic): TopicApi {
+  static topicToApi(topic: Topic): ITopicApi {
     const quotes = topic.quoteIds
       ? topic.quoteIds
       : (topic.quotes as Quote[]).map(quote => quote.id);
@@ -123,7 +123,7 @@ export default class Parser {
     };
   }
 
-  static answerFromApi(answer: AnswerApi): Answer {
+  static answerFromApi(answer: IAnswerApi): Answer {
     return new Answer(
       answer._id,
       answer.question || (answer as any).questionId,
@@ -132,7 +132,7 @@ export default class Parser {
     );
   }
 
-  static answerToApi(answer: Answer): AnswerApi {
+  static answerToApi(answer: Answer): IAnswerApi {
     return {
       _id: answer.id,
       question: answer.questionid,

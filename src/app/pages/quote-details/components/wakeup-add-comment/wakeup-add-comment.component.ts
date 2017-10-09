@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { ICreateComment } from "../../../../common/models/quote.model";
+import { ICreateComment } from "../../../../common/models";
 
 @Component({
   selector: "wakeup-add-comment",

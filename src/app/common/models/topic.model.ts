@@ -1,5 +1,5 @@
 import { QuestionSet } from './question-set.model';
-import { Quote, QuoteApi } from './quote.model';
+import { Quote, IQuoteApi } from './quote.model';
 
 export interface ITopic {
     title: string;
@@ -7,14 +7,14 @@ export interface ITopic {
     isDefault: boolean;
 }
 
-export interface TopicApi {
+export interface ITopicApi {
     _id: number;
     title: string;
     description: string;
     user: string;
     createDate: string;
     questionSetList;
-    quoteList: number[] | QuoteApi[];
+    quoteList: number[] | IQuoteApi[];
     isDefault: boolean;
 }
 

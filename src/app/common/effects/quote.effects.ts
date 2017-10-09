@@ -8,31 +8,41 @@ import { Observable } from "rxjs/Observable";
 import AppConstants from "../app-constants";
 
 import * as quoteActions from "../actions/quote.actions";
-import { QuoteService } from "../services/quote.service";
+import { QuoteApi } from "../services/api/quote.api";
 import { NotificationService } from "../services/notification.service";
 import { FileParsingService } from "../services/file-parsing";
 
 @Injectable()
 export class QuoteEffects {
+  
+  constructor(
+    private quoteApi: QuoteApi,
+    private fileParsing: FileParsingService,
+    private notificationService: NotificationService,
+    private actions$: Actions,
+    private router: Router,
+    private store: Store<reducers.State>
+  ) { }
+
   @Effect()
   load$ = this.actions$
     .ofType(quoteActions.ActionTypes.LOAD)
     .map(action => action.payload)
-    .switchMap(() => this.quoteService.all())
+    .switchMap(() => this.quoteApi.all())
     .map(result => new quoteActions.LoadActionSuccess(result));
 
   @Effect()
   getByTopic$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_BY_TOPIC_ID)
     .map(action => action.payload)
-    .switchMap(topicId => this.quoteService.get(topicId))
+    .switchMap(topicId => this.quoteApi.get(topicId))
     .map(result => new quoteActions.GetByTopicIdActionSuccess(result));
 
   @Effect()
   getById$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_BY_ID)
     .map(action => action.payload)
-    .switchMap(quoteId => this.quoteService.getById(quoteId))
+    .switchMap(quoteId => this.quoteApi.getById(quoteId))
     .map(result => new quoteActions.GetByIdActionSuccess(result))
     .catch(error => Observable.of(new quoteActions.GetByIdActionError(error)));
 
@@ -51,14 +61,14 @@ export class QuoteEffects {
   @Effect()
   getSuggestions$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_SUGGESTIONS)
-    .switchMap(() => this.quoteService.getSuggestions())
+    .switchMap(() => this.quoteApi.getSuggestions())
     .map(result => new quoteActions.GetSuggestionsActionSuccess(result));
 
   @Effect()
   create$ = this.actions$
     .ofType(quoteActions.ActionTypes.CREATE)
     .map(action => action.payload)
-    .switchMap(quote => this.quoteService.create(quote))
+    .switchMap(quote => this.quoteApi.create(quote))
     .map(result => {
       this.notificationService.notifySuccess("Quote successfully created");
       return new quoteActions.CreateActionSuccess(result);
@@ -80,7 +90,7 @@ export class QuoteEffects {
   delete$ = this.actions$
     .ofType(quoteActions.ActionTypes.DELETE)
     .map(action => action.payload)
-    .switchMap(quoteId => this.quoteService.delete(quoteId))
+    .switchMap(quoteId => this.quoteApi.delete(quoteId))
     .map(result => {
       this.notificationService.notifySuccess("Quote successfully deleted");
       return new quoteActions.DeleteActionSuccess(result);
@@ -101,30 +111,30 @@ export class QuoteEffects {
   @Effect({ dispatch: false })
   invalidateCache = this.actions$
     .ofType(
-      quoteActions.ActionTypes.CREATE_SUCCESS,
-      quoteActions.ActionTypes.UPDATE_SUCCESS,
-      quoteActions.ActionTypes.DELETE_SUCCESS,
-      quoteActions.ActionTypes.CREATE_COMMENT_SUCCESS,
-      quoteActions.ActionTypes.DELETE_COMMENT_SUCCESS,
-      "USER_LOGOUT"
+    quoteActions.ActionTypes.CREATE_SUCCESS,
+    quoteActions.ActionTypes.UPDATE_SUCCESS,
+    quoteActions.ActionTypes.DELETE_SUCCESS,
+    quoteActions.ActionTypes.CREATE_COMMENT_SUCCESS,
+    quoteActions.ActionTypes.DELETE_COMMENT_SUCCESS,
+    "USER_LOGOUT"
     )
     .map(() => {
       console.log("clear cache");
-      this.quoteService.clearCache();
+      this.quoteApi.clearCache();
     });
 
   @Effect()
   getComments$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_COMMENTS)
     .map(action => action.payload)
-    .switchMap(quoteId => this.quoteService.getComments(quoteId))
+    .switchMap(quoteId => this.quoteApi.getComments(quoteId))
     .map(result => new quoteActions.GetCommentsActionSuccess(result));
 
   @Effect()
   create_comment$ = this.actions$
     .ofType(quoteActions.ActionTypes.CREATE_COMMENT)
     .map(action => action.payload)
-    .switchMap(comment => this.quoteService.addComment(comment))
+    .switchMap(comment => this.quoteApi.addComment(comment))
     .map(result => {
       this.notificationService.notifySuccess("Comment successfully created");
       return new quoteActions.CreateCommentActionSuccess(result);
@@ -138,7 +148,7 @@ export class QuoteEffects {
   delete_comment$ = this.actions$
     .ofType(quoteActions.ActionTypes.DELETE_COMMENT)
     .map(action => action.payload)
-    .switchMap(comment => this.quoteService.deleteComment(comment))
+    .switchMap(comment => this.quoteApi.deleteComment(comment))
     .map(result => {
       this.notificationService.notifySuccess("Comment successfully deleted");
       return new quoteActions.DeleteCommentActionSuccess(result);
@@ -153,7 +163,7 @@ export class QuoteEffects {
     .ofType(quoteActions.ActionTypes.UPDATE)
     .map(action => action.payload)
     .switchMap(quote =>
-      this.quoteService
+      this.quoteApi
         .update(quote)
         .map(result => {
           this.notificationService.notifySuccess("Quote successfully updated");
@@ -173,7 +183,7 @@ export class QuoteEffects {
       this.fileParsing.parseCVS(
         data.quotes[0],
         results => {
-          this.quoteService.importQuotes(data.topicId, results.data).subscribe(
+          this.quoteApi.importQuotes(data.topicId, results.data).subscribe(
             result => {
               this.notificationService.notifySuccess(
                 "Quotes successfully imported"
@@ -204,13 +214,4 @@ export class QuoteEffects {
         data.topicName
       );
     });
-
-  constructor(
-    private quoteService: QuoteService,
-    private fileParsing: FileParsingService,
-    private notificationService: NotificationService,
-    private actions$: Actions,
-    private router: Router,
-    private store: Store<reducers.State>
-  ) {}
 }

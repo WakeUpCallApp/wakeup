@@ -1,6 +1,5 @@
-import { Quote, QuoteApi } from './quote.model';
-import { AnswerApi } from './answer.model';
-import { QuestionSet, QuestionSetApi } from './question-set.model';
+import { IAnswerApi } from './answer.model';
+import { QuestionSet, IQuestionSetApi } from './question-set.model';
 
 export interface IQuestion {
   id: number;
@@ -9,12 +8,12 @@ export interface IQuestion {
   quote?;
 }
 
-export interface QuestionApi {
+export interface IQuestionApi {
   _id: number;
   text: string;
   date: string;
-  questionSet: number | QuestionSetApi;
-  answers: number[] | Object[] | AnswerApi[];
+  questionSet: number | IQuestionSetApi;
+  answers: number[] | Object[] | IAnswerApi[];
   quote: any;
 }
 

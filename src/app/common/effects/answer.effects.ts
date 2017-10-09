@@ -6,11 +6,17 @@ import { Router } from "@angular/router";
 import AppConstants from "../app-constants";
 
 import * as answer from "../actions/answer.actions";
-import { AnswerService } from "../services/answer.service";
+import { AnswerApi } from "../services/api/answer.api";
 import { NotificationService } from "../services/notification.service";
 
 @Injectable()
 export class AnswerEffects {
+  constructor(
+    private answerService: AnswerApi,
+    private notificationService: NotificationService,
+    private actions$: Actions,
+    private router: Router
+  ) { }
   @Effect()
   load$ = this.actions$
     .ofType(answer.ActionTypes.LOAD)
@@ -71,21 +77,14 @@ export class AnswerEffects {
   @Effect({ dispatch: false })
   invalidateCache = this.actions$
     .ofType(
-      answer.ActionTypes.CREATE_SUCCESS,
-      answer.ActionTypes.UPDATE_SUCCESS,
-      answer.ActionTypes.DELETE_SUCCESS,
-      answer.ActionTypes.DELETE_ALL_SUCCESS,
-      "USER_LOGOUT"
+    answer.ActionTypes.CREATE_SUCCESS,
+    answer.ActionTypes.UPDATE_SUCCESS,
+    answer.ActionTypes.DELETE_SUCCESS,
+    answer.ActionTypes.DELETE_ALL_SUCCESS,
+    "USER_LOGOUT"
     )
     .map(() => {
       console.log("clear cache");
       this.answerService.clearCache();
     });
-
-  constructor(
-    private answerService: AnswerService,
-    private notificationService: NotificationService,
-    private actions$: Actions,
-    private router: Router
-  ) {}
 }

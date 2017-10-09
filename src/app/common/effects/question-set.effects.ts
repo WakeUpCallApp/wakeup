@@ -8,26 +8,36 @@ import AppConstants from "../app-constants";
 
 import * as questionSet from "../actions/question-set.actions";
 import * as reducers from "../reducers";
-import { QuestionSetService } from "../services/question-set.service";
-import { QuestionService } from "../services/question.service";
+import { QuestionSetApi } from "../services/api/question-set.api";
+import { QuestionApi } from "../services/api/question.api";
 import { FileParsingService } from "../services/file-parsing";
 import { NotificationService } from "../services/notification.service";
-import { AnswerFactory } from "app/common/services";
+import { AnswersIndexedDbApi } from "app/common/services";
 
 @Injectable()
 export class QuestionSetEffects {
+  constructor(
+    private questionSetApi: QuestionSetApi,
+    private questionApi: QuestionApi,
+    private fileParsing: FileParsingService,
+    private notificationService: NotificationService,
+    private actions$: Actions,
+    private router: Router,
+    private store: Store<reducers.State>,
+    private answerIndexedDbService: AnswersIndexedDbApi
+  ) { }
   @Effect()
   load$ = this.actions$
     .ofType(questionSet.ActionTypes.LOAD)
     .map(action => action.payload)
-    .switchMap(() => this.questionSetService.all())
+    .switchMap(() => this.questionSetApi.all())
     .map(result => new questionSet.LoadActionSuccess(result));
 
   @Effect()
   create$ = this.actions$
     .ofType(questionSet.ActionTypes.CREATE)
     .map(action => action.payload)
-    .switchMap(questionSet => this.questionSetService.create(questionSet))
+    .switchMap(questionSet => this.questionSetApi.create(questionSet))
     .map(result => {
       this.notificationService.notifySuccess(
         "Question Set successfully created"
@@ -57,7 +67,7 @@ export class QuestionSetEffects {
     .map(action => action.payload)
     .map(data => {
       this.fileParsing.parseCVS(data.questions[0], results => {
-        this.questionSetService
+        this.questionSetApi
           .importQuestions(data.questionSetId, results.data)
           .subscribe(
           result =>
@@ -87,7 +97,7 @@ export class QuestionSetEffects {
   update$ = this.actions$
     .ofType(questionSet.ActionTypes.UPDATE)
     .map(action => action.payload)
-    .switchMap(questionSet => this.questionSetService.update(questionSet))
+    .switchMap(questionSet => this.questionSetApi.update(questionSet))
     .map(result => {
       this.notificationService.notifySuccess(
         "Question Set successfully updated"
@@ -103,7 +113,7 @@ export class QuestionSetEffects {
   delete$ = this.actions$
     .ofType(questionSet.ActionTypes.DELETE)
     .map(action => action.payload)
-    .switchMap(questionSet => this.questionSetService.delete(questionSet))
+    .switchMap(questionSet => this.questionSetApi.delete(questionSet))
     .map(() => {
       this.notificationService.notifySuccess(
         "Question Set successfully deleted"
@@ -124,7 +134,7 @@ export class QuestionSetEffects {
     .ofType(questionSet.ActionTypes.GET_CURRENT_QUESTION_SET)
     .map(action => action.payload)
     .switchMap(id =>
-      this.questionSetService
+      this.questionSetApi
         .get(id)
         .map(result => new questionSet.GetCurrentQSActionSuccess(result))
         .catch(error =>
@@ -136,7 +146,7 @@ export class QuestionSetEffects {
   addQuestion$ = this.actions$
     .ofType(questionSet.ActionTypes.ADD_QUESTION)
     .map(action => action.payload)
-    .switchMap(question => this.questionService.create(question))
+    .switchMap(question => this.questionApi.create(question))
     .map(result => {
       this.notificationService.notifySuccess("Question successfully added");
       return new questionSet.AddQuestionActionSuccess(result);
@@ -146,7 +156,7 @@ export class QuestionSetEffects {
   updateQuestion$ = this.actions$
     .ofType(questionSet.ActionTypes.EDIT_QUESTION)
     .map(action => action.payload)
-    .switchMap(question => this.questionService.update(question))
+    .switchMap(question => this.questionApi.update(question))
     .map(result => {
       this.notificationService.notifySuccess("Question successfully updated");
       return new questionSet.EditQuestionActionSuccess(result);
@@ -156,7 +166,7 @@ export class QuestionSetEffects {
   deleteQuestion$ = this.actions$
     .ofType(questionSet.ActionTypes.DELETE_QUESTION)
     .map(action => action.payload)
-    .flatMap(question => this.questionService.delete(question))
+    .flatMap(question => this.questionApi.delete(question))
     .map(result => {
       this.notificationService.notifySuccess("Question successfully deleted");
       return new questionSet.DeleteQuestionActionSuccess(result);
@@ -175,7 +185,7 @@ export class QuestionSetEffects {
     )
     .map(() => {
       console.log("clear cache");
-      this.questionSetService.clearCache();
+      this.questionSetApi.clearCache();
     });
 
   @Effect({ dispatch: false })
@@ -196,7 +206,7 @@ export class QuestionSetEffects {
       this.notificationService.notifySuccess(
         "Practice session ended successfully"
       );
-      return this.questionSetService.registerSession(questionSetId);
+      return this.questionSetApi.registerSession(questionSetId);
     });
 
   @Effect()
@@ -208,15 +218,4 @@ export class QuestionSetEffects {
     )
     .flatMap(promises => Observable.forkJoin(...promises))
     .map(data => new questionSet.GetSessionDetailsActionSuccess(data));
-
-  constructor(
-    private questionSetService: QuestionSetService,
-    private questionService: QuestionService,
-    private fileParsing: FileParsingService,
-    private notificationService: NotificationService,
-    private actions$: Actions,
-    private router: Router,
-    private store: Store<reducers.State>,
-    private answerIndexedDbService: AnswerFactory
-  ) { }
 }

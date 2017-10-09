@@ -1,16 +1,15 @@
 import { Injectable } from "@angular/core";
-import { Answer, IAnswer, AnswerApi } from "../models/answer.model";
-import { QuestionSetService } from "app/common/services";
-import { Observable } from 'rxjs/Observable';
+import { Answer } from "../../models/answer.model";
+import { QuestionSetApi } from "./question-set.api";
 import Parser from "./parser";
 
 @Injectable()
-export class AnswerFactory {
+export class AnswersIndexedDbApi {
     db = null;
     lastIndex = 0;
 
     constructor(
-        private questionSetService: QuestionSetService) {
+        private questionSetApi: QuestionSetApi) {
         if (!('indexedDB' in window)) {
             alert('This browser doesn\'t support IndexedDB');
             return;
@@ -157,7 +156,7 @@ export class AnswerFactory {
 
     getSessionDetailsData(questionSetId) {
         const promises = [];
-        return this.questionSetService.getSessionDetailsData(questionSetId).toPromise()
+        return this.questionSetApi.getSessionDetailsData(questionSetId).toPromise()
             .then(questions => {
                 questions = questions.map(question => {
                     return this.getAnswers(question._id).then((answers => {

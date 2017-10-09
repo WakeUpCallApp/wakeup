@@ -3,10 +3,10 @@ import { Http, Response } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 
 import Parser from "./parser";
-import { Quote, QuoteApi, IQuote } from "../models/quote.model";
+import { Quote, IQuoteApi, IQuote } from "../../models/quote.model";
 
 @Injectable()
-export class QuoteService {
+export class QuoteApi {
   private suggestions;
   private userQuotes;
   private quotes;
@@ -54,7 +54,7 @@ export class QuoteService {
     return this.http
       .post(`/api/quotes/${quote.topic}`, quote)
       .map((response: Response) => response.json())
-      .map((quoteApi: QuoteApi) => {
+      .map((quoteApi: IQuoteApi) => {
         return Parser.quoteFromApi(quoteApi);
       })
       .catch(this.handleError);

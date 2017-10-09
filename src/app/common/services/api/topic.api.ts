@@ -3,14 +3,18 @@ import { Http, Response } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 
 import Parser from "./parser";
-import { Topic, ITopic, TopicApi } from "../models/topic.model";
-import { QuoteApi } from "../models/quote.model";
+import {
+  Topic,
+  ITopic,
+  ITopicApi,
+  IQuoteApi
+} from "../../models";
 
 @Injectable()
-export class TopicService {
+export class TopicApi {
   topics;
   populatedTopics;
-  constructor(private http: Http) {}
+  constructor(private http: Http) { }
 
   all(): Observable<Topic[]> {
     if (this.topics) {
@@ -32,7 +36,7 @@ export class TopicService {
     return this.http
       .post("/api/topics", topic)
       .map((response: Response) => response.json())
-      .map((topicApi: TopicApi) => {
+      .map((topicApi: ITopicApi) => {
         return Parser.topicFromApi(topicApi);
       })
       .catch(this.handleError);
@@ -46,12 +50,12 @@ export class TopicService {
     return this.http
       .get(`/api/topics/${id}`)
       .map((response: Response) => response.json())
-      .map((topicApi: TopicApi) => {
+      .map((topicApi: ITopicApi) => {
         const topic = Parser.topicFromApi(topicApi);
         topic.questionSets = topicApi.questionSetList.map(questionSetApi =>
           Parser.questionSetFromApi(questionSetApi)
         );
-        topic.quotes = (topicApi.quoteList as QuoteApi[]).map(quoteApi =>
+        topic.quotes = (topicApi.quoteList as IQuoteApi[]).map(quoteApi =>
           Parser.quoteFromApi(quoteApi)
         );
         return topic;
@@ -64,7 +68,7 @@ export class TopicService {
     return this.http
       .put(`/api/topics/${topic.id}`, Parser.topicToApi(topic))
       .map((response: Response) => response.json())
-      .map((topicApi: TopicApi) => {
+      .map((topicApi: ITopicApi) => {
         const topicObj = Parser.topicFromApi(topicApi);
         topicObj.questionSets = topicApi.questionSetList.map(questionSetApi =>
           Parser.questionSetFromApi(questionSetApi)

@@ -8,18 +8,18 @@ import { AuthenticationGuard } from "./guards/authentication.guard";
 import { CanDeactivateGuard } from "./guards/can-deactivate.guard";
 import { UserDetailResolver } from "./guards/user-details.resolver";
 import {
-  LoginService,
+  LoginApi,
   AuthTokenService,
-  QuestionSetService,
-  QuestionService,
-  QuoteService,
-  TopicService,
-  AnswerService,
+  QuestionSetApi,
+  QuestionApi,
+  QuoteApi,
+  TopicApi,
+  AnswerApi,
   SessionConfigService,
   FileParsingService,
   NotificationService,
   DialogService,
-  AnswerFactory
+  AnswersIndexedDbApi
 } from "./services";
 import { WakeupTopBarComponent } from "./components/wakeup-top-bar/wakeup-top-bar.component";
 import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side-nav.component";
@@ -45,19 +45,19 @@ import { WakeupConfirmDialogComponent } from './components/wakeup-confirm-dialog
   providers: [
     AuthTokenService,
     SessionConfigService,
-    LoginService,
-    QuestionSetService,
-    QuestionService,
-    QuoteService,
-    TopicService,
-    AnswerService,
+    LoginApi,
+    QuestionSetApi,
+    QuestionApi,
+    QuoteApi,
+    TopicApi,
+    AnswerApi,
     AuthenticationGuard,
     CanDeactivateGuard,
     UserDetailResolver,
     FileParsingService,
     NotificationService,
     DialogService,
-    AnswerFactory
+    AnswersIndexedDbApi
   ],
   exports: [
     WakeupTopBarComponent,

@@ -6,13 +6,13 @@ import Parser from "./parser";
 import {
   QuestionSet,
   IQuestionSet,
-  QuestionSetApi
-} from "../models/question-set.model";
+  IQuestionSetApi
+} from "../../models/question-set.model";
 
-import { Question } from "../models/question.model";
+import { Question } from "../../models/question.model";
 
 @Injectable()
-export class QuestionSetService {
+export class QuestionSetApi {
   questionSets;
   populatedQuestionSets;
   constructor(private http: Http) {}
@@ -37,7 +37,7 @@ export class QuestionSetService {
     return this.http
       .post("/api/questionSet", questionSet)
       .map((response: Response) => response.json())
-      .map((questionSetApi: QuestionSetApi) => {
+      .map((questionSetApi: IQuestionSetApi) => {
         return Parser.questionSetFromApi(questionSetApi);
       })
       .catch(this.handleError);
@@ -53,7 +53,7 @@ export class QuestionSetService {
     return this.http
       .get(`/api/questionSet/${id}`)
       .map((response: Response) => response.json())
-      .map((questionSetApi: QuestionSetApi) => {
+      .map((questionSetApi: IQuestionSetApi) => {
         const questionSet = Parser.questionSetFromApi(questionSetApi);
         questionSet.questions = questionSetApi.questions.map(question => {
           const parsedQuestion = Parser.questionFromApi(question);
@@ -82,7 +82,7 @@ export class QuestionSetService {
     return this.http
       .put(`/api/questionSet/${questionSet.id}`, parsedQuestionSet)
       .map((response: Response) => response.json())
-      .map((questionSetApi: QuestionSetApi) => {
+      .map((questionSetApi: IQuestionSetApi) => {
         const questionSetObj = Parser.questionSetFromApi(questionSetApi);
         questionSetObj.questions = questionSetApi.questions.map(question => {
           const parsedQuestion = Parser.questionFromApi(question);

@@ -3,10 +3,10 @@ import { Http, Response } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 
 import Parser from "./parser";
-import { Answer, IAnswer, AnswerApi } from "../models/answer.model";
+import { Answer, IAnswer, IAnswerApi } from "../../models/answer.model";
 
 @Injectable()
-export class AnswerService {
+export class AnswerApi {
   answers = new Map();
   constructor(private http: Http) {}
   all(questionId): Observable<Answer[]> {
@@ -17,7 +17,7 @@ export class AnswerService {
     return this.http
       .get(`/api/answers/${questionId}`)
       .map((response: Response) => response.json())
-      .map((answerApiList: AnswerApi[]) => {
+      .map((answerApiList: IAnswerApi[]) => {
         return answerApiList.map(answerApi => Parser.answerFromApi(answerApi));
       })
       .do(answers => (this.answers[questionId] = answers))
@@ -28,7 +28,7 @@ export class AnswerService {
     return this.http
       .post("/api/answers/", answer)
       .map((response: Response) => response.json())
-      .map((answerApi: AnswerApi) => {
+      .map((answerApi: IAnswerApi) => {
         return Parser.answerFromApi(answerApi);
       })
       .catch(this.handleError);
@@ -38,7 +38,7 @@ export class AnswerService {
     return this.http
       .put(`/api/answers/${answer.id}`, Parser.answerToApi(answer))
       .map((response: Response) => response.json())
-      .map((answerApi: AnswerApi) => {
+      .map((answerApi: IAnswerApi) => {
         return Parser.answerFromApi(answerApi);
       })
       .catch(this.handleError);

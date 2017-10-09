@@ -7,7 +7,7 @@ export interface IAnswer {
     userId;
 }
 
-export interface AnswerApi {
+export interface IAnswerApi {
     _id: number;
     question: number;
     text: string;

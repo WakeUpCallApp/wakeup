@@ -16,7 +16,7 @@ import {
   SessionConfigService,
   SessionOptions
 } from "../../common/services/session-config.service";
-import { LoginService } from '../../common/services/login.service';
+import { LoginApi } from '../../common/services/api/login.api';
 
 @Component({
   selector: "wakeup-practice-session",
@@ -42,7 +42,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
     private router: Router,
     private sessionConfigService: SessionConfigService,
     private titleService: Title,
-    private loginService: LoginService
+    private loginApi: LoginApi
   ) {
     this.configOptions =
       this.sessionConfigService.getOptions() || (<SessionOptions>{});
@@ -173,7 +173,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
         questionId: this.currentQuestion.id,
         text: this.answerText,
         date: new Date().getTime(),
-        userId: this.loginService.getCurrentUser()._id
+        userId: this.loginApi.getCurrentUser()._id
       })
     );
     this.answerText = "";

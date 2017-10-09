@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../../../common/services/login.service';
+import { LoginApi } from '../../../../common/services/api/login.api';
 import { Router } from '@angular/router';
 
 import appConstants from '../../../../common/app-constants';
@@ -20,7 +20,7 @@ export class SignupWakeupCallComponent implements OnInit {
   errorMessage: string;
   isSigningIn = false;
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginApi: LoginApi, private router: Router) { }
 
   ngOnInit() {
   }
@@ -31,7 +31,7 @@ export class SignupWakeupCallComponent implements OnInit {
 
   signUp() {
     this.isSigningIn = true;
-    this.loginService.signUp(this.user).subscribe(
+    this.loginApi.signUp(this.user).subscribe(
       resp => {
         this.isSigningIn = false;
         this.router.navigate([appConstants.routes.QUESTION_SETS]);

@@ -1,4 +1,4 @@
-import { TopicApi, Topic } from "./topic.model";
+import { ITopicApi, Topic } from "./topic.model";
 import { Question } from './question.model';
 
 export interface Comment {
@@ -21,13 +21,13 @@ export interface IQuote {
   questions: number[];
 }
 
-export interface QuoteApi {
+export interface IQuoteApi {
   _id: number;
   text: string;
   source: string;
   date: string;
   author: string;
-  topic: number | TopicApi;
+  topic: number | ITopicApi;
   questions;
   commentList;
 }
