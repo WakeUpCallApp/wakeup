@@ -54,12 +54,12 @@ export class QuoteDetailsComponent implements OnInit {
   ngOnInit() {
     this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
     this.actionsSubscription = Observable.combineLatest(
-      this.route.params.select<string>("id"),
-      this.route.params.select<string>("topicId"),
-      (quoteId, topicId) => {
-        this.store.dispatch(new topicActions.GetCurrentTopicAction(+topicId));
-        this.store.dispatch(new actions.GetByIdAction(+quoteId));
-        return new actions.GetCommentsAction(+quoteId);
+      this.route.params.filter(params => !!params["id"]),
+      this.route.params.filter(params => !!params["topicId"]),
+      (quoteIdParams, topicIdParams) => {
+        this.store.dispatch(new topicActions.GetCurrentTopicAction(+topicIdParams['topicId']));
+        this.store.dispatch(new actions.GetByIdAction(+quoteIdParams['id']));
+        return new actions.GetCommentsAction(+quoteIdParams['id']);
       }
     ).subscribe(this.store);
 

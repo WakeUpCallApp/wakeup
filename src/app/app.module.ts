@@ -16,7 +16,7 @@ import {
   AnswerEffects,
   AnswerEffectsIndexedDB
 } from "./common/effects";
-import { reducer } from "./common/reducers";
+import { reducers } from "./common/reducers";
 
 import { environment } from '../environments/environment';
 import { httpFactory } from "./config/http.factory";
@@ -62,7 +62,7 @@ import { TopicDetailsModule } from "./pages/topic-details/topic-details.module";
     LoginModule,
     TopicDetailsModule,
     AppRoutingModule,
-    StoreModule.forRoot(reducer),
+    StoreModule.forRoot(reducers),
     // must come AFTER `provideStore` call
     !environment.production
       ? StoreDevtoolsModule.instrument()

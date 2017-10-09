@@ -1,18 +1,18 @@
-<md-card class="questionList mat-elevation-z3">
-  <md-card-header>
+<mat-card class="questionList mat-elevation-z3">
+  <mat-card-header>
     <div class="title">
       <h1 class="cardTitle">Questions</h1>
     </div>
-  </md-card-header>
-  <md-card-content>
-    <button mdTooltip="Associate Questions" class="addQuestion" md-mini-fab (click)="openQuestionsBrowser()"><md-icon>add</md-icon>
+  </mat-card-header>
+  <mat-card-content>
+    <button matTooltip="Associate Questions" class="addQuestion" mat-mini-fab (click)="openQuestionsBrowser()"><mat-icon>add</mat-icon>
     </button>
     <ul class="list">
       <li *ngFor="let question of questions; index as i">
         <span class="text">{{question.text}}</span>
         <span tabindex="0" role="button" aria-label="remove question" class="remove" (keyup.enter)="onRemove(question)" (click)="onRemove(question)"
-          mdTooltip="Remove Question"><md-icon>delete</md-icon></span>
+          matTooltip="Remove Question"><mat-icon>delete</mat-icon></span>
       </li>
     </ul>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>

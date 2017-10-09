@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
-
+import {
+  SharedModule
+} from '../_shared/shared.module';
 import { AuthenticationGuard } from "./guards/authentication.guard";
 import { CanDeactivateGuard } from "./guards/can-deactivate.guard";
 import { UserDetailResolver } from "./guards/user-details.resolver";
@@ -19,18 +21,13 @@ import {
 } from "./services";
 import { WakeupTopBarComponent } from "./components/wakeup-top-bar/wakeup-top-bar.component";
 import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side-nav.component";
-import { WakeupCardComponent } from "./components/wakeup-card/wakeup-card.component";
-import { WakeupImportFileComponent } from "./components/wakeup-import-file/wakeup-import-file.component";
-import { WakeupConfirmDialogComponent } from './components/wakeup-confirm-dialog/wakeup-confirm-dialog.component';
+
 
 @NgModule({
-  imports: [],
+  imports: [SharedModule],
   declarations: [
     WakeupTopBarComponent,
-    WakeupSideNavComponent,
-    WakeupCardComponent,
-    WakeupImportFileComponent,
-    WakeupConfirmDialogComponent
+    WakeupSideNavComponent
   ],
   providers: [
     AuthTokenService,
@@ -51,8 +48,6 @@ import { WakeupConfirmDialogComponent } from './components/wakeup-confirm-dialog
   ],
   exports: [
     WakeupTopBarComponent,
-    WakeupSideNavComponent,
-    WakeupCardComponent],
-  entryComponents: [WakeupImportFileComponent, WakeupConfirmDialogComponent]
+    WakeupSideNavComponent]
 })
 export class WakeupCommonModule { }

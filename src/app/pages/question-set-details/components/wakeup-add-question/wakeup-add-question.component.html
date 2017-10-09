@@ -1,33 +1,33 @@
-<md-card class="addQuestion mat-elevation-z3">
-  <md-card-header>
+<mat-card class="addQuestion mat-elevation-z3">
+  <mat-card-header>
     <h1 class="cardTitle">Add Question</h1>
-  </md-card-header>
-  <md-card-content class="content">
+  </mat-card-header>
+  <mat-card-content class="content">
     <section class="row questionText">
-      <md-input-container floatPlaceholder="always">
-        <textarea #characterCountInputHint mdInput maxlength="200" type="text" placeholder="Text" rows="3" [(ngModel)]="question.text">
+      <mat-input-container floatPlaceholder="always">
+        <textarea #characterCountInputHint matInput maxlength="200" type="text" placeholder="Text" rows="3" [(ngModel)]="question.text">
       </textarea>
-        <md-hint align="end" aria-live="polite">
+        <mat-hint align="end" aria-live="polite">
           {{characterCountInputHint.value.length}} / 200
-        </md-hint>
-      </md-input-container>
-      <button class="addQuestionButton" md-button md-raised-button [disabled]="!question.text.trim()" (click)="handleClick()">Create</button>
+        </mat-hint>
+      </mat-input-container>
+      <button class="addQuestionButton" mat-button mat-raised-button [disabled]="!question.text.trim()" (click)="handleClick()">Create</button>
     </section>
     <section class="row questionQuote">
       <div class="noQuote" *ngIf="!question.quote">
         Associate a quote
         <button 
-         md-mini-fab 
+         mat-mini-fab 
          (click)="openQuotesBrowser(question)"
-         mdTooltip="Attach Quote"><md-icon>add</md-icon>
+         matTooltip="Attach Quote"><mat-icon>add</mat-icon>
         </button>
       </div>
-      <div class="hasQuote truncate" *ngIf="question.quote" (click)="removeQuote()" mdTooltip="Remove Quote">
+      <div class="hasQuote truncate" *ngIf="question.quote" (click)="removeQuote()" matTooltip="Remove Quote">
         <blockquote>{{selectedQuoteText}}</blockquote>
         <span class="remove">
-          <md-icon>clear</md-icon>
+          <mat-icon>clear</mat-icon>
         </span>
       </div>
     </section>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>

@@ -1,7 +1,7 @@
 @import "~../../common/constants";
 .questionSets {
     .card-body {
-        md-spinner {
+        mat-spinner {
             height: 50px;
             margin: 0 auto;
             margin-bottom: 16px;
@@ -18,7 +18,7 @@
             strong{
               margin-right: 16px;
             }
-            md-select{
+            mat-select{
               min-width: 130px;
             }
         }

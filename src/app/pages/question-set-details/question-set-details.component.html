@@ -4,39 +4,39 @@
             <div class="card-header">
                 <span class="title">{{currentQuestionSet.name}}</span>
                 <div class="actions">
-                    <button md-icon-button mdTooltip="View Practice Sessions" [routerLink]="['/sessionDetails', currentQuestionSet.id, currentQuestionSet.name]"> 
-                        <md-icon>question_answer</md-icon> 
+                    <button mat-icon-button matTooltip="View Practice Sessions" [routerLink]="['/sessionDetails', currentQuestionSet.id, currentQuestionSet.name]"> 
+                        <mat-icon>question_answer</mat-icon> 
                     </button>
-                    <button md-icon-button mdTooltip="Delete Question Set" (click)="onQuestionSetDelete()">
-                     <md-icon>delete_forever</md-icon> 
+                    <button mat-icon-button matTooltip="Delete Question Set" (click)="onQuestionSetDelete()">
+                     <mat-icon>delete_forever</mat-icon> 
                     </button>
-                    <button md-button [mdMenuTriggerFor]="appMenu">
-                       <md-icon>more_horiz</md-icon> More
+                    <button mat-button [matMenuTriggerFor]="appMenu">
+                       <mat-icon>more_horiz</mat-icon> More
                     </button>
-                    <md-menu #appMenu="mdMenu">
-                        <button md-menu-item *ngIf="!currentQuestionSet.isDefault" (click)="openImportQuestionsModal()"> 
-                            <md-icon>file_upload</md-icon>
+                    <mat-menu #appMenu="matMenu">
+                        <button mat-menu-item *ngIf="!currentQuestionSet.isDefault" (click)="openImportQuestionsModal()"> 
+                            <mat-icon>file_upload</mat-icon>
                              Import Questions 
                             </button>
-                        <button *ngIf="currentQuestionSet.questions?.length" md-menu-item (click)="exportQuestions()"> 
-                                <md-icon>file_download</md-icon>
+                        <button *ngIf="currentQuestionSet.questions?.length" mat-menu-item (click)="exportQuestions()"> 
+                                <mat-icon>file_download</mat-icon>
                                  Export Questions
                         </button>
-                    </md-menu>
+                    </mat-menu>
                 </div>
             </div>
             <div class="card-body">
                 <div class="editable" *ngIf="!updateObject.isDefault">
-                    <md-input-container floatPlaceholder="always">
-                        <input #nameInput mdInput type="text" placeholder="Name" name="name" [(ngModel)]="updateObject.name" required>
-                        <span mdSuffix><md-icon color="accent">edit</md-icon></span>
-                        <md-error>Name is required</md-error>
-                    </md-input-container>
-                    <md-input-container floatPlaceholder="always">
-                        <textarea #descriptionInput mdInput placeholder="Description" name="description" [(ngModel)]="updateObject.description" rows="5">
+                    <mat-input-container floatPlaceholder="always">
+                        <input #nameInput matInput type="text" placeholder="Name" name="name" [(ngModel)]="updateObject.name" required>
+                        <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
+                        <mat-error>Name is required</mat-error>
+                    </mat-input-container>
+                    <mat-input-container floatPlaceholder="always">
+                        <textarea #descriptionInput matInput placeholder="Description" name="description" [(ngModel)]="updateObject.description" rows="5">
                         </textarea>
-                        <span mdSuffix><md-icon color="accent">edit</md-icon></span>
-                    </md-input-container>
+                        <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
+                    </mat-input-container>
                 </div>
                 <div class="readOnly" *ngIf="updateObject.isDefault">
                     <div class="name">
@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button *ngIf="currentQuestionSet.questions?.length" class="practiceQuestionSetButton" md-button md-button-raised (click)="openPracticeSessionModal()">Practice Question Set</button>
+                <button *ngIf="currentQuestionSet.questions?.length" class="practiceQuestionSetButton" mat-button mat-button-raised (click)="openPracticeSessionModal()">Practice Question Set</button>
             </div>
         </wakeup-card>
     </section>
@@ -62,4 +62,4 @@
         </wakeup-question-list>
     </section>
 </div>
-<md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
+<mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>

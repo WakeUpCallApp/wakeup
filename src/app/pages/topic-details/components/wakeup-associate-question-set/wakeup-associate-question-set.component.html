@@ -1,28 +1,28 @@
-<md-card class="associateQuestionSet mat-elevation-z3">
-  <md-card-header>
+<mat-card class="associateQuestionSet mat-elevation-z3">
+  <mat-card-header>
     <h1 class="cardTitle">Add / Remove Question Sets</h1>
-  </md-card-header>
-  <md-card-content class="content">
+  </mat-card-header>
+  <mat-card-content class="content">
     <section class="row questionSetsDropDown">
-      <md-input-container>
-        <input mdInput name="searchText" 
+      <mat-input-container>
+        <input matInput name="searchText" 
         placeholder="Select question set" 
-        [mdAutocomplete]="auto" 
+        [matAutocomplete]="auto" 
         [formControl]="questionSetCtrl">
-      </md-input-container>
-      <md-autocomplete #auto="mdAutocomplete" md-min-length="0">
-        <md-option (onSelectionChange)="addQuestionSet($event.source.value)" 
-        *ngFor="let questionSet of filteredQuestionSets | async" [value]="questionSet.name" mdTooltip="Add">
+      </mat-input-container>
+      <mat-autocomplete #auto="matAutocomplete" mat-min-length="0">
+        <mat-option (onSelectionChange)="addQuestionSet($event.source.value)" 
+        *ngFor="let questionSet of filteredQuestionSets | async" [value]="questionSet.name" matTooltip="Add">
           {{ questionSet.name }}
-        </md-option>
-      </md-autocomplete>
+        </mat-option>
+      </mat-autocomplete>
       <ul class="added">
-        <li class="item" *ngFor="let selected of selected" (click)="removeQuestionSet(selected)" mdTooltip="Remove">
+        <li class="item" *ngFor="let selected of selected" (click)="removeQuestionSet(selected)" matTooltip="Remove">
           <span class="name truncate">{{selected}}</span>
-          <span><md-icon>clear</md-icon></span>
+          <span><mat-icon>clear</mat-icon></span>
         </li>
       </ul>
     </section>
-    <!-- <button class="associateQuestionSetButton" md-button md-raised-button (click)="handleClick()">Update</button> -->
-  </md-card-content>
-</md-card>
+    <!-- <button class="associateQuestionSetButton" mat-button mat-raised-button (click)="handleClick()">Update</button> -->
+  </mat-card-content>
+</mat-card>

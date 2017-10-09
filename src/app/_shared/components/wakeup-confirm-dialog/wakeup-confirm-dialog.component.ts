@@ -10,7 +10,7 @@ export class WakeupConfirmDialogComponent implements OnInit {
   @Input() title: string;
   @Input() message: string;
 
-  constructor(public dialogRef:MatDialogRef<WakeupConfirmDialogComponent>) {}
+  constructor(public dialogRef: MatDialogRef<WakeupConfirmDialogComponent>) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

@@ -36,13 +36,13 @@ ul {
     flex: 1;
     font-size: 14px;
   }
-  md-icon {
+  mat-icon {
     cursor: pointer;
     height: 34px;
     width: 34px;
     font-size: 34px;
   }
-  md-icon.disabled {
+  mat-icon.disabled {
     color: rgba(0, 0, 0, .34);
     cursor: not-allowed;
   }

@@ -50,8 +50,8 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.actionsSubscription = this.route.params
-      .select<string>("questionSetId")
-      .map(id => new actions.GetCurrentQSAction(id))
+      .filter(params => !!params['questionSetId'])
+      .map(idParams => new actions.GetCurrentQSAction(idParams["questionSetId"]))
       .subscribe(this.store);
 
     this.qsSubscription = this.store

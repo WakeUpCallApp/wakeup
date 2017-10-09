@@ -1,23 +1,23 @@
-<h2 md-dialog-title>Session Settings</h2>
-<md-dialog-content>
+<h2 mat-dialog-title>Session Settings</h2>
+<mat-dialog-content>
   <form class="content">
     <div class="row">
       <h4>Please specify the time interval to be prompted with a question</h4>
-      <md-input-container floatPlaceholder="always">
-        <input mdInput type="number" min="0" step="any" placeholder="Question Interval(minutes)" [(ngModel)]="options.questionInterval"
+      <mat-input-container floatPlaceholder="always">
+        <input matInput type="number" min="0" step="any" placeholder="Question Interval(minutes)" [(ngModel)]="options.questionInterval"
           name="text" />
-      </md-input-container>
+      </mat-input-container>
     </div>
     <div class="row otherOptions">
-      <md-slide-toggle name="repeatQS" [(ngModel)]="options.repeatQS">Loop Question Set?</md-slide-toggle>
-      <md-slide-toggle name="shuffleQS" [(ngModel)]="options.shuffleQuestions">Shuffle Questions?</md-slide-toggle>
+      <mat-slide-toggle name="repeatQS" [(ngModel)]="options.repeatQS">Loop Question Set?</mat-slide-toggle>
+      <mat-slide-toggle name="shuffleQS" [(ngModel)]="options.shuffleQuestions">Shuffle Questions?</mat-slide-toggle>
     </div>
   </form>
-</md-dialog-content>
-<md-dialog-actions>
-  <button class="cancelButton" md-button md-raised-button md-dialog-close>Cancel</button>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="cancelButton" mat-button mat-raised-button mat-dialog-close>Cancel</button>
   <!-- Can optionally provide a result for the closing dialog. -->
-  <button class="startButton" md-button md-raised-button (click)="handleClick()">
+  <button class="startButton" mat-button mat-raised-button (click)="handleClick()">
     Start
     </button>
-</md-dialog-actions>
+</mat-dialog-actions>

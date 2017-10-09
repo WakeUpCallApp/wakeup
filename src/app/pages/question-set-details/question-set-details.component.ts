@@ -13,14 +13,13 @@ import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { Store } from "@ngrx/store";
-import "@ngrx/core/add/operator/select";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import { SessionOptions } from "../../common/services/session-config.service";
 import { WakeupQuotesBrowserComponent } from "./components/wakeup-quotes-browser/wakeup-quotes-browser.component";
 import { WakeupSessionConfigComponent } from "./components/wakeup-session-config/wakeup-session-config.component";
 import { WakeupEditQuestionDialogComponent } from "./components/wakeup-edit-question-dialog/wakeup-edit-question-dialog.component";
-import { WakeupImportFileComponent } from "../../common/components/wakeup-import-file/wakeup-import-file.component";
+import { WakeupImportFileComponent } from "../../_shared/components/wakeup-import-file/wakeup-import-file.component";
 import { SessionConfigService } from "../../common/services/session-config.service";
 import { DialogService } from "../../common/services/dialog.service";
 import { QuestionSet } from "../../common/models/question-set.model";
@@ -61,8 +60,8 @@ export class QuestionSetDetailsComponent
 
   ngOnInit() {
     this.actionsSubscription = this.route.params
-      .select<string>("id")
-      .map(id => new actions.GetCurrentQSAction(id))
+      .filter(params => !!params['id'])
+      .map(idParams => new actions.GetCurrentQSAction(idParams["id"]))
       .subscribe(this.store);
 
     this.qsSubscription = this.store

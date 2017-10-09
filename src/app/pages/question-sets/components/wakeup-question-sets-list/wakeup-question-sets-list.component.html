@@ -1,16 +1,16 @@
 <ul class="questionSetList">
   <li *ngFor="let questionSet of questionSets">
-    <a mdRipple [routerLink]="['/questionSetDetails', questionSet.id]">
-      <div class="info" md-line>
+    <a matRipple [routerLink]="['/questionSetDetails', questionSet.id]">
+      <div class="info" mat-line>
         <span class="title truncate">{{questionSet.name}}</span>
         <span class="summary"> 
-              <span> <md-icon>play_arrow</md-icon> Practiced {{questionSet.practiceTimes}} times</span>
-        <span><md-icon> question_answer</md-icon>{{questionSet.questionIds?.length}} Questions</span>
+              <span> <mat-icon>play_arrow</mat-icon> Practiced {{questionSet.practiceTimes}} times</span>
+        <span><mat-icon> question_answer</mat-icon>{{questionSet.questionIds?.length}} Questions</span>
         </span>
       </div>
       <div tabindex="0" role="button" 
       (keyup.enter)="startQuestionSet($event, questionSet)" 
-      (click)="startQuestionSet($event, questionSet)" class="play" mdTooltip="Practice  Question Set" aria-label="Practice  Question Set">
+      (click)="startQuestionSet($event, questionSet)" class="play" matTooltip="Practice  Question Set" aria-label="Practice  Question Set">
         <span class="text">Practice now</span>
         <img class="practiceIcon" src="../../../../assets/images/healthyHeart.png" alt="practice">
       </div>

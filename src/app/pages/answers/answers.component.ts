@@ -56,14 +56,14 @@ export class AnswersComponent implements OnInit {
     this.store.dispatch(new answerActions.OpenIndexedDbAction());
     this.actionsSubscription =
       Observable.combineLatest(
-        this.route.params.select<string>("questionId"),
+        this.route.params.filter(params => !!params["questionId"]),
         this.store.select(reducers.getIndexedDBState),
-        ((id, isDbOpen) => {
-          this.currentQuestionId = id;
+        ((idParams, isDbOpen) => {
+          this.currentQuestionId = idParams["questionId"];
           if (isDbOpen) {
             this.store.dispatch(new answerActions.LoadAction(+this.currentQuestionId));
           }
-          return new questionActions.GetCurrentQuestion(+id);
+          return new questionActions.GetCurrentQuestion(+idParams["questionId"]);
         }))
         .subscribe(this.store);
         

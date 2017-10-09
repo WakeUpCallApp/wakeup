@@ -32,7 +32,7 @@ body {
   font-size: 16px;
 }
 
-md-card-header {
+mat-card-header {
   align-items: center;
   margin-bottom: 16px;
 }
@@ -65,7 +65,7 @@ textarea {
   align-items: center;
 }
 
-.breadcrumbs md-icon {
+.breadcrumbs mat-icon {
   align-items: center;
 }
 
@@ -84,7 +84,7 @@ textarea {
   font-weight: bold;
 }
 
-md-input-container, .mat-card-content {
+mat-input-container, .mat-card-content {
   font-size: 17px !important;
 }
 
@@ -143,6 +143,6 @@ blockquote{ margin: 0;
      background-color: transparent;
  }
 
- md-input-container {
+ mat-input-container {
    width: 100% !important;
  }

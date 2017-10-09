@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Import file</h2>
+<mat-dialog-content>
+  <mat-spinner class="spinner" *ngIf="importSpinner"></mat-spinner>
+  <form class="content">
+    <input type="file" placeholder="File" name="file" accept=".csv" (change)="fileChanged($event)">
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="cancelButton" mat-button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

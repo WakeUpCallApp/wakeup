@@ -1,4 +1,4 @@
-@import "~../../constants";
+@import "~../../../common/constants";
 :host {
     margin: 26px;
     .mat-card>:first-child {
@@ -6,7 +6,7 @@
     }
 }
 
-md-card-header {
+mat-card-header {
     box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
     margin: -43px 15px 0;
     border-radius: 3px;
@@ -19,12 +19,12 @@ md-card-header {
     font-size: 18px;
 }
 
-md-card-title {
+mat-card-title {
     font-size: 18px;
     margin-bottom: 0;
 }
 
-md-card-content {
+mat-card-content {
     margin-top: 36px;
     font-size: 16px;
 }

@@ -2,23 +2,22 @@
   <wakeup-card>
     <div class="card-header">Question Sets</div>
     <div class="card-body">
-      <md-input-container class="search">
-        <input mdInput [(ngModel)]="search" name="search" placeholder="search" (keyup)="doSearch($event.target.value)">
-        <md-icon class="material-icons" mdSuffix>search</md-icon>
-      </md-input-container>
+      <mat-input-container class="search">
+        <input matInput [(ngModel)]="search" name="search" placeholder="search" (keyup)="doSearch($event.target.value)">
+        <mat-icon class="material-icons" matSuffix>search</mat-icon>
+      </mat-input-container>
       <div class="filter">
-      <strong>Filter:</strong>
-       <md-select [(ngModel)]="selectedFilter" (change)="doFilter()">
-              <md-option [value]=all>
-                All
-              </md-option>
-              <md-option [value]=mostPlayed >
-                Most Practiced
-              </md-option>
-            </md-select>
+        <strong>Filter:</strong>
+        <mat-select [(ngModel)]="selectedFilter" (change)="doFilter()">
+          <mat-option [value]=all>
+            All
+          </mat-option>
+          <mat-option [value]=mostPlayed>
+            Most Practiced
+          </mat-option>
+        </mat-select>
       </div>
-
-      <md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
+      <mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>
       <span *ngIf="!(filteredList$|async)?.length">Nothing found</span>
       <wakeup-question-sets-list *ngIf="(filteredList$|async)?.length" [questionSets]="filteredList$ | async">
       </wakeup-question-sets-list>

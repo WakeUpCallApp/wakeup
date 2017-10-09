@@ -13,7 +13,6 @@ import {
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import "@ngrx/core/add/operator/select";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import * as reducers from "../../common/reducers";
@@ -52,8 +51,10 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.store.dispatch(new questionSetActions.LoadAction());
     this.questionSets$ = this.store.select(reducers.getQuestionSetsSortedState);
     this.actionsSubscription = this.route.params
-      .select<string>("id")
-      .map(id => new actions.GetCurrentTopicAction(+id))
+      .filter(params => !!params['id'])
+      .map(idParams => {
+        return new actions.GetCurrentTopicAction(+idParams['id']); 
+      })
       .subscribe(this.store);
 
     this.topicSubscription = this.store

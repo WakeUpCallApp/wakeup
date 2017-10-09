@@ -1,43 +1,43 @@
-<md-card class="questionList mat-elevation-z3">
-  <md-card-header>
+<mat-card class="questionList mat-elevation-z3">
+  <mat-card-header>
     <div class="title">
       <h1 class="cardTitle">Questions</h1>
     </div>
-  </md-card-header>
-  <md-card-content class="list">
+  </mat-card-header>
+  <mat-card-content class="list">
     <h3 class="allQuestionsCheck" *ngIf="canEdit">
-      <md-checkbox [indeterminate]="indeterminate" [(checked)]="checked" (change)="toggleCheckAllQuestions()">
+      <mat-checkbox [indeterminate]="indeterminate" [(checked)]="checked" (change)="toggleCheckAllQuestions()">
         <span *ngIf="!getSelectedQuestions().length">Select all</span>
         <span *ngIf="getSelectedQuestions().length">
               {{getSelectedQuestions().length}} Selected
         </span>
-      </md-checkbox>
+      </mat-checkbox>
       <div class="actions">
-        <button [disabled]="!canDelete()" class="deleteQuestions" md-button md-raised-button (click)="deleteQuestions()">Delete</button>
+        <button [disabled]="!canDelete()" class="deleteQuestions" mat-button mat-raised-button (click)="deleteQuestions()">Delete</button>
       </div>
     </h3>
     <ul>
       <li *ngFor="let question of questions; index as i">
-        <md-checkbox *ngIf="canEdit" class="questionCheckbox" [(ngModel)]="question.checked">
+        <mat-checkbox *ngIf="canEdit" class="questionCheckbox" [(ngModel)]="question.checked">
           <span class="questionTitle">{{question.text}}</span>
-        </md-checkbox>
+        </mat-checkbox>
 
         <a *ngIf="!canEdit" class="questionTitleLink" [routerLink]="['/answers', question.id]">
           <span class="title">{{i+1}} . {{question.text}}</span> 
-          <span> <md-icon>keyboard_arrow_right</md-icon></span>
+          <span> <mat-icon>keyboard_arrow_right</mat-icon></span>
         </a>
         <div *ngIf="canEdit" class="actions">
-          <button color="primary" md-button mdTooltip="See Answers" [routerLink]="['/answers', question.id]"> <md-icon>message</md-icon> answers </button>
-          <button md-button mdTooltip="More Actions" [mdMenuTriggerFor]="questionMenu" >
-                <md-icon>more_horiz</md-icon> More
+          <button color="primary" mat-button matTooltip="See Answers" [routerLink]="['/answers', question.id]"> <mat-icon>message</mat-icon> answers </button>
+          <button mat-button matTooltip="More Actions" [matMenuTriggerFor]="questionMenu" >
+                <mat-icon>more_horiz</mat-icon> More
             </button>
-          <md-menu #questionMenu="mdMenu">
-            <button md-menu-item (click)="editQuestion(question)">  <md-icon class="accent">edit</md-icon> Edit </button>
-            <button md-menu-item (click)="openQuotes(question)">  <md-icon class="primary">format_quote</md-icon> Add/Remove Quote </button>
-          </md-menu>
+          <mat-menu #questionMenu="matMenu">
+            <button mat-menu-item (click)="editQuestion(question)">  <mat-icon class="accent">edit</mat-icon> Edit </button>
+            <button mat-menu-item (click)="openQuotes(question)">  <mat-icon class="primary">format_quote</mat-icon> Add/Remove Quote </button>
+          </mat-menu>
 
         </div>
       </li>
     </ul>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>

@@ -38,10 +38,10 @@ export class NewQuoteComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
     this.actionsSubscription = this.route.params
-      .select<string>('topidId')
-      .subscribe(topicId => {
-        this.quote.topic = +topicId;
-        this.store.dispatch(new topicActions.GetCurrentTopicAction(+topicId));
+      .filter(params => !!params['topidId'])
+      .subscribe(topicIdParams => {
+        this.quote.topic = +topicIdParams["topicId"];
+        this.store.dispatch(new topicActions.GetCurrentTopicAction(+topicIdParams["topicId"]));
       });
     this.authors$ = this.store.select(reducers.getAuthorSuggestions);
     this.sources$ = this.store.select(reducers.getSourceSuggestions);

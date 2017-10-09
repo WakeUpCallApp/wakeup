@@ -1,5 +1,5 @@
 import { Observable } from "rxjs/Rx";
-import { WakeupConfirmDialogComponent } from "../components/wakeup-confirm-dialog/wakeup-confirm-dialog.component";
+import { WakeupConfirmDialogComponent } from "../../_shared/components/wakeup-confirm-dialog/wakeup-confirm-dialog.component";
 import { MatDialogRef, MatDialog, MatDialogConfig } from "@angular/material";
 import { Injectable } from "@angular/core";
 

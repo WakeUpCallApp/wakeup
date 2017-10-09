@@ -75,7 +75,7 @@ export class LoadActionError implements Action {
 export class GetCurrentQSAction implements Action {
   type = ActionTypes.GET_CURRENT_QUESTION_SET;
 
-  constructor(public payload: string) {}
+  constructor(public payload: any) {}
 }
 
 export class GetCurrentQSActionSuccess implements Action {

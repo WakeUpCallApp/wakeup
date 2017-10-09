@@ -12,7 +12,7 @@ import * as topicActions from "../../common/actions/topic.actions";
 import { Quote } from "../../common/models/quote.model";
 import { Topic } from "../../common/models/topic.model";
 import appConstants from "../../common/app-constants";
-import { WakeupImportFileComponent } from "../../common/components/wakeup-import-file/wakeup-import-file.component";
+import { WakeupImportFileComponent } from "../../_shared/components/wakeup-import-file/wakeup-import-file.component";
 
 @Component({
   selector: "wakeup-quotes",
@@ -40,13 +40,13 @@ export class QuotesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
     this.actionsSubscription = this.route.params
-      .select<string>("topicId")
-      .map(id => {
-        this.currentTopicId = id;
+      .filter(params => !!params["topicId"])
+      .map(idParams => {
+        this.currentTopicId = idParams["topicId"];
         this.store.dispatch(
           new topicActions.GetCurrentTopicAction(this.currentTopicId)
         );
-        return new actions.GetByTopicIdAction(+id);
+        return new actions.GetByTopicIdAction(+idParams["topicId"]);
       })
       .subscribe(this.store);
 

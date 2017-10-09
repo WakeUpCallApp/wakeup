@@ -13,11 +13,11 @@
         @media (min-width: 1000px) {
             flex-direction: row;
             align-items: center;
-            md-input-container {
+            mat-input-container {
                 width: 90%;
             }
         }
-        md-input-container {
+        mat-input-container {
             width: 100%;
         }
     }

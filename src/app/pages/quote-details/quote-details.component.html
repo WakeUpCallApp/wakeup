@@ -1,15 +1,15 @@
 <div class="quoteDetails pageContent">
   <div class="breadcrumbs" *ngIf="topic">
     <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
-    <md-icon>keyboard_arrow_right</md-icon>
+    <mat-icon>keyboard_arrow_right</mat-icon>
     <a [routerLink]="['/quotes', topic?.id]"> Inspiration Page</a>
-    <md-icon>keyboard_arrow_right</md-icon> <span class="currentLink">Quote Details</span>
+    <mat-icon>keyboard_arrow_right</mat-icon> <span class="currentLink">Quote Details</span>
   </div>
   <wakeup-card>
     <div class="card-header">
       <div class="title">Quotes Details</div>
       <div class="actions" *ngIf="!topic?.isDefault">
-          <button md-icon-button mdTooltip="Delete Quote" (click)="onDeleteQuote()"> <md-icon>delete_forever</md-icon></button>
+          <button mat-icon-button matTooltip="Delete Quote" (click)="onDeleteQuote()"> <mat-icon>delete_forever</mat-icon></button>
       </div>
     </div>
     <div class="card-body" *ngIf="updateObject as quote">
@@ -18,40 +18,40 @@
       </div>
       <section class="quoteForm" *ngIf="!quote.topic?.isDefault;else readOnlyQuote">
         <form class="editQuoteForm" #quoteForm='ngForm'>
-          <md-input-container floatPlaceholder="always">
-            <textarea class="quoteText" [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" mdInput name="text" required></textarea>
-            <span mdSuffix><md-icon color="accent">edit</md-icon></span>
-            <md-error>Text is required</md-error>
-            <md-hint align="end" aria-live="polite"> {{textVar.value.length}} / 1000 </md-hint>
-          </md-input-container>
+          <mat-input-container floatPlaceholder="always">
+            <textarea class="quoteText" [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" matInput name="text" required></textarea>
+            <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
+            <mat-error>Text is required</mat-error>
+            <mat-hint align="end" aria-live="polite"> {{textVar.value.length}} / 1000 </mat-hint>
+          </mat-input-container>
 
-          <md-input-container floatPlaceholder="always">
+          <mat-input-container floatPlaceholder="always">
             <input [(ngModel)]="quote.author" #authorVar list="suggestions" autocomplete="off" maxlength="200" placeholder="Author" type="text"
-              mdInput name="author">
-            <span mdSuffix><md-icon color="accent">edit</md-icon></span>
+              matInput name="author">
+            <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
             <datalist id="suggestions">
               <select>
                     <option *ngFor="let suggestion of authors$ | async">{{suggestion}}</option>
                 </select>
             </datalist>
-            <md-hint align="end" aria-live="polite">
+            <mat-hint align="end" aria-live="polite">
               {{authorVar.value.length}} / 200
-            </md-hint>
-          </md-input-container>
+            </mat-hint>
+          </mat-input-container>
 
-          <md-input-container floatPlaceholder="always">
+          <mat-input-container floatPlaceholder="always">
             <input [(ngModel)]="quote.source" #sourceVar list="sourceSuggestions" autocomplete="off" placeholder="Source" type="text"
-              mdInput name="source" maxlength="200">
-            <span mdSuffix><md-icon color="accent">edit</md-icon></span>
+              matInput name="source" maxlength="200">
+            <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
             <datalist id="sourceSuggestions">
               <select>
                     <option *ngFor="let source of sources$ | async" >{{source}}</option>
                 </select>
             </datalist>
-            <md-hint align="end" aria-live="polite">
+            <mat-hint align="end" aria-live="polite">
               {{sourceVar.value.length}} / 200
-            </md-hint>
-          </md-input-container>
+            </mat-hint>
+          </mat-input-container>
         </form>
       </section>
       <ng-template class="readOnly" #readOnlyQuote>
@@ -74,4 +74,4 @@
     </wakeup-comment-list>
   </section>
 </div>
-<md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
+<mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>

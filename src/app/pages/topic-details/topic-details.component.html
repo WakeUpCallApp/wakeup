@@ -5,31 +5,31 @@
                 <span class="title">{{currentTopic.name}}</span>
                 <div class="actions">
                     <button 
-                    md-icon-button
-                    mdTooltip="View Quotes" 
+                    mat-icon-button
+                    matTooltip="View Quotes" 
                     [routerLink]="['/quotes',currentTopic.id]"> 
-                            <md-icon>format_quote</md-icon>  
+                            <mat-icon>format_quote</mat-icon>  
                     </button>
                     <button 
-                    md-icon-button 
+                    mat-icon-button 
                     (click)="onDeleteTopic()"
-                    mdTooltip="Delete Topic"> 
-                            <md-icon>delete_forever</md-icon>
+                    matTooltip="Delete Topic"> 
+                            <mat-icon>delete_forever</mat-icon>
                     </button>
                 </div>
             </div>
             <div class="card-body">
                 <div class="editable" *ngIf="!updateObject.isDefault">
-                    <md-input-container floatPlaceholder="always">
-                        <input #nameInput mdInput type="text" placeholder="Name" name="name" [(ngModel)]="updateObject.name" required>
-                        <span mdSuffix><md-icon color="accent">edit</md-icon></span>
-                        <md-error>Name is required</md-error>
-                    </md-input-container>
-                    <md-input-container floatPlaceholder="always">
-                        <textarea #descriptionInput mdInput placeholder="Description" name="description" [(ngModel)]="updateObject.description" rows="5">
+                    <mat-input-container floatPlaceholder="always">
+                        <input #nameInput matInput type="text" placeholder="Name" name="name" [(ngModel)]="updateObject.name" required>
+                        <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
+                        <mat-error>Name is required</mat-error>
+                    </mat-input-container>
+                    <mat-input-container floatPlaceholder="always">
+                        <textarea #descriptionInput matInput placeholder="Description" name="description" [(ngModel)]="updateObject.description" rows="5">
                         </textarea>
-                        <span mdSuffix><md-icon color="accent">edit</md-icon></span>
-                    </md-input-container>
+                        <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
+                    </mat-input-container>
                 </div>
                 <div class="readOnly" *ngIf="updateObject.isDefault">
                     <div class="name">
@@ -47,18 +47,18 @@
         </wakeup-associate-question-set>
     </section>
     <section class="questionSets" *ngIf="currentTopic.questionSets?.length">
-        <md-card class="questionSetList mat-elevation-z3">
-            <md-card-header>
+        <mat-card class="questionSetList mat-elevation-z3">
+            <mat-card-header>
                 <div class="title">
                     <h1 class="cardTitle">Question Sets</h1>
                 </div>
                 <div class="actions">
                 </div>
-            </md-card-header>
-            <md-card-content class="list">
+            </mat-card-header>
+            <mat-card-content class="list">
                 <wakeup-question-sets-list [questionSets]="currentTopic.questionSets"></wakeup-question-sets-list>
-            </md-card-content>
-        </md-card>
+            </mat-card-content>
+        </mat-card>
     </section>
 </div>
-<md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
+<mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>

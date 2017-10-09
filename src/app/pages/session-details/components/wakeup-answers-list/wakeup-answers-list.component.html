@@ -2,21 +2,21 @@
     <div class="group" *ngIf="currentGroup">
         <div class="navigation">
             <span class="dateText">{{currentGroup.date}}</span>
-            <md-icon
+            <mat-icon
             tabindex="0"
             role="button"
             aria-label="see previous answer"
             (keyup.enter)="getPrevSession(i)"
             (click)="getPrevSession(i)" 
             [ngClass]="{'disabled': !answers[i+1]}" 
-             title="Previous">keyboard_arrow_left</md-icon>
-            <md-icon 
+             title="Previous">keyboard_arrow_left</mat-icon>
+            <mat-icon 
             tabindex="0"
             role="button"
             aria-label="see next answer"
             (keyup.enter)="getNextSession(i)"
             (click)="getNextSession(i)"
-            [ngClass]="{'disabled': !answers[i-1]}" title="Next">keyboard_arrow_right</md-icon>
+            [ngClass]="{'disabled': !answers[i-1]}" title="Next">keyboard_arrow_right</mat-icon>
         </div>
         <ul class="list">
             <li *ngFor="let answer of currentGroup.answers">

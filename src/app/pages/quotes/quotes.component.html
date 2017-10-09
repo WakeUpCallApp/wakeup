@@ -1,26 +1,26 @@
 <div class="quotes pageContent">
   <div class="breadcrumbs" *ngIf="currentTopic as topic">
     <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
-    <md-icon>keyboard_arrow_right</md-icon>
+    <mat-icon>keyboard_arrow_right</mat-icon>
     <span class="currentLink">Inspiration Page</span>
   </div>
   <wakeup-card>
     <div class="card-header">
       <div class="title">Quotes <small>{{currentTopic?.name}}</small></div>
       <div class="actions">
-        <button md-button [mdMenuTriggerFor]="quotesMenu" mdTooltip="More Actions">
-                       <md-icon>more_horiz</md-icon> More
+        <button mat-button [matMenuTriggerFor]="quotesMenu" matTooltip="More Actions">
+                       <mat-icon>more_horiz</mat-icon> More
                     </button>
-        <md-menu #quotesMenu="mdMenu">
-          <button md-menu-item *ngIf="!currentTopic?.isDefault" (click)="openImportQuotesModal()"> 
-              <md-icon>file_upload</md-icon> 
+        <mat-menu #quotesMenu="matMenu">
+          <button mat-menu-item *ngIf="!currentTopic?.isDefault" (click)="openImportQuotesModal()"> 
+              <mat-icon>file_upload</mat-icon> 
               Import Quotes 
           </button>
-          <button md-menu-item *ngIf="currentTopic?.quotes?.length" (click)="exportQuotes()"> 
-              <md-icon>file_download</md-icon> 
+          <button mat-menu-item *ngIf="currentTopic?.quotes?.length" (click)="exportQuotes()"> 
+              <mat-icon>file_download</mat-icon> 
               Export Quotes 
           </button>
-        </md-menu>
+        </mat-menu>
       </div>
     </div>
     <div class="card-body">
@@ -29,8 +29,8 @@
       </div>
       <ul class="quotesList">
         <li *ngFor="let quote of quotes">
-          <a [routerLink]="['/quoteDetails', quote.id, currentTopic.id]" mdTooltip="see details">
-            <!-- <md-icon>format_quote</md-icon> -->
+          <a [routerLink]="['/quoteDetails', quote.id, currentTopic.id]" matTooltip="see details">
+            <!-- <mat-icon>format_quote</mat-icon> -->
             <blockquote class="text">
               {{quote.text}}
             </blockquote>
@@ -42,8 +42,8 @@
     </div>
   </wakeup-card>
 </div>
-<button tabindex="0" mdRipple *ngIf="!currentTopic?.isDefault" (click)="goToCreateQuote()" mdTooltip="Create Quote" class="addQuoteButton"
-  md-mini-fab [mdTooltipPosition]="'above'" [mdTooltipClass]="'tooltip'">
- <md-icon>add</md-icon>
+<button tabindex="0" matRipple *ngIf="!currentTopic?.isDefault" (click)="goToCreateQuote()" matTooltip="Create Quote" class="addQuoteButton"
+  mat-mini-fab [matTooltipPosition]="'above'" [matTooltipClass]="'tooltip'">
+ <mat-icon>add</mat-icon>
 </button>
-<md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
+<mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>

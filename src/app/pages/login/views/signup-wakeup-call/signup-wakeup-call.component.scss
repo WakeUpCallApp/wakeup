@@ -24,7 +24,7 @@ form.signupForm {
     button.signupButton:not(:disabled) {
         background-color: $accent;
     }
-    md-input-container {
+    mat-input-container {
         margin-bottom: 10px;
     }
     .errorMessage {

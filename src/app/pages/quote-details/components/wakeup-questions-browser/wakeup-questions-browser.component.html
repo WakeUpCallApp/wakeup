@@ -1,13 +1,13 @@
-<h2 class="header" md-dialog-title>
+<h2 class="header" mat-dialog-title>
   <span class="title"> Associate Questions</span>
-  <button class="addQuestionButton" md-button md-button-raised (click)="safeClose()">Save</button>
+  <button class="addQuestionButton" mat-button mat-button-raised (click)="safeClose()">Save</button>
 </h2>
-<md-dialog-content *ngIf="currentQuestionSet">
-  <md-select class="questionSetDropDown" placeholder="Question Set" [(ngModel)]="currentQuestionSet">
-    <md-option *ngFor="let questionSet of questionSets" [value]="questionSet">
+<mat-dialog-content *ngIf="currentQuestionSet">
+  <mat-select class="questionSetDropDown" placeholder="Question Set" [(ngModel)]="currentQuestionSet">
+    <mat-option *ngFor="let questionSet of questionSets" [value]="questionSet">
       {{ questionSet.questionSet }}
-    </md-option>
-  </md-select>
+    </mat-option>
+  </mat-select>
   <div class="questionList">
     <ul>
       <li *ngFor="let question of currentQuestionSet.questions" [ngClass]="{'selected': isSelectedQuestion(question)}" (click)="toggleSelectedQuestion(question)">
@@ -20,4 +20,4 @@
     There are no questions in this question set
   </div>
 
-</md-dialog-content>
+</mat-dialog-content>

@@ -1,4 +1,4 @@
-<md-toolbar *ngIf="loggedUser" class="mat-elevation-z5">
+<mat-toolbar *ngIf="loggedUser" class="mat-elevation-z5">
   <div class="left large-screen">
     <a routerLink="/questionSets" class="logo">
         <img src="/../../../assets/images/heart.png" alt='logo'>
@@ -31,29 +31,29 @@
   </div>
   <div class="left small-screen">
     <div class="openMenu">
-      <button (click)="toggleSideNav()" md-mini-fab mdTooltip="Show/Hide menu">
-      <md-icon>menu</md-icon>
+      <button (click)="toggleSideNav()" mat-mini-fab matTooltip="Show/Hide menu">
+      <mat-icon>menu</mat-icon>
       </button>
     </div>
   </div>
   <div class="right">
     <div class="userProfile">
-      <button md-button [mdMenuTriggerFor]="menu"><span class="greeting">Hello</span> {{loggedUser?.name}}
-        <md-icon>keyboard_arrow_down</md-icon> 
+      <button mat-button [matMenuTriggerFor]="menu"><span class="greeting">Hello</span> {{loggedUser?.name}}
+        <mat-icon>keyboard_arrow_down</mat-icon> 
         </button>
     </div>
-    <md-menu #menu="mdMenu" [overlapTrigger]="false">
-      <button md-menu-item routerLink='/profile'>
+    <mat-menu #menu="matMenu" [overlapTrigger]="false">
+      <button mat-menu-item routerLink='/profile'>
         <div class="menu-section">
-              <md-icon>perm_identity</md-icon> Profile
+              <mat-icon>perm_identity</mat-icon> Profile
         </div>
      </button>
-      <button md-menu-item>
+      <button mat-menu-item>
         <div class="menu-section">
-              <md-icon>language</md-icon> Change Language
+              <mat-icon>language</mat-icon> Change Language
         </div>
      </button>
-    </md-menu>
-    <button md-button (click)="logoutUser()">Logout <i class="fa fa-sign-out"></i></button>
+    </mat-menu>
+    <button mat-button (click)="logoutUser()">Logout <i class="fa fa-sign-out"></i></button>
   </div>
-</md-toolbar>
+</mat-toolbar>

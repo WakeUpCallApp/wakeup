@@ -20,13 +20,24 @@ import {
   MatSnackBarModule,
   MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatSlideToggleModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { WakeupCardComponent } from "./components/wakeup-card/wakeup-card.component";
+import { WakeupImportFileComponent } from "./components/wakeup-import-file/wakeup-import-file.component";
+import { WakeupConfirmDialogComponent } from './components/wakeup-confirm-dialog/wakeup-confirm-dialog.component';
 @NgModule({
-  imports: [],
-  declarations: [],
+  imports: [
+    CommonModule, 
+    RouterModule,
+    MatCardModule, 
+    MatButtonModule,
+    MatTooltipModule],
+  declarations: [
+    WakeupCardComponent,
+    WakeupImportFileComponent,
+    WakeupConfirmDialogComponent],
   exports: [
     CommonModule,
     RouterModule,
@@ -50,7 +61,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatSnackBarModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule
-  ]
+    MatTooltipModule,
+    MatSlideToggleModule,
+    WakeupCardComponent
+  ],
+  entryComponents: [WakeupImportFileComponent, WakeupConfirmDialogComponent]
 })
 export class SharedModule { }

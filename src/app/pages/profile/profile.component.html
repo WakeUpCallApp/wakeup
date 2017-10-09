@@ -6,16 +6,16 @@
       </div>
       <div class="card-body">
         <form #profileForm='ngForm'>
-          <md-input-container floatPlaceholder="always">
-            <input mdInput type="password" placeholder="Old Password" name="oldPassword" [(ngModel)]="oldPassword" required>
-            <md-error>Old Password is required</md-error>
-          </md-input-container>
-          <md-input-container floatPlaceholder="always">
-            <input mdInput type="password" placeholder="New Password" name="newPassword" [(ngModel)]="newPassword" required>
-            <md-error>New Password is required</md-error>
-          </md-input-container>
-           <md-hint class="errorMessage">{{this.errorMessage}}</md-hint>
-          <button [disabled]="!profileForm.valid" class="saveChanges" md-button md-raised-button (click)="updatePassword()"> Save changes </button>
+          <mat-input-container floatPlaceholder="always">
+            <input matInput type="password" placeholder="Old Password" name="oldPassword" [(ngModel)]="oldPassword" required>
+            <mat-error>Old Password is required</mat-error>
+          </mat-input-container>
+          <mat-input-container floatPlaceholder="always">
+            <input matInput type="password" placeholder="New Password" name="newPassword" [(ngModel)]="newPassword" required>
+            <mat-error>New Password is required</mat-error>
+          </mat-input-container>
+           <mat-hint class="errorMessage">{{this.errorMessage}}</mat-hint>
+          <button [disabled]="!profileForm.valid" class="saveChanges" mat-button mat-raised-button (click)="updatePassword()"> Save changes </button>
         </form>
       </div>
     </wakeup-card>

@@ -3,23 +3,23 @@
     <div class="card-header">Create Topic</div>
     <div class="card-body">
       <form class="createTopicForm" #topicForm='ngForm'>
-        <md-input-container floatPlaceholder="always" dividerColor="{{ (topicNameVar.touched || topicNameVar.dirty) && !topicNameVar.valid ? 'warn' : 'primary' }}">
-          <input #topicNameVar placeholder="Name" type="text" maxlength="200" #nameInputHint mdInput name="title" required [(ngModel)]="topic.title">
-          <md-error>Name is required</md-error>
-          <md-hint align="end" aria-live="polite"> {{nameInputHint.value.length}} /200 </md-hint>
-        </md-input-container>
-        <md-input-container floatPlaceholder="always">
-          <textarea mdInput #descriptionInputHint maxlength="500" placeholder="Description" name="description" cols="30" rows="5" [(ngModel)]="topic.description">
+        <mat-input-container floatPlaceholder="always" dividerColor="{{ (topicNameVar.touched || topicNameVar.dirty) && !topicNameVar.valid ? 'warn' : 'primary' }}">
+          <input #topicNameVar placeholder="Name" type="text" maxlength="200" #nameInputHint matInput name="title" required [(ngModel)]="topic.title">
+          <mat-error>Name is required</mat-error>
+          <mat-hint align="end" aria-live="polite"> {{nameInputHint.value.length}} /200 </mat-hint>
+        </mat-input-container>
+        <mat-input-container floatPlaceholder="always">
+          <textarea matInput #descriptionInputHint maxlength="500" placeholder="Description" name="description" cols="30" rows="5" [(ngModel)]="topic.description">
           </textarea>
-          <md-hint align="end" aria-live="polite"> {{descriptionInputHint.value.length}} /500 </md-hint>
-        </md-input-container>
+          <mat-hint align="end" aria-live="polite"> {{descriptionInputHint.value.length}} /500 </mat-hint>
+        </mat-input-container>
       </form>
     </div>
     <div class="card-footer">
-      <button *ngIf="!isCreating" md-button md-raised-button [disabled]="!topicForm.valid" class="createButton" (click)="createTopic()">
+      <button *ngIf="!isCreating" mat-button mat-raised-button [disabled]="!topicForm.valid" class="createButton" (click)="createTopic()">
     Create
     </button>
-      <md-spinner class="spinner" *ngIf="isCreating"></md-spinner>
+      <mat-spinner class="spinner" *ngIf="isCreating"></mat-spinner>
     </div>
   </wakeup-card>
 </div>

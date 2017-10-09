@@ -1,5 +1,4 @@
 import { ActionReducer, combineReducers } from "@ngrx/store";
-import { compose } from "@ngrx/core/compose";
 import { environment } from "../../../environments/environment";
 
 import * as questionSet from "./question-set.reducer";
@@ -21,24 +20,13 @@ export interface State {
   answer: answer.State;
 }
 
-const reducers = {
+export const reducers = {
   questionSet: questionSet.reducer,
   quote: quote.reducer,
   topic: topic.reducer,
   question: question.reducer,
   answer: answer.reducer
 };
-
-const developmentReducer: ActionReducer<any> = combineReducers(reducers);
-const productionReducer: ActionReducer<any> = combineReducers(reducers);
-
-export function reducer(state: any, action: any) {
-  if (environment.production) {
-    return productionReducer(state, action);
-  } else {
-    return developmentReducer(state, action);
-  }
-}
 
 // -------------------------------------------------------------------
 // Selectors

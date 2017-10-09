@@ -1,5 +1,5 @@
 <div class="practiceSession">
-  <button mdTooltip="End Session"  [mdTooltipClass]="'tooltip'" class="endSessionButton" (click)="endQuestionSet()" md-fab>
+  <button matTooltip="End Session"  [matTooltipClass]="'tooltip'" class="endSessionButton" (click)="endQuestionSet()" mat-fab>
       <i class="fa fa-power-off" aria-hidden="true"></i>
     </button>
   <div class="content" *ngIf="displayQuestion">
@@ -7,17 +7,17 @@
     <div class="questionInfo">
       <div class="questionText">{{currentQuestionIndex+1}}. {{currentQuestion?.text}}</div>
       <div class="quoteText" *ngIf="currentQuote">
-        <md-icon>format_quote</md-icon>
+        <mat-icon>format_quote</mat-icon>
         {{(currentQuote | async)?.text }}
       </div>
     </div>
     <div class="inputArea">
-      <md-input-container floatPlaceholder="always">
-        <textarea maxlength="5000" mdInput rows="3" placeholder="Answer" [(ngModel)]="answerText"></textarea>
-      </md-input-container>
+      <mat-input-container floatPlaceholder="always">
+        <textarea maxlength="5000" matInput rows="3" placeholder="Answer" [(ngModel)]="answerText"></textarea>
+      </mat-input-container>
       <div class="actions">
-        <button md-button (click)="setNextQuestion()">Skip</button>
-        <button md-button (click)="saveAnswer()" [disabled]="!answerText?.trim()" md-raised-button class="saveButton">Save</button>
+        <button mat-button (click)="setNextQuestion()">Skip</button>
+        <button mat-button (click)="saveAnswer()" [disabled]="!answerText?.trim()" mat-raised-button class="saveButton">Save</button>
       </div>
     </div>
   </div>

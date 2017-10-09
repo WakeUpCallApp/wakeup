@@ -1,13 +1,13 @@
-<h2 md-dialog-title class="header">
+<h2 mat-dialog-title class="header">
   <span class="title">Quotes</span>
-  <button class="addQuoteButton" md-button md-button-raised (click)="safeClose()">Save</button>
+  <button class="addQuoteButton" mat-button mat-button-raised (click)="safeClose()">Save</button>
 </h2>
-<md-dialog-content>
-  <md-select class="topicDropDown" placeholder="Topic" [(ngModel)]="currentTopic">
-    <md-option *ngFor="let topic of topics" [value]="topic">
+<mat-dialog-content>
+  <mat-select class="topicDropDown" placeholder="Topic" [(ngModel)]="currentTopic">
+    <mat-option *ngFor="let topic of topics" [value]="topic">
       {{ topic.name }}
-    </md-option>
-  </md-select>
+    </mat-option>
+  </mat-select>
   <div class="quoteList">
     <ul>
       <li *ngFor="let quote of currentTopic.quotes" [ngClass]="{'selected': isSelectedQuote(quote)}" (click)="toggleSelectedQuote(quote)">
@@ -21,4 +21,4 @@
     There are no quotes for this topic
   </div>
 
-</md-dialog-content>
+</mat-dialog-content>

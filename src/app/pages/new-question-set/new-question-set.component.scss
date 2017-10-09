@@ -3,7 +3,7 @@
     .createQuestionSetForm {
         display: flex;
         flex-direction: column;
-        md-input-container {
+        mat-input-container {
             margin-bottom: 26px;
         }
     }
@@ -16,7 +16,7 @@
     .createButton:not(:disabled) {
         background-color: $accent;
     }
-    md-spinner {
+    mat-spinner {
         height: 50px;
         align-self: center;
     }

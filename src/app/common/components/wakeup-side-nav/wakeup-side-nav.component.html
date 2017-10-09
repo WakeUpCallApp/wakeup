@@ -1,5 +1,5 @@
-<md-sidenav-container class="container">
-    <md-sidenav #sidenav [(opened)]="isOpen" mode="push" class='mat-elevation-z5' (close)="closeSidenav()">
+<mat-sidenav-container class="container">
+    <mat-sidenav #sidenav [(opened)]="isOpen" mode="push" class='mat-elevation-z5' (close)="closeSidenav()">
         <div class="sidenav-content" class="sidenav">
             <div class="logo">
                 <img src="/../../../assets/images/heart.png" alt='logo'>
@@ -13,6 +13,6 @@
                 <li><a routerLink="/newTopic" routerLinkActive="activeLink"><i  class="material-icons">create</i> New Topic</a></li>
             </ul>
         </div>
-    </md-sidenav>
+    </mat-sidenav>
     <ng-content></ng-content>
-</md-sidenav-container>
+</mat-sidenav-container>

@@ -29,13 +29,13 @@
         display: flex;
         align-items: center;
         padding-left: 8px;
-        md-checkbox {
+        mat-checkbox {
             font-weight: normal;
             font-size: 14px;
             flex: 1;
         }
     }
-    md-checkbox.questionCheckbox {
+    mat-checkbox.questionCheckbox {
         display: flex;
         flex: 1;
     }

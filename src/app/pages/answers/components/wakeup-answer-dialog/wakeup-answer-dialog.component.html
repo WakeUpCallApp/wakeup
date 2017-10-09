@@ -1,9 +1,9 @@
-<h2 md-dialog-title>{{ answer._id ? 'Update' : 'Create'}} Answer</h2>
-<md-dialog-content class="editAnswer">
+<h2 mat-dialog-title>{{ answer._id ? 'Update' : 'Create'}} Answer</h2>
+<mat-dialog-content class="editAnswer">
   <form class="content">
-    <md-input-container floatPlaceholder="always">
+    <mat-input-container floatPlaceholder="always">
       <textarea #characterCountInputHint
-       mdInput 
+       matInput 
        maxlength="5000" 
        type="text" 
        placeholder="Text" 
@@ -12,21 +12,21 @@
        name="text"
        required>
       </textarea>
-      <md-hint align="end" aria-live="polite">
+      <mat-hint align="end" aria-live="polite">
         {{characterCountInputHint.value.length}} / 5000
-      </md-hint>
-    </md-input-container>
+      </mat-hint>
+    </mat-input-container>
   </form>
-</md-dialog-content>
-<md-dialog-actions>
-  <button class="cancelButton" md-button md-raised-button md-dialog-close>Cancel</button>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="cancelButton" mat-button mat-raised-button mat-dialog-close>Cancel</button>
   <!-- Can optionally provide a result for the closing dialog. -->
   <button 
     class="updateButton" 
     [disabled]="!answer.text.trim()"
-    md-button 
-    md-raised-button
+    mat-button 
+    mat-raised-button
     (click)="handleClick()">
     {{answer._id? 'Update' : 'Create' }}
     </button>
-</md-dialog-actions>
+</mat-dialog-actions>

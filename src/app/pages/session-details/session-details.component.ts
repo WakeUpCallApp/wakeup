@@ -31,15 +31,15 @@ export class SessionDetailsComponent implements OnInit, OnDestroy {
 
     this.sessionData$ = this.store.select(reducers.getSessionDetailsState);
     this.actionsSubscription = Observable.combineLatest(
-      this.route.params.select<string>("questionSetId"),
-      this.route.params.select<string>("questionSetName"),
+      this.route.params.filter(params => !!params["questionSetId"]),
+      this.route.params.filter(params => !!params["questionSetName"]),
       this.store.select(reducers.getIndexedDBState),
-      (id, name, isDbOpen) => {
-        this.currentQuestionSetName = name;
-        this.questionSetId = id;
+      (idParams, nameParams, isDbOpen) => {
+        this.currentQuestionSetName = nameParams["questionSetName"];
+        this.questionSetId = idParams["questionSetId"];
         this.titleService.setTitle(`SessionDetails ${name}`);
         if (isDbOpen) {
-          return new actions.GetSessionDetailsAction(+id);
+          return new actions.GetSessionDetailsAction(+this.questionSetId);
         }
         return {type:'NOT_READY'};
       }

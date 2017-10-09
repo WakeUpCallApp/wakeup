@@ -3,8 +3,8 @@
 <div class="google">
   <button 
   (click)="loginOauth('google')"
-  md-button 
-  md-raised-button><i class="fa fa-google-plus" aria-hidden="true"></i>
+  mat-button 
+  mat-raised-button><i class="fa fa-google-plus" aria-hidden="true"></i>
       Log In with Google</button>
 </div>
 
@@ -13,10 +13,10 @@
        </span>
 
 <form class="loginForm" #loginForm="ngForm">
-  <md-input-container 
+  <mat-input-container 
   dividerColor="{{ (emailVar.touched || emailVar.dirty) && !emailVar.valid ? 'warn' : 'primary' }}">
     <input 
-    mdInput 
+    matInput 
     placeholder="Email" 
     type="email" 
     #emailVar="ngModel" 
@@ -25,13 +25,13 @@
     [(ngModel)]="user.email"
     (ngModelChange)="valuechange($event)"
     pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
-    <md-error *ngIf="emailVar.errors?.required">Email is required</md-error>
-    <md-error *ngIf="emailVar.errors?.pattern">Email is not valid</md-error>
-  </md-input-container>
-  <md-input-container 
+    <mat-error *ngIf="emailVar.errors?.required">Email is required</mat-error>
+    <mat-error *ngIf="emailVar.errors?.pattern">Email is not valid</mat-error>
+  </mat-input-container>
+  <mat-input-container 
   dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
     <input 
-    mdInput 
+    matInput 
     placeholder="Password" 
     type="password" 
     #passwordVar 
@@ -39,18 +39,18 @@
     name="password" 
     [(ngModel)]="user.password"
     (ngModelChange)="valuechange($event)">
-    <md-error>Password is required</md-error>
-  </md-input-container>
+    <mat-error>Password is required</mat-error>
+  </mat-input-container>
   <div class="errorMessage" *ngIf="errorMessage">{{errorMessage}}</div>
   <button 
      *ngIf="!isLoggingIn"
-     md-button
-     md-raised-button
+     mat-button
+     mat-raised-button
      class="loginButton"
      [disabled]="!loginForm.valid"
      (click)="login()">Log In
       </button>
-   <md-spinner class="spinner" *ngIf="isLoggingIn"></md-spinner>
+   <mat-spinner class="spinner" *ngIf="isLoggingIn"></mat-spinner>
 </form>
 <div class="usefulLinks">
   <a [routerLink]="['../signup']">Sign up now ></a>

@@ -1,21 +1,21 @@
 <div class="answers-container pageContent" *ngIf="question">
   <div class="breadcrumbs" *ngIf="question.questionSet as questionSet">
     <a [routerLink]="['/questionSetDetails', questionSet?.id]">{{questionSet?.name}}</a>
-    <md-icon>keyboard_arrow_right</md-icon>
+    <mat-icon>keyboard_arrow_right</mat-icon>
     <span class="currentLink">{{question.text}}</span>
   </div>
   <wakeup-card>
     <div class="card-header">
       <div class="title">Answers</div>
       <div class="actions">
-        <button *ngIf="answers?.length" md-button mdTooltip="Delete all answers" (click)="onDeleteAnswers()"> <md-icon>delete_forever</md-icon> All Answers </button>
-        <button *ngIf="!question.questionSet?.isDefault" md-button [mdMenuTriggerFor]="questionMenu" mdTooltip="More actions">
-            <md-icon>more_horiz</md-icon> More
+        <button *ngIf="answers?.length" mat-button matTooltip="Delete all answers" (click)="onDeleteAnswers()"> <mat-icon>delete_forever</mat-icon> All Answers </button>
+        <button *ngIf="!question.questionSet?.isDefault" mat-button [matMenuTriggerFor]="questionMenu" matTooltip="More actions">
+            <mat-icon>more_horiz</mat-icon> More
         </button>
-        <md-menu #questionMenu="mdMenu">
-          <button md-menu-item (click)="onDeleteQuestion()">
-            <md-icon>delete_forever</md-icon> Delete Question </button>
-        </md-menu>
+        <mat-menu #questionMenu="matMenu">
+          <button mat-menu-item (click)="onDeleteQuestion()">
+            <mat-icon>delete_forever</mat-icon> Delete Question </button>
+        </mat-menu>
       </div>
     </div>
     <div class="card-body">
@@ -25,8 +25,8 @@
         </div>
         <div class="quote" *ngIf="question.quote">
           <label>Quote </label>
-          <a [routerLink]="['/quoteDetails', question.quote?.id, question.quote?.topic]" mdTooltip="See quote">
-            <md-icon>format_quote</md-icon> {{question.quote?.text}}</a>
+          <a [routerLink]="['/quoteDetails', question.quote?.id, question.quote?.topic]" matTooltip="See quote">
+            <mat-icon>format_quote</mat-icon> {{question.quote?.text}}</a>
         </div>
       </div>
       <div class="answers">
@@ -37,8 +37,8 @@
             <li *ngFor="let answer of answerGroup.answers">
               <span class="text">{{answer.text}}</span>
               <div class="actions">
-                <button color="accent" md-icon-button (click)="editAnswer(answer)" mdTooltip="Edit Answer"> <md-icon>edit</md-icon></button>
-                <button color="warn" md-icon-button (click)="onDeleteAnswer(answer)" mdTooltip="Delete Answer"> <md-icon>delete_forever</md-icon></button>
+                <button color="accent" mat-icon-button (click)="editAnswer(answer)" matTooltip="Edit Answer"> <mat-icon>edit</mat-icon></button>
+                <button color="warn" mat-icon-button (click)="onDeleteAnswer(answer)" matTooltip="Delete Answer"> <mat-icon>delete_forever</mat-icon></button>
               </div>
             </li>
           </ul>
@@ -47,17 +47,17 @@
     </div>
   </wakeup-card>
 </div>
-<button mdRipple (click)="createAnswer()" mdTooltip="Add Answer" [mdTooltipClass]="'tooltip'" class="addAnswerButton">
- <md-icon>add</md-icon>
+<button matRipple (click)="createAnswer()" matTooltip="Add Answer" [matTooltipClass]="'tooltip'" class="addAnswerButton">
+ <mat-icon>add</mat-icon>
 </button>
 
-<button mdRipple *ngIf="prevQuestionId" [routerLink]="['/answers', prevQuestionId]" title="previous question" class="prevQuestionButton"
-  md-icon-button>
- <md-icon>keyboard_arrow_left</md-icon>
+<button matRipple *ngIf="prevQuestionId" [routerLink]="['/answers', prevQuestionId]" title="previous question" class="prevQuestionButton"
+  mat-icon-button>
+ <mat-icon>keyboard_arrow_left</mat-icon>
 </button>
 
-<button mdRipple *ngIf="nextQuestionId" [routerLink]="['/answers', nextQuestionId]" title="next question" class="nextQuestionButton"
-  md-icon-button>
- <md-icon>keyboard_arrow_right</md-icon>
+<button matRipple *ngIf="nextQuestionId" [routerLink]="['/answers', nextQuestionId]" title="next question" class="nextQuestionButton"
+  mat-icon-button>
+ <mat-icon>keyboard_arrow_right</mat-icon>
 </button>
-<md-spinner class="spinner" *ngIf="isLoading$ | async"></md-spinner>
+<mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>
