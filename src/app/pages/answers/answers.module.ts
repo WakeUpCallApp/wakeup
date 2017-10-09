@@ -1,20 +1,18 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { FormsModule } from "@angular/forms";
-import { MaterialModule } from "@angular/material";
 import { CommonModule } from "@angular/common";
 
 import { routing } from './answers.routing';
-import { WakeupCommonModule } from "../../common/common.module";
+import { SharedModule } from "../../_shared/shared.module";
 import { AnswersComponent } from "./answers.component";
 import { WakeupAnswerDialogComponent } from "./components/wakeup-answer-dialog/wakeup-answer-dialog.component";
 @NgModule({
   imports: [
     RouterModule,
     FormsModule,
-    MaterialModule,
     CommonModule,
-    WakeupCommonModule,
+    SharedModule,
     routing
   ],
   exports: [],

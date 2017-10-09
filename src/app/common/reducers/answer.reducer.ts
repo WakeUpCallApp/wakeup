@@ -1,4 +1,3 @@
-import { Action } from "@ngrx/store";
 import { Answer } from "../models/answer.model";
 import * as actions from "../actions/answer.actions";
 import Helper from "./helper";
@@ -19,7 +18,7 @@ export const initialState: State = {
   isIndexedDBOpen: false
 };
 
-export function reducer(state = initialState, action: Action): State {
+export function reducer(state = initialState, action: any): State {
   let newEntities;
   switch (action.type) {
     case actions.ActionTypes.LOAD:

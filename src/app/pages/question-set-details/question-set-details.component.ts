@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MdDialog, MdDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig } from "@angular/material";
 import { Store } from "@ngrx/store";
 import "@ngrx/core/add/operator/select";
 import { Observable } from "rxjs/Observable";
@@ -51,7 +51,7 @@ export class QuestionSetDetailsComponent
     private store: Store<reducers.State>,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private ngzone: NgZone,
     private cdref: ChangeDetectorRef,
     private appref: ApplicationRef,
@@ -171,7 +171,7 @@ export class QuestionSetDetailsComponent
   }
 
   editQuestion(question) {
-    const config: MdDialogConfig = {
+    const config: MatDialogConfig = {
       disableClose: false,
       width: "600px"
     };
@@ -188,7 +188,7 @@ export class QuestionSetDetailsComponent
   }
 
   openQuotesBrowser(question) {
-    const config: MdDialogConfig = {
+    const config: MatDialogConfig = {
       disableClose: false,
       width: "80%",
       height: "80%"
@@ -204,7 +204,7 @@ export class QuestionSetDetailsComponent
   }
 
   openPracticeSessionModal() {
-    const config: MdDialogConfig = {
+    const config: MatDialogConfig = {
       disableClose: false
     };
     const dialogRef = this.dialog.open(WakeupSessionConfigComponent, config);
@@ -220,7 +220,7 @@ export class QuestionSetDetailsComponent
   }
 
   openImportQuestionsModal() {
-    const config: MdDialogConfig = {
+    const config: MatDialogConfig = {
       disableClose: false
     };
     const dialogRef = this.dialog.open(WakeupImportFileComponent, config);

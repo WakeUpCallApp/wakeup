@@ -21,14 +21,14 @@ export class TopicEffects {
   @Effect()
   load$ = this.actions$
     .ofType(topic.ActionTypes.LOAD)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(() => this.topicApi.all())
     .map(result => new topic.LoadActionSuccess(result));
 
   @Effect()
   create$ = this.actions$
     .ofType(topic.ActionTypes.CREATE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(topic => this.topicApi.create(topic))
     .map(result => {
       this.notificationService.notifySuccess("Topic succcessfully created");
@@ -42,7 +42,7 @@ export class TopicEffects {
   @Effect({ dispatch: false })
   createSuccess$ = this.actions$
     .ofType(topic.ActionTypes.CREATE_SUCCESS)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .map(topic => {
       this.router.navigate([AppConstants.routes.TOPIC_DETAILS, topic.id]);
       return Observable.of(topic);
@@ -51,7 +51,7 @@ export class TopicEffects {
   @Effect()
   update$ = this.actions$
     .ofType(topic.ActionTypes.UPDATE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(topic => this.topicApi.update(topic))
     .map(result => {
       this.notificationService.notifySuccess("Topic successfully updated");
@@ -65,7 +65,7 @@ export class TopicEffects {
   @Effect()
   delete$ = this.actions$
     .ofType(topic.ActionTypes.DELETE)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(topic => this.topicApi.delete(topic))
     .map(() => {
       this.notificationService.notifySuccess("Topic successfully deleted");
@@ -75,7 +75,7 @@ export class TopicEffects {
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
     .ofType(topic.ActionTypes.DELETE_SUCCESS)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .map(() => {
       this.router.navigate([AppConstants.routes.TOPICS]);
     });
@@ -83,7 +83,7 @@ export class TopicEffects {
   @Effect()
   getCurrentTopic$ = this.actions$
     .ofType(topic.ActionTypes.GET_CURRENT_TOPIC)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(id =>
       this.topicApi
         .get(id)
@@ -96,7 +96,7 @@ export class TopicEffects {
   @Effect({ dispatch: false })
   httpErrors$ = this.actions$
     .ofType(topic.ActionTypes.GET_CURRENT_TOPIC_ERROR)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .map(error => {
       if (error.status === AppConstants.errorCode.NotFound) {
         this.notificationService.notifyError("Topic not found");

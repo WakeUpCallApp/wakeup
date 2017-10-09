@@ -20,7 +20,7 @@ export class AnswerEffectsIndexedDB {
   @Effect()
   openIndexedDb$ = this.actions$
     .ofType(answer.ActionTypes.OPEN_INDEXED_DB)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(questionId => this.answerService.openIndexedDb())
     .map(result => new answer.OpenIndexedDbActionSuccess())
     .catch(error => {
@@ -30,14 +30,14 @@ export class AnswerEffectsIndexedDB {
   @Effect()
   load$ = this.actions$
     .ofType(answer.ActionTypes.LOAD)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(questionId => this.answerService.getAnswers(questionId))
     .map(result => new answer.LoadActionSuccess(result));
 
   @Effect()
   create$ = this.actions$
     .ofType(answer.ActionTypes.CREATE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(answer => this.answerService.saveAnswer(answer))
     .map(result => {
       this.notificationService.notifySuccess("Answer successfully created");
@@ -51,7 +51,7 @@ export class AnswerEffectsIndexedDB {
   @Effect()
   update$ = this.actions$
     .ofType(answer.ActionTypes.UPDATE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(answer => this.answerService.updateAnswer(answer))
     .map(result => {
       this.notificationService.notifySuccess("Answer successfully updated");
@@ -67,7 +67,7 @@ export class AnswerEffectsIndexedDB {
   @Effect()
   delete$ = this.actions$
     .ofType(answer.ActionTypes.DELETE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(answer => this.answerService.deleteAnswer(answer))
     .map(answerId => {
       this.notificationService.notifySuccess("Answer successfully deleted");
@@ -77,7 +77,7 @@ export class AnswerEffectsIndexedDB {
   @Effect()
   deleteAll$ = this.actions$
     .ofType(answer.ActionTypes.DELETE_ALL)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(({ questionId, userId }) => this.answerService.deleteAllAnswers(questionId, userId))
     .map(questionId => {
       this.notificationService.notifySuccess("Answers successfully deleted");

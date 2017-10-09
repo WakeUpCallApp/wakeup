@@ -29,14 +29,14 @@ export class QuestionSetEffects {
   @Effect()
   load$ = this.actions$
     .ofType(questionSet.ActionTypes.LOAD)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(() => this.questionSetApi.all())
     .map(result => new questionSet.LoadActionSuccess(result));
 
   @Effect()
   create$ = this.actions$
     .ofType(questionSet.ActionTypes.CREATE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(questionSet => this.questionSetApi.create(questionSet))
     .map(result => {
       this.notificationService.notifySuccess(
@@ -52,7 +52,7 @@ export class QuestionSetEffects {
   @Effect({ dispatch: false })
   createSuccess$ = this.actions$
     .ofType(questionSet.ActionTypes.CREATE_SUCCESS)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .map(questionSet => {
       this.router.navigate([
         AppConstants.routes.QUESTION_SET_DETAILS,
@@ -64,7 +64,7 @@ export class QuestionSetEffects {
   @Effect({ dispatch: false })
   importQuestions$ = this.actions$
     .ofType(questionSet.ActionTypes.IMPORT_QUESTIONS)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .map(data => {
       this.fileParsing.parseCVS(data.questions[0], results => {
         this.questionSetApi
@@ -85,7 +85,7 @@ export class QuestionSetEffects {
   @Effect({ dispatch: false })
   exportQuestions$ = this.actions$
     .ofType(questionSet.ActionTypes.EXPORT_QUESTIONS)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .map(data => {
       this.fileParsing.downloadCSV(
         this.fileParsing.unparseCVS(data.questions, false),
@@ -96,7 +96,7 @@ export class QuestionSetEffects {
   @Effect()
   update$ = this.actions$
     .ofType(questionSet.ActionTypes.UPDATE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(questionSet => this.questionSetApi.update(questionSet))
     .map(result => {
       this.notificationService.notifySuccess(
@@ -112,7 +112,7 @@ export class QuestionSetEffects {
   @Effect()
   delete$ = this.actions$
     .ofType(questionSet.ActionTypes.DELETE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(questionSet => this.questionSetApi.delete(questionSet))
     .map(() => {
       this.notificationService.notifySuccess(
@@ -124,7 +124,7 @@ export class QuestionSetEffects {
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
     .ofType(questionSet.ActionTypes.DELETE_SUCCESS)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .map(() => {
       this.router.navigate([AppConstants.routes.QUESTION_SETS]);
     });
@@ -132,7 +132,7 @@ export class QuestionSetEffects {
   @Effect()
   getCurrentQS$ = this.actions$
     .ofType(questionSet.ActionTypes.GET_CURRENT_QUESTION_SET)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(id =>
       this.questionSetApi
         .get(id)
@@ -145,7 +145,7 @@ export class QuestionSetEffects {
   @Effect()
   addQuestion$ = this.actions$
     .ofType(questionSet.ActionTypes.ADD_QUESTION)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(question => this.questionApi.create(question))
     .map(result => {
       this.notificationService.notifySuccess("Question successfully added");
@@ -155,7 +155,7 @@ export class QuestionSetEffects {
   @Effect()
   updateQuestion$ = this.actions$
     .ofType(questionSet.ActionTypes.EDIT_QUESTION)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(question => this.questionApi.update(question))
     .map(result => {
       this.notificationService.notifySuccess("Question successfully updated");
@@ -165,7 +165,7 @@ export class QuestionSetEffects {
   @Effect()
   deleteQuestion$ = this.actions$
     .ofType(questionSet.ActionTypes.DELETE_QUESTION)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .flatMap(question => this.questionApi.delete(question))
     .map(result => {
       this.notificationService.notifySuccess("Question successfully deleted");
@@ -191,7 +191,7 @@ export class QuestionSetEffects {
   @Effect({ dispatch: false })
   httpErrors$ = this.actions$
     .ofType(questionSet.ActionTypes.GET_CURRENT_QUESTION_SET_ERROR)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .map(error => {
       this.notificationService.notifyError("Question Set not found");
       this.router.navigate([AppConstants.routes.QUESTION_SETS]);
@@ -201,7 +201,7 @@ export class QuestionSetEffects {
   @Effect({ dispatch: false })
   registerSession$ = this.actions$
     .ofType(questionSet.ActionTypes.REGISTER_SESSION)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(questionSetId => {
       this.notificationService.notifySuccess(
         "Practice session ended successfully"
@@ -212,7 +212,7 @@ export class QuestionSetEffects {
   @Effect()
   getSessionDetails$ = this.actions$
     .ofType(questionSet.ActionTypes.GET_SESSION_DETAILS)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(questionSetId =>
       this.answerIndexedDbService.getSessionDetailsData(questionSetId)
     )

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect } from "@ngrx/effects";
 import { Router } from "@angular/router";
-import { Store } from "@ngrx/store";
+import { Store, Action } from "@ngrx/store";
 import * as reducers from "../reducers";
 
 import { Observable } from "rxjs/Observable";
@@ -27,21 +27,21 @@ export class QuoteEffects {
   @Effect()
   load$ = this.actions$
     .ofType(quoteActions.ActionTypes.LOAD)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(() => this.quoteApi.all())
     .map(result => new quoteActions.LoadActionSuccess(result));
 
   @Effect()
   getByTopic$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_BY_TOPIC_ID)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(topicId => this.quoteApi.get(topicId))
     .map(result => new quoteActions.GetByTopicIdActionSuccess(result));
 
   @Effect()
   getById$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_BY_ID)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(quoteId => this.quoteApi.getById(quoteId))
     .map(result => new quoteActions.GetByIdActionSuccess(result))
     .catch(error => Observable.of(new quoteActions.GetByIdActionError(error)));
@@ -49,7 +49,7 @@ export class QuoteEffects {
   @Effect({ dispatch: false })
   httpErrors$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_BY_ID_ERROR)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .map(error => {
       if (error.status === AppConstants.errorCode.NotFound) {
         this.notificationService.notifyError("Quote not found");
@@ -67,7 +67,7 @@ export class QuoteEffects {
   @Effect()
   create$ = this.actions$
     .ofType(quoteActions.ActionTypes.CREATE)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(quote => this.quoteApi.create(quote))
     .map(result => {
       this.notificationService.notifySuccess("Quote successfully created");
@@ -81,7 +81,7 @@ export class QuoteEffects {
   @Effect({ dispatch: false })
   createSuccess$ = this.actions$
     .ofType(quoteActions.ActionTypes.CREATE_SUCCESS)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .map(quote => {
       this.router.navigate([AppConstants.routes.QUOTE_DETAILS, quote.id]);
     });
@@ -89,7 +89,7 @@ export class QuoteEffects {
   @Effect()
   delete$ = this.actions$
     .ofType(quoteActions.ActionTypes.DELETE)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(quoteId => this.quoteApi.delete(quoteId))
     .map(result => {
       this.notificationService.notifySuccess("Quote successfully deleted");
@@ -103,7 +103,7 @@ export class QuoteEffects {
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
     .ofType(quoteActions.ActionTypes.DELETE_SUCCESS)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .map(({ topic }) => {
       this.router.navigate([AppConstants.routes.QUOTES, topic.id]);
     });
@@ -126,14 +126,14 @@ export class QuoteEffects {
   @Effect()
   getComments$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_COMMENTS)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(quoteId => this.quoteApi.getComments(quoteId))
     .map(result => new quoteActions.GetCommentsActionSuccess(result));
 
   @Effect()
   create_comment$ = this.actions$
     .ofType(quoteActions.ActionTypes.CREATE_COMMENT)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(comment => this.quoteApi.addComment(comment))
     .map(result => {
       this.notificationService.notifySuccess("Comment successfully created");
@@ -147,7 +147,7 @@ export class QuoteEffects {
   @Effect()
   delete_comment$ = this.actions$
     .ofType(quoteActions.ActionTypes.DELETE_COMMENT)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(comment => this.quoteApi.deleteComment(comment))
     .map(result => {
       this.notificationService.notifySuccess("Comment successfully deleted");
@@ -161,7 +161,7 @@ export class QuoteEffects {
   @Effect()
   updateS$ = this.actions$
     .ofType(quoteActions.ActionTypes.UPDATE)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(quote =>
       this.quoteApi
         .update(quote)
@@ -178,7 +178,7 @@ export class QuoteEffects {
   @Effect({ dispatch: false })
   importQuotes$ = this.actions$
     .ofType(quoteActions.ActionTypes.IMPORT_QUOTES)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .map(data => {
       this.fileParsing.parseCVS(
         data.quotes[0],
@@ -207,7 +207,7 @@ export class QuoteEffects {
   @Effect({ dispatch: false })
   exportQuotes$ = this.actions$
     .ofType(quoteActions.ActionTypes.EXPORT_QUOTES)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .map(data => {
       this.fileParsing.downloadCSV(
         this.fileParsing.unparseCVS(data.quotes, true),

@@ -74,7 +74,7 @@ export class GetCommentsActionSuccess implements Action {
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;
 
-  constructor() {}
+  constructor(public payload?: any) {}
 }
 
 export class LoadActionSuccess implements Action {
@@ -178,7 +178,7 @@ export class DeleteCommentActionError implements Action {
 
 export class GetSuggestionsAction implements Action {
   type = ActionTypes.GET_SUGGESTIONS;
-  constructor() {}
+  constructor(public payload? : any) {}
 }
 
 export class GetSuggestionsActionSuccess implements Action {

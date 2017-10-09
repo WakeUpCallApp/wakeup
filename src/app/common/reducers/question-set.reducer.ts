@@ -1,4 +1,3 @@
-import { Action } from "@ngrx/store";
 import { QuestionSet } from "../models/question-set.model";
 import * as actions from "../actions/question-set.actions";
 import Helper from "./helper";
@@ -25,7 +24,7 @@ export const initialState: State = {
   showImportSpinner: undefined
 };
 
-export function reducer(state = initialState, action: Action): State {
+export function reducer(state = initialState, action: any): State {
   switch (action.type) {
     case actions.ActionTypes.SEARCH_INPUT:
       return Object.assign({}, state, { searchTerm: action.payload });

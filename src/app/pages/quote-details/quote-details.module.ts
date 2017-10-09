@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
-import { CommonModule } from '@angular/common';
 
 import { routing } from './quote-details.routing';
-import { WakeupCommonModule } from '../../common/common.module';
+import { SharedModule } from '../../_shared/shared.module';
 import { QuoteDetailsComponent } from './quote-details.component';
 import { WakeupAddCommentComponent } from './components/wakeup-add-comment/wakeup-add-comment.component';
 import { WakeupCommentListComponent } from './components/wakeup-comment-list/wakeup-comment-list.component';
@@ -14,11 +10,7 @@ import { WakeupQuestionsBrowserComponent } from './components/wakeup-questions-b
 
 @NgModule({
   imports: [
-    RouterModule,
-    FormsModule,
-    MaterialModule,
-    CommonModule,
-    WakeupCommonModule,
+    SharedModule,
     routing
   ],
   exports: [],
@@ -32,4 +24,4 @@ import { WakeupQuestionsBrowserComponent } from './components/wakeup-questions-b
   providers: [],
   entryComponents: [WakeupQuestionsBrowserComponent]
 })
-export class QuoteDetailsModule {}
+export class QuoteDetailsModule { }

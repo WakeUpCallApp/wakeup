@@ -4,7 +4,7 @@ import { Title } from "@angular/platform-browser";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
-import { MdDialog, MdDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig } from "@angular/material";
 
 import * as reducers from "../../common/reducers";
 import * as quoteActions from "../../common/actions/quote.actions";
@@ -46,7 +46,7 @@ export class AnswersComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private dialogService: DialogService,
     private auth: AuthTokenService
   ) { }
@@ -110,7 +110,7 @@ export class AnswersComponent implements OnInit {
 
   editAnswer(answer) {
     this.openModal = true;
-    const config: MdDialogConfig = {
+    const config: MatDialogConfig = {
       disableClose: false,
       width: "600px"
     };
@@ -139,7 +139,7 @@ export class AnswersComponent implements OnInit {
       questionId: +this.currentQuestionId,
       text: ""
     };
-    const config: MdDialogConfig = {
+    const config: MatDialogConfig = {
       disableClose: false,
       width: "600px"
     };

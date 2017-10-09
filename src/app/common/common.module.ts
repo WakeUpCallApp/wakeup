@@ -1,8 +1,4 @@
 import { NgModule } from "@angular/core";
-import { MaterialModule } from "@angular/material";
-import { CommonModule } from "@angular/common";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { RouterModule } from "@angular/router";
 
 import { AuthenticationGuard } from "./guards/authentication.guard";
 import { CanDeactivateGuard } from "./guards/can-deactivate.guard";
@@ -28,13 +24,7 @@ import { WakeupImportFileComponent } from "./components/wakeup-import-file/wakeu
 import { WakeupConfirmDialogComponent } from './components/wakeup-confirm-dialog/wakeup-confirm-dialog.component';
 
 @NgModule({
-  imports: [
-    MaterialModule,
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
+  imports: [],
   declarations: [
     WakeupTopBarComponent,
     WakeupSideNavComponent,
@@ -62,13 +52,7 @@ import { WakeupConfirmDialogComponent } from './components/wakeup-confirm-dialog
   exports: [
     WakeupTopBarComponent,
     WakeupSideNavComponent,
-    WakeupCardComponent,
-    MaterialModule,
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
+    WakeupCardComponent],
   entryComponents: [WakeupImportFileComponent, WakeupConfirmDialogComponent]
 })
-export class WakeupCommonModule {}
+export class WakeupCommonModule { }

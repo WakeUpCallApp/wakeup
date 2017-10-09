@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MdDialogRef } from "@angular/material";
+import { MatDialogRef } from "@angular/material";
 import { Store } from "@ngrx/store";
 import * as reducers from "../../../../common/reducers";
 import { Observable } from "rxjs/Observable";
@@ -20,7 +20,7 @@ export class WakeupQuestionsBrowserComponent implements OnInit {
   initialSelection;
   constructor(
     private store: Store<reducers.State>,
-    public dialogRef: MdDialogRef<WakeupQuestionsBrowserComponent>
+    public dialogRef: MatDialogRef<WakeupQuestionsBrowserComponent>
   ) {}
 
   ngOnInit() {

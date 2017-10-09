@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { SessionOptions } from '../../../../common/services/session-config.service';
 @Component({
   selector: 'wakeup-session-config',
@@ -12,7 +12,7 @@ export class WakeupSessionConfigComponent implements OnInit {
     repeatQS: false,
     shuffleQuestions: false
   };
-  constructor(public dialogRef: MdDialogRef<WakeupSessionConfigComponent>
+  constructor(public dialogRef: MatDialogRef<WakeupSessionConfigComponent>
   ) { }
 
   ngOnInit() {

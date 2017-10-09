@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { MdDialogRef } from "@angular/material";
+import { MatDialogRef } from "@angular/material";
 
 @Component({
   selector: "wakeup-wakeup-confirm-dialog",
@@ -10,7 +10,7 @@ export class WakeupConfirmDialogComponent implements OnInit {
   @Input() title: string;
   @Input() message: string;
 
-  constructor(public dialogRef: MdDialogRef<WakeupConfirmDialogComponent>) {}
+  constructor(public dialogRef:MatDialogRef<WakeupConfirmDialogComponent>) {}
 
   ngOnInit() {}
 }

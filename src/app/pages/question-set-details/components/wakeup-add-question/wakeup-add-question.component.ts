@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { MdDialog, MdDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { WakeupQuotesBrowserComponent } from '../wakeup-quotes-browser/wakeup-quotes-browser.component';
 
 @Component({
@@ -11,7 +11,7 @@ export class WakeupAddQuestionComponent implements OnInit {
   @Input() question;
   @Output() create = new EventEmitter();
   selectedQuoteText;
-  constructor(private dialog: MdDialog) {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit() {}
 
@@ -20,7 +20,7 @@ export class WakeupAddQuestionComponent implements OnInit {
   }
 
   openQuotesBrowser(question) {
-    const config: MdDialogConfig = {
+    const config: MatDialogConfig = {
       disableClose: false,
       width: '80%',
       height: '80%'

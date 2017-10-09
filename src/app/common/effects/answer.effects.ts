@@ -20,14 +20,14 @@ export class AnswerEffects {
   @Effect()
   load$ = this.actions$
     .ofType(answer.ActionTypes.LOAD)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(questionId => this.answerService.all(questionId))
     .map(result => new answer.LoadActionSuccess(result));
 
   @Effect()
   create$ = this.actions$
     .ofType(answer.ActionTypes.CREATE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(answer => this.answerService.create(answer))
     .map(result => {
       this.notificationService.notifySuccess("Answer successfully created");
@@ -41,7 +41,7 @@ export class AnswerEffects {
   @Effect()
   update$ = this.actions$
     .ofType(answer.ActionTypes.UPDATE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(answer => this.answerService.update(answer))
     .map(result => {
       this.notificationService.notifySuccess("Answer successfully updated");
@@ -57,7 +57,7 @@ export class AnswerEffects {
   @Effect()
   delete$ = this.actions$
     .ofType(answer.ActionTypes.DELETE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(answer => this.answerService.delete(answer))
     .map(answerId => {
       this.notificationService.notifySuccess("Answer successfully deleted");
@@ -67,7 +67,7 @@ export class AnswerEffects {
   @Effect()
   deleteAll$ = this.actions$
     .ofType(answer.ActionTypes.DELETE_ALL)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(questionId => this.answerService.deleteAll(questionId))
     .map(questionId => {
       this.notificationService.notifySuccess("Answers successfully deleted");

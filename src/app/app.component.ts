@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
-import { MdSnackBar, MdSnackBarConfig } from "@angular/material";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
 import { Title } from "@angular/platform-browser";
 import { Store } from '@ngrx/store';
 import * as reducers from './common/reducers';
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private authTokenService: AuthTokenService,
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
-    private snackBar: MdSnackBar,
+    private snackBar: MatSnackBar,
     private notificationService: NotificationService,
     private store: Store<reducers.State>
   ) {}
@@ -86,7 +86,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   openSnackBar({ message, action = "", config }) {
-    const conf = new MdSnackBarConfig();
+    const conf = new MatSnackBarConfig();
     conf.duration = 10000;
     conf.extraClasses = [config.extraClass];
     this.snackBar.open(message, action, conf);

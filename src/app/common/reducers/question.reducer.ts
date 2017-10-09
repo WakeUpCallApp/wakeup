@@ -1,4 +1,3 @@
-import { Action } from "@ngrx/store";
 import { Question } from "../models/question.model";
 import * as actions from "../actions/question.actions";
 import * as answerActions from "../actions/answer.actions";
@@ -18,7 +17,7 @@ export const initialState: State = {
   isLoading: false
 };
 
-export function reducer(state = initialState, action: Action): State {
+export function reducer(state = initialState, action: any): State {
   switch (action.type) {
     case actions.ActionTypes.LOAD_SUCCESS:
       return Object.assign({}, state, {

@@ -22,14 +22,14 @@ export class QuestionEffects {
   @Effect()
   load$ = this.actions$
     .ofType(question.ActionTypes.LOAD)
-    .map(action => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(() => this.questionApi.all())
     .map(result => new question.LoadActionSuccess(result));
 
   @Effect()
   get$ = this.actions$
     .ofType(question.ActionTypes.GET_CURRENT_QUESTION)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(id => this.questionApi.get(id))
     .map(result => new question.GetCurrentQuestionSuccess(result))
     .catch(error => Observable.of(new question.GetCurrentQuestionError(error)));
@@ -37,7 +37,7 @@ export class QuestionEffects {
   @Effect({ dispatch: false })
   httpErrors$ = this.actions$
     .ofType(question.ActionTypes.GET_CURRENT_QUESTION_ERROR)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .map(error => {
       this.notificationService.notifyError("Question not found");
       this.router.navigate([AppConstants.routes.QUESTION_SETS]);
@@ -47,7 +47,7 @@ export class QuestionEffects {
   @Effect()
   delete$ = this.actions$
     .ofType(question.ActionTypes.DELETE)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .switchMap(question => this.questionApi.delete(question))
     .map(result => {
       this.notificationService.notifySuccess("Question successfully deleted");
@@ -57,7 +57,7 @@ export class QuestionEffects {
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
     .ofType(question.ActionTypes.DELETE_SUCCESS)
-    .map(action => action.payload)
+    .map((action:any) => action.payload)
     .map(({ questionSet }) => {
       this.router.navigate([
         AppConstants.routes.QUESTION_SET_DETAILS,

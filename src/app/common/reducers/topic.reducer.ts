@@ -1,4 +1,3 @@
-import { Action } from "@ngrx/store";
 import { Topic } from "../models/topic.model";
 import * as actions from "../actions/topic.actions";
 import { ActionTypes as quote } from "../actions/quote.actions";
@@ -16,7 +15,7 @@ export const initialState: State = {
   searchTerm: undefined
 };
 
-export function reducer(state = initialState, action: Action): State {
+export function reducer(state = initialState, action: any): State {
   switch (action.type) {
     case actions.ActionTypes.SEARCH_INPUT:
       return Object.assign({}, state, { searchTerm: action.payload });

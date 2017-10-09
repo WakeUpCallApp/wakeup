@@ -9,7 +9,7 @@ import {
   Output
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdSidenav } from '@angular/material';
+import { MatSidenav } from '@angular/material';
 
 @Component({
   selector: 'wakeup-side-nav',
@@ -19,7 +19,7 @@ import { MdSidenav } from '@angular/material';
 export class WakeupSideNavComponent implements OnInit, OnChanges {
   @Input() isOpen;
   @Output() onClose = new EventEmitter();
-  @ViewChild('sidenav') sidenav: MdSidenav;
+  @ViewChild('sidenav') sidenav: MatSidenav;
 
   constructor() { }
 

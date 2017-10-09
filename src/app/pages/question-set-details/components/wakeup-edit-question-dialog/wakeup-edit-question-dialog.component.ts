@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'wakeup-edit-question-dialog',
@@ -10,7 +10,7 @@ import { MdDialogRef } from '@angular/material';
 export class WakeupEditQuestionDialogComponent implements OnInit {
   question;
   constructor(
-    public dialogRef: MdDialogRef<WakeupEditQuestionDialogComponent>
+    public dialogRef: MatDialogRef<WakeupEditQuestionDialogComponent>
   ) {}
 
   ngOnInit() {}

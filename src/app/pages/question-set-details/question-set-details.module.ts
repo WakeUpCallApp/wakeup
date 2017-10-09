@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
-import { CommonModule } from '@angular/common';
 
-import { WakeupCommonModule } from '../../common/common.module';
+import { SharedModule } from '../../_shared/shared.module';
 import { QuestionSetDetailsComponent } from './question-set-details.component';
 import { WakeupAddQuestionComponent } from './components/wakeup-add-question/wakeup-add-question.component';
 import { WakeupQuestionListComponent } from './components/wakeup-question-list/wakeup-question-list.component';
@@ -16,11 +12,7 @@ import { routing } from './question-set-details.routing';
 
 @NgModule({
   imports: [
-    RouterModule,
-    FormsModule,
-    MaterialModule,
-    CommonModule,
-    WakeupCommonModule,
+    SharedModule,
     routing
   ],
   exports: [],

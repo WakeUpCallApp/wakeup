@@ -23,54 +23,54 @@ export const ActionTypes = {
 export class SearchAction implements Action {
   type = ActionTypes.SEARCH_INPUT;
 
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;
 
-  constructor() {}
+  constructor(public payload?: any) { }
 }
 
 export class LoadActionSuccess implements Action {
   type = ActionTypes.LOAD_SUCCESS;
 
-  constructor(public payload: Topic[]) {}
+  constructor(public payload: Topic[]) { }
 }
 
 export class LoadActionError implements Action {
   type = ActionTypes.LOAD_ERROR;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class CreateAction implements Action {
   type = ActionTypes.CREATE;
 
-  constructor(public payload: ITopic) {}
+  constructor(public payload: ITopic) { }
 }
 export class CreateActionSuccess implements Action {
   type = ActionTypes.CREATE_SUCCESS;
 
-  constructor(public payload: Topic) {}
+  constructor(public payload: Topic) { }
 }
 
 export class CreateActionError implements Action {
   type = ActionTypes.CREATE_ERROR;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class UpdateAction implements Action {
   type = ActionTypes.UPDATE;
 
-  constructor(public payload: Topic) {}
+  constructor(public payload: Topic) { }
 }
 
 export class UpdateActionSuccess implements Action {
   type = ActionTypes.UPDATE_SUCCESS;
 
-  constructor(public payload: Topic) {}
+  constructor(public payload: Topic) { }
 }
 
 export class UpdateActionError implements Action {
@@ -83,32 +83,31 @@ export class UpdateActionError implements Action {
 export class DeleteAction implements Action {
   type = ActionTypes.DELETE;
 
-  constructor(public payload: number) {}
+  constructor(public payload: number) { }
 }
 
 export class DeleteActionSuccess implements Action {
   type = ActionTypes.DELETE_SUCCESS;
 
-  constructor() {}
+  constructor(public payload?: any) { }
 }
 
 export class GetCurrentTopicAction implements Action {
   type = ActionTypes.GET_CURRENT_TOPIC;
 
-  constructor(public payload: number) {}
+  constructor(public payload: number) { }
 }
 
 export class GetCurrentTopicActionSuccess implements Action {
   type = ActionTypes.GET_CURRENT_TOPIC_SUCCESS;
 
-  constructor(public payload: Topic) {}
+  constructor(public payload: Topic) { }
 }
 
 export class GetCurrentTopicActionError implements Action {
   type = ActionTypes.GET_CURRENT_TOPIC_ERROR;
 
-  constructor(public payload) {
-  }
+  constructor(public payload) {}
 }
 
 /**

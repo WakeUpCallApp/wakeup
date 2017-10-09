@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'wakeup-answer-dialog',
@@ -8,7 +8,7 @@ import { MdDialogRef } from '@angular/material';
 })
 export class WakeupAnswerDialogComponent implements OnInit {
   answer;
-  constructor( public dialogRef: MdDialogRef<WakeupAnswerDialogComponent>) { }
+  constructor( public dialogRef: MatDialogRef<WakeupAnswerDialogComponent>) { }
 
   ngOnInit() {
   }

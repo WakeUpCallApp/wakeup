@@ -4,7 +4,7 @@ import { Title } from "@angular/platform-browser";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
-import { MdDialog, MdDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig } from "@angular/material";
 
 import * as reducers from "../../common/reducers";
 import * as actions from "../../common/actions/quote.actions";
@@ -31,7 +31,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
   quotes;
   constructor(
     private store: Store<reducers.State>,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title
@@ -84,7 +84,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
   }
 
   openImportQuotesModal() {
-    const config: MdDialogConfig = {
+    const config: MatDialogConfig = {
       disableClose: false
     };
     const dialogRef = this.dialog.open(WakeupImportFileComponent, config);

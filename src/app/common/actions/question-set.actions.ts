@@ -171,7 +171,7 @@ export class DeleteAction implements Action {
 export class DeleteActionSuccess implements Action {
   type = ActionTypes.DELETE_SUCCESS;
 
-  constructor() {}
+  constructor(public payload?: any) {}
 }
 
 export class RegisterSessionAction implements Action {

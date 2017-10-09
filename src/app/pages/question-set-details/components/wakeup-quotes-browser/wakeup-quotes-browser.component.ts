@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 import * as reducers from '../../../../common/reducers';
 import { Observable } from 'rxjs/Observable';
@@ -22,7 +22,7 @@ export class WakeupQuotesBrowserComponent implements OnInit, OnDestroy {
   selectedQuoteText;
   constructor(
     private store: Store<reducers.State>,
-    public dialogRef: MdDialogRef<WakeupQuotesBrowserComponent>
+    public dialogRef: MatDialogRef<WakeupQuotesBrowserComponent>
   ) {}
 
   ngOnInit() {

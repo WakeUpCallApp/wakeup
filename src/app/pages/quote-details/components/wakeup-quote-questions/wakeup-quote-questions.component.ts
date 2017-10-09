@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { MdDialog, MdDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { WakeupQuestionsBrowserComponent} from '../wakeup-questions-browser/wakeup-questions-browser.component';
 
 @Component({
@@ -10,7 +10,7 @@ import { WakeupQuestionsBrowserComponent} from '../wakeup-questions-browser/wake
 export class WakeupQuoteQuestionsComponent implements OnInit {
   @Input() questions;
   @Output() update = new EventEmitter();
-  constructor(private dialog: MdDialog) {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit() {}
 
@@ -22,7 +22,7 @@ export class WakeupQuoteQuestionsComponent implements OnInit {
   }
 
   openQuestionsBrowser() {
-    const config: MdDialogConfig = {
+    const config: MatDialogConfig = {
       disableClose: false,
       width: '80%',
       height: '80%'
