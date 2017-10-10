@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './question-sets.component.html',
   styleUrls: ['./question-sets.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {'class': 'questionSets pageContent'}
+  host: {'class': 'pageContent'}
 })
 export class QuestionSetsComponent implements OnInit {
   questionSets$: Observable<QuestionSet[]>;

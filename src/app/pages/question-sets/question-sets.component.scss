@@ -1,26 +1,25 @@
 @import "~../../common/constants";
-.questionSets {
-    .card-body {
-        mat-spinner {
-            height: 50px;
-            margin: 0 auto;
-            margin-bottom: 16px;
+
+.card-body {
+    mat-spinner {
+        height: 50px;
+        margin: 0 auto;
+        margin-bottom: 16px;
+    }
+    .search {
+        width: 100%;
+        margin: 16px 0;
+    }
+    .filter {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: flex-end;
+        strong{
+            margin-right: 16px;
         }
-        .search {
-            width: 100%;
-            margin: 16px 0;
-        }
-        .filter {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            justify-content: flex-end;
-            strong{
-              margin-right: 16px;
-            }
-            mat-select{
-              width: 130px;
-            }
+        mat-select{
+            width: 130px;
         }
     }
 }
