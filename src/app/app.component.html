@@ -4,6 +4,6 @@
 <wakeup-side-nav [isOpen]="isOpen && canShowNavigation()" (onClose)="openMenu(false)">
   <div class="app-container" role="application">
     <router-outlet></router-outlet>
-    <wakeup-footer *ngIf="loginApi.getCurrentUser()"></wakeup-footer>
+    <wakeup-footer *ngIf="canShowFooter()"></wakeup-footer>
   </div>
 </wakeup-side-nav>

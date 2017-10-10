@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private notificationService: NotificationService,
     private store: Store<reducers.State>
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.router.events
@@ -78,8 +78,13 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
+  canShowFooter() {
+    return this.loginApi.getCurrentUser() &&
+      location.pathname.indexOf(appConstants.routes.PRACTICE_SESSION) === -1;
+  }
+
   logout(): void {
-    this.store.dispatch({type:'USER_LOGOUT'});
+    this.store.dispatch({ type: 'USER_LOGOUT' });
     this.loginApi.logout();
     this.isOpen = false;
     this.router.navigate([appConstants.routes.LOGIN]);
