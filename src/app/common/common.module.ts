@@ -21,13 +21,15 @@ import {
 } from "./services";
 import { WakeupTopBarComponent } from "./components/wakeup-top-bar/wakeup-top-bar.component";
 import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side-nav.component";
+import { WakeupFooterComponent } from './components/wakeup-footer/wakeup-footer.component';
 
 
 @NgModule({
   imports: [SharedModule],
   declarations: [
     WakeupTopBarComponent,
-    WakeupSideNavComponent
+    WakeupSideNavComponent,
+    WakeupFooterComponent
   ],
   providers: [
     AuthTokenService,
@@ -48,6 +50,7 @@ import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side
   ],
   exports: [
     WakeupTopBarComponent,
+    WakeupFooterComponent,
     WakeupSideNavComponent]
 })
 export class WakeupCommonModule { }

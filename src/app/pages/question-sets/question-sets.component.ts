@@ -9,7 +9,8 @@ import { Observable } from 'rxjs/Observable';
   selector: 'wakeup-question-sets',
   templateUrl: './question-sets.component.html',
   styleUrls: ['./question-sets.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {'class': 'questionSets pageContent'}
 })
 export class QuestionSetsComponent implements OnInit {
   questionSets$: Observable<QuestionSet[]>;

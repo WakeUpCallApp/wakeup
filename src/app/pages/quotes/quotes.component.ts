@@ -17,7 +17,8 @@ import { WakeupImportFileComponent } from "../../_shared/components/wakeup-impor
 @Component({
   selector: "wakeup-quotes",
   templateUrl: "./quotes.component.html",
-  styleUrls: ["./quotes.component.scss"]
+  styleUrls: ["./quotes.component.scss"],
+  host: { 'class': 'quotes pageContent' }
 })
 export class QuotesComponent implements OnInit, OnDestroy {
   actionsSubscription: Subscription;
@@ -35,7 +36,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
@@ -90,7 +91,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(WakeupImportFileComponent, config);
     this.importDialogRef = dialogRef;
     dialogRef.componentInstance.uploadFile = this.importQuestions.bind(this);
-    dialogRef.afterClosed().subscribe(() => {});
+    dialogRef.afterClosed().subscribe(() => { });
   }
 
   importQuestions(files) {

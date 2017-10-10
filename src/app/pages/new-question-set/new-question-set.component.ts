@@ -9,7 +9,8 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'wakeup-new-question-set',
   templateUrl: './new-question-set.component.html',
-  styleUrls: ['./new-question-set.component.scss']
+  styleUrls: ['./new-question-set.component.scss'],
+  host: {'class':'newQuestionSet pageContent'}
 })
 export class NewQuestionSetComponent implements OnInit {
   questionSet: IQuestionSet = {

@@ -11,7 +11,8 @@ import AppConstants from '../../common/app-constants';
   selector: 'wakeup-topics',
   templateUrl: './topics.component.html',
   styleUrls: ['./topics.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {'class': 'topics pageContent'}
 })
 export class TopicsComponent implements OnInit {
   topics$: Observable<Topic[]>;

@@ -77,22 +77,14 @@
 
 .addAnswerButton {
   z-index: 2220;
-  position: sticky;
-  width: 65px;
-  height: 65px;
-  bottom: 16px;
-  left: calc(100vw - 96px);
-  border-radius: 59px;
-  background-color: orange;
-  border: none;
-  box-shadow: 0 4px 6px -3px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-  user-select: none;
-  cursor: pointer;
+  position: fixed;
+  bottom: 83px;
+  left: calc(100vw - 83px);
 }
 
 .prevQuestionButton {
   z-index: 20;
-  position: sticky;
+  position: fixed;
   bottom: calc(100vh/2);
   left: 26px;
   display: flex;
@@ -108,7 +100,7 @@
 
 .nextQuestionButton {
   z-index: 20;
-  position: sticky;
+  position: fixed;
   bottom: calc(100vh/2);
   left: calc(100vw - 96px);
   display: flex;

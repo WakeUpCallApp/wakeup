@@ -1,4 +1,4 @@
-<div class="answers-container pageContent" *ngIf="question">
+<div class="answers-container" *ngIf="question">
   <div class="breadcrumbs" *ngIf="question.questionSet as questionSet">
     <a [routerLink]="['/questionSetDetails', questionSet?.id]">{{questionSet?.name}}</a>
     <mat-icon>keyboard_arrow_right</mat-icon>
@@ -47,16 +47,16 @@
     </div>
   </wakeup-card>
 </div>
-<button matRipple (click)="createAnswer()" matTooltip="Add Answer" [matTooltipClass]="'tooltip'" class="addAnswerButton">
+<button mat-fab matRipple (click)="createAnswer()" matTooltip="Add Answer" [matTooltipClass]="'tooltip'" class="addAnswerButton">
  <mat-icon>add</mat-icon>
 </button>
 
-<button matRipple *ngIf="prevQuestionId" [routerLink]="['/answers', prevQuestionId]" title="previous question" class="prevQuestionButton"
+<button mat-button matRipple *ngIf="prevQuestionId" [routerLink]="['/answers', prevQuestionId]" title="previous question" class="prevQuestionButton"
   mat-icon-button>
  <mat-icon>keyboard_arrow_left</mat-icon>
 </button>
 
-<button matRipple *ngIf="nextQuestionId" [routerLink]="['/answers', nextQuestionId]" title="next question" class="nextQuestionButton"
+<button mat-button matRipple *ngIf="nextQuestionId" [routerLink]="['/answers', nextQuestionId]" title="next question" class="nextQuestionButton"
   mat-icon-button>
  <mat-icon>keyboard_arrow_right</mat-icon>
 </button>

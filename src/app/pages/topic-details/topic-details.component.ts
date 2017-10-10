@@ -24,7 +24,8 @@ import { DialogService } from "../../common/services/dialog.service";
   selector: "wakeup-topic-details",
   templateUrl: "./topic-details.component.html",
   styleUrls: ["./topic-details.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {'class': 'pageContent'}
 })
 export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   currentTopic: Topic;

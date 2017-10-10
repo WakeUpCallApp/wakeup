@@ -12,7 +12,8 @@ import { QuestionSet } from "../../common/models/question-set.model";
 @Component({
   selector: "wakeup-session-details",
   templateUrl: "./session-details.component.html",
-  styleUrls: ["./session-details.component.scss"]
+  styleUrls: ["./session-details.component.scss"],
+  host: { 'class': 'sessionDetails pageContent' }
 })
 export class SessionDetailsComponent implements OnInit, OnDestroy {
   actionsSubscription: Subscription;
@@ -41,7 +42,7 @@ export class SessionDetailsComponent implements OnInit, OnDestroy {
         if (isDbOpen) {
           return new actions.GetSessionDetailsAction(+this.questionSetId);
         }
-        return {type:'NOT_READY'};
+        return { type: 'NOT_READY' };
       }
     ).subscribe(this.store);
   }

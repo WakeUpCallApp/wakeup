@@ -25,7 +25,8 @@ import { DialogService } from "../../common/services/dialog.service";
 @Component({
   selector: "wakeup-quote-details",
   templateUrl: "./quote-details.component.html",
-  styleUrls: ["./quote-details.component.scss"]
+  styleUrls: ["./quote-details.component.scss"],
+  host: {'class': 'pageContent'}
 })
 export class QuoteDetailsComponent implements OnInit {
   actionsSubscription: Subscription;

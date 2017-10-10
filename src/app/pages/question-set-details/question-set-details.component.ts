@@ -31,7 +31,8 @@ import appConstants from "../../common/app-constants";
 @Component({
   selector: "wakeup-question-set-details",
   templateUrl: "./question-set-details.component.html",
-  styleUrls: ["./question-set-details.component.scss"]
+  styleUrls: ["./question-set-details.component.scss"],
+  host: { 'class': 'pageContent' }
 })
 export class QuestionSetDetailsComponent
   implements OnInit, AfterViewInit, OnDestroy {

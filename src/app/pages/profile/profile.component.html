@@ -1,23 +1,21 @@
-<div class="profile pageContent">
-  <section class="details">
-    <wakeup-card class="summary">
-      <div class="card-header">
-        <span class="title">Profile</span>
-      </div>
-      <div class="card-body">
-        <form #profileForm='ngForm'>
-          <mat-input-container floatPlaceholder="always">
-            <input matInput type="password" placeholder="Old Password" name="oldPassword" [(ngModel)]="oldPassword" required>
-            <mat-error>Old Password is required</mat-error>
-          </mat-input-container>
-          <mat-input-container floatPlaceholder="always">
-            <input matInput type="password" placeholder="New Password" name="newPassword" [(ngModel)]="newPassword" required>
-            <mat-error>New Password is required</mat-error>
-          </mat-input-container>
-           <mat-hint class="errorMessage">{{this.errorMessage}}</mat-hint>
-          <button [disabled]="!profileForm.valid" class="saveChanges" mat-button mat-raised-button (click)="updatePassword()"> Save changes </button>
-        </form>
-      </div>
-    </wakeup-card>
-  </section>
-</div>
+<section class="details">
+  <wakeup-card class="summary">
+    <div class="card-header">
+      <span class="title">Profile</span>
+    </div>
+    <div class="card-body">
+      <form #profileForm='ngForm'>
+        <mat-input-container floatPlaceholder="always">
+          <input matInput type="password" placeholder="Old Password" name="oldPassword" [(ngModel)]="oldPassword" required>
+          <mat-error>Old Password is required</mat-error>
+        </mat-input-container>
+        <mat-input-container floatPlaceholder="always">
+          <input matInput type="password" placeholder="New Password" name="newPassword" [(ngModel)]="newPassword" required>
+          <mat-error>New Password is required</mat-error>
+        </mat-input-container>
+        <mat-hint class="errorMessage">{{this.errorMessage}}</mat-hint>
+        <button [disabled]="!profileForm.valid" class="saveChanges" mat-button mat-raised-button (click)="updatePassword()"> Save changes </button>
+      </form>
+    </div>
+  </wakeup-card>
+</section>

@@ -76,7 +76,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
         }
       },
       {
-        path: 'newQuote/:topidId',
+        path: 'newQuote/:topicId',
         component: NewQuoteComponent,
         data: { title: 'New Quote' },
         canActivate: [AuthenticationGuard],

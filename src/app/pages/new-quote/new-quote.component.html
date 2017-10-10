@@ -1,4 +1,4 @@
-<div class="newQuote pageContent" *ngIf="topic$ | async as topic">
+<div class="newQuote" *ngIf="topic$ | async as topic">
   <div class="breadcrumbs">
     <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
     <mat-icon>keyboard_arrow_right</mat-icon>

@@ -13,7 +13,8 @@ import { Topic } from '../../common/models/topic.model';
 @Component({
   selector: 'wakeup-new-quote',
   templateUrl: './new-quote.component.html',
-  styleUrls: ['./new-quote.component.scss']
+  styleUrls: ['./new-quote.component.scss'],
+  host: {'class': 'pageContent'}
 })
 export class NewQuoteComponent implements OnInit, OnDestroy {
   actionsSubscription: Subscription;
@@ -38,10 +39,10 @@ export class NewQuoteComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
     this.actionsSubscription = this.route.params
-      .filter(params => !!params['topidId'])
+      .filter(params => !!params['topicId'])
       .subscribe(topicIdParams => {
-        this.quote.topic = +topicIdParams["topicId"];
-        this.store.dispatch(new topicActions.GetCurrentTopicAction(+topicIdParams["topicId"]));
+        this.quote.topic = parseInt(topicIdParams["topicId"]);
+        this.store.dispatch(new topicActions.GetCurrentTopicAction(this.quote.topic));
       });
     this.authors$ = this.store.select(reducers.getAuthorSuggestions);
     this.sources$ = this.store.select(reducers.getSourceSuggestions);

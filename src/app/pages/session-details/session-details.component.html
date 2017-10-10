@@ -1,25 +1,23 @@
-<div class="sessionDetails pageContent">
-  <div class="breadcrumbs" *ngIf="questionSetId">
-    <a [routerLink]="['/questionSetDetails', questionSetId]">{{currentQuestionSetName}}</a>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-    <span class="currentLink">Session Details</span>
+<div class="breadcrumbs" *ngIf="questionSetId">
+  <a [routerLink]="['/questionSetDetails', questionSetId]">{{currentQuestionSetName}}</a>
+  <mat-icon>keyboard_arrow_right</mat-icon>
+  <span class="currentLink">Session Details</span>
+</div>
+<wakeup-card>
+  <div class="card-header">
+    <span class="title">Session Details <small>{{currentQuestionSetName}}</small></span>
   </div>
-  <wakeup-card>
-    <div class="card-header">
-      <span class="title">Session Details <small>{{currentQuestionSetName}}</small></span>
-    </div>
-    <div class="card-body">
-      <div class="question" *ngFor="let question of sessionData$ | async; let i = index">
-        <div class="name">{{i+1}}. {{question.text}}</div>
-        <div class="quote" *ngIf="question.quote">
-          <a [routerLink]="['/quoteDetails', question.quote._id, question.quote.topic]" matTooltip="See Quote">
+  <div class="card-body">
+    <div class="question" *ngFor="let question of sessionData$ | async; let i = index">
+      <div class="name">{{i+1}}. {{question.text}}</div>
+      <div class="quote" *ngIf="question.quote">
+        <a [routerLink]="['/quoteDetails', question.quote._id, question.quote.topic]" matTooltip="See Quote">
             &#34;{{question.quote?.text}}&#34;
           </a>
-        </div>
-        <div class="answers">
-          <wakeup-answers-list [answers]="question.answers"></wakeup-answers-list>
-        </div>
+      </div>
+      <div class="answers">
+        <wakeup-answers-list [answers]="question.answers"></wakeup-answers-list>
       </div>
     </div>
-  </wakeup-card>
-</div>
+  </div>
+</wakeup-card>

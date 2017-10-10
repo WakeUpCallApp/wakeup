@@ -1,49 +1,48 @@
-<div class="quotes pageContent">
-  <div class="breadcrumbs" *ngIf="currentTopic as topic">
-    <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-    <span class="currentLink">Inspiration Page</span>
-  </div>
-  <wakeup-card>
-    <div class="card-header">
-      <div class="title">Quotes <small>{{currentTopic?.name}}</small></div>
-      <div class="actions">
-        <button mat-button [matMenuTriggerFor]="quotesMenu" matTooltip="More Actions">
+<div class="breadcrumbs" *ngIf="currentTopic as topic">
+  <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
+  <mat-icon>keyboard_arrow_right</mat-icon>
+  <span class="currentLink">Inspiration Page</span>
+</div>
+<wakeup-card>
+  <div class="card-header">
+    <div class="title">Quotes <small>{{currentTopic?.name}}</small></div>
+    <div class="actions">
+      <button mat-button [matMenuTriggerFor]="quotesMenu" matTooltip="More Actions">
                        <mat-icon>more_horiz</mat-icon> More
                     </button>
-        <mat-menu #quotesMenu="matMenu">
-          <button mat-menu-item *ngIf="!currentTopic?.isDefault" (click)="openImportQuotesModal()"> 
+      <mat-menu #quotesMenu="matMenu">
+        <button mat-menu-item *ngIf="!currentTopic?.isDefault" (click)="openImportQuotesModal()"> 
               <mat-icon>file_upload</mat-icon> 
               Import Quotes 
           </button>
-          <button mat-menu-item *ngIf="currentTopic?.quotes?.length" (click)="exportQuotes()"> 
+        <button mat-menu-item *ngIf="currentTopic?.quotes?.length" (click)="exportQuotes()"> 
               <mat-icon>file_download</mat-icon> 
               Export Quotes 
           </button>
-        </mat-menu>
-      </div>
+      </mat-menu>
     </div>
-    <div class="card-body">
-      <div class="emptyState" *ngIf="!currentTopic?.quotes?.length">
-        There are no quotes for this topic
-      </div>
-      <ul class="quotesList">
-        <li *ngFor="let quote of quotes">
-          <a [routerLink]="['/quoteDetails', quote.id, currentTopic.id]" matTooltip="see details">
-            <!-- <mat-icon>format_quote</mat-icon> -->
-            <blockquote class="text">
-              {{quote.text}}
-            </blockquote>
-            <span class="author">
+  </div>
+  <div class="card-body">
+    <div class="emptyState" *ngIf="!currentTopic?.quotes?.length">
+      There are no quotes for this topic
+    </div>
+    <ul class="quotesList">
+      <li *ngFor="let quote of quotes">
+        <a [routerLink]="['/quoteDetails', quote.id, currentTopic.id]" matTooltip="see details">
+          <!-- <mat-icon>format_quote</mat-icon> -->
+          <blockquote class="text">
+            {{quote.text}}
+          </blockquote>
+          <span class="author">
               {{quote.author ? quote.author : 'Unknown'}}</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </wakeup-card>
-</div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</wakeup-card>
+
 <button tabindex="0" matRipple *ngIf="!currentTopic?.isDefault" (click)="goToCreateQuote()" matTooltip="Create Quote" class="addQuoteButton"
-  mat-mini-fab [matTooltipPosition]="'above'" [matTooltipClass]="'tooltip'">
+  mat-fab [matTooltipPosition]="'above'" [matTooltipClass]="'tooltip'">
  <mat-icon>add</mat-icon>
 </button>
 <mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>

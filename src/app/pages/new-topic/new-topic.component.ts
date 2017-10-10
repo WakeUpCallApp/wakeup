@@ -7,7 +7,8 @@ import * as actions from '../../common/actions/topic.actions';
 @Component({
   selector: 'wakeup-new-topic',
   templateUrl: './new-topic.component.html',
-  styleUrls: ['./new-topic.component.scss']
+  styleUrls: ['./new-topic.component.scss'],
+  host: {'class': 'newTopic pageContent'}
 })
 export class NewTopicComponent implements OnInit {
   topic: ITopic = {

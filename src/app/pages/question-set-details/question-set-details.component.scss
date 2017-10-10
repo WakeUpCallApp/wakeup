@@ -1,49 +1,47 @@
 @import "~../../common/constants";
-.questionSetDetails {
-    .summary {
-        .card-header {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            .title {
-                flex: 1;
-                word-wrap: break-word;
-                word-break: break-all;
-            }
-            .actions {
-               display: flex;
-               flex-wrap: wrap;
-            }
+.summary {
+    .card-header {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        .title {
+            flex: 1;
+            word-wrap: break-word;
+            word-break: break-all;
         }
-        .editable {
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+    .editable {
+        display: flex;
+        flex-direction: column;
+    }
+    .practiceQuestionSetButton {
+        background-color: $accent;
+        border-radius: 5px;
+    }
+
+    .readOnly {
+        display: flex;
+        flex-direction: column;
+        div.name {
+            padding-bottom: 16px;
+        }
+        > div {
             display: flex;
             flex-direction: column;
-        }
-        .practiceQuestionSetButton {
-            background-color: $accent;
-            border-radius: 5px;
-        }
 
-        .readOnly {
-            display: flex;
-            flex-direction: column;
-            div.name {
-                padding-bottom: 16px;
-            }
-            > div {
-              display: flex;
-              flex-direction: column;
-
-              label {
-                  font-size: 12px;
-                  font-weight: bold;
-                  margin-bottom: 4px;
-                  color: $primary;
-              }
+            label {
+                font-size: 12px;
+                font-weight: bold;
+                margin-bottom: 4px;
+                color: $primary;
             }
         }
     }
-    .newQuestion {
-        margin-bottom: 26px;
-    }
+}
+.newQuestion {
+    margin-bottom: 26px;
 }

@@ -1,20 +1,18 @@
 @import "~../../common/constants";
 
-.profile {
-    form {
-        display: flex;
-        flex-direction: column;
-        mat-input-container {
-            margin-bottom: 26px;
-        }
-        .saveChanges {
-            align-self: left;
-        }
-        .saveChanges:not(:disabled) {
-          background-color: $accent; 
-        }
+form {
+    display: flex;
+    flex-direction: column;
+    mat-input-container {
+        margin-bottom: 26px;
     }
-   .errorMessage {
-       color: $warn;
-   }
+    .saveChanges {
+        align-self: left;
+    }
+    .saveChanges:not(:disabled) {
+        background-color: $accent; 
+    }
+}
+.errorMessage {
+    color: $warn;
 }

@@ -1,77 +1,76 @@
-<div class="quoteDetails pageContent">
-  <div class="breadcrumbs" *ngIf="topic">
-    <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-    <a [routerLink]="['/quotes', topic?.id]"> Inspiration Page</a>
-    <mat-icon>keyboard_arrow_right</mat-icon> <span class="currentLink">Quote Details</span>
-  </div>
-  <wakeup-card>
-    <div class="card-header">
-      <div class="title">Quotes Details</div>
-      <div class="actions" *ngIf="!topic?.isDefault">
-          <button mat-icon-button matTooltip="Delete Quote" (click)="onDeleteQuote()"> <mat-icon>delete_forever</mat-icon></button>
-      </div>
+<div class="breadcrumbs" *ngIf="topic">
+  <a [routerLink]="['/topicDetails', topic?.id]">{{topic?.name}}</a>
+  <mat-icon>keyboard_arrow_right</mat-icon>
+  <a [routerLink]="['/quotes', topic?.id]"> Inspiration Page</a>
+  <mat-icon>keyboard_arrow_right</mat-icon> <span class="currentLink">Quote Details</span>
+</div>
+<wakeup-card>
+  <div class="card-header">
+    <div class="title">Quotes Details</div>
+    <div class="actions" *ngIf="!topic?.isDefault">
+      <button mat-icon-button matTooltip="Delete Quote" (click)="onDeleteQuote()"> <mat-icon>delete_forever</mat-icon></button>
     </div>
-    <div class="card-body" *ngIf="updateObject as quote">
-      <div class="row readOnly">
-        <label> Topic </label> {{topic?.name}}
-      </div>
-      <section class="quoteForm" *ngIf="!quote.topic?.isDefault;else readOnlyQuote">
-        <form class="editQuoteForm" #quoteForm='ngForm'>
-          <mat-input-container floatPlaceholder="always">
-            <textarea class="quoteText" [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" matInput name="text" required></textarea>
-            <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
-            <mat-error>Text is required</mat-error>
-            <mat-hint align="end" aria-live="polite"> {{textVar.value.length}} / 1000 </mat-hint>
-          </mat-input-container>
+  </div>
+  <div class="card-body" *ngIf="updateObject as quote">
+    <div class="row readOnly">
+      <label> Topic </label> {{topic?.name}}
+    </div>
+    <section class="quoteForm" *ngIf="!quote.topic?.isDefault;else readOnlyQuote">
+      <form class="editQuoteForm" #quoteForm='ngForm'>
+        <mat-input-container floatPlaceholder="always">
+          <textarea class="quoteText" [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" matInput name="text"
+            required></textarea>
+          <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
+          <mat-error>Text is required</mat-error>
+          <mat-hint align="end" aria-live="polite"> {{textVar.value.length}} / 1000 </mat-hint>
+        </mat-input-container>
 
-          <mat-input-container floatPlaceholder="always">
-            <input [(ngModel)]="quote.author" #authorVar list="suggestions" autocomplete="off" maxlength="200" placeholder="Author" type="text"
-              matInput name="author">
-            <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
-            <datalist id="suggestions">
-              <select>
+        <mat-input-container floatPlaceholder="always">
+          <input [(ngModel)]="quote.author" #authorVar list="suggestions" autocomplete="off" maxlength="200" placeholder="Author" type="text"
+            matInput name="author">
+          <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
+          <datalist id="suggestions">
+            <select>
                     <option *ngFor="let suggestion of authors$ | async">{{suggestion}}</option>
                 </select>
-            </datalist>
-            <mat-hint align="end" aria-live="polite">
-              {{authorVar.value.length}} / 200
-            </mat-hint>
-          </mat-input-container>
+          </datalist>
+          <mat-hint align="end" aria-live="polite">
+            {{authorVar.value.length}} / 200
+          </mat-hint>
+        </mat-input-container>
 
-          <mat-input-container floatPlaceholder="always">
-            <input [(ngModel)]="quote.source" #sourceVar list="sourceSuggestions" autocomplete="off" placeholder="Source" type="text"
-              matInput name="source" maxlength="200">
-            <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
-            <datalist id="sourceSuggestions">
-              <select>
+        <mat-input-container floatPlaceholder="always">
+          <input [(ngModel)]="quote.source" #sourceVar list="sourceSuggestions" autocomplete="off" placeholder="Source" type="text"
+            matInput name="source" maxlength="200">
+          <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
+          <datalist id="sourceSuggestions">
+            <select>
                     <option *ngFor="let source of sources$ | async" >{{source}}</option>
                 </select>
-            </datalist>
-            <mat-hint align="end" aria-live="polite">
-              {{sourceVar.value.length}} / 200
-            </mat-hint>
-          </mat-input-container>
-        </form>
-      </section>
-      <ng-template class="readOnly" #readOnlyQuote>
-        <div class="row readOnly">
-          <label>Text</label> {{currentQuote.text}}
-        </div>
-        <div class="row readOnly" *ngIf="currentQuote.author"><label>Author</label> {{currentQuote.author}}</div>
-        <div class="row readOnly" *ngIf="currentQuote.source"><label>Source</label> {{currentQuote.source}}</div>
-      </ng-template>
-    </div>
-  </wakeup-card>
-  <section class="question">
-   <wakeup-quote-questions [questions]="currentQuote.questions" (update)="updateQuoteOnQuestionsUpdate($event)"></wakeup-quote-questions>
-  </section>
-  <section class="newComment" *ngIf="newComment">
-    <wakeup-add-comment (create)="addComment($event)" [commentObject]="newComment"></wakeup-add-comment>
-  </section>
-  <section class="commentList" *ngIf="(comments$ | async) as comments">
-    <wakeup-comment-list *ngIf="comments.length" [comments]="comments" (delete)="onDeleteComment($event)">
-    </wakeup-comment-list>
-  </section>
-</div>
+          </datalist>
+          <mat-hint align="end" aria-live="polite">
+            {{sourceVar.value.length}} / 200
+          </mat-hint>
+        </mat-input-container>
+      </form>
+    </section>
+    <ng-template class="readOnly" #readOnlyQuote>
+      <div class="row readOnly">
+        <label>Text</label> {{currentQuote.text}}
+      </div>
+      <div class="row readOnly" *ngIf="currentQuote.author"><label>Author</label> {{currentQuote.author}}</div>
+      <div class="row readOnly" *ngIf="currentQuote.source"><label>Source</label> {{currentQuote.source}}</div>
+    </ng-template>
+  </div>
+</wakeup-card>
+<section class="question">
+  <wakeup-quote-questions [questions]="currentQuote.questions" (update)="updateQuoteOnQuestionsUpdate($event)"></wakeup-quote-questions>
+</section>
+<section class="newComment" *ngIf="newComment">
+  <wakeup-add-comment (create)="addComment($event)" [commentObject]="newComment"></wakeup-add-comment>
+</section>
+<section class="commentList" *ngIf="(comments$ | async) as comments">
+  <wakeup-comment-list *ngIf="comments.length" [comments]="comments" (delete)="onDeleteComment($event)">
+  </wakeup-comment-list>
+</section>
 <mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>

@@ -28,7 +28,8 @@ enum KEY_CODE {
 @Component({
   selector: "wakeup-answers",
   templateUrl: "./answers.component.html",
-  styleUrls: ["./answers.component.scss"]
+  styleUrls: ["./answers.component.scss"],
+  host: {'class': 'pageContent'}
 })
 export class AnswersComponent implements OnInit {
   question: Question;

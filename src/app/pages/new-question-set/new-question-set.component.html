@@ -1,23 +1,21 @@
-<div class="newQuestionSet pageContent">
-  <wakeup-card>
-    <div class="card-header">Create Question Set</div>
-    <div class="card-body">
-      <form class="createQuestionSetForm" #qsForm='ngForm'>
-        <mat-input-container floatPlaceholder="always">
-          <input placeholder="Name" type="text" maxlength="200" #titleInputHint matInput name="name" required [(ngModel)]="questionSet.name">
-          <mat-error>Name is required</mat-error>
-          <mat-hint align="end" aria-live="polite"> {{titleInputHint.value.length}} / 200 </mat-hint>
-        </mat-input-container>
-        <mat-input-container floatPlaceholder="always">
-          <textarea matInput placeholder="Description"  name="description" cols="30" rows="5" [(ngModel)]="questionSet.description">
+<wakeup-card>
+  <div class="card-header">Create Question Set</div>
+  <div class="card-body">
+    <form class="createQuestionSetForm" #qsForm='ngForm'>
+      <mat-input-container floatPlaceholder="always">
+        <input placeholder="Name" type="text" maxlength="200" #titleInputHint matInput name="name" required [(ngModel)]="questionSet.name">
+        <mat-error>Name is required</mat-error>
+        <mat-hint align="end" aria-live="polite"> {{titleInputHint.value.length}} / 200 </mat-hint>
+      </mat-input-container>
+      <mat-input-container floatPlaceholder="always">
+        <textarea matInput placeholder="Description" name="description" cols="30" rows="5" [(ngModel)]="questionSet.description">
           </textarea>
-        </mat-input-container>
-      </form>
-    </div>
-    <div class="card-footer">
-      <button mat-button mat-raised-button [disabled]="!qsForm.valid" class="createButton" (click)="createQuestionSet()">
+      </mat-input-container>
+    </form>
+  </div>
+  <div class="card-footer">
+    <button mat-button mat-raised-button [disabled]="!qsForm.valid" class="createButton" (click)="createQuestionSet()">
     Create
     </button>
-    </div>
-  </wakeup-card>
-</div>
+  </div>
+</wakeup-card>
