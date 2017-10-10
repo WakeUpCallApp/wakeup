@@ -32,8 +32,10 @@ form.loginForm {
         padding-bottom: 10px;
     }
     .spinner {
-        height: 50px;
-        align-self: center;
+        width: 50px !important;
+        height: 50px !important;
+        position: relative !important;
+        align-self: auto;
     }
 }
 

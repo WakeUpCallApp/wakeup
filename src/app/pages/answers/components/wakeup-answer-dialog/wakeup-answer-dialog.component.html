@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ answer._id ? 'Update' : 'Create'}} Answer</h2>
+<h2 mat-dialog-title>{{ answer.id ? 'Update' : 'Create'}} Answer</h2>
 <mat-dialog-content class="editAnswer">
   <form class="content">
     <mat-input-container floatPlaceholder="always">
@@ -27,6 +27,6 @@
     mat-button 
     mat-raised-button
     (click)="handleClick()">
-    {{answer._id? 'Update' : 'Create' }}
+    {{answer.id? 'Update' : 'Create' }}
     </button>
 </mat-dialog-actions>

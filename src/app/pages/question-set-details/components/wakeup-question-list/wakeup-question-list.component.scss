@@ -38,6 +38,11 @@
     mat-checkbox.questionCheckbox {
         display: flex;
         flex: 1;
+        min-width: 200px;
+        
+        .questionTitle {
+            white-space: normal;
+        }
     }
     .questionTitleLink {
         flex: 1;
