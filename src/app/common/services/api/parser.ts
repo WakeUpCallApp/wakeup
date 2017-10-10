@@ -66,8 +66,8 @@ export default class Parser {
   static quoteFromApi(quoteApi: IQuoteApi): Quote {
     const questions = quoteApi.questions
       ? quoteApi.questions.map(questionApi =>
-          Parser.questionFromApi(questionApi)
-        )
+        Parser.questionFromApi(questionApi)
+      )
       : [];
     return new Quote(
       quoteApi._id,
@@ -140,4 +140,15 @@ export default class Parser {
       date: answer.createDate.getTime()
     };
   }
+
+  static answerIndexedDBToApi(answer: Answer) {
+    return {
+      _id: answer.id,
+      local: true,
+      questionId: answer.questionid,
+      text: answer.text,
+      date: answer.createDate.getTime()
+    };
+  }
+
 }

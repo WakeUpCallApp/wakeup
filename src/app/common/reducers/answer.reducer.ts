@@ -76,7 +76,7 @@ export function reducer(state = initialState, action: any): State {
 
 function onUpdateAnswer(answers, answerToUpdate) {
   return answers.map(answer => {
-    if (answer._id === answerToUpdate._id) {
+    if (answer.id === answerToUpdate.id) {
       answer = Object.assign({}, answerToUpdate);
     }
     return answer;
@@ -85,7 +85,7 @@ function onUpdateAnswer(answers, answerToUpdate) {
 
 function onDeleteAnswer(answers, answerToDelete) {
   return answers.filter(answer => {
-    return answer._id !== answerToDelete;
+    return answer.id !== answerToDelete;
   });
 }
 

@@ -131,7 +131,7 @@ export class AnswersComponent implements OnInit {
     );
   }
   private deleteAnswer(answer) {
-    this.store.dispatch(new actions.DeleteAction(answer._id));
+    this.store.dispatch(new actions.DeleteAction(answer.id));
   }
 
   createAnswer() {

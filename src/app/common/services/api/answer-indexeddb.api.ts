@@ -64,8 +64,7 @@ export class AnswersIndexedDbApi {
 
             return new Promise((resolve, reject) => {
                 request.onsuccess = (e) => {
-                    console.log(answer);
-                    resolve(answer);
+                    resolve(Parser.answerFromApi(answer));
                 }
                 request.onerror = (e) => reject(e);
             });
@@ -79,7 +78,7 @@ export class AnswersIndexedDbApi {
         }
         const trans = this.db.transaction(['answers'], 'readwrite');
         const store = trans.objectStore('answers');
-        const request = store.put(answer);
+        const request = store.put(Parser.answerIndexedDBToApi(answer));
         return new Promise((resolve, reject) => {
             request.onsuccess = (e) => resolve(answer);
             request.onerror = (e) => reject(e);
