@@ -123,21 +123,23 @@ export default class Parser {
     };
   }
 
-  static answerFromApi(answer: IAnswerApi): Answer {
+  static answerFromApi(answer): Answer {
     return new Answer(
       answer._id,
       answer.question || (answer as any).questionId,
       answer.text,
-      new Date(answer.date)
+      new Date(answer.date),
+      answer.userId
     );
   }
 
-  static answerToApi(answer: Answer): IAnswerApi {
+  static answerToApi(answer) {
     return {
       _id: answer.id,
       question: answer.questionid,
       text: answer.text,
-      date: answer.createDate.getTime()
+      date: answer.createDate.getTime(),
+      userId: answer.userId
     };
   }
 
@@ -147,7 +149,8 @@ export default class Parser {
       local: true,
       questionId: answer.questionid,
       text: answer.text,
-      date: answer.createDate.getTime()
+      date: answer.createDate.getTime(),
+      userId: answer.userId
     };
   }
 

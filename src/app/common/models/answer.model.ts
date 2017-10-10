@@ -20,7 +20,8 @@ export class Answer {
         public id: number,
         public questionid: number,
         public text: string,
-        public createDate: Date) {
-            this.groupDay = moment(createDate).format('dddd, DD MMM YYYY');
-         }
+        public createDate: Date,
+        public userId) {
+        this.groupDay = moment(createDate).format('dddd, DD MMM YYYY');
+    }
 }

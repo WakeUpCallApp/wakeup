@@ -152,7 +152,8 @@ export class AnswersComponent implements OnInit {
         this.store.dispatch(
           new actions.CreateAction(
             Object.assign({}, newAnswer, result, {
-              date: new Date().getTime()
+              date: new Date().getTime(),
+              userId: this.auth.getUserInfo().id
             })
           )
         );
