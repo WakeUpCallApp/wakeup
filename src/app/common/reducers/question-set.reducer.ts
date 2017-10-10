@@ -57,7 +57,7 @@ export function reducer(state = initialState, action: any): State {
 
     case actions.ActionTypes.GET_CURRENT_QUESTION_SET_SUCCESS:
       return Object.assign({}, state, {
-        currentQuestionSet: action.payload,
+        currentQuestionSet: getsortedQuestionsQS(action.payload),
         isLoading: false
       });
 
@@ -155,14 +155,19 @@ function getSessionDetails(data) {
       ? helper.groupAnswersByDate(question.answers)
       : [];
   });
-  return sessionDetails.sort((q1, q2) => {
-    return parseInt(q1._id) - parseInt(q2._id);
-  });
+  return helper.sortQuestionsById(sessionDetails);
 }
 
 function updateOnImportQuestions(questionSet, questionsToAdd) {
   const updatedQuestionSet = Object.assign({}, questionSet, {
     questions: questionSet.questions.concat(questionsToAdd)
+  });
+  return updatedQuestionSet;
+}
+
+function getsortedQuestionsQS(questionSet) {
+  const updatedQuestionSet = Object.assign({}, questionSet, {
+    questions: helper.sortQuestionsById(questionSet.questions)
   });
   return updatedQuestionSet;
 }
