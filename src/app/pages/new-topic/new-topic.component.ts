@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ITopic } from '../../common/models/topic.model';
-import { Store } from '@ngrx/store';
-import * as reducers from '../../common/reducers';
-import * as actions from '../../common/actions/topic.actions';
+import { TopicStoreService } from '../../common/store';
 
 @Component({
   selector: 'wakeup-new-topic',
   templateUrl: './new-topic.component.html',
   styleUrls: ['./new-topic.component.scss'],
-  host: {'class': 'newTopic pageContent'}
+  host: { 'class': 'newTopic pageContent' }
 })
 export class NewTopicComponent implements OnInit {
   topic: ITopic = {
@@ -17,11 +15,11 @@ export class NewTopicComponent implements OnInit {
     isDefault: false
   };
   isCreating = false;
-  constructor(private store: Store<reducers.State>) {}
+  constructor(private topicStoreService: TopicStoreService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   createTopic() {
-    this.store.dispatch(new actions.CreateAction(this.topic));
+    this.topicStoreService.create(this.topic);
   }
 }

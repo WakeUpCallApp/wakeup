@@ -1,9 +1,9 @@
 <section class="details">
     <wakeup-card class="summary">
         <div class="card-header">
-            <span class="title">{{currentTopic.name}}</span>
+            <span class="title">{{currentTopic?.name}}</span>
             <div class="actions">
-                <button mat-icon-button matTooltip="View Quotes" [routerLink]="['/quotes',currentTopic.id]"> 
+                <button mat-icon-button matTooltip="View Quotes" [routerLink]="['/quotes',currentTopic?.id]"> 
                             <mat-icon>format_quote</mat-icon>  
                     </button>
                 <button mat-icon-button (click)="onDeleteTopic()" matTooltip="Delete Topic"> 
@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="editable" *ngIf="!updateObject.isDefault">
+            <div class="editable" *ngIf="!updateObject?.isDefault">
                 <mat-input-container floatPlaceholder="always">
                     <input #nameInput matInput type="text" placeholder="Name" name="name" [(ngModel)]="updateObject.name" required>
                     <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
@@ -25,22 +25,22 @@
                     <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
                 </mat-input-container>
             </div>
-            <div class="readOnly" *ngIf="updateObject.isDefault">
+            <div class="readOnly" *ngIf="updateObject?.isDefault">
                 <div class="name">
-                    <label> Name </label> {{currentTopic.name}}
+                    <label> Name </label> {{currentTopic?.name}}
                 </div>
                 <div class="description">
-                    <label>Description </label> {{currentTopic.description ? currentTopic.description : 'None available'}}
+                    <label>Description </label> {{currentTopic?.description ? currentTopic?.description : 'None available'}}
                 </div>
             </div>
         </div>
     </wakeup-card>
 </section>
-<section class="associateQuestionSet" *ngIf="!currentTopic.isDefault">
-    <wakeup-associate-question-set [questionSets]="questionSets$| async" [selectedQuestionSets]="currentTopic.questionSets" (update)="associateQuestionSets($event)">
+<section class="associateQuestionSet" *ngIf="!currentTopic?.isDefault">
+    <wakeup-associate-question-set [questionSets]="questionSets$| async" [selectedQuestionSets]="currentTopic?.questionSets" (update)="associateQuestionSets($event)">
     </wakeup-associate-question-set>
 </section>
-<section class="questionSets" *ngIf="currentTopic.questionSets?.length">
+<section class="questionSets" *ngIf="currentTopic?.questionSets?.length">
     <mat-card class="questionSetList mat-elevation-z3">
         <mat-card-header>
             <div class="title">
@@ -50,7 +50,7 @@
             </div>
         </mat-card-header>
         <mat-card-content class="list">
-            <wakeup-question-sets-list [questionSets]="currentTopic.questionSets"></wakeup-question-sets-list>
+            <wakeup-question-sets-list [questionSets]="currentTopic?.questionSets"></wakeup-question-sets-list>
         </mat-card-content>
     </mat-card>
 </section>

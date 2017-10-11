@@ -1,7 +1,7 @@
-import { Question } from "../models/question.model";
-import * as actions from "../actions/question.actions";
-import * as answerActions from "../actions/answer.actions";
-import Helper from "./helper";
+import { Question } from "../../models/question.model";
+import * as actions from "./question.actions";
+import * as answerActions from "../answer/answer.actions";
+import Helper from "../helper";
 
 const helper = new Helper();
 

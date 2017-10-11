@@ -1,6 +1,5 @@
-import { Quote } from "../models/quote.model";
-import { Topic } from "../models/topic.model";
-import * as actions from "../actions/quote.actions";
+import { Quote, Topic } from "../../models";
+import * as actions from "./quote.actions";
 
 export interface State {
   topicsWithQuotes: Topic[];

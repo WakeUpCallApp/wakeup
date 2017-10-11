@@ -1,12 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { Store } from '@ngrx/store';
-import * as reducers from '../../../../common/reducers';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import * as actions from '../../../../common/actions/quote.actions';
-import { Topic } from '../../../../common/models/topic.model';
-import { Quote } from '../../../../common/models/quote.model';
+import { Topic, Quote } from '../../../../common/models';
+import { QuoteStoreService } from '../../../../common/store';
 
 @Component({
   selector: 'wakeup-quotes-browser',
@@ -21,15 +18,14 @@ export class WakeupQuotesBrowserComponent implements OnInit, OnDestroy {
   selectedQuoteId;
   selectedQuoteText;
   constructor(
-    private store: Store<reducers.State>,
+    private quoteStoreService: QuoteStoreService,
     public dialogRef: MatDialogRef<WakeupQuotesBrowserComponent>
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.selectedQuoteId = this.initialQuoteId;
-    this.store.dispatch(new actions.LoadAction());
-    this.quotesSubscription = this.store
-      .select(reducers.getTopicsWithQuotesState)
+    this.quoteStoreService.getAll();
+    this.quotesSubscription = this.quoteStoreService.topicsWithQuotes$
       .subscribe(topicsList => {
         this.topics = topicsList;
         this.currentTopic = this.getCurrentTopic();
@@ -59,7 +55,7 @@ export class WakeupQuotesBrowserComponent implements OnInit, OnDestroy {
 
   getCurrentTopic() {
     return this.topics.find(topic => !!(topic.quotes as Quote[]).find(quote => quote.id === this.selectedQuoteId))
-    || (this.topics.length ? this.topics[0] : <Topic>{});
+      || (this.topics.length ? this.topics[0] : <Topic>{});
   }
 
   isSelectedQuote(quote) {

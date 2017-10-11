@@ -1,6 +1,6 @@
-import { QuestionSet } from "../models/question-set.model";
-import * as actions from "../actions/question-set.actions";
-import Helper from "./helper";
+import { QuestionSet } from "../../models/question-set.model";
+import * as actions from "./question-set.actions";
+import Helper from "../helper";
 
 const helper = new Helper();
 

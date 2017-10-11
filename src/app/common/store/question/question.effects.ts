@@ -2,13 +2,13 @@ import { Injectable } from "@angular/core";
 import { Actions, Effect } from "@ngrx/effects";
 
 import { Observable } from "rxjs/Observable";
-import AppConstants from "../app-constants";
+import AppConstants from "../../app-constants";
 import { Router } from "@angular/router";
 
-import * as question from "../actions/question.actions";
-import * as questionSet from "../actions/question-set.actions";
-import { QuestionApi } from "../services/api/question.api";
-import { NotificationService } from "../services/notification.service";
+import * as question from "./question.actions";
+import * as questionSet from "../question-set/question-set.actions";
+import { QuestionApi } from "../../services/api/question.api";
+import { NotificationService } from "../../services/notification.service";
 
 @Injectable()
 export class QuestionEffects {

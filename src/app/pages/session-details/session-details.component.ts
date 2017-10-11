@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
-import { Store } from "@ngrx/store";
+
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
-import * as reducers from "../../common/reducers";
-import * as actions from "../../common/actions/question-set.actions";
-import * as answerActions from '../../common/actions/answer.actions';
+
+import { QuestionSetStoreService, AnswerStoreService } from '../../common/store';
 import { QuestionSet } from "../../common/models/question-set.model";
 
 @Component({
@@ -21,30 +20,30 @@ export class SessionDetailsComponent implements OnInit, OnDestroy {
   currentQuestionSetName: string;
   questionSetId;
   constructor(
-    private store: Store<reducers.State>,
+    private questionSetStoreService: QuestionSetStoreService,
+    private answerStoreService: AnswerStoreService,
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(new answerActions.OpenIndexedDbAction());
+    this.answerStoreService.openIndexedDb();
 
-    this.sessionData$ = this.store.select(reducers.getSessionDetailsState);
+    this.sessionData$ = this.questionSetStoreService.sessionDetails$;
     this.actionsSubscription = Observable.combineLatest(
       this.route.params.filter(params => !!params["questionSetId"]),
       this.route.params.filter(params => !!params["questionSetName"]),
-      this.store.select(reducers.getIndexedDBState),
+      this.answerStoreService.isIndexedDbOpen$,
       (idParams, nameParams, isDbOpen) => {
         this.currentQuestionSetName = nameParams["questionSetName"];
         this.questionSetId = idParams["questionSetId"];
         this.titleService.setTitle(`SessionDetails ${name}`);
         if (isDbOpen) {
-          return new actions.GetSessionDetailsAction(+this.questionSetId);
+          this.questionSetStoreService.getSessionDetails(parseInt(this.questionSetId));
         }
-        return { type: 'NOT_READY' };
       }
-    ).subscribe(this.store);
+    ).subscribe();
   }
 
   ngOnDestroy() {

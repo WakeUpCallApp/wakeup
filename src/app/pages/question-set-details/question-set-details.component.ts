@@ -15,17 +15,18 @@ import { MatDialog, MatDialogConfig } from "@angular/material";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
-import { SessionOptions } from "../../common/services/session-config.service";
-import { WakeupQuotesBrowserComponent } from "./components/wakeup-quotes-browser/wakeup-quotes-browser.component";
-import { WakeupSessionConfigComponent } from "./components/wakeup-session-config/wakeup-session-config.component";
-import { WakeupEditQuestionDialogComponent } from "./components/wakeup-edit-question-dialog/wakeup-edit-question-dialog.component";
+
+import {
+  WakeupQuotesBrowserComponent,
+  WakeupSessionConfigComponent,
+  WakeupEditQuestionDialogComponent
+} from "./components";
 import { WakeupImportFileComponent } from "../../_shared/components/wakeup-import-file/wakeup-import-file.component";
-import { SessionConfigService } from "../../common/services/session-config.service";
-import { DialogService } from "../../common/services/dialog.service";
-import { QuestionSet } from "../../common/models/question-set.model";
-import { IQuestion } from "../../common/models/question.model";
-import * as reducers from "../../common/reducers";
-import * as actions from "../../common/actions/question-set.actions";
+import { DialogService, SessionConfigService } from '../../common/services';
+import { SessionOptions } from "../../common/services/session-config.service";
+import { QuestionSet, IQuestion } from "../../common/models";
+import { QuestionSetStoreService } from '../../common/store';
+
 import appConstants from "../../common/app-constants";
 
 @Component({
@@ -48,7 +49,7 @@ export class QuestionSetDetailsComponent
   @ViewChild("descriptionInput") descriptionElRef: ElementRef;
   constructor(
     private sessionConfigService: SessionConfigService,
-    private store: Store<reducers.State>,
+    private questionSetStoreService: QuestionSetStoreService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
@@ -62,22 +63,18 @@ export class QuestionSetDetailsComponent
   ngOnInit() {
     this.actionsSubscription = this.route.params
       .filter(params => !!params['id'])
-      .map(idParams => new actions.GetCurrentQSAction(idParams["id"]))
-      .subscribe(this.store);
+      .map(idParams => this.questionSetStoreService.get(idParams["id"]))
+      .subscribe();
 
-    this.qsSubscription = this.store
-      .select(reducers.getCurrentQuestionSetState)
+    this.qsSubscription = this.questionSetStoreService.currentQuestionSet$
       .subscribe(currentQuestionSet => {
-        this.currentQuestionSet = <QuestionSet>Object.assign(
-          {},
-          currentQuestionSet
-        );
+        this.currentQuestionSet = <QuestionSet>currentQuestionSet;
         this.titleService.setTitle(`${this.currentQuestionSet.name} details`);
         this.updateObject = Object.assign({}, currentQuestionSet);
         this.newQuestion = this.getEmptyQuestion();
       });
-    this.importSpinnerSubscription = this.store
-      .select(reducers.getImportSpinner)
+
+    this.importSpinnerSubscription = this.questionSetStoreService.isImporting$
       .subscribe(importSpinner => {
         if (importSpinner) {
           this.importDialogRef.componentInstance.importSpinner = importSpinner;
@@ -86,7 +83,7 @@ export class QuestionSetDetailsComponent
           this.importDialogRef.close();
         }
       });
-    this.isLoading$ = this.store.select(reducers.getLoadingQuestionSetState);
+    this.isLoading$ = this.questionSetStoreService.isLoading$;
   }
 
   ngAfterViewInit() {
@@ -122,7 +119,7 @@ export class QuestionSetDetailsComponent
   }
 
   updateQuestionSet() {
-    this.store.dispatch(new actions.UpdateAction(this.updateObject));
+    this.questionSetStoreService.update(this.updateObject);
   }
 
   onQuestionSetDelete() {
@@ -133,7 +130,7 @@ export class QuestionSetDetailsComponent
   }
 
   private deleteQuestionSet() {
-    this.store.dispatch(new actions.DeleteAction(this.currentQuestionSet.id));
+    this.questionSetStoreService.delete(this.currentQuestionSet);
   }
 
   getEmptyQuestion() {
@@ -146,14 +143,7 @@ export class QuestionSetDetailsComponent
   }
 
   addQuestion(qs: IQuestion) {
-    this.store.dispatch(
-      new actions.AddQuestionAction({
-        text: qs.text,
-        questionSet: qs.questionSet,
-        date: new Date().getTime(),
-        quote: qs.quote
-      })
-    );
+    this.questionSetStoreService.addQuestion(qs);
     this.newQuestion = this.getEmptyQuestion();
   }
 
@@ -166,7 +156,7 @@ export class QuestionSetDetailsComponent
 
   private deleteQuestions(questions) {
     questions.forEach(question =>
-      this.store.dispatch(new actions.DeleteQuestionAction(question))
+      this.questionSetStoreService.deleteQuestion(question)
     );
   }
 
@@ -182,7 +172,7 @@ export class QuestionSetDetailsComponent
     dialogRef.componentInstance.question = Object.assign({}, question);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.store.dispatch(new actions.EditQuestionAction(result));
+        this.questionSetStoreService.editQuestion(result);
       }
     });
   }
@@ -198,7 +188,7 @@ export class QuestionSetDetailsComponent
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         question.quote = result.selectedQuoteId;
-        this.store.dispatch(new actions.EditQuestionAction(question));
+        this.questionSetStoreService.editQuestion(question);
       }
     });
   }
@@ -230,12 +220,7 @@ export class QuestionSetDetailsComponent
   }
 
   importQuestions(files) {
-    this.store.dispatch(
-      new actions.ImportQuestionsAction({
-        questionSetId: this.currentQuestionSet.id,
-        questions: files
-      })
-    );
+    this.questionSetStoreService.importQuestions(this.currentQuestionSet.id, files);
   }
 
   exportQuestions() {
@@ -245,11 +230,6 @@ export class QuestionSetDetailsComponent
           questionName: question.text
         };
       });
-    this.store.dispatch(
-      new actions.ExportQuestionsAction({
-        questions: exportData,
-        questionSetName: this.currentQuestionSet.name
-      })
-    );
+    this.questionSetStoreService.exportQuestions(exportData, this.currentQuestionSet.name);
   }
 }

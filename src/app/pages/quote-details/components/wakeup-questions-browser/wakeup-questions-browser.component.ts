@@ -1,10 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialogRef } from "@angular/material";
-import { Store } from "@ngrx/store";
-import * as reducers from "../../../../common/reducers";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
-import * as actions from "../../../../common/actions/question.actions";
+import { QuestionStoreService } from "../../../../common/store";
 import isEqual from "lodash/isEqual";
 
 @Component({
@@ -19,21 +17,24 @@ export class WakeupQuestionsBrowserComponent implements OnInit {
   selectedQuestions;
   initialSelection;
   constructor(
-    private store: Store<reducers.State>,
+    private questionStoreService: QuestionStoreService,
     public dialogRef: MatDialogRef<WakeupQuestionsBrowserComponent>
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initialSelection = this.selectedQuestions;
-    this.store.dispatch(new actions.LoadAction());
-    this.allQuestionsSubscription = this.store
-      .select(reducers.getQuestionsState)
+    this.questionStoreService.getAll();
+    this.allQuestionsSubscription = this.questionStoreService.questions$
       .subscribe(questionSets => {
         this.questionSets = questionSets;
         if (questionSets) {
           this.currentQuestionSet = this.getCurrentQuestionSet();
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.allQuestionsSubscription.unsubscribe();
   }
 
   safeClose() {

@@ -3,12 +3,13 @@ import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
 import { Title } from "@angular/platform-browser";
 import { Store } from '@ngrx/store';
-import * as reducers from './common/reducers';
+
 import { LoginApi } from "./common/services/api/login.api";
 import { AuthTokenService } from "./common/services/authToken.service";
 import appConstants from "./common/app-constants";
-import { addEvent } from "./common/util";
+import { addEvent } from "./common/store/util";
 import { NotificationService } from "app/common/services";
+import { LoginStoreService } from './common/store';
 
 @Component({
   selector: "app-root",
@@ -26,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private snackBar: MatSnackBar,
     private notificationService: NotificationService,
-    private store: Store<reducers.State>
+    private loginStoreService: LoginStoreService
   ) { }
 
   ngOnInit() {
@@ -84,7 +85,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.store.dispatch({ type: 'USER_LOGOUT' });
+    this.loginStoreService.logout();
     this.loginApi.logout();
     this.isOpen = false;
     this.router.navigate([appConstants.routes.LOGIN]);

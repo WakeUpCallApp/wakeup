@@ -3,32 +3,42 @@ import { Actions, Effect } from "@ngrx/effects";
 
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
-import AppConstants from "../app-constants";
 
-import * as answer from "../actions/answer.actions";
-import { AnswerApi } from "../services/api/answer.api";
-import { NotificationService } from "../services/notification.service";
+import AppConstants from "../../app-constants";
+import { AnswersIndexedDbApi } from "../../services/api/answer-indexeddb.api";
+import { NotificationService } from "../../services/notification.service";
+import * as answer from "./answer.actions";
 
 @Injectable()
-export class AnswerEffects {
+export class AnswerEffectsIndexedDB {
   constructor(
-    private answerService: AnswerApi,
+    private answerService: AnswersIndexedDbApi,
     private notificationService: NotificationService,
     private actions$: Actions,
     private router: Router
   ) { }
   @Effect()
+  openIndexedDb$ = this.actions$
+    .ofType(answer.ActionTypes.OPEN_INDEXED_DB)
+    .map((action:any) => action.payload)
+    .switchMap(questionId => this.answerService.openIndexedDb())
+    .map(result => new answer.OpenIndexedDbActionSuccess())
+    .catch(error => {
+      return Observable.of(new answer.OpenIndexedDbActionError(error));
+    });;
+
+  @Effect()
   load$ = this.actions$
     .ofType(answer.ActionTypes.LOAD)
     .map((action:any) => action.payload)
-    .switchMap(questionId => this.answerService.all(questionId))
+    .switchMap(questionId => this.answerService.getAnswers(questionId))
     .map(result => new answer.LoadActionSuccess(result));
 
   @Effect()
   create$ = this.actions$
     .ofType(answer.ActionTypes.CREATE)
     .map((action:any) => action.payload)
-    .switchMap(answer => this.answerService.create(answer))
+    .switchMap(answer => this.answerService.saveAnswer(answer))
     .map(result => {
       this.notificationService.notifySuccess("Answer successfully created");
       return new answer.CreateActionSuccess(result);
@@ -42,7 +52,7 @@ export class AnswerEffects {
   update$ = this.actions$
     .ofType(answer.ActionTypes.UPDATE)
     .map((action:any) => action.payload)
-    .switchMap(answer => this.answerService.update(answer))
+    .switchMap(answer => this.answerService.updateAnswer(answer))
     .map(result => {
       this.notificationService.notifySuccess("Answer successfully updated");
       return new answer.UpdateActionSuccess(result);
@@ -58,7 +68,7 @@ export class AnswerEffects {
   delete$ = this.actions$
     .ofType(answer.ActionTypes.DELETE)
     .map((action:any) => action.payload)
-    .switchMap(answer => this.answerService.delete(answer))
+    .switchMap(answer => this.answerService.deleteAnswer(answer))
     .map(answerId => {
       this.notificationService.notifySuccess("Answer successfully deleted");
       return new answer.DeleteActionSuccess(answerId);
@@ -68,23 +78,9 @@ export class AnswerEffects {
   deleteAll$ = this.actions$
     .ofType(answer.ActionTypes.DELETE_ALL)
     .map((action:any) => action.payload)
-    .switchMap(questionId => this.answerService.deleteAll(questionId))
+    .switchMap(({ questionId, userId }) => this.answerService.deleteAllAnswers(questionId, userId))
     .map(questionId => {
       this.notificationService.notifySuccess("Answers successfully deleted");
       return new answer.DeleteAllActionSuccess(questionId);
-    });
-
-  @Effect({ dispatch: false })
-  invalidateCache = this.actions$
-    .ofType(
-    answer.ActionTypes.CREATE_SUCCESS,
-    answer.ActionTypes.UPDATE_SUCCESS,
-    answer.ActionTypes.DELETE_SUCCESS,
-    answer.ActionTypes.DELETE_ALL_SUCCESS,
-    "USER_LOGOUT"
-    )
-    .map(() => {
-      console.log("clear cache");
-      this.answerService.clearCache();
     });
 }

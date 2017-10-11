@@ -1,16 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { QuestionSet } from '../../common/models/question-set.model';
-import * as reducers from '../../common/reducers';
-import * as actions from '../../common/actions/question-set.actions';
 import { Observable } from 'rxjs/Observable';
+import { QuestionSetStoreService } from '../../common/store';
 
 @Component({
   selector: 'wakeup-question-sets',
   templateUrl: './question-sets.component.html',
   styleUrls: ['./question-sets.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {'class': 'pageContent'}
+  host: { 'class': 'pageContent' }
 })
 export class QuestionSetsComponent implements OnInit {
   questionSets$: Observable<QuestionSet[]>;
@@ -21,10 +19,10 @@ export class QuestionSetsComponent implements OnInit {
   selectedFilter = this.all;
   search;
 
-  constructor(private store: Store<reducers.State>) {
-    this.questionSets$ = store.select(reducers.getQuestionSetsSortedState);
-    this.searchTerm$ = store.select(reducers.getQuestionSetSearchTerm);
-    this.filter$ = store.select(reducers.getQuestionSetFilter);
+  constructor(private questionSetStoreService: QuestionSetStoreService) {
+    this.questionSets$ = this.questionSetStoreService.sortedQuestionSets$;
+    this.searchTerm$ = this.questionSetStoreService.searchTerm$;
+    this.filter$ = this.questionSetStoreService.filter$;
 
     this.filteredList$ = Observable.combineLatest(
       this.questionSets$,
@@ -45,31 +43,30 @@ export class QuestionSetsComponent implements OnInit {
           : filteredQuestionSets;
       }
     );
-    this.isLoading$ = store.select(reducers.getLoadingQuestionSetState);
+    this.isLoading$ = this.questionSetStoreService.isLoading$;
   }
 
   get all() {
-    return actions.Filter.ALL;
+    return this.questionSetStoreService.getAllFilter();
   }
 
   get mostPlayed() {
-    return actions.Filter.MOST_PLAYED;
+    return this.questionSetStoreService.getMostPlayedFilter();
   }
 
   ngOnInit() {
-    this.store.dispatch(new actions.LoadAction());
+    this.questionSetStoreService.getAll();
   }
 
   ngOnDestroy() {
-    this.store.dispatch(new actions.FilterAction(this.all));
-    this.store.dispatch(new actions.SearchAction(undefined));
+    this.questionSetStoreService.resetSearchAndFilter();
   }
 
   doSearch(val) {
-    this.store.dispatch(new actions.SearchAction(val));
+    this.questionSetStoreService.doSearch(val);
   }
 
   doFilter() {
-    this.store.dispatch(new actions.FilterAction(this.selectedFilter));
+    this.questionSetStoreService.doFilter(this.selectedFilter);
   }
 }

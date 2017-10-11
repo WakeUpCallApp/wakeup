@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { IQuestionSet} from '../../common/models/question-set.model';
-import { Store } from '@ngrx/store';
+import { IQuestionSet } from '../../common/models/question-set.model';
 
-import * as reducers from '../../common/reducers';
-import * as actions from '../../common/actions/question-set.actions';
 import { Observable } from 'rxjs/Observable';
+import { QuestionSetStoreService } from '../../common/store';
 
 @Component({
   selector: 'wakeup-new-question-set',
   templateUrl: './new-question-set.component.html',
   styleUrls: ['./new-question-set.component.scss'],
-  host: {'class':'newQuestionSet pageContent'}
+  host: { 'class': 'newQuestionSet pageContent' }
 })
 export class NewQuestionSetComponent implements OnInit {
   questionSet: IQuestionSet = {
@@ -18,13 +16,13 @@ export class NewQuestionSetComponent implements OnInit {
     description: '',
     isDefault: false
   };
-   constructor(
-    private store: Store<reducers.State>) { }
+  constructor(
+    private questionSetStoreService: QuestionSetStoreService) { }
 
   ngOnInit() {
   }
 
   createQuestionSet() {
-    this.store.dispatch(new actions.CreateAction(this.questionSet));
+    this.questionSetStoreService.create(this.questionSet);
   }
 }

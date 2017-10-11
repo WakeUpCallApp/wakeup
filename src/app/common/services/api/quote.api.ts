@@ -11,7 +11,7 @@ export class QuoteApi {
   private userQuotes;
   private quotes;
   private comments;
-  constructor(private http: Http) {}
+  constructor(private http: Http) { }
 
   all(): Observable<Quote[]> {
     if (this.userQuotes) {
@@ -76,9 +76,7 @@ export class QuoteApi {
     return this.http
       .delete(`/api/quotes/${quote.id}`)
       .map((response: Response) => response.json())
-      .map(() => {
-        return quote;
-      })
+      .map(() => quote)
       .catch(this.handleError);
   }
 

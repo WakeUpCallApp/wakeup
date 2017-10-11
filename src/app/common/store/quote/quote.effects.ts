@@ -2,26 +2,26 @@ import { Injectable } from "@angular/core";
 import { Actions, Effect } from "@ngrx/effects";
 import { Router } from "@angular/router";
 import { Store, Action } from "@ngrx/store";
-import * as reducers from "../reducers";
+import * as reducers from "../app.store";
 
 import { Observable } from "rxjs/Observable";
-import AppConstants from "../app-constants";
+import AppConstants from "../../app-constants";
 
-import * as quoteActions from "../actions/quote.actions";
-import { QuoteApi } from "../services/api/quote.api";
-import { NotificationService } from "../services/notification.service";
-import { FileParsingService } from "../services/file-parsing";
+import * as quoteActions from "./quote.actions";
+import { QuoteApi } from "../../services/api/quote.api";
+import { NotificationService } from "../../services/notification.service";
+import { FileParsingService } from "../../services/file-parsing";
 
 @Injectable()
 export class QuoteEffects {
-  
+
   constructor(
     private quoteApi: QuoteApi,
     private fileParsing: FileParsingService,
     private notificationService: NotificationService,
     private actions$: Actions,
     private router: Router,
-    private store: Store<reducers.State>
+    private store: Store<reducers.AppState>
   ) { }
 
   @Effect()
@@ -83,14 +83,14 @@ export class QuoteEffects {
     .ofType(quoteActions.ActionTypes.CREATE_SUCCESS)
     .map((action: any) => action.payload)
     .map(quote => {
-      this.router.navigate([AppConstants.routes.QUOTE_DETAILS, quote.id]);
+      this.router.navigate([AppConstants.routes.QUOTE_DETAILS, quote.id, quote.topic]);
     });
 
   @Effect()
   delete$ = this.actions$
     .ofType(quoteActions.ActionTypes.DELETE)
     .map((action: any) => action.payload)
-    .switchMap(quoteId => this.quoteApi.delete(quoteId))
+    .switchMap(quote => this.quoteApi.delete(quote))
     .map(result => {
       this.notificationService.notifySuccess("Quote successfully deleted");
       return new quoteActions.DeleteActionSuccess(result);
@@ -105,7 +105,7 @@ export class QuoteEffects {
     .ofType(quoteActions.ActionTypes.DELETE_SUCCESS)
     .map((action: any) => action.payload)
     .map(({ topic }) => {
-      this.router.navigate([AppConstants.routes.QUOTES, topic.id]);
+      this.router.navigate([AppConstants.routes.QUOTES, topic.id ? topic.id : topic]);
     });
 
   @Effect({ dispatch: false })

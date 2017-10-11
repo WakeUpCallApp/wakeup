@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IQuestion, Question } from '../models/question.model';
+import { IQuestion, Question } from '../../models/question.model';
 import { type } from '../util';
 
 export const ActionTypes = {

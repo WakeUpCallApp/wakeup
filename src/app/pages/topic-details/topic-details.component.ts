@@ -7,37 +7,35 @@ import {
   ChangeDetectorRef,
   ApplicationRef,
   ViewChild,
-  ElementRef,
-  ChangeDetectionStrategy
+  ElementRef
 } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Store } from "@ngrx/store";
+
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
-import * as reducers from "../../common/reducers";
-import * as actions from "../../common/actions/topic.actions";
-import * as questionSetActions from "../../common/actions/question-set.actions";
+
+import { TopicStoreService, QuestionSetStoreService } from '../../common/store';
 import { Topic } from "../../common/models/topic.model";
 import { DialogService } from "../../common/services/dialog.service";
 @Component({
   selector: "wakeup-topic-details",
   templateUrl: "./topic-details.component.html",
   styleUrls: ["./topic-details.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {'class': 'pageContent'}
+  host: { 'class': 'pageContent' }
 })
 export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   currentTopic: Topic;
   questionSets$;
   actionsSubscription: Subscription;
   topicSubscription: Subscription;
-  updateObject;
+  updateObject = <Topic>{ name: '', description: '' };
   isLoading$;
   @ViewChild("nameInput") nameElRef: ElementRef;
   @ViewChild("descriptionInput") descriptionElRef: ElementRef;
   constructor(
-    private store: Store<reducers.State>,
+    private topicStoreService: TopicStoreService,
+    private questionSetStoreService: QuestionSetStoreService,
     private route: ActivatedRoute,
     private router: Router,
     private ngzone: NgZone,
@@ -48,24 +46,23 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.isLoading$ = this.store.select(reducers.getLoadingTopicState);
-    this.store.dispatch(new questionSetActions.LoadAction());
-    this.questionSets$ = this.store.select(reducers.getQuestionSetsSortedState);
     this.actionsSubscription = this.route.params
       .filter(params => !!params['id'])
-      .map(idParams => {
-        return new actions.GetCurrentTopicAction(+idParams['id']); 
-      })
-      .subscribe(this.store);
+      .map(idParams => this.topicStoreService.get(idParams['id']))
+      .subscribe();
 
-    this.topicSubscription = this.store
-      .select(reducers.getCurrentTopicState)
+    this.topicSubscription = this.topicStoreService.currentTopic$
+      .filter(currentTopic => !!currentTopic)
       .subscribe(currentTopic => {
-        this.currentTopic = Object.assign({}, currentTopic);
-        this.updateObject = Object.assign({}, currentTopic);
+        this.currentTopic = <Topic>currentTopic;
         this.titleService.setTitle(`${this.currentTopic.name} details`);
-        this.cdref.detectChanges();
+        this.updateObject = Object.assign({}, currentTopic);
       });
+
+    this.isLoading$ = this.topicStoreService.isLoading$;
+    this.questionSetStoreService.getAll();
+    this.questionSets$ = this.questionSetStoreService.questionsSets$;
+
   }
 
   ngAfterViewInit() {
@@ -80,6 +77,7 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
             return;
           }
           this.updateTopic();
+          this.cdref.detectChanges();
         });
       Observable.fromEvent(this.descriptionElRef.nativeElement, "keyup")
         .debounceTime(1000)
@@ -88,6 +86,7 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
             return;
           }
           this.updateTopic();
+          this.cdref.detectChanges();
         });
     });
   }
@@ -97,7 +96,7 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateTopic() {
-    this.store.dispatch(new actions.UpdateAction(this.updateObject));
+    this.topicStoreService.update(this.updateObject);
   }
 
   associateQuestionSets(questionSetIds) {
@@ -112,6 +111,6 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
   private deleteTopic() {
-    this.store.dispatch(new actions.DeleteAction(this.currentTopic.id));
+    this.topicStoreService.delete(this.currentTopic);
   }
 }

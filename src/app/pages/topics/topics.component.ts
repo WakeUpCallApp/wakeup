@@ -1,10 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Topic } from '../../common/models/topic.model';
-import * as reducers from '../../common/reducers';
-import * as actions from '../../common/actions/topic.actions';
 import { Observable } from 'rxjs/Observable';
+import { Topic } from '../../common/models/topic.model';
+import { TopicStoreService } from '../../common/store';
+
 import AppConstants from '../../common/app-constants';
 
 @Component({
@@ -12,7 +11,7 @@ import AppConstants from '../../common/app-constants';
   templateUrl: './topics.component.html',
   styleUrls: ['./topics.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {'class': 'topics pageContent'}
+  host: { 'class': 'topics pageContent' }
 })
 export class TopicsComponent implements OnInit {
   topics$: Observable<Topic[]>;
@@ -20,36 +19,36 @@ export class TopicsComponent implements OnInit {
   filteredList$: Observable<Topic[]>;
   search: string;
   isLoading$;
-  constructor(private store: Store<reducers.State>, private router: Router) {
-    this.isLoading$ = store.select(reducers.getLoadingTopicState);
-    this.topics$ = store.select(reducers.getTopicsSortedState);
-    this.searchTerm$ = store.select(reducers.getTopicSearchTerm);
+  constructor(private topicStoreService: TopicStoreService, private router: Router) {
+    this.isLoading$ = this.topicStoreService.isLoading$;
+    this.topics$ = this.topicStoreService.sortedTopics$;
+    this.searchTerm$ = this.topicStoreService.searchTerm$;
     this.filteredList$ = Observable.combineLatest(
       this.topics$,
       this.searchTerm$,
       (topics, searchTerm) => {
         return searchTerm
           ? topics.filter(
-              topic =>
-                topic.name
-                  .toLocaleLowerCase()
-                  .indexOf(searchTerm.toLocaleLowerCase()) !== -1
-            )
+            topic =>
+              topic.name
+                .toLocaleLowerCase()
+                .indexOf(searchTerm.toLocaleLowerCase()) !== -1
+          )
           : topics;
       }
     );
   }
 
   ngOnInit() {
-    this.store.dispatch(new actions.LoadAction());
+    this.topicStoreService.getAll();
   }
 
   ngOnDestroy() {
-    this.store.dispatch(new actions.SearchAction(undefined));
+    this.doSearch(undefined);
   }
 
   doSearch(val) {
-    this.store.dispatch(new actions.SearchAction(val));
+    this.topicStoreService.doSearch(val);
   }
 
   goToQuotes(e, topicId: number) {

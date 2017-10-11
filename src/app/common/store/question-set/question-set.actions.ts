@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { IQuestionSet, QuestionSet } from "../models/question-set.model";
+import { IQuestionSet, QuestionSet } from "../../models/question-set.model";
 import { type } from "../util";
 
 export enum Filter {

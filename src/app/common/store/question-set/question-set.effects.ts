@@ -4,14 +4,14 @@ import { Store } from "@ngrx/store";
 
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
-import AppConstants from "../app-constants";
+import AppConstants from "../../app-constants";
 
-import * as questionSet from "../actions/question-set.actions";
-import * as reducers from "../reducers";
-import { QuestionSetApi } from "../services/api/question-set.api";
-import { QuestionApi } from "../services/api/question.api";
-import { FileParsingService } from "../services/file-parsing";
-import { NotificationService } from "../services/notification.service";
+import * as questionSet from "./question-set.actions";
+import * as reducers from "../app.store";
+import { QuestionSetApi } from "../../services/api/question-set.api";
+import { QuestionApi } from "../../services/api/question.api";
+import { FileParsingService } from "../../services/file-parsing";
+import { NotificationService } from "../../services/notification.service";
 import { AnswersIndexedDbApi } from "app/common/services";
 
 @Injectable()
@@ -23,7 +23,7 @@ export class QuestionSetEffects {
     private notificationService: NotificationService,
     private actions$: Actions,
     private router: Router,
-    private store: Store<reducers.State>,
+    private store: Store<reducers.AppState>,
     private answerIndexedDbService: AnswersIndexedDbApi
   ) { }
   @Effect()

@@ -1,16 +1,12 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
-import { Store } from "@ngrx/store";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import { MatDialog, MatDialogConfig } from "@angular/material";
 
-import * as reducers from "../../common/reducers";
-import * as actions from "../../common/actions/quote.actions";
-import * as topicActions from "../../common/actions/topic.actions";
-import { Quote } from "../../common/models/quote.model";
-import { Topic } from "../../common/models/topic.model";
+import { TopicStoreService, QuoteStoreService } from '../../common/store';
+import { Quote, Topic } from "../../common/models";
 import appConstants from "../../common/app-constants";
 import { WakeupImportFileComponent } from "../../_shared/components/wakeup-import-file/wakeup-import-file.component";
 
@@ -31,7 +27,8 @@ export class QuotesComponent implements OnInit, OnDestroy {
   quotesSubscription;
   quotes;
   constructor(
-    private store: Store<reducers.State>,
+    private topicStoreService: TopicStoreService,
+    private quoteStoreService: QuoteStoreService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
@@ -39,27 +36,23 @@ export class QuotesComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
+    this.isLoading$ = this.quoteStoreService.isLoading$;
     this.actionsSubscription = this.route.params
       .filter(params => !!params["topicId"])
       .map(idParams => {
         this.currentTopicId = idParams["topicId"];
-        this.store.dispatch(
-          new topicActions.GetCurrentTopicAction(this.currentTopicId)
-        );
-        return new actions.GetByTopicIdAction(+idParams["topicId"]);
+        this.topicStoreService.get(this.currentTopicId);
+        this.quoteStoreService.getByTopicId(+idParams["topicId"]);
       })
-      .subscribe(this.store);
+      .subscribe();
 
-    this.topicSubscription = this.store
-      .select(reducers.getCurrentTopicState)
+    this.topicSubscription = this.topicStoreService.currentTopic$
       .subscribe(currentTopic => {
         this.currentTopic = Object.assign({}, currentTopic);
         this.titleService.setTitle(`Quotes: ${this.currentTopic.name}`);
       });
 
-    this.importSpinnerSubscription = this.store
-      .select(reducers.getQuotesImportSpinner)
+    this.importSpinnerSubscription = this.quoteStoreService.isImporting$
       .subscribe(importSpinner => {
         if (importSpinner) {
           this.importDialogRef.componentInstance.importSpinner = importSpinner;
@@ -68,8 +61,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
           this.importDialogRef.close();
         }
       });
-    this.quotesSubscription = this.store
-      .select(reducers.getQuotesByTopic)
+    this.quotesSubscription = this.quoteStoreService.quotesByTopic$
       .subscribe(quotes => (this.quotes = quotes));
   }
 
@@ -90,17 +82,12 @@ export class QuotesComponent implements OnInit, OnDestroy {
     };
     const dialogRef = this.dialog.open(WakeupImportFileComponent, config);
     this.importDialogRef = dialogRef;
-    dialogRef.componentInstance.uploadFile = this.importQuestions.bind(this);
+    dialogRef.componentInstance.uploadFile = this.importQuotes.bind(this);
     dialogRef.afterClosed().subscribe(() => { });
   }
 
-  importQuestions(files) {
-    this.store.dispatch(
-      new actions.ImportQuotesAction({
-        topicId: this.currentTopic.id,
-        quotes: files
-      })
-    );
+  importQuotes(files) {
+    this.quoteStoreService.importQuotes(this.currentTopic.id, files);
   }
 
   exportQuotes() {
@@ -111,11 +98,6 @@ export class QuotesComponent implements OnInit, OnDestroy {
         source: quote.source
       };
     });
-    this.store.dispatch(
-      new actions.ExportQuotesAction({
-        quotes: exportData,
-        topicName: this.currentTopic.name
-      })
-    );
+    this.quoteStoreService.exportQuotes(this.currentTopic.name, exportData);
   }
 }

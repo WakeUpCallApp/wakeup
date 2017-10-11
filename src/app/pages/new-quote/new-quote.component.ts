@@ -1,20 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import * as reducers from '../../common/reducers';
-import * as actions from '../../common/actions/quote.actions';
-import * as topicActions from '../../common/actions/topic.actions';
+import { TopicStoreService, QuoteStoreService } from '../../common/store';
 import { Topic } from '../../common/models/topic.model';
 
 @Component({
   selector: 'wakeup-new-quote',
   templateUrl: './new-quote.component.html',
   styleUrls: ['./new-quote.component.scss'],
-  host: {'class': 'pageContent'}
+  host: { 'class': 'pageContent' }
 })
 export class NewQuoteComponent implements OnInit, OnDestroy {
   actionsSubscription: Subscription;
@@ -31,24 +27,25 @@ export class NewQuoteComponent implements OnInit, OnDestroy {
   };
   isLoading$;
   constructor(
-    private store: Store<reducers.State>,
+    private topicStoreService: TopicStoreService,
+    private quoteStoreService: QuoteStoreService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
+    this.isLoading$ = this.quoteStoreService.isLoading$;
     this.actionsSubscription = this.route.params
       .filter(params => !!params['topicId'])
       .subscribe(topicIdParams => {
         this.quote.topic = parseInt(topicIdParams["topicId"]);
-        this.store.dispatch(new topicActions.GetCurrentTopicAction(this.quote.topic));
+        this.topicStoreService.get(this.quote.topic);
       });
-    this.authors$ = this.store.select(reducers.getAuthorSuggestions);
-    this.sources$ = this.store.select(reducers.getSourceSuggestions);
-    this.topic$ = this.store.select(reducers.getCurrentTopicState);
+    this.authors$ = this.quoteStoreService.authorSuggestions$;
+    this.sources$ = this.quoteStoreService.sourceSuggestions$;
+    this.topic$ = this.topicStoreService.currentTopic$;
 
-    this.store.dispatch(new actions.GetSuggestionsAction());
+    this.quoteStoreService.getSuggestions();
   }
 
   ngOnDestroy() {
@@ -56,7 +53,6 @@ export class NewQuoteComponent implements OnInit, OnDestroy {
   }
 
   create() {
-    this.quote.date = new Date();
-    this.store.dispatch(new actions.CreateAction(this.quote));
+    this.quoteStoreService.create(this.quote);
   }
 }

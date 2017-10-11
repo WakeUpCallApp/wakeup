@@ -8,25 +8,20 @@ import {
   ChangeDetectorRef
 } from "@angular/core";
 
-import { Store } from "@ngrx/store";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import { Title } from "@angular/platform-browser";
 
-import * as reducers from "../../common/reducers";
-import * as questionActions from "../../common/actions/question.actions";
-import * as actions from "../../common/actions/quote.actions";
-import * as topicActions from "../../common/actions/topic.actions";
-import { Quote, ICreateComment } from "../../common/models/quote.model";
-import { Topic } from "../../common/models/topic.model";
+import { QuoteStoreService, TopicStoreService } from '../../common/store';
+import { Quote, ICreateComment, Topic } from "../../common/models";
 import { DialogService } from "../../common/services/dialog.service";
 
 @Component({
   selector: "wakeup-quote-details",
   templateUrl: "./quote-details.component.html",
   styleUrls: ["./quote-details.component.scss"],
-  host: {'class': 'pageContent'}
+  host: { 'class': 'pageContent' }
 })
 export class QuoteDetailsComponent implements OnInit {
   actionsSubscription: Subscription;
@@ -43,7 +38,8 @@ export class QuoteDetailsComponent implements OnInit {
   @ViewChild("authorVar") authorElRef: ElementRef;
   @ViewChild("sourceVar") sourceElRef: ElementRef;
   constructor(
-    private store: Store<reducers.State>,
+    private quoteStoreService: QuoteStoreService,
+    private topicStoreService: TopicStoreService,
     private route: ActivatedRoute,
     private router: Router,
     private ngzone: NgZone,
@@ -53,20 +49,20 @@ export class QuoteDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isLoading$ = this.store.select(reducers.getLoadingQuoteState);
+    this.isLoading$ = this.quoteStoreService.isLoading$;
     this.actionsSubscription = Observable.combineLatest(
       this.route.params.filter(params => !!params["id"]),
       this.route.params.filter(params => !!params["topicId"]),
       (quoteIdParams, topicIdParams) => {
-        this.store.dispatch(new topicActions.GetCurrentTopicAction(+topicIdParams['topicId']));
-        this.store.dispatch(new actions.GetByIdAction(+quoteIdParams['id']));
-        return new actions.GetCommentsAction(+quoteIdParams['id']);
+        this.topicStoreService.get(+topicIdParams['topicId']);
+        this.quoteStoreService.getById(+quoteIdParams['id']);
+        this.quoteStoreService.getComments(+quoteIdParams['id']);
       }
-    ).subscribe(this.store);
+    ).subscribe();
 
     this.dataSubscription = Observable.combineLatest(
-      this.store.select(reducers.getCurrentQuote),
-      this.store.select(reducers.getCurrentTopicState),
+      this.quoteStoreService.currentQuote$,
+      this.topicStoreService.currentTopic$,
       (quote, topic) => {
         this.currentQuote = quote;
         this.updateObject = Object.assign({}, this.currentQuote);
@@ -82,11 +78,11 @@ export class QuoteDetailsComponent implements OnInit {
       }
     ).subscribe();
 
-    this.authors$ = this.store.select(reducers.getAuthorSuggestions);
-    this.sources$ = this.store.select(reducers.getSourceSuggestions);
-    this.comments$ = this.store.select(reducers.getComments);
+    this.authors$ = this.quoteStoreService.authorSuggestions$;
+    this.sources$ = this.quoteStoreService.sourceSuggestions$;
+    this.comments$ = this.quoteStoreService.comments$;
 
-    this.store.dispatch(new actions.GetSuggestionsAction());
+    this.quoteStoreService.getSuggestions();
   }
 
   ngAfterViewInit() {
@@ -100,7 +96,7 @@ export class QuoteDetailsComponent implements OnInit {
           if (keyboardEvent.keyCode === 9) {
             return;
           }
-          this.updateQuote();
+          this.updateQuote(this.updateObject);
           this.cdref.detectChanges();
         });
       Observable.fromEvent(this.authorElRef.nativeElement, "keyup")
@@ -109,7 +105,7 @@ export class QuoteDetailsComponent implements OnInit {
           if (keyboardEvent.keyCode === 9) {
             return;
           }
-          this.updateQuote();
+          this.updateQuote(this.updateObject);
           this.cdref.detectChanges();
         });
       Observable.fromEvent(this.sourceElRef.nativeElement, "keyup")
@@ -118,7 +114,7 @@ export class QuoteDetailsComponent implements OnInit {
           if (keyboardEvent.keyCode === 9) {
             return;
           }
-          this.updateQuote();
+          this.updateQuote(this.updateObject);
           this.cdref.detectChanges();
         });
     });
@@ -129,15 +125,15 @@ export class QuoteDetailsComponent implements OnInit {
     this.dataSubscription.unsubscribe();
   }
 
-  updateQuote() {
-    this.store.dispatch(new actions.UpdateAction(this.updateObject));
+  updateQuote(quote) {
+    this.quoteStoreService.update(quote);
   }
 
   updateQuoteOnQuestionsUpdate(questions) {
     const updateObject = Object.assign({}, this.updateObject, {
       questions
     });
-    this.store.dispatch(new actions.UpdateAction(updateObject));
+    this.updateQuote(updateObject);
   }
 
   onDeleteQuote() {
@@ -148,12 +144,11 @@ export class QuoteDetailsComponent implements OnInit {
   }
 
   private deleteQuote() {
-    this.store.dispatch(new actions.DeleteAction(this.updateObject));
+    this.quoteStoreService.delete(this.updateObject);
   }
 
   addComment(commentObj) {
-    commentObj.comment.createDate = new Date();
-    this.store.dispatch(new actions.CreateCommentAction(commentObj));
+    this.quoteStoreService.createComment(commentObj);
     this.newComment = this.getEmptyComment();
   }
 
@@ -165,12 +160,7 @@ export class QuoteDetailsComponent implements OnInit {
   }
 
   deleteComment(comment) {
-    this.store.dispatch(
-      new actions.DeleteCommentAction({
-        quoteId: this.currentQuote.id,
-        commentId: comment._id
-      })
-    );
+    this.quoteStoreService.deleteComment(this.currentQuote.id, comment._id);
   }
 
   getEmptyComment(): ICreateComment {

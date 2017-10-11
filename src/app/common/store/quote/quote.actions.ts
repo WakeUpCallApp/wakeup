@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { Quote } from "../models/quote.model";
+import { Quote } from "../../models/quote.model";
 import { type } from "../util";
 
 export const ActionTypes = {

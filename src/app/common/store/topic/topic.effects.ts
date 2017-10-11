@@ -3,11 +3,11 @@ import { Actions, Effect } from "@ngrx/effects";
 
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
-import AppConstants from "../app-constants";
+import AppConstants from "../../app-constants";
 
-import * as topic from "../actions/topic.actions";
-import { TopicApi } from "../services/api/topic.api";
-import { NotificationService } from "../services/notification.service";
+import * as topic from "./topic.actions";
+import { TopicApi } from "../../services/api/topic.api";
+import { NotificationService } from "../../services/notification.service";
 
 @Injectable()
 export class TopicEffects {
@@ -16,19 +16,19 @@ export class TopicEffects {
     private notificationService: NotificationService,
     private actions$: Actions,
     private router: Router
-  ) {}
+  ) { }
 
   @Effect()
   load$ = this.actions$
     .ofType(topic.ActionTypes.LOAD)
-    .map((action:any) => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(() => this.topicApi.all())
     .map(result => new topic.LoadActionSuccess(result));
 
   @Effect()
   create$ = this.actions$
     .ofType(topic.ActionTypes.CREATE)
-    .map((action:any) => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(topic => this.topicApi.create(topic))
     .map(result => {
       this.notificationService.notifySuccess("Topic succcessfully created");
@@ -42,7 +42,7 @@ export class TopicEffects {
   @Effect({ dispatch: false })
   createSuccess$ = this.actions$
     .ofType(topic.ActionTypes.CREATE_SUCCESS)
-    .map((action:any) => action.payload)
+    .map((action: any) => action.payload)
     .map(topic => {
       this.router.navigate([AppConstants.routes.TOPIC_DETAILS, topic.id]);
       return Observable.of(topic);
@@ -51,7 +51,7 @@ export class TopicEffects {
   @Effect()
   update$ = this.actions$
     .ofType(topic.ActionTypes.UPDATE)
-    .map((action:any) => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(topic => this.topicApi.update(topic))
     .map(result => {
       this.notificationService.notifySuccess("Topic successfully updated");
@@ -75,7 +75,7 @@ export class TopicEffects {
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
     .ofType(topic.ActionTypes.DELETE_SUCCESS)
-    .map((action:any) => action.payload)
+    .map((action: any) => action.payload)
     .map(() => {
       this.router.navigate([AppConstants.routes.TOPICS]);
     });
@@ -83,10 +83,9 @@ export class TopicEffects {
   @Effect()
   getCurrentTopic$ = this.actions$
     .ofType(topic.ActionTypes.GET_CURRENT_TOPIC)
-    .map((action:any) => action.payload)
+    .map((action: any) => action.payload)
     .switchMap(id =>
-      this.topicApi
-        .get(id)
+      this.topicApi.get(id)
         .map(result => new topic.GetCurrentTopicActionSuccess(result))
         .catch(error =>
           Observable.of(new topic.GetCurrentTopicActionError(error))
@@ -96,7 +95,7 @@ export class TopicEffects {
   @Effect({ dispatch: false })
   httpErrors$ = this.actions$
     .ofType(topic.ActionTypes.GET_CURRENT_TOPIC_ERROR)
-    .map((action:any) => action.payload)
+    .map((action: any) => action.payload)
     .map(error => {
       if (error.status === AppConstants.errorCode.NotFound) {
         this.notificationService.notifyError("Topic not found");
@@ -108,10 +107,10 @@ export class TopicEffects {
   @Effect({ dispatch: false })
   invalidateCache = this.actions$
     .ofType(
-      topic.ActionTypes.CREATE_SUCCESS,
-      topic.ActionTypes.UPDATE_SUCCESS,
-      topic.ActionTypes.DELETE_SUCCESS,
-      "USER_LOGOUT"
+    topic.ActionTypes.CREATE_SUCCESS,
+    topic.ActionTypes.UPDATE_SUCCESS,
+    topic.ActionTypes.DELETE_SUCCESS,
+    "USER_LOGOUT"
     )
     .map(() => {
       console.log("clear cache");

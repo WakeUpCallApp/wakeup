@@ -13,10 +13,9 @@ import {
   QuestionEffects,
   QuoteEffects,
   TopicEffects,
-  AnswerEffects,
   AnswerEffectsIndexedDB
-} from "./common/effects";
-import { reducers } from "./common/reducers";
+} from "./common/store";
+import { reducers } from "./common/store/app.store";
 
 import { environment } from '../environments/environment';
 import { httpFactory } from "./config/http.factory";
@@ -63,7 +62,6 @@ import { TopicDetailsModule } from "./pages/topic-details/topic-details.module";
     TopicDetailsModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers),
-    // must come AFTER `provideStore` call
     !environment.production
       ? StoreDevtoolsModule.instrument()
       : [],

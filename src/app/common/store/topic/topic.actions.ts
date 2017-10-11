@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ITopic, Topic } from '../models/topic.model';
+import { ITopic, Topic } from '../../models/topic.model';
 import { type } from '../util';
 
 export const ActionTypes = {
@@ -95,7 +95,7 @@ export class DeleteActionSuccess implements Action {
 export class GetCurrentTopicAction implements Action {
   type = ActionTypes.GET_CURRENT_TOPIC;
 
-  constructor(public payload: number) { }
+  constructor(public payload: any) { }
 }
 
 export class GetCurrentTopicActionSuccess implements Action {

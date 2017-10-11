@@ -6,19 +6,14 @@ import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import { MatDialog, MatDialogConfig } from "@angular/material";
 
-import * as reducers from "../../common/reducers";
-import * as quoteActions from "../../common/actions/quote.actions";
-import * as actions from "../../common/actions/answer.actions";
-import * as questionActions from "../../common/actions/question.actions";
-import * as answerActions from "../../common/actions/answer.actions";
-import { Quote } from "../../common/models/quote.model";
-import { Answer } from "../../common/models/answer.model";
-import { Question } from "../../common/models/question.model";
-import { QuestionSet } from "../../common/models/question-set.model";
 import appConstants from "../../common/app-constants";
 import { WakeupAnswerDialogComponent } from "./components/wakeup-answer-dialog/wakeup-answer-dialog.component";
-import { DialogService } from "../../common/services/dialog.service";
-import { AuthTokenService } from '../../common/services/authToken.service';
+import { DialogService, AuthTokenService } from "../../common/services";
+import {
+  AnswerStoreService,
+  QuestionStoreService
+} from '../../common/store';
+import { QuestionSet } from '../../common/models';
 
 enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -29,47 +24,46 @@ enum KEY_CODE {
   selector: "wakeup-answers",
   templateUrl: "./answers.component.html",
   styleUrls: ["./answers.component.scss"],
-  host: {'class': 'pageContent'}
+  host: { 'class': 'pageContent' }
 })
 export class AnswersComponent implements OnInit {
-  question: Question;
+  question;
   currentQuestionId;
   actionsSubscription: Subscription;
-  questionSubscription: Subscription;
+  currentQuestionSubscription: Subscription;
+  groupedAnswersSubscription: Subscription;
   nextQuestionId: number;
   prevQuestionId: number;
   openModal = false;
   isLoading$;
   answers;
-  answerSubscription;
   constructor(
-    private store: Store<reducers.State>,
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title,
     private dialog: MatDialog,
     private dialogService: DialogService,
-    private auth: AuthTokenService
+    private auth: AuthTokenService,
+    private answerStoreService: AnswerStoreService,
+    private questionStoreService: QuestionStoreService
   ) { }
 
   ngOnInit() {
-    this.isLoading$ = this.store.select(reducers.getLoadingAnswersState);
-    this.store.dispatch(new answerActions.OpenIndexedDbAction());
+    this.isLoading$ = this.answerStoreService.isLoading$;
+    this.answerStoreService.openIndexedDb();
     this.actionsSubscription =
       Observable.combineLatest(
         this.route.params.filter(params => !!params["questionId"]),
-        this.store.select(reducers.getIndexedDBState),
+        this.answerStoreService.isIndexedDbOpen$,
         ((idParams, isDbOpen) => {
           this.currentQuestionId = idParams["questionId"];
           if (isDbOpen) {
-            this.store.dispatch(new answerActions.LoadAction(+this.currentQuestionId));
+            this.answerStoreService.getAnswers(+this.currentQuestionId);
           }
-          return new questionActions.GetCurrentQuestion(+idParams["questionId"]);
-        }))
-        .subscribe(this.store);
-        
-    this.questionSubscription = this.store
-      .select(reducers.getCurrentQuestionState)
+          this.questionStoreService.getQuestion(+idParams["questionId"]);
+        })).subscribe();
+
+    this.currentQuestionSubscription = this.questionStoreService.currentQuestion$
       .subscribe(question => {
         this.question = question;
         this.titleService.setTitle(`Answers ${question.text}`);
@@ -80,8 +74,7 @@ export class AnswersComponent implements OnInit {
           this.prevQuestionId = this.getPrevQuestion(currentQuestionIndex);
         }
       });
-    this.answerSubscription = this.store
-      .select(reducers.getGroupedAnswersState)
+    this.groupedAnswersSubscription = this.answerStoreService.groupedAnswers$
       .subscribe(answers => {
         if (answers.constructor === Array) {
           this.answers = answers;
@@ -91,8 +84,8 @@ export class AnswersComponent implements OnInit {
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();
-    this.questionSubscription.unsubscribe();
-    this.answerSubscription.unsubscribe();
+    this.currentQuestionSubscription.unsubscribe();
+    this.groupedAnswersSubscription.unsubscribe();
   }
 
   @HostListener("document:keyup", ["$event"])
@@ -117,10 +110,10 @@ export class AnswersComponent implements OnInit {
     };
     const dialogRef = this.dialog.open(WakeupAnswerDialogComponent, config);
     dialogRef.componentInstance.answer = Object.assign({}, answer);
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(answer => {
       this.openModal = false;
-      if (result) {
-        this.store.dispatch(new actions.UpdateAction(result));
+      if (answer) {
+        this.answerStoreService.update(answer);
       }
     });
   }
@@ -131,7 +124,7 @@ export class AnswersComponent implements OnInit {
     );
   }
   private deleteAnswer(answer) {
-    this.store.dispatch(new actions.DeleteAction(answer.id));
+    this.answerStoreService.delete(answer);
   }
 
   createAnswer() {
@@ -146,17 +139,10 @@ export class AnswersComponent implements OnInit {
     };
     const dialogRef: any = this.dialog.open(WakeupAnswerDialogComponent, config);
     dialogRef.componentInstance.answer = Object.assign({}, newAnswer);
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(answer => {
       this.openModal = false;
-      if (result) {
-        this.store.dispatch(
-          new actions.CreateAction(
-            Object.assign({}, newAnswer, result, {
-              date: new Date().getTime(),
-              userId: this.auth.getUserInfo().id
-            })
-          )
-        );
+      if (answer) {
+        this.answerStoreService.create(answer, this.auth.getUserInfo().id);
       }
     });
   }
@@ -169,7 +155,7 @@ export class AnswersComponent implements OnInit {
   }
 
   private deleteQuestion() {
-    this.store.dispatch(new questionActions.DeleteAction(this.question));
+    this.questionStoreService.deleteQuestion(this.question);
   }
 
   onDeleteAnswers() {
@@ -180,11 +166,7 @@ export class AnswersComponent implements OnInit {
   }
 
   private deleteAnswers() {
-    this.store.dispatch(new actions.DeleteAllAction(
-      {
-        questionId: +this.currentQuestionId,
-        userId: this.auth.getUserInfo().id
-      }));
+    this.answerStoreService.deleteAll(+this.currentQuestionId, this.auth.getUserInfo().id);
   }
 
   getPrevQuestion(currentQuestionId): number {

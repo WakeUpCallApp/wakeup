@@ -1,22 +1,20 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Store } from "@ngrx/store";
-import * as reducers from "../../common/reducers";
+
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
-import * as actions from "../../common/actions/question-set.actions";
-import * as quoteActions from "../../common/actions/quote.actions";
-import * as answerActions from "../../common/actions/answer.actions";
 
-import { QuestionSet } from "../../common/models/question-set.model";
-import { Quote } from "../../common/models/quote.model";
+import { QuestionSet, Quote } from "../../common/models";
 import appConstants from "../../common/app-constants";
+
 import {
   SessionConfigService,
   SessionOptions
 } from "../../common/services/session-config.service";
+
 import { LoginApi } from '../../common/services/api/login.api';
+import { AnswerStoreService, QuestionSetStoreService, QuoteStoreService } from '../../common/store';
 
 @Component({
   selector: "wakeup-practice-session",
@@ -37,7 +35,9 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   private sessionTimer;
   private isSessionMode = false;
   constructor(
-    private store: Store<reducers.State>,
+    private questionSetStoreService: QuestionSetStoreService,
+    private quoteStoreService: QuoteStoreService,
+    private answerStoreService: AnswerStoreService,
     private route: ActivatedRoute,
     private router: Router,
     private sessionConfigService: SessionConfigService,
@@ -51,11 +51,10 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.actionsSubscription = this.route.params
       .filter(params => !!params['questionSetId'])
-      .map(idParams => new actions.GetCurrentQSAction(idParams["questionSetId"]))
-      .subscribe(this.store);
+      .map(idParams => this.questionSetStoreService.get(idParams["questionSetId"]))
+      .subscribe();
 
-    this.qsSubscription = this.store
-      .select(reducers.getCurrentQuestionSetState)
+    this.qsSubscription = this.questionSetStoreService.currentQuestionSet$
       .subscribe(currentQuestionSet => {
         this.currentQuestionSet = <QuestionSet>Object.assign({}, currentQuestionSet);
         this.titleService.setTitle(`${this.currentQuestionSet.name} practice`);
@@ -74,7 +73,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
         this.setCurrentQuestion();
         this.isSessionMode = true;
       });
-    this.store.dispatch(new answerActions.OpenIndexedDbAction());
+    this.answerStoreService.openIndexedDb();
   }
 
   ngOnDestroy() {
@@ -96,10 +95,8 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
       : {};
 
     if (this.currentQuestion.quote) {
-      this.store.dispatch(
-        new quoteActions.GetByIdAction(this.currentQuestion.quote)
-      );
-      this.currentQuote = this.store.select(reducers.getCurrentQuote);
+      this.quoteStoreService.getById(this.currentQuestion.quote);
+      this.currentQuote = this.quoteStoreService.currentQuote$;
     } else {
       this.currentQuote = null;
     }
@@ -109,9 +106,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   endQuestionSet() {
     this.isSessionMode = false;
     clearTimeout(this.sessionTimer);
-    this.store.dispatch(
-      new actions.RegisterSessionAction(this.currentQuestionSet.id)
-    );
+    this.questionSetStoreService.registerSession(this.currentQuestionSet);
     this.router.navigate([
       appConstants.routes.SESSION_DETAILS,
       this.currentQuestionSet.id,
@@ -168,14 +163,11 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   }
 
   saveAnswer() {
-    this.store.dispatch(
-      new answerActions.CreateAction({
-        questionId: this.currentQuestion.id,
-        text: this.answerText,
-        date: new Date().getTime(),
-        userId: this.loginApi.getCurrentUser()._id
-      })
-    );
+    this.answerStoreService.create({
+      questionId: this.currentQuestion.id,
+      text: this.answerText
+    },
+      this.loginApi.getCurrentUser()._id);
     this.answerText = "";
     this.setNextQuestion();
   }

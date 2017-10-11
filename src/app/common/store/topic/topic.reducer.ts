@@ -1,6 +1,6 @@
-import { Topic } from "../models/topic.model";
-import * as actions from "../actions/topic.actions";
-import { ActionTypes as quote } from "../actions/quote.actions";
+import { Topic } from "../../models/topic.model";
+import * as actions from "./topic.actions";
+import { ActionTypes as quote } from "../quote/quote.actions";
 export interface State {
   entities: Topic[];
   isLoading: boolean;

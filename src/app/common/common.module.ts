@@ -19,10 +19,52 @@ import {
   DialogService,
   AnswersIndexedDbApi
 } from "./services";
+
+import {
+  AnswerStoreService,
+  QuestionStoreService,
+  QuestionSetStoreService,
+  QuoteStoreService,
+  TopicStoreService,
+  LoginStoreService
+} from './store';
+
 import { WakeupTopBarComponent } from "./components/wakeup-top-bar/wakeup-top-bar.component";
 import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side-nav.component";
 import { WakeupFooterComponent } from './components/wakeup-footer/wakeup-footer.component';
 
+const storeServices = [
+  AnswerStoreService,
+  QuestionStoreService,
+  QuestionSetStoreService,
+  QuoteStoreService,
+  TopicStoreService,
+  LoginStoreService
+]
+
+const apiServices = [
+  LoginApi,
+  QuestionSetApi,
+  QuestionApi,
+  QuoteApi,
+  TopicApi,
+  AnswerApi,
+  AnswersIndexedDbApi
+];
+
+const services = [
+  AuthTokenService,
+  SessionConfigService,
+  FileParsingService,
+  NotificationService,
+  DialogService,
+];
+
+const guards = [
+  AuthenticationGuard,
+  CanDeactivateGuard,
+  UserDetailResolver
+];
 
 @NgModule({
   imports: [SharedModule],
@@ -32,21 +74,11 @@ import { WakeupFooterComponent } from './components/wakeup-footer/wakeup-footer.
     WakeupFooterComponent
   ],
   providers: [
-    AuthTokenService,
-    SessionConfigService,
-    LoginApi,
-    QuestionSetApi,
-    QuestionApi,
-    QuoteApi,
-    TopicApi,
-    AnswerApi,
-    AuthenticationGuard,
-    CanDeactivateGuard,
-    UserDetailResolver,
-    FileParsingService,
-    NotificationService,
-    DialogService,
-    AnswersIndexedDbApi
+    ...services,
+    ...apiServices,
+    ...storeServices,
+    ...guards
+
   ],
   exports: [
     WakeupTopBarComponent,
