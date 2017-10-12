@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { Answer } from "../../models/answer.model";
-import { QuestionSetApi } from "./question-set.api";
-import Parser from "./parser";
+import { Injectable } from '@angular/core';
+import { Answer } from '../../models/answer.model';
+import { QuestionSetApi } from './question-set.api';
+import Parser from './parser';
 
 @Injectable()
 export class AnswersIndexedDbApi {
@@ -18,8 +18,8 @@ export class AnswersIndexedDbApi {
 
     openIndexedDb() {
         const version = 3;
-        const request = indexedDB.open("answersData", version);
-        let promise = new Promise((resolve, reject) => {
+        const request = indexedDB.open('answersData', version);
+        const promise = new Promise((resolve, reject) => {
             request.onsuccess = ((e: any) => {
                 this.db = e.target.result;
                 resolve();
@@ -36,11 +36,11 @@ export class AnswersIndexedDbApi {
     upgradeCallback(e) {
         this.db = e.target.result;
         e.target.transaction.onerror = (indexedDB as any).onerror;
-        if (this.db.objectStoreNames.contains("answers")) {
-            this.db.deleteObjectStore("answers");
+        if (this.db.objectStoreNames.contains('answers')) {
+            this.db.deleteObjectStore('answers');
         }
-        const store = this.db.createObjectStore("answers", {
-            keyPath: "_id"
+        const store = this.db.createObjectStore('answers', {
+            keyPath: '_id'
         });
         store.createIndex('question', 'questionId', {
             unique: false
@@ -49,7 +49,7 @@ export class AnswersIndexedDbApi {
 
     saveAnswer(answer): Promise<any> {
         if (this.db === null) {
-            Promise.reject("IndexDB is not opened yet!");
+            Promise.reject('IndexDB is not opened yet!');
         }
 
         return this.getLastIndex().then((lastIndex: any) => {
@@ -74,7 +74,7 @@ export class AnswersIndexedDbApi {
 
     updateAnswer(answer): Promise<Answer> {
         if (this.db === null) {
-            Promise.reject("IndexedDB is not opened yet!");
+            Promise.reject('IndexedDB is not opened yet!');
         }
         const trans = this.db.transaction(['answers'], 'readwrite');
         const store = trans.objectStore('answers');
@@ -113,7 +113,7 @@ export class AnswersIndexedDbApi {
 
     deleteAnswer(answerId): Promise<number> {
         if (this.db === null) {
-            Promise.reject("IndexDB is not opened yet!");
+            Promise.reject('IndexDB is not opened yet!');
         }
         const trans = this.db.transaction(['answers'], 'readwrite');
         const store = trans.objectStore('answers');

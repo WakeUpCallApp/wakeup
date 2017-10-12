@@ -9,7 +9,7 @@ export const ActionTypes = {
 export class LogoutAction implements Action {
   type = ActionTypes.LOGOUT;
 
-  constructor(public payload? : any) { }
+  constructor(public payload?: any) { }
 }
 
 export type Actions

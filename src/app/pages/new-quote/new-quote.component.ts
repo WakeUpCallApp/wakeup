@@ -38,7 +38,7 @@ export class NewQuoteComponent implements OnInit, OnDestroy {
     this.actionsSubscription = this.route.params
       .filter(params => !!params['topicId'])
       .subscribe(topicIdParams => {
-        this.quote.topic = parseInt(topicIdParams["topicId"]);
+        this.quote.topic = parseInt(topicIdParams['topicId']);
         this.topicStoreService.get(this.quote.topic);
       });
     this.authors$ = this.quoteStoreService.authorSuggestions$;

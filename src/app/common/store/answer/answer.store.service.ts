@@ -37,7 +37,7 @@ export class AnswerStoreService {
 
     create({ questionId, text }, userId) {
         const newAnswer = {
-            questionId, 
+            questionId,
             text,
             date: new Date().getTime(),
             userId

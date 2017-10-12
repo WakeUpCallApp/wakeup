@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { MatDialogRef } from "@angular/material";
+import { Component, OnInit, Input } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
-  selector: "wakeup-wakeup-confirm-dialog",
-  templateUrl: "./wakeup-confirm-dialog.component.html",
-  styleUrls: ["./wakeup-confirm-dialog.component.scss"]
+  selector: 'wakeup-wakeup-confirm-dialog',
+  templateUrl: './wakeup-confirm-dialog.component.html',
+  styleUrls: ['./wakeup-confirm-dialog.component.scss']
 })
 export class WakeupConfirmDialogComponent implements OnInit {
   @Input() title: string;

@@ -6,21 +6,21 @@ import {
   ElementRef,
   NgZone,
   ChangeDetectorRef
-} from "@angular/core";
+} from '@angular/core';
 
-import { ActivatedRoute, Router } from "@angular/router";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
-import { Title } from "@angular/platform-browser";
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Title } from '@angular/platform-browser';
 
 import { QuoteStoreService, TopicStoreService } from '../../common/store';
-import { Quote, ICreateComment, Topic } from "../../common/models";
-import { DialogService } from "../../common/services/dialog.service";
+import { Quote, ICreateComment, Topic } from '../../common/models';
+import { DialogService } from '../../common/services/dialog.service';
 
 @Component({
-  selector: "wakeup-quote-details",
-  templateUrl: "./quote-details.component.html",
-  styleUrls: ["./quote-details.component.scss"],
+  selector: 'wakeup-quote-details',
+  templateUrl: './quote-details.component.html',
+  styleUrls: ['./quote-details.component.scss'],
   host: { 'class': 'pageContent' }
 })
 export class QuoteDetailsComponent implements OnInit {
@@ -34,9 +34,9 @@ export class QuoteDetailsComponent implements OnInit {
   topic: Topic;
   newComment: ICreateComment;
   isLoading$;
-  @ViewChild("textVar") textElRef: ElementRef;
-  @ViewChild("authorVar") authorElRef: ElementRef;
-  @ViewChild("sourceVar") sourceElRef: ElementRef;
+  @ViewChild('textVar') textElRef: ElementRef;
+  @ViewChild('authorVar') authorElRef: ElementRef;
+  @ViewChild('sourceVar') sourceElRef: ElementRef;
   constructor(
     private quoteStoreService: QuoteStoreService,
     private topicStoreService: TopicStoreService,
@@ -51,8 +51,8 @@ export class QuoteDetailsComponent implements OnInit {
   ngOnInit() {
     this.isLoading$ = this.quoteStoreService.isLoading$;
     this.actionsSubscription = Observable.combineLatest(
-      this.route.params.filter(params => !!params["id"]),
-      this.route.params.filter(params => !!params["topicId"]),
+      this.route.params.filter(params => !!params['id']),
+      this.route.params.filter(params => !!params['topicId']),
       (quoteIdParams, topicIdParams) => {
         this.topicStoreService.get(+topicIdParams['topicId']);
         this.quoteStoreService.getById(+quoteIdParams['id']);
@@ -90,7 +90,7 @@ export class QuoteDetailsComponent implements OnInit {
       return;
     }
     this.ngzone.runOutsideAngular(() => {
-      Observable.fromEvent(this.textElRef.nativeElement, "keyup")
+      Observable.fromEvent(this.textElRef.nativeElement, 'keyup')
         .debounceTime(1000)
         .subscribe((keyboardEvent: any) => {
           if (keyboardEvent.keyCode === 9) {
@@ -99,7 +99,7 @@ export class QuoteDetailsComponent implements OnInit {
           this.updateQuote(this.updateObject);
           this.cdref.detectChanges();
         });
-      Observable.fromEvent(this.authorElRef.nativeElement, "keyup")
+      Observable.fromEvent(this.authorElRef.nativeElement, 'keyup')
         .debounceTime(1000)
         .subscribe((keyboardEvent: any) => {
           if (keyboardEvent.keyCode === 9) {
@@ -108,7 +108,7 @@ export class QuoteDetailsComponent implements OnInit {
           this.updateQuote(this.updateObject);
           this.cdref.detectChanges();
         });
-      Observable.fromEvent(this.sourceElRef.nativeElement, "keyup")
+      Observable.fromEvent(this.sourceElRef.nativeElement, 'keyup')
         .debounceTime(1000)
         .subscribe((keyboardEvent: any) => {
           if (keyboardEvent.keyCode === 9) {
@@ -138,7 +138,7 @@ export class QuoteDetailsComponent implements OnInit {
 
   onDeleteQuote() {
     this.dialogService.openDialog(
-      "Are you sure you want to delete this quote",
+      'Are you sure you want to delete this quote',
       this.deleteQuote.bind(this)
     );
   }
@@ -154,7 +154,7 @@ export class QuoteDetailsComponent implements OnInit {
 
   onDeleteComment(comment) {
     this.dialogService.openDialog(
-      "Are you sure you want to delete this commment?",
+      'Are you sure you want to delete this commment?',
       () => this.deleteComment.call(this, comment)
     );
   }
@@ -166,7 +166,7 @@ export class QuoteDetailsComponent implements OnInit {
   getEmptyComment(): ICreateComment {
     const comment = {
       createDate: undefined,
-      text: ""
+      text: ''
     };
     return {
       comment,

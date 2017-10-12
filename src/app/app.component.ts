@@ -1,20 +1,20 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
-import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
-import { Title } from "@angular/platform-browser";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 
-import { LoginApi } from "./common/services/api/login.api";
-import { AuthTokenService } from "./common/services/authToken.service";
-import appConstants from "./common/app-constants";
-import { addEvent } from "./common/store/util";
-import { NotificationService } from "app/common/services";
+import { LoginApi } from './common/services/api/login.api';
+import { AuthTokenService } from './common/services/authToken.service';
+import appConstants from './common/app-constants';
+import { addEvent } from './common/store/util';
+import { NotificationService } from 'app/common/services';
 import { LoginStoreService } from './common/store';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
   public isOpen = false;
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
         }
         return route;
       })
-      .filter(route => route.outlet === "primary")
+      .filter(route => route.outlet === 'primary')
       .mergeMap(route => route.data)
       .subscribe(event => {
         const title = event['title'];
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       });
 
-    addEvent(window, "resize", e => {
+    addEvent(window, 'resize', e => {
       if (this.isOpen) {
         this.isOpen = window.innerWidth < 1000;
       }
@@ -63,7 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    window.document.removeEventListener("resize");
+    window.document.removeEventListener('resize');
   }
 
   openMenu(isOpen) {
@@ -91,7 +91,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.navigate([appConstants.routes.LOGIN]);
   }
 
-  openSnackBar({ message, action = "", config }) {
+  openSnackBar({ message, action = '', config }) {
     const conf = new MatSnackBarConfig();
     conf.duration = 10000;
     conf.extraClasses = [config.extraClass];

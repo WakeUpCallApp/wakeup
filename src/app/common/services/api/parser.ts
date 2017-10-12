@@ -1,9 +1,9 @@
-import * as moment from "moment";
-import { QuestionSet, IQuestionSetApi } from "../../models/question-set.model";
-import { Question, IQuestion, IQuestionApi } from "../../models/question.model";
-import { Quote, IQuoteApi } from "../../models/quote.model";
-import { Topic, ITopicApi } from "../../models/topic.model";
-import { Answer, IAnswerApi } from "../../models/answer.model";
+import * as moment from 'moment';
+import { QuestionSet, IQuestionSetApi } from '../../models/question-set.model';
+import { Question, IQuestion, IQuestionApi } from '../../models/question.model';
+import { Quote, IQuoteApi } from '../../models/quote.model';
+import { Topic, ITopicApi } from '../../models/topic.model';
+import { Answer, IAnswerApi } from '../../models/answer.model';
 
 export default class Parser {
   static questionFromApi(questionApi: IQuestionApi): Question {

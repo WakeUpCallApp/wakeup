@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Title } from "@angular/platform-browser";
-import { Store } from "@ngrx/store";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
-import appConstants from "../../common/app-constants";
-import { WakeupAnswerDialogComponent } from "./components/wakeup-answer-dialog/wakeup-answer-dialog.component";
-import { DialogService, AuthTokenService } from "../../common/services";
+import appConstants from '../../common/app-constants';
+import { WakeupAnswerDialogComponent } from './components/wakeup-answer-dialog/wakeup-answer-dialog.component';
+import { DialogService, AuthTokenService } from '../../common/services';
 import {
   AnswerStoreService,
   QuestionStoreService
@@ -21,9 +21,9 @@ enum KEY_CODE {
 }
 
 @Component({
-  selector: "wakeup-answers",
-  templateUrl: "./answers.component.html",
-  styleUrls: ["./answers.component.scss"],
+  selector: 'wakeup-answers',
+  templateUrl: './answers.component.html',
+  styleUrls: ['./answers.component.scss'],
   host: { 'class': 'pageContent' }
 })
 export class AnswersComponent implements OnInit {
@@ -53,14 +53,14 @@ export class AnswersComponent implements OnInit {
     this.answerStoreService.openIndexedDb();
     this.actionsSubscription =
       Observable.combineLatest(
-        this.route.params.filter(params => !!params["questionId"]),
+        this.route.params.filter(params => !!params['questionId']),
         this.answerStoreService.isIndexedDbOpen$,
         ((idParams, isDbOpen) => {
-          this.currentQuestionId = idParams["questionId"];
+          this.currentQuestionId = idParams['questionId'];
           if (isDbOpen) {
             this.answerStoreService.getAnswers(+this.currentQuestionId);
           }
-          this.questionStoreService.getQuestion(+idParams["questionId"]);
+          this.questionStoreService.getQuestion(+idParams['questionId']);
         })).subscribe();
 
     this.currentQuestionSubscription = this.questionStoreService.currentQuestion$
@@ -88,7 +88,7 @@ export class AnswersComponent implements OnInit {
     this.groupedAnswersSubscription.unsubscribe();
   }
 
-  @HostListener("document:keyup", ["$event"])
+  @HostListener('document:keyup', ['$event'])
   onKeyUp(ev: KeyboardEvent) {
     if (this.openModal) {
       return;
@@ -106,7 +106,7 @@ export class AnswersComponent implements OnInit {
     this.openModal = true;
     const config: MatDialogConfig = {
       disableClose: false,
-      width: "600px"
+      width: '600px'
     };
     const dialogRef = this.dialog.open(WakeupAnswerDialogComponent, config);
     dialogRef.componentInstance.answer = Object.assign({}, answer);
@@ -119,7 +119,7 @@ export class AnswersComponent implements OnInit {
   }
   onDeleteAnswer(answer) {
     this.dialogService.openDialog(
-      "Are you sure you want to delete this answer?",
+      'Are you sure you want to delete this answer?',
       () => this.deleteAnswer.call(this, answer)
     );
   }
@@ -131,11 +131,11 @@ export class AnswersComponent implements OnInit {
     this.openModal = true;
     const newAnswer = {
       questionId: +this.currentQuestionId,
-      text: ""
+      text: ''
     };
     const config: MatDialogConfig = {
       disableClose: false,
-      width: "600px"
+      width: '600px'
     };
     const dialogRef: any = this.dialog.open(WakeupAnswerDialogComponent, config);
     dialogRef.componentInstance.answer = Object.assign({}, newAnswer);
@@ -149,7 +149,7 @@ export class AnswersComponent implements OnInit {
 
   onDeleteQuestion() {
     this.dialogService.openDialog(
-      "Are you sure you want to delete this question?",
+      'Are you sure you want to delete this question?',
       this.deleteQuestion.bind(this)
     );
   }
@@ -160,7 +160,7 @@ export class AnswersComponent implements OnInit {
 
   onDeleteAnswers() {
     this.dialogService.openDialog(
-      "Are you sure you want to delete all answers?",
+      'Are you sure you want to delete all answers?',
       this.deleteAnswers.bind(this)
     );
   }

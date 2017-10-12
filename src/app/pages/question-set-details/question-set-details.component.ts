@@ -8,31 +8,31 @@ import {
   ApplicationRef,
   ViewChild,
   ElementRef
-} from "@angular/core";
-import { Title } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from "@angular/router";
-import { MatDialog, MatDialogConfig } from "@angular/material";
-import { Store } from "@ngrx/store";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
+} from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import {
   WakeupQuotesBrowserComponent,
   WakeupSessionConfigComponent,
   WakeupEditQuestionDialogComponent
-} from "./components";
-import { WakeupImportFileComponent } from "../../_shared/components/wakeup-import-file/wakeup-import-file.component";
+} from './components';
+import { WakeupImportFileComponent } from '../../_shared/components/wakeup-import-file/wakeup-import-file.component';
 import { DialogService, SessionConfigService } from '../../common/services';
-import { SessionOptions } from "../../common/services/session-config.service";
-import { QuestionSet, IQuestion } from "../../common/models";
+import { SessionOptions } from '../../common/services/session-config.service';
+import { QuestionSet, IQuestion } from '../../common/models';
 import { QuestionSetStoreService } from '../../common/store';
 
-import appConstants from "../../common/app-constants";
+import appConstants from '../../common/app-constants';
 
 @Component({
-  selector: "wakeup-question-set-details",
-  templateUrl: "./question-set-details.component.html",
-  styleUrls: ["./question-set-details.component.scss"],
+  selector: 'wakeup-question-set-details',
+  templateUrl: './question-set-details.component.html',
+  styleUrls: ['./question-set-details.component.scss'],
   host: { 'class': 'pageContent' }
 })
 export class QuestionSetDetailsComponent
@@ -45,8 +45,8 @@ export class QuestionSetDetailsComponent
   importSpinnerSubscription: Subscription;
   importDialogRef;
   isLoading$;
-  @ViewChild("nameInput") nameElRef: ElementRef;
-  @ViewChild("descriptionInput") descriptionElRef: ElementRef;
+  @ViewChild('nameInput') nameElRef: ElementRef;
+  @ViewChild('descriptionInput') descriptionElRef: ElementRef;
   constructor(
     private sessionConfigService: SessionConfigService,
     private questionSetStoreService: QuestionSetStoreService,
@@ -63,7 +63,7 @@ export class QuestionSetDetailsComponent
   ngOnInit() {
     this.actionsSubscription = this.route.params
       .filter(params => !!params['id'])
-      .map(idParams => this.questionSetStoreService.get(idParams["id"]))
+      .map(idParams => this.questionSetStoreService.get(idParams['id']))
       .subscribe();
 
     this.qsSubscription = this.questionSetStoreService.currentQuestionSet$
@@ -91,7 +91,7 @@ export class QuestionSetDetailsComponent
       return;
     }
     this.ngzone.runOutsideAngular(() => {
-      Observable.fromEvent(this.nameElRef.nativeElement, "keyup")
+      Observable.fromEvent(this.nameElRef.nativeElement, 'keyup')
         .debounceTime(1000)
         .subscribe((keyboardEvent: any) => {
           if (keyboardEvent.keyCode === 9) {
@@ -100,7 +100,7 @@ export class QuestionSetDetailsComponent
           this.updateQuestionSet();
           this.cdref.detectChanges();
         });
-      Observable.fromEvent(this.descriptionElRef.nativeElement, "keyup")
+      Observable.fromEvent(this.descriptionElRef.nativeElement, 'keyup')
         .debounceTime(1000)
         .subscribe((keyboardEvent: any) => {
           if (keyboardEvent.keyCode === 9) {
@@ -124,7 +124,7 @@ export class QuestionSetDetailsComponent
 
   onQuestionSetDelete() {
     this.dialogService.openDialog(
-      "Are you sure you want to delete this question set?",
+      'Are you sure you want to delete this question set?',
       this.deleteQuestionSet.bind(this)
     );
   }
@@ -136,7 +136,7 @@ export class QuestionSetDetailsComponent
   getEmptyQuestion() {
     return {
       id: undefined,
-      text: "",
+      text: '',
       quote: undefined,
       questionSet: this.currentQuestionSet.id
     };
@@ -149,7 +149,7 @@ export class QuestionSetDetailsComponent
 
   onDeleteQuestions(questions) {
     this.dialogService.openDialog(
-      "Are you sure you want to delete these questions?",
+      'Are you sure you want to delete these questions?',
       () => this.deleteQuestions.call(this, questions)
     );
   }
@@ -163,7 +163,7 @@ export class QuestionSetDetailsComponent
   editQuestion(question) {
     const config: MatDialogConfig = {
       disableClose: false,
-      width: "600px"
+      width: '600px'
     };
     const dialogRef = this.dialog.open(
       WakeupEditQuestionDialogComponent,
@@ -180,8 +180,8 @@ export class QuestionSetDetailsComponent
   openQuotesBrowser(question) {
     const config: MatDialogConfig = {
       disableClose: false,
-      width: "80%",
-      height: "80%"
+      width: '80%',
+      height: '80%'
     };
     const dialogRef = this.dialog.open(WakeupQuotesBrowserComponent, config);
     dialogRef.componentInstance.initialQuoteId = question.quote;

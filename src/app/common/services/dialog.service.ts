@@ -1,14 +1,14 @@
-import { Observable } from "rxjs/Rx";
-import { WakeupConfirmDialogComponent } from "../../_shared/components/wakeup-confirm-dialog/wakeup-confirm-dialog.component";
-import { MatDialogRef, MatDialog, MatDialogConfig } from "@angular/material";
-import { Injectable } from "@angular/core";
+import { Observable } from 'rxjs/Rx';
+import { WakeupConfirmDialogComponent } from '../../_shared/components/wakeup-confirm-dialog/wakeup-confirm-dialog.component';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DialogService {
   constructor(private dialog: MatDialog) {}
 
   public openDialog(message, callback) {
-    this.confirm("Confirmation Required", message).subscribe(result => {
+    this.confirm('Confirmation Required', message).subscribe(result => {
       if (result) {
         callback();
       }

@@ -1,10 +1,10 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import {
   SharedModule
 } from '../_shared/shared.module';
-import { AuthenticationGuard } from "./guards/authentication.guard";
-import { CanDeactivateGuard } from "./guards/can-deactivate.guard";
-import { UserDetailResolver } from "./guards/user-details.resolver";
+import { AuthenticationGuard } from './guards/authentication.guard';
+import { CanDeactivateGuard } from './guards/can-deactivate.guard';
+import { UserDetailResolver } from './guards/user-details.resolver';
 import {
   LoginApi,
   AuthTokenService,
@@ -18,7 +18,7 @@ import {
   NotificationService,
   DialogService,
   AnswersIndexedDbApi
-} from "./services";
+} from './services';
 
 import {
   AnswerStoreService,
@@ -29,8 +29,8 @@ import {
   LoginStoreService
 } from './store';
 
-import { WakeupTopBarComponent } from "./components/wakeup-top-bar/wakeup-top-bar.component";
-import { WakeupSideNavComponent } from "./components/wakeup-side-nav/wakeup-side-nav.component";
+import { WakeupTopBarComponent } from './components/wakeup-top-bar/wakeup-top-bar.component';
+import { WakeupSideNavComponent } from './components/wakeup-side-nav/wakeup-side-nav.component';
 import { WakeupFooterComponent } from './components/wakeup-footer/wakeup-footer.component';
 
 const storeServices = [

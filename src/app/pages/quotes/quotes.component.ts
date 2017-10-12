@@ -1,19 +1,19 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Title } from "@angular/platform-browser";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
 import { TopicStoreService, QuoteStoreService } from '../../common/store';
-import { Quote, Topic } from "../../common/models";
-import appConstants from "../../common/app-constants";
-import { WakeupImportFileComponent } from "../../_shared/components/wakeup-import-file/wakeup-import-file.component";
+import { Quote, Topic } from '../../common/models';
+import appConstants from '../../common/app-constants';
+import { WakeupImportFileComponent } from '../../_shared/components/wakeup-import-file/wakeup-import-file.component';
 
 @Component({
-  selector: "wakeup-quotes",
-  templateUrl: "./quotes.component.html",
-  styleUrls: ["./quotes.component.scss"],
+  selector: 'wakeup-quotes',
+  templateUrl: './quotes.component.html',
+  styleUrls: ['./quotes.component.scss'],
   host: { 'class': 'quotes pageContent' }
 })
 export class QuotesComponent implements OnInit, OnDestroy {
@@ -38,11 +38,11 @@ export class QuotesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading$ = this.quoteStoreService.isLoading$;
     this.actionsSubscription = this.route.params
-      .filter(params => !!params["topicId"])
+      .filter(params => !!params['topicId'])
       .map(idParams => {
-        this.currentTopicId = idParams["topicId"];
+        this.currentTopicId = idParams['topicId'];
         this.topicStoreService.get(this.currentTopicId);
-        this.quoteStoreService.getByTopicId(+idParams["topicId"]);
+        this.quoteStoreService.getByTopicId(+idParams['topicId']);
       })
       .subscribe();
 

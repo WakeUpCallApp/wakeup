@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { WakeupQuestionsBrowserComponent} from '../wakeup-questions-browser/wakeup-questions-browser.component';
 
 @Component({
-  selector: "wakeup-quote-questions",
-  templateUrl: "./wakeup-quote-questions.component.html",
-  styleUrls: ["./wakeup-quote-questions.component.scss"]
+  selector: 'wakeup-quote-questions',
+  templateUrl: './wakeup-quote-questions.component.html',
+  styleUrls: ['./wakeup-quote-questions.component.scss']
 })
 export class WakeupQuoteQuestionsComponent implements OnInit {
   @Input() questions;

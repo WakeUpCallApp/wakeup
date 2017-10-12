@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { ICreateComment } from "../../../../common/models";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ICreateComment } from '../../../../common/models';
 
 @Component({
-  selector: "wakeup-add-comment",
-  templateUrl: "./wakeup-add-comment.component.html",
-  styleUrls: ["./wakeup-add-comment.component.scss"]
+  selector: 'wakeup-add-comment',
+  templateUrl: './wakeup-add-comment.component.html',
+  styleUrls: ['./wakeup-add-comment.component.scss']
 })
 export class WakeupAddCommentComponent implements OnInit {
   @Input() commentObject: ICreateComment;

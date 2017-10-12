@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import { Actions, Effect } from "@ngrx/effects";
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
 
-import { Observable } from "rxjs/Observable";
-import { Router } from "@angular/router";
-import AppConstants from "../../app-constants";
+import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
+import AppConstants from '../../app-constants';
 
-import * as topic from "./topic.actions";
-import { TopicApi } from "../../services/api/topic.api";
-import { NotificationService } from "../../services/notification.service";
+import * as topic from './topic.actions';
+import { TopicApi } from '../../services/api/topic.api';
+import { NotificationService } from '../../services/notification.service';
 
 @Injectable()
 export class TopicEffects {
@@ -31,11 +31,11 @@ export class TopicEffects {
     .map((action: any) => action.payload)
     .switchMap(topic => this.topicApi.create(topic))
     .map(result => {
-      this.notificationService.notifySuccess("Topic succcessfully created");
+      this.notificationService.notifySuccess('Topic succcessfully created');
       return new topic.CreateActionSuccess(result);
     })
     .catch(error => {
-      this.notificationService.notifyError("Topic could not be created");
+      this.notificationService.notifyError('Topic could not be created');
       return Observable.of(new topic.CreateActionError(error));
     });
 
@@ -54,11 +54,11 @@ export class TopicEffects {
     .map((action: any) => action.payload)
     .switchMap(topic => this.topicApi.update(topic))
     .map(result => {
-      this.notificationService.notifySuccess("Topic successfully updated");
+      this.notificationService.notifySuccess('Topic successfully updated');
       return new topic.UpdateActionSuccess(result);
     })
     .catch(error => {
-      this.notificationService.notifyError("Topic could not be updated");
+      this.notificationService.notifyError('Topic could not be updated');
       return Observable.of(new topic.UpdateActionError(error));
     });
 
@@ -68,7 +68,7 @@ export class TopicEffects {
     .map((action: any) => action.payload)
     .switchMap(topic => this.topicApi.delete(topic))
     .map(() => {
-      this.notificationService.notifySuccess("Topic successfully deleted");
+      this.notificationService.notifySuccess('Topic successfully deleted');
       return new topic.DeleteActionSuccess();
     });
 
@@ -98,7 +98,7 @@ export class TopicEffects {
     .map((action: any) => action.payload)
     .map(error => {
       if (error.status === AppConstants.errorCode.NotFound) {
-        this.notificationService.notifyError("Topic not found");
+        this.notificationService.notifyError('Topic not found');
       }
       this.router.navigate([AppConstants.routes.TOPICS]);
       return Observable.of(error);
@@ -110,10 +110,10 @@ export class TopicEffects {
     topic.ActionTypes.CREATE_SUCCESS,
     topic.ActionTypes.UPDATE_SUCCESS,
     topic.ActionTypes.DELETE_SUCCESS,
-    "USER_LOGOUT"
+    'USER_LOGOUT'
     )
     .map(() => {
-      console.log("clear cache");
+      console.log('clear cache');
       this.topicApi.clearCache();
     });
 }

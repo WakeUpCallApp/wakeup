@@ -1,16 +1,16 @@
-import { Injectable } from "@angular/core";
-import { Actions, Effect } from "@ngrx/effects";
-import { Router } from "@angular/router";
-import { Store, Action } from "@ngrx/store";
-import * as reducers from "../app.store";
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
+import { Router } from '@angular/router';
+import { Store, Action } from '@ngrx/store';
+import * as reducers from '../app.store';
 
-import { Observable } from "rxjs/Observable";
-import AppConstants from "../../app-constants";
+import { Observable } from 'rxjs/Observable';
+import AppConstants from '../../app-constants';
 
-import * as quoteActions from "./quote.actions";
-import { QuoteApi } from "../../services/api/quote.api";
-import { NotificationService } from "../../services/notification.service";
-import { FileParsingService } from "../../services/file-parsing";
+import * as quoteActions from './quote.actions';
+import { QuoteApi } from '../../services/api/quote.api';
+import { NotificationService } from '../../services/notification.service';
+import { FileParsingService } from '../../services/file-parsing';
 
 @Injectable()
 export class QuoteEffects {
@@ -52,7 +52,7 @@ export class QuoteEffects {
     .map((action: any) => action.payload)
     .map(error => {
       if (error.status === AppConstants.errorCode.NotFound) {
-        this.notificationService.notifyError("Quote not found");
+        this.notificationService.notifyError('Quote not found');
       }
       this.router.navigate([AppConstants.routes.TOPICS]);
       return Observable.of(error);
@@ -70,11 +70,11 @@ export class QuoteEffects {
     .map((action: any) => action.payload)
     .switchMap(quote => this.quoteApi.create(quote))
     .map(result => {
-      this.notificationService.notifySuccess("Quote successfully created");
+      this.notificationService.notifySuccess('Quote successfully created');
       return new quoteActions.CreateActionSuccess(result);
     })
     .catch(error => {
-      this.notificationService.notifyError("Quote could not be created");
+      this.notificationService.notifyError('Quote could not be created');
       return Observable.of(new quoteActions.CreateActionError(error));
     });
 
@@ -92,11 +92,11 @@ export class QuoteEffects {
     .map((action: any) => action.payload)
     .switchMap(quote => this.quoteApi.delete(quote))
     .map(result => {
-      this.notificationService.notifySuccess("Quote successfully deleted");
+      this.notificationService.notifySuccess('Quote successfully deleted');
       return new quoteActions.DeleteActionSuccess(result);
     })
     .catch(error => {
-      this.notificationService.notifyError("Quote could not be deleted");
+      this.notificationService.notifyError('Quote could not be deleted');
       return Observable.of(new quoteActions.DeleteActionError(error));
     });
 
@@ -116,10 +116,10 @@ export class QuoteEffects {
     quoteActions.ActionTypes.DELETE_SUCCESS,
     quoteActions.ActionTypes.CREATE_COMMENT_SUCCESS,
     quoteActions.ActionTypes.DELETE_COMMENT_SUCCESS,
-    "USER_LOGOUT"
+    'USER_LOGOUT'
     )
     .map(() => {
-      console.log("clear cache");
+      console.log('clear cache');
       this.quoteApi.clearCache();
     });
 
@@ -136,11 +136,11 @@ export class QuoteEffects {
     .map((action: any) => action.payload)
     .switchMap(comment => this.quoteApi.addComment(comment))
     .map(result => {
-      this.notificationService.notifySuccess("Comment successfully created");
+      this.notificationService.notifySuccess('Comment successfully created');
       return new quoteActions.CreateCommentActionSuccess(result);
     })
     .catch(error => {
-      this.notificationService.notifyError("Comment could not be created");
+      this.notificationService.notifyError('Comment could not be created');
       return Observable.of(new quoteActions.CreateCommentActionError(error));
     });
 
@@ -150,11 +150,11 @@ export class QuoteEffects {
     .map((action: any) => action.payload)
     .switchMap(comment => this.quoteApi.deleteComment(comment))
     .map(result => {
-      this.notificationService.notifySuccess("Comment successfully deleted");
+      this.notificationService.notifySuccess('Comment successfully deleted');
       return new quoteActions.DeleteCommentActionSuccess(result);
     })
     .catch(error => {
-      this.notificationService.notifyError("Comment could not be deleted");
+      this.notificationService.notifyError('Comment could not be deleted');
       return Observable.of(new quoteActions.DeleteCommentActionError(error));
     });
 
@@ -166,11 +166,11 @@ export class QuoteEffects {
       this.quoteApi
         .update(quote)
         .map(result => {
-          this.notificationService.notifySuccess("Quote successfully updated");
+          this.notificationService.notifySuccess('Quote successfully updated');
           return new quoteActions.UpdateActionSuccess(result);
         })
         .catch(error => {
-          this.notificationService.notifyError("Quote could not be updated");
+          this.notificationService.notifyError('Quote could not be updated');
           return Observable.of(new quoteActions.UpdateActionError(error));
         })
     );
@@ -186,14 +186,14 @@ export class QuoteEffects {
           this.quoteApi.importQuotes(data.topicId, results.data).subscribe(
             result => {
               this.notificationService.notifySuccess(
-                "Quotes successfully imported"
+                'Quotes successfully imported'
               );
               return this.store.dispatch(
                 new quoteActions.ImportQuotesActionSuccess(result)
               );
             },
             error => {
-              this.notificationService.notifyError("Could not import quotes");
+              this.notificationService.notifyError('Could not import quotes');
               return this.store.dispatch(
                 new quoteActions.ImportQuotesActionError(error)
               );

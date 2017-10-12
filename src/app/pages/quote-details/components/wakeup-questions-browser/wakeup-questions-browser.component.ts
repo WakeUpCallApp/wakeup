@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialogRef } from "@angular/material";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
-import { QuestionStoreService } from "../../../../common/store";
-import isEqual from "lodash/isEqual";
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { QuestionStoreService } from '../../../../common/store';
+import isEqual from 'lodash/isEqual';
 
 @Component({
-  selector: "wakeup-questions-browser",
-  templateUrl: "./wakeup-questions-browser.component.html",
-  styleUrls: ["./wakeup-questions-browser.component.scss"]
+  selector: 'wakeup-questions-browser',
+  templateUrl: './wakeup-questions-browser.component.html',
+  styleUrls: ['./wakeup-questions-browser.component.scss']
 })
 export class WakeupQuestionsBrowserComponent implements OnInit {
   allQuestionsSubscription: Subscription;

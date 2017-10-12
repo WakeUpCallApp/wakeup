@@ -1,4 +1,4 @@
-import { ITopicApi, Topic } from "./topic.model";
+import { ITopicApi, Topic } from './topic.model';
 import { Question } from './question.model';
 
 export interface Comment {

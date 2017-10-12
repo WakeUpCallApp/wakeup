@@ -13,7 +13,7 @@ export const getQuoteState = (state: AppState) => state.quote;
 export const getQuestionState = (state: AppState) => state.question;
 export const getAnswerState = (state: AppState) => state.answer;
 
-// QuestionSet selectors 
+// QuestionSet selectors
 
 export const getQuestionSets = createSelector(getQuestionSetState, questionSetSelectors.getQuestionSets);
 export const getSortedQuestionSets = createSelector(getQuestionSetState, questionSetSelectors.getSortedQuestionSets);

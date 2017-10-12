@@ -1,4 +1,4 @@
-import { Subject } from "rxjs/Subject";
+import { Subject } from 'rxjs/Subject';
 
 export class NotificationService {
   public subj_notification: Subject<any> = new Subject();
@@ -11,10 +11,10 @@ export class NotificationService {
   }
 
   public notifyError(message) {
-    return this.notify(message, "error-toast");
+    return this.notify(message, 'error-toast');
   }
 
   public notifySuccess(message) {
-    return this.notify(message, "success-toast");
+    return this.notify(message, 'success-toast');
   }
 }

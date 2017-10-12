@@ -1,25 +1,25 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Title } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
-import { QuestionSet, Quote } from "../../common/models";
-import appConstants from "../../common/app-constants";
+import { QuestionSet, Quote } from '../../common/models';
+import appConstants from '../../common/app-constants';
 
 import {
   SessionConfigService,
   SessionOptions
-} from "../../common/services/session-config.service";
+} from '../../common/services/session-config.service';
 
 import { LoginApi } from '../../common/services/api/login.api';
 import { AnswerStoreService, QuestionSetStoreService, QuoteStoreService } from '../../common/store';
 
 @Component({
-  selector: "wakeup-practice-session",
-  templateUrl: "./practice-session.component.html",
-  styleUrls: ["./practice-session.component.scss"]
+  selector: 'wakeup-practice-session',
+  templateUrl: './practice-session.component.html',
+  styleUrls: ['./practice-session.component.scss']
 })
 export class PracticeSessionComponent implements OnInit, OnDestroy {
   displayQuestion = true;
@@ -51,7 +51,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.actionsSubscription = this.route.params
       .filter(params => !!params['questionSetId'])
-      .map(idParams => this.questionSetStoreService.get(idParams["questionSetId"]))
+      .map(idParams => this.questionSetStoreService.get(idParams['questionSetId']))
       .subscribe();
 
     this.qsSubscription = this.questionSetStoreService.currentQuestionSet$
@@ -83,7 +83,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
 
   canDeactivate() {
     if (this.isSessionMode) {
-      return window.confirm("Are you sure? The session will terminate.");
+      return window.confirm('Are you sure? The session will terminate.');
     }
 
     return true;
@@ -138,7 +138,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
 
   playQuestion() {
     this.displayQuestion = true;
-    const sound = new Audio("../../../assets/sounds/Bell-ding.mp3");
+    const sound = new Audio('../../../assets/sounds/Bell-ding.mp3');
     sound.play();
   }
 
@@ -168,7 +168,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
       text: this.answerText
     },
       this.loginApi.getCurrentUser()._id);
-    this.answerText = "";
+    this.answerText = '';
     this.setNextQuestion();
   }
 

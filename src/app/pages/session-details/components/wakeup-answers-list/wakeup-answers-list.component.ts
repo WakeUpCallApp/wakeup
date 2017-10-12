@@ -4,12 +4,12 @@ import {
   Input,
   OnChanges,
   SimpleChanges
-} from "@angular/core";
+} from '@angular/core';
 
 @Component({
-  selector: "wakeup-answers-list",
-  templateUrl: "./wakeup-answers-list.component.html",
-  styleUrls: ["./wakeup-answers-list.component.scss"]
+  selector: 'wakeup-answers-list',
+  templateUrl: './wakeup-answers-list.component.html',
+  styleUrls: ['./wakeup-answers-list.component.scss']
 })
 export class WakeupAnswersListComponent implements OnInit, OnChanges {
   @Input() answers;

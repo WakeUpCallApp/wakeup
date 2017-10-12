@@ -1,35 +1,35 @@
-import { Action } from "@ngrx/store";
-import { Quote } from "../../models/quote.model";
-import { type } from "../util";
+import { Action } from '@ngrx/store';
+import { Quote } from '../../models/quote.model';
+import { type } from '../util';
 
 export const ActionTypes = {
-  GET_BY_TOPIC_ID: type("[Quote] Get By Topic Id"),
-  GET_BY_TOPIC_ID_SUCCESS: type("[Quote] Get By Topic Id Success"),
-  GET_BY_ID: type("[Quote] Get By Id"),
-  GET_BY_ID_SUCCESS: type("[Quote] Get By Id Success"),
-  GET_BY_ID_ERROR: type("[Quote] Get By Id Error"),
-  GET_COMMENTS: type("[Quote] Get Comments"),
-  GET_COMMENTS_SUCCESS: type("[Quote] Get Comments Success"),
-  LOAD: type("[Quote] Load"),
-  LOAD_SUCCESS: type("[Quote] Load success"),
-  LOAD_ERROR: type("[Quote] Load error"),
-  CREATE: type("[Quote] Create"),
-  CREATE_SUCCESS: type("[Quote] Create success"),
-  CREATE_ERROR: type("[Quote] Create error"),
-  CREATE_COMMENT: type("[Quote] Create Comment"),
-  CREATE_COMMENT_SUCCESS: type("[Quote] Create Comment success"),
-  CREATE_COMMENT_ERROR: type("[Quote] Create Comment error"),
-  UPDATE: type("[Quote] Update"),
-  UPDATE_SUCCESS: type("[Quote] Update Success"),
-  UPDATE_ERROR: type("[Quote] Update Error"),
-  DELETE: type("[Quote] Delete"),
-  DELETE_SUCCESS: type("[Quote] Delete Success"),
-  DELETE_ERROR: type("[Quote] Delete Error"),
-  DELETE_COMMENT: type("[Quote] Delete Comment"),
-  DELETE_COMMENT_ERROR: type("[Quote] Delete Comment Error"),
-  DELETE_COMMENT_SUCCESS: type("[Quote] Delete Comment Success"),
-  GET_SUGGESTIONS: type("[Quote] Get Suggestions"),
-  GET_SUGGESTIONS_SUCCESS: type("[Quote] Get Suggestions Success"),
+  GET_BY_TOPIC_ID: type('[Quote] Get By Topic Id'),
+  GET_BY_TOPIC_ID_SUCCESS: type('[Quote] Get By Topic Id Success'),
+  GET_BY_ID: type('[Quote] Get By Id'),
+  GET_BY_ID_SUCCESS: type('[Quote] Get By Id Success'),
+  GET_BY_ID_ERROR: type('[Quote] Get By Id Error'),
+  GET_COMMENTS: type('[Quote] Get Comments'),
+  GET_COMMENTS_SUCCESS: type('[Quote] Get Comments Success'),
+  LOAD: type('[Quote] Load'),
+  LOAD_SUCCESS: type('[Quote] Load success'),
+  LOAD_ERROR: type('[Quote] Load error'),
+  CREATE: type('[Quote] Create'),
+  CREATE_SUCCESS: type('[Quote] Create success'),
+  CREATE_ERROR: type('[Quote] Create error'),
+  CREATE_COMMENT: type('[Quote] Create Comment'),
+  CREATE_COMMENT_SUCCESS: type('[Quote] Create Comment success'),
+  CREATE_COMMENT_ERROR: type('[Quote] Create Comment error'),
+  UPDATE: type('[Quote] Update'),
+  UPDATE_SUCCESS: type('[Quote] Update Success'),
+  UPDATE_ERROR: type('[Quote] Update Error'),
+  DELETE: type('[Quote] Delete'),
+  DELETE_SUCCESS: type('[Quote] Delete Success'),
+  DELETE_ERROR: type('[Quote] Delete Error'),
+  DELETE_COMMENT: type('[Quote] Delete Comment'),
+  DELETE_COMMENT_ERROR: type('[Quote] Delete Comment Error'),
+  DELETE_COMMENT_SUCCESS: type('[Quote] Delete Comment Success'),
+  GET_SUGGESTIONS: type('[Quote] Get Suggestions'),
+  GET_SUGGESTIONS_SUCCESS: type('[Quote] Get Suggestions Success'),
   IMPORT_QUOTES: type('[Quote] Import Quotes'),
   IMPORT_QUOTES_SUCCESS: type('[Quote] Import Quotes Success'),
   IMPORT_QUOTES_ERROR: type('[Quote] Import Quotes Error'),
@@ -178,7 +178,7 @@ export class DeleteCommentActionError implements Action {
 
 export class GetSuggestionsAction implements Action {
   type = ActionTypes.GET_SUGGESTIONS;
-  constructor(public payload? : any) {}
+  constructor(public payload?: any) {}
 }
 
 export class GetSuggestionsActionSuccess implements Action {

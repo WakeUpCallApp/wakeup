@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { Http, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
-import { AuthTokenService } from "../authToken.service";
-import { User, Token } from "../../models/user.model";
+import { AuthTokenService } from '../authToken.service';
+import { User, Token } from '../../models/user.model';
 
 @Injectable()
 export class LoginApi {
   private currentUser;
-  private identityUrl = "/api/users/me";
+  private identityUrl = '/api/users/me';
   constructor(private http: Http, private authService: AuthTokenService) {}
 
   getCurrentUser(): User {
@@ -21,7 +21,7 @@ export class LoginApi {
 
   signUp(userObject: User): Observable<User> {
     return this.http
-      .post("/api/users", userObject)
+      .post('/api/users', userObject)
       .map((response: Response) => response.json())
       .do(response => {
         this.authService.setToken(response.token);
@@ -33,7 +33,7 @@ export class LoginApi {
 
   login(userObject: User): Observable<Token> {
     return this.http
-      .post("/auth/local", userObject)
+      .post('/auth/local', userObject)
       .map((response: Response) => response.json())
       .do(response => {
         this.authService.setToken(response.token);
@@ -59,7 +59,7 @@ export class LoginApi {
 
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error || "Server error");
+    return Observable.throw(error || 'Server error');
   }
 
   logout() {

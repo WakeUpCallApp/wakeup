@@ -1,24 +1,24 @@
-import { Action } from "@ngrx/store";
-import { IAnswer, Answer } from "../../models/answer.model";
-import { type } from "../util";
+import { Action } from '@ngrx/store';
+import { IAnswer, Answer } from '../../models/answer.model';
+import { type } from '../util';
 
 export const ActionTypes = {
-  OPEN_INDEXED_DB: type("[Answer] Open indexed db"),
-  OPEN_INDEXED_DB_SUCCESS: type("[Answer] Open indexed db success"),
-  OPEN_INDEXED_DB_ERROR: type("[Answer] Open indexed db error"),
-  LOAD: type("[Answer] Load"),
-  LOAD_SUCCESS: type("[Answer] Load success"),
-  LOAD_ERROR: type("[Answer] Load error"),
-  CREATE: type("[Answer] Create"),
-  CREATE_SUCCESS: type("[Answer] Create success"),
-  CREATE_ERROR: type("[Answer] Create error"),
-  UPDATE: type("[Answer] Update"),
-  UPDATE_SUCCESS: type("[Answer] Update Success"),
-  UPDATE_ERROR: type("[Answer] Update Error"),
-  DELETE: type("[Answer] Delete"),
-  DELETE_SUCCESS: type("[Answer] Delete Success"),
-  DELETE_ALL: type("[Answer] Delete all"),
-  DELETE_ALL_SUCCESS: type("[Answer] Delete all Success")
+  OPEN_INDEXED_DB: type('[Answer] Open indexed db'),
+  OPEN_INDEXED_DB_SUCCESS: type('[Answer] Open indexed db success'),
+  OPEN_INDEXED_DB_ERROR: type('[Answer] Open indexed db error'),
+  LOAD: type('[Answer] Load'),
+  LOAD_SUCCESS: type('[Answer] Load success'),
+  LOAD_ERROR: type('[Answer] Load error'),
+  CREATE: type('[Answer] Create'),
+  CREATE_SUCCESS: type('[Answer] Create success'),
+  CREATE_ERROR: type('[Answer] Create error'),
+  UPDATE: type('[Answer] Update'),
+  UPDATE_SUCCESS: type('[Answer] Update Success'),
+  UPDATE_ERROR: type('[Answer] Update Error'),
+  DELETE: type('[Answer] Delete'),
+  DELETE_SUCCESS: type('[Answer] Delete Success'),
+  DELETE_ALL: type('[Answer] Delete all'),
+  DELETE_ALL_SUCCESS: type('[Answer] Delete all Success')
 };
 
 export class OpenIndexedDbAction implements Action {

@@ -4,13 +4,13 @@ import { Observable } from 'rxjs/Rx';
 import { environment } from '../../environments/environment';
 import { AuthTokenService } from '../common/services/authToken.service';
 import { Router } from '@angular/router';
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/mergeMap";
-import "rxjs/add/operator/catch";
-import "rxjs/add/observable/throw";
-import "rxjs/add/operator/do";
-import "rxjs/add/operator/switchMap";
-import "rxjs/add/observable/forkJoin";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/forkJoin';
 
 
 @Injectable()

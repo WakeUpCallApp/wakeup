@@ -24,14 +24,14 @@ import {
   MatSlideToggleModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { WakeupCardComponent } from "./components/wakeup-card/wakeup-card.component";
-import { WakeupImportFileComponent } from "./components/wakeup-import-file/wakeup-import-file.component";
+import { WakeupCardComponent } from './components/wakeup-card/wakeup-card.component';
+import { WakeupImportFileComponent } from './components/wakeup-import-file/wakeup-import-file.component';
 import { WakeupConfirmDialogComponent } from './components/wakeup-confirm-dialog/wakeup-confirm-dialog.component';
 @NgModule({
   imports: [
-    CommonModule, 
+    CommonModule,
     RouterModule,
-    MatCardModule, 
+    MatCardModule,
     MatButtonModule,
     MatTooltipModule],
   declarations: [

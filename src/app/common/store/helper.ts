@@ -1,12 +1,12 @@
-import { groupBy, chain, toPairs, zipObject } from "lodash";
+import { groupBy, chain, toPairs, zipObject } from 'lodash';
 
 export default class Helper {
   groupAnswersByDate(answers) {
     return chain(this.sortAnswersByDate(answers))
-      .groupBy("groupDay")
+      .groupBy('groupDay')
       .toPairs()
       .map(currentItem => {
-        return zipObject(["date", "answers"], currentItem);
+        return zipObject(['date', 'answers'], currentItem);
       })
       .value();
   }
@@ -26,10 +26,10 @@ export default class Helper {
 
   groupQuestionsByQuestionSet(questions) {
     return chain(questions.sort())
-      .groupBy("questionSet")
+      .groupBy('questionSet')
       .toPairs()
       .map(currentItem => {
-        return zipObject(["questionSet", "questions"], currentItem);
+        return zipObject(['questionSet', 'questions'], currentItem);
       })
       .value();
   }

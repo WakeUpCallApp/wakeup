@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { Http, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
-import Parser from "./parser";
-import { Quote, IQuoteApi, IQuote } from "../../models/quote.model";
+import Parser from './parser';
+import { Quote, IQuoteApi, IQuote } from '../../models/quote.model';
 
 @Injectable()
 export class QuoteApi {
@@ -18,7 +18,7 @@ export class QuoteApi {
       return Observable.of(this.userQuotes);
     }
     return this.http
-      .get("/api/quotes/userQuotes/")
+      .get('/api/quotes/userQuotes/')
       .map((response: Response) => response.json())
       .map(userTopics => {
         return userTopics.map(topicApi => {
@@ -101,7 +101,7 @@ export class QuoteApi {
       return Observable.of(this.suggestions);
     }
     return this.http
-      .get("/api/quotes/suggestions")
+      .get('/api/quotes/suggestions')
       .map((response: Response) => response.json())
       .map(suggestions => suggestions)
       .do(suggestions => (this.suggestions = suggestions))
@@ -168,6 +168,6 @@ export class QuoteApi {
 
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error || "Server error");
+    return Observable.throw(error || 'Server error');
   }
 }

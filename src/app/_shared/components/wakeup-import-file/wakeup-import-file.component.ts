@@ -1,9 +1,9 @@
-import { Component, OnInit} from "@angular/core";
+import { Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: "wakeup-import-file",
-  templateUrl: "./wakeup-import-file.component.html",
-  styleUrls: ["./wakeup-import-file.component.scss"]
+  selector: 'wakeup-import-file',
+  templateUrl: './wakeup-import-file.component.html',
+  styleUrls: ['./wakeup-import-file.component.scss']
 })
 export class WakeupImportFileComponent implements OnInit {
   uploadFile;

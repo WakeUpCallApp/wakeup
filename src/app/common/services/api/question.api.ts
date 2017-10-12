@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { Http, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
-import Parser from "./parser";
+import Parser from './parser';
 import {
   Question,
   IQuestion,
@@ -10,7 +10,7 @@ import {
   Answer,
   IQuoteApi,
   IQuestionSetApi
-} from "../../models";
+} from '../../models';
 
 
 @Injectable()
@@ -24,7 +24,7 @@ export class QuestionApi {
       return Observable.of(this.allQuestions);
     }
     return this.http
-      .get("/api/questions/allQuestions")
+      .get('/api/questions/allQuestions')
       .map((response: Response) => response.json())
       .map(questionApiList => {
         return questionApiList.map(question =>
@@ -66,7 +66,7 @@ export class QuestionApi {
 
   create(question: IQuestion): Observable<Question> {
     return this.http
-      .post("/api/questions/", question)
+      .post('/api/questions/', question)
       .map((response: Response) => response.json())
       .map((questionApi: IQuestionApi) => {
         const question = Parser.questionFromApi(questionApi);
@@ -104,6 +104,6 @@ export class QuestionApi {
 
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error || "Server error");
+    return Observable.throw(error || 'Server error');
   }
 }

@@ -19,7 +19,7 @@ export interface IQuestionApi {
 
 export class Question {
   checked = false;
-  questionSet : number | QuestionSet;
+  questionSet: number | QuestionSet;
   constructor(
     public id: number,
     public text: string,

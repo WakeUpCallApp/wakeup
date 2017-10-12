@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
-import { Http, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
-import Parser from "./parser";
+import Parser from './parser';
 import {
   QuestionSet,
   IQuestionSet,
   IQuestionSetApi
-} from "../../models/question-set.model";
+} from '../../models/question-set.model';
 
-import { Question } from "../../models/question.model";
+import { Question } from '../../models/question.model';
 
 @Injectable()
 export class QuestionSetApi {
@@ -22,7 +22,7 @@ export class QuestionSetApi {
       return Observable.of(this.questionSets);
     }
     return this.http
-      .get("/api/questionSet")
+      .get('/api/questionSet')
       .map((response: Response) => response.json())
       .map(questionSetApiList => {
         return questionSetApiList.map(questionSetApi => {
@@ -35,7 +35,7 @@ export class QuestionSetApi {
 
   create(questionSet: IQuestionSet): Observable<QuestionSet> {
     return this.http
-      .post("/api/questionSet", questionSet)
+      .post('/api/questionSet', questionSet)
       .map((response: Response) => response.json())
       .map((questionSetApi: IQuestionSetApi) => {
         return Parser.questionSetFromApi(questionSetApi);
@@ -103,7 +103,7 @@ export class QuestionSetApi {
 
   registerSession(questionSetId: number) {
     return this.http
-      .put(`/api/questionSet/session/${questionSetId}`, "")
+      .put(`/api/questionSet/session/${questionSetId}`, '')
       .map((response: Response) => response.json())
       .catch(this.handleError);
   }
@@ -147,6 +147,6 @@ export class QuestionSetApi {
 
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error || "Server error");
+    return Observable.throw(error || 'Server error');
   }
 }

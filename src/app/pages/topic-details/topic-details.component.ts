@@ -8,20 +8,20 @@ import {
   ApplicationRef,
   ViewChild,
   ElementRef
-} from "@angular/core";
-import { Title } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from "@angular/router";
+} from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { TopicStoreService, QuestionSetStoreService } from '../../common/store';
-import { Topic } from "../../common/models/topic.model";
-import { DialogService } from "../../common/services/dialog.service";
+import { Topic } from '../../common/models/topic.model';
+import { DialogService } from '../../common/services/dialog.service';
 @Component({
-  selector: "wakeup-topic-details",
-  templateUrl: "./topic-details.component.html",
-  styleUrls: ["./topic-details.component.scss"],
+  selector: 'wakeup-topic-details',
+  templateUrl: './topic-details.component.html',
+  styleUrls: ['./topic-details.component.scss'],
   host: { 'class': 'pageContent' }
 })
 export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -31,8 +31,8 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   topicSubscription: Subscription;
   updateObject = <Topic>{ name: '', description: '' };
   isLoading$;
-  @ViewChild("nameInput") nameElRef: ElementRef;
-  @ViewChild("descriptionInput") descriptionElRef: ElementRef;
+  @ViewChild('nameInput') nameElRef: ElementRef;
+  @ViewChild('descriptionInput') descriptionElRef: ElementRef;
   constructor(
     private topicStoreService: TopicStoreService,
     private questionSetStoreService: QuestionSetStoreService,
@@ -70,7 +70,7 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
     this.ngzone.runOutsideAngular(() => {
-      Observable.fromEvent(this.nameElRef.nativeElement, "keyup")
+      Observable.fromEvent(this.nameElRef.nativeElement, 'keyup')
         .debounceTime(1000)
         .subscribe((keyboardEvent: any) => {
           if (keyboardEvent.keyCode === 9) {
@@ -79,7 +79,7 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.updateTopic();
           this.cdref.detectChanges();
         });
-      Observable.fromEvent(this.descriptionElRef.nativeElement, "keyup")
+      Observable.fromEvent(this.descriptionElRef.nativeElement, 'keyup')
         .debounceTime(1000)
         .subscribe((keyboardEvent: any) => {
           if (keyboardEvent.keyCode === 9) {
@@ -106,7 +106,7 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onDeleteTopic() {
     this.dialogService.openDialog(
-      "Are you sure you want to delete this topic?",
+      'Are you sure you want to delete this topic?',
       this.deleteTopic.bind(this)
     );
   }

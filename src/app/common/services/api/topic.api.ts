@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { Http, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
-import Parser from "./parser";
+import Parser from './parser';
 import {
   Topic,
   ITopic,
   ITopicApi,
   IQuoteApi
-} from "../../models";
+} from '../../models';
 
 @Injectable()
 export class TopicApi {
@@ -21,7 +21,7 @@ export class TopicApi {
       return Observable.of(this.topics);
     }
     return this.http
-      .get("/api/topics")
+      .get('/api/topics')
       .map((response: Response) => response.json())
       .map(topicApiList => {
         return topicApiList.map(topicApi => {
@@ -34,7 +34,7 @@ export class TopicApi {
 
   create(topic): Observable<Topic> {
     return this.http
-      .post("/api/topics", topic)
+      .post('/api/topics', topic)
       .map((response: Response) => response.json())
       .map((topicApi: ITopicApi) => {
         return Parser.topicFromApi(topicApi);
@@ -97,6 +97,6 @@ export class TopicApi {
 
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error || "Server error");
+    return Observable.throw(error || 'Server error');
   }
 }

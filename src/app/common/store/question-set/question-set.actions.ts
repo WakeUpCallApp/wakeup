@@ -1,6 +1,6 @@
-import { Action } from "@ngrx/store";
-import { IQuestionSet, QuestionSet } from "../../models/question-set.model";
-import { type } from "../util";
+import { Action } from '@ngrx/store';
+import { IQuestionSet, QuestionSet } from '../../models/question-set.model';
+import { type } from '../util';
 
 export enum Filter {
   MOST_PLAYED,
@@ -8,35 +8,35 @@ export enum Filter {
 }
 
 export const ActionTypes = {
-  SEARCH_INPUT: type("[QuestionSet] Search Input"),
-  FILTER: type("[QuestionSet] FILTER"),
-  LOAD: type("[QuestionSet] Load"),
-  LOAD_SUCCESS: type("[QuestionSet] Load Success"),
-  LOAD_ERROR: type("[QuestionSet] Load Error"),
-  GET_CURRENT_QUESTION_SET: type("[QuestionSet] Get Current Question Set"),
+  SEARCH_INPUT: type('[QuestionSet] Search Input'),
+  FILTER: type('[QuestionSet] FILTER'),
+  LOAD: type('[QuestionSet] Load'),
+  LOAD_SUCCESS: type('[QuestionSet] Load Success'),
+  LOAD_ERROR: type('[QuestionSet] Load Error'),
+  GET_CURRENT_QUESTION_SET: type('[QuestionSet] Get Current Question Set'),
   GET_CURRENT_QUESTION_SET_SUCCESS: type(
-    "[QuestionSet] Get Current Question Set Success"
+    '[QuestionSet] Get Current Question Set Success'
   ),
   GET_CURRENT_QUESTION_SET_ERROR: type(
-    "[QuestionSet] Get Current Question Set Error"
+    '[QuestionSet] Get Current Question Set Error'
   ),
-  CREATE: type("[QuestionSet] Create"),
-  CREATE_SUCCESS: type("[QuestionSet] Create Success"),
-  CREATE_ERROR: type("[QuestionSet] Create Error"),
-  ADD_QUESTION: type("[QuestionSet] Add Question"),
-  ADD_QUESTION_SUCCESS: type("[QuestionSet] Add Question Success"),
-  EDIT_QUESTION: type("[QuestionSet] Edit Question"),
-  EDIT_QUESTION_SUCCESS: type("[QuestionSet] Edit Question Success"),
-  DELETE_QUESTION: type("[QuestionSet] Delete Question"),
-  DELETE_QUESTION_SUCCESS: type("[QuestionSet] Delete Question Success"),
-  UPDATE: type("[QuestionSet] Update"),
-  UPDATE_SUCCESS: type("[QuestionSet] Update Success"),
-  UPDATE_ERROR: type("[QuestionSet] Update Error"),
-  DELETE: type("[QuestionSet] Delete"),
-  DELETE_SUCCESS: type("[QuestionSet] Delete Success"),
-  REGISTER_SESSION: type("[QuestionSet] Register Session"),
-  GET_SESSION_DETAILS: type("[QuestionSet] Get Session Details"),
-  GET_SESSION_DETAILS_SUCCESS: type("[QuestionSet] Get Session Details Success"),
+  CREATE: type('[QuestionSet] Create'),
+  CREATE_SUCCESS: type('[QuestionSet] Create Success'),
+  CREATE_ERROR: type('[QuestionSet] Create Error'),
+  ADD_QUESTION: type('[QuestionSet] Add Question'),
+  ADD_QUESTION_SUCCESS: type('[QuestionSet] Add Question Success'),
+  EDIT_QUESTION: type('[QuestionSet] Edit Question'),
+  EDIT_QUESTION_SUCCESS: type('[QuestionSet] Edit Question Success'),
+  DELETE_QUESTION: type('[QuestionSet] Delete Question'),
+  DELETE_QUESTION_SUCCESS: type('[QuestionSet] Delete Question Success'),
+  UPDATE: type('[QuestionSet] Update'),
+  UPDATE_SUCCESS: type('[QuestionSet] Update Success'),
+  UPDATE_ERROR: type('[QuestionSet] Update Error'),
+  DELETE: type('[QuestionSet] Delete'),
+  DELETE_SUCCESS: type('[QuestionSet] Delete Success'),
+  REGISTER_SESSION: type('[QuestionSet] Register Session'),
+  GET_SESSION_DETAILS: type('[QuestionSet] Get Session Details'),
+  GET_SESSION_DETAILS_SUCCESS: type('[QuestionSet] Get Session Details Success'),
   IMPORT_QUESTIONS: type('[QuestionSet] Import Questions'),
   IMPORT_QUESTIONS_SUCCESS: type('[QuestionSet] Import Questions Success'),
   IMPORT_QUESTIONS_ERROR: type('[QuestionSet] Import Questions Error'),

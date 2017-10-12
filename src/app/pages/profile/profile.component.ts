@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginApi } from "app/common/services";
+import { LoginApi } from 'app/common/services';
 
 @Component({
   selector: 'wakeup-profile',
@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
     this.loginApi
       .changePassword(this.oldPassword, this.newPassword)
       .subscribe(() => { }, () => {
-        this.errorMessage = "incorrect password";
+        this.errorMessage = 'incorrect password';
       });
   }
 
