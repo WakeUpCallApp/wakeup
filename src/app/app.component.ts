@@ -81,7 +81,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   canShowFooter() {
     return this.loginApi.getCurrentUser() &&
-      location.pathname.indexOf(appConstants.routes.PRACTICE_SESSION) === -1;
+      location.pathname.indexOf(appConstants.routes.PRACTICE_SESSION) === -1
+      && location.pathname.indexOf(appConstants.routes.LANDING) === -1 &&
+      location.pathname.indexOf(appConstants.routes.LOGIN) === -1;
   }
 
   logout(): void {

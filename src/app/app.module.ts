@@ -1,9 +1,9 @@
 import 'hammerjs';
+import './rxjs.imports';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -16,51 +16,25 @@ import {
   AnswerEffectsIndexedDB
 } from './common/store';
 import { reducers } from './common/store/app.store';
-
 import { environment } from '../environments/environment';
-import { httpFactory } from './config/http.factory';
+import { InterceptedHttp } from './config/http.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { NewQuestionSetComponent } from './pages/new-question-set/new-question-set.component';
-import { TopicsComponent } from './pages/topics/topics.component';
-import { NewTopicComponent } from './pages/new-topic/new-topic.component';
-import { LandingComponent } from './pages/landing/landing.component';
-import { QuotesComponent } from './pages/quotes/quotes.component';
-import { NewQuoteComponent } from './pages/new-quote/new-quote.component';
-import { PracticeSessionComponent } from './pages/practice-session/practice-session.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-
-
 import { WakeupCommonModule } from './common/common.module';
 import { SharedModule } from './_shared/shared.module';
-import { LoginModule } from './pages/login/login.module';
-import { QuestionSetsModule } from './pages/question-sets/question-sets.module';
-import { TopicDetailsModule } from './pages/topic-details/topic-details.module';
-
-
+import { PagesModule } from './pages/pages.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LandingComponent,
-    NewQuestionSetComponent,
-    TopicsComponent,
-    NewTopicComponent,
-    QuotesComponent,
-    NewQuoteComponent,
-    PracticeSessionComponent,
-    ProfileComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpModule,
+    HttpClientModule,
     SharedModule,
     WakeupCommonModule,
-    LoginModule,
-    TopicDetailsModule,
-    AppRoutingModule,
     StoreModule.forRoot(reducers),
     !environment.production
       ? StoreDevtoolsModule.instrument()
@@ -71,17 +45,16 @@ import { TopicDetailsModule } from './pages/topic-details/topic-details.module';
       QuoteEffects,
       TopicEffects,
       AnswerEffectsIndexedDB
-    ])
+    ]),
+    PagesModule,
+    AppRoutingModule,
   ],
-
-  exports: [QuestionSetsModule],
-  providers: [
-    {
-      provide: Http,
-      useFactory: httpFactory,
-      deps: [XHRBackend, RequestOptions, Router]
-    }
-  ],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: InterceptedHttp,
+    multi: true
+  }],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

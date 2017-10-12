@@ -1,77 +1,51 @@
-import { Injectable } from '@angular/core';
-import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers } from '@angular/http';
+import { Injectable, Injector } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
+
+import appConstants from '../common/app-constants';
 import { environment } from '../../environments/environment';
 import { AuthTokenService } from '../common/services/authToken.service';
-import { Router } from '@angular/router';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/forkJoin';
 
+import {
+    HttpEvent,
+    HttpInterceptor,
+    HttpHandler,
+    HttpRequest,
+    HttpErrorResponse,
+    HttpResponse
+} from '@angular/common/http';
 
 @Injectable()
-export class InterceptedHttp extends Http {
+export class InterceptedHttp implements HttpInterceptor {
     private authService: AuthTokenService = new AuthTokenService();
-    constructor(backend: ConnectionBackend,
-        defaultOptions: RequestOptions,
-        private router: Router) {
-        super(backend, defaultOptions);
+    private router;
+    constructor(private injector: Injector) {
+        this.router = this.injector.get(Router);
     }
 
-    request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-        return super.request(url, options).catch(this.catchErrors());
-    }
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const token = this.authService.getToken() || undefined;
+        const authReq = req.clone({
+            setHeaders: { Authorization: `Bearer ${token}` },
+            url: this.updateUrl(req.url)
+        });
 
-    get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-        url = this.updateUrl(url);
-        return super.get(url, this.getRequestOptionArgs(options)).catch(this.catchErrors());
-    }
-
-    post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-        url = this.updateUrl(url);
-        return super.post(url, body, this.getRequestOptionArgs(options)).catch(this.catchErrors());
-    }
-
-    put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-        url = this.updateUrl(url);
-        return super.put(url, body, this.getRequestOptionArgs(options)).catch(this.catchErrors());
-    }
-
-    delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
-        url = this.updateUrl(url);
-        return super.delete(url, this.getRequestOptionArgs(options)).catch(this.catchErrors());
+        return next.handle(authReq)
+            .catch((res) => {
+                if (res instanceof HttpErrorResponse
+                    && (res.status === appConstants.errorCode.Unauthorized ||
+                        res.status === appConstants.errorCode.Forbidden)) {
+                    // handle authorization errors
+                    this.authService.removeStoredToken();
+                    this.injector.get(Router).navigate(['/login']);
+                    return Observable.empty();
+                }
+                return Observable.throw(res);
+            });
     }
 
     private updateUrl(req: string) {
         return environment.serverURL + req;
     }
 
-    private getRequestOptionArgs(options?: RequestOptionsArgs): RequestOptionsArgs {
-        if (options == null) {
-            options = new RequestOptions();
-        }
-        if (options.headers == null) {
-            options.headers = new Headers();
-        }
-        const token = this.authService.getToken() || {};
-        options.headers.append('Content-Type', 'application/json');
-        options.headers.append('Authorization', `Bearer ${token}`);
-
-        return options;
-    }
-
-    private catchErrors() {
-        return (res: Response) => {
-            if (res.status === 401 || res.status === 403) {
-                // handle authorization errors
-                this.authService.removeStoredToken();
-                this.router.navigate(['login']);
-            }
-            return Observable.throw(res);
-        };
-    }
 }

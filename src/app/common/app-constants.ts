@@ -2,7 +2,8 @@ const appConstants = {
     errorCode: {
         Unauthorized: 401,
         UnprocessableEntity: 422,
-        NotFound: 404
+        NotFound: 404,
+        Forbidden: 403
     },
     routes: {
         LANDING: 'landing',
