@@ -1,16 +1,23 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  HostBinding
+} from '@angular/core';
 import { QuestionSet } from '../../common/models/question-set.model';
 import { Observable } from 'rxjs/Observable';
 import { QuestionSetStoreService } from '../../common/store';
+import appConstants from '../../common/app-constants';
 
 @Component({
-  selector: 'wakeup-question-sets',
+  selector: 'app-question-sets',
   templateUrl: './question-sets.component.html',
   styleUrls: ['./question-sets.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { 'class': 'pageContent' }
 })
-export class QuestionSetsComponent implements OnInit {
+export class QuestionSetsComponent implements OnInit, OnDestroy {
+  @HostBinding('class') classes = appConstants.ui.PAGE_CONTAINER_CLASS;
   questionSets$: Observable<QuestionSet[]>;
   searchTerm$: Observable<string>;
   filter$: Observable<number>;

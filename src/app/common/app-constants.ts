@@ -17,6 +17,9 @@ const appConstants = {
         PRACTICE_SESSION: 'practiceSession',
         ANSWERS: 'answers',
         SESSION_DETAILS: 'sessionDetails',
+    },
+    ui: {
+        PAGE_CONTAINER_CLASS: 'pageContent'
     }
 };
 

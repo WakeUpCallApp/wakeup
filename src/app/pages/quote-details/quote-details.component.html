@@ -4,7 +4,7 @@
   <a [routerLink]="['/quotes', topic?.id]"> Inspiration Page</a>
   <mat-icon>keyboard_arrow_right</mat-icon> <span class="currentLink">Quote Details</span>
 </div>
-<wakeup-card>
+<app-card>
   <div class="card-header">
     <div class="title">Quotes Details</div>
     <div class="actions" *ngIf="!topic?.isDefault">
@@ -62,15 +62,15 @@
       <div class="row readOnly" *ngIf="currentQuote.source"><label>Source</label> {{currentQuote.source}}</div>
     </ng-template>
   </div>
-</wakeup-card>
+</app-card>
 <section class="question">
-  <wakeup-quote-questions [questions]="currentQuote.questions" (update)="updateQuoteOnQuestionsUpdate($event)"></wakeup-quote-questions>
+  <app-quote-questions [questions]="currentQuote.questions" (update)="updateQuoteOnQuestionsUpdate($event)"></app-quote-questions>
 </section>
 <section class="newComment" *ngIf="newComment">
-  <wakeup-add-comment (create)="addComment($event)" [commentObject]="newComment"></wakeup-add-comment>
+  <app-add-comment (create)="addComment($event)" [commentObject]="newComment"></app-add-comment>
 </section>
 <section class="commentList" *ngIf="(comments$ | async) as comments">
-  <wakeup-comment-list *ngIf="comments.length" [comments]="comments" (delete)="onDeleteComment($event)">
-  </wakeup-comment-list>
+  <app-comment-list *ngIf="comments.length" [comments]="comments" (delete)="onDeleteComment($event)">
+  </app-comment-list>
 </section>
 <mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>

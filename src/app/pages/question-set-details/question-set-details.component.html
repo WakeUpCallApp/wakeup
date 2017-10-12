@@ -1,5 +1,5 @@
 <section class="details">
-    <wakeup-card class="summary">
+    <app-card class="summary">
         <div class="card-header">
             <span class="title">{{currentQuestionSet.name}}</span>
             <div class="actions">
@@ -51,14 +51,14 @@
         <div class="card-footer">
             <button *ngIf="currentQuestionSet.questions?.length" class="practiceQuestionSetButton" mat-button mat-button-raised (click)="openPracticeSessionModal()">Practice Question Set</button>
         </div>
-    </wakeup-card>
+    </app-card>
 </section>
 <section class="newQuestion" *ngIf="!currentQuestionSet.isDefault">
-    <wakeup-add-question (create)="addQuestion($event)" [question]="newQuestion"></wakeup-add-question>
+    <app-add-question (create)="addQuestion($event)" [question]="newQuestion"></app-add-question>
 </section>
 <section class="questionList" *ngIf="currentQuestionSet.questions?.length">
-    <wakeup-question-list [questions]="currentQuestionSet.questions" [canEdit]="!currentQuestionSet.isDefault" (delete)="onDeleteQuestions($event)"
+    <app-question-list [questions]="currentQuestionSet.questions" [canEdit]="!currentQuestionSet.isDefault" (delete)="onDeleteQuestions($event)"
         (edit)="editQuestion($event)" (openQuotesBrowser)="openQuotesBrowser($event)">
-    </wakeup-question-list>
+    </app-question-list>
 </section>
 <mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>

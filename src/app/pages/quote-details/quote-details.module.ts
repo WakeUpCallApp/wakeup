@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { routing } from './quote-details.routing';
 import { SharedModule } from '../../_shared/shared.module';
 import { QuoteDetailsComponent } from './quote-details.component';
-import { WakeupAddCommentComponent } from './components/wakeup-add-comment/wakeup-add-comment.component';
-import { WakeupCommentListComponent } from './components/wakeup-comment-list/wakeup-comment-list.component';
-import { WakeupQuoteQuestionsComponent } from './components/wakeup-quote-questions/wakeup-quote-questions.component';
-import { WakeupQuestionsBrowserComponent } from './components/wakeup-questions-browser/wakeup-questions-browser.component';
+import { AppAddCommentComponent } from './components/app-add-comment/app-add-comment.component';
+import { AppCommentListComponent } from './components/app-comment-list/app-comment-list.component';
+import { AppQuoteQuestionsComponent } from './components/app-quote-questions/app-quote-questions.component';
+import { AppQuestionsBrowserComponent } from './components/app-questions-browser/app-questions-browser.component';
 
 @NgModule({
   imports: [
@@ -16,12 +16,12 @@ import { WakeupQuestionsBrowserComponent } from './components/wakeup-questions-b
   exports: [],
   declarations: [
     QuoteDetailsComponent,
-    WakeupAddCommentComponent,
-    WakeupCommentListComponent,
-    WakeupQuoteQuestionsComponent,
-    WakeupQuestionsBrowserComponent
+    AppAddCommentComponent,
+    AppCommentListComponent,
+    AppQuoteQuestionsComponent,
+    AppQuestionsBrowserComponent
   ],
   providers: [],
-  entryComponents: [WakeupQuestionsBrowserComponent]
+  entryComponents: [AppQuestionsBrowserComponent]
 })
 export class QuoteDetailsModule { }

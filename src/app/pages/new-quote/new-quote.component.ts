@@ -1,18 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { TopicStoreService, QuoteStoreService } from '../../common/store';
 import { Topic } from '../../common/models/topic.model';
+import appConstants from '../../common/app-constants';
 
 @Component({
-  selector: 'wakeup-new-quote',
+  selector: 'app-new-quote',
   templateUrl: './new-quote.component.html',
-  styleUrls: ['./new-quote.component.scss'],
-  host: { 'class': 'pageContent' }
+  styleUrls: ['./new-quote.component.scss']
 })
 export class NewQuoteComponent implements OnInit, OnDestroy {
+  @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   actionsSubscription: Subscription;
   authors$: Observable<string[]>;
   sources$: Observable<string[]>;
@@ -38,7 +39,7 @@ export class NewQuoteComponent implements OnInit, OnDestroy {
     this.actionsSubscription = this.route.params
       .filter(params => !!params['topicId'])
       .subscribe(topicIdParams => {
-        this.quote.topic = parseInt(topicIdParams['topicId']);
+        this.quote.topic = parseInt(topicIdParams['topicId'], 10);
         this.topicStoreService.get(this.quote.topic);
       });
     this.authors$ = this.quoteStoreService.authorSuggestions$;

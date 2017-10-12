@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../_shared/shared.module';
 import { QuestionSetDetailsComponent } from './question-set-details.component';
 import {
-  WakeupAddQuestionComponent,
-  WakeupQuestionListComponent,
-  WakeupQuotesBrowserComponent,
-  WakeupEditQuestionDialogComponent,
-  WakeupSessionConfigComponent
+  AppAddQuestionComponent,
+  AppQuestionListComponent,
+  AppQuotesBrowserComponent,
+  AppEditQuestionDialogComponent,
+  AppSessionConfigComponent
 } from './components';
 
 import { routing } from './question-set-details.routing';
@@ -20,17 +20,17 @@ import { routing } from './question-set-details.routing';
   ],
   exports: [],
   declarations: [
-    WakeupQuotesBrowserComponent,
+    AppQuotesBrowserComponent,
     QuestionSetDetailsComponent,
-    WakeupAddQuestionComponent,
-    WakeupQuestionListComponent,
-    WakeupEditQuestionDialogComponent,
-    WakeupSessionConfigComponent
+    AppAddQuestionComponent,
+    AppQuestionListComponent,
+    AppEditQuestionDialogComponent,
+    AppSessionConfigComponent
   ],
   providers: [],
   entryComponents: [
-    WakeupQuotesBrowserComponent,
-    WakeupEditQuestionDialogComponent,
-    WakeupSessionConfigComponent]
+    AppQuotesBrowserComponent,
+    AppEditQuestionDialogComponent,
+    AppSessionConfigComponent]
 })
 export class QuestionSetDetailsModule { }

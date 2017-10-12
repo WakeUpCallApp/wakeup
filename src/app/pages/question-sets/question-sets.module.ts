@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../../_shared/shared.module';
 import { QuestionSetsComponent } from './question-sets.component';
-import { WakeupQuestionSetsListComponent } from './components/wakeup-question-sets-list/wakeup-question-sets-list.component';
+import { AppQuestionSetsListComponent } from './components/app-question-sets-list/app-question-sets-list.component';
 
 @NgModule({
   imports: [
     SharedModule
   ],
-  exports: [WakeupQuestionSetsListComponent],
+  exports: [AppQuestionSetsListComponent],
   declarations: [
     QuestionSetsComponent,
-    WakeupQuestionSetsListComponent
+    AppQuestionSetsListComponent
   ],
   providers: [],
 })

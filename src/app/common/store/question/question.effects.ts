@@ -1,3 +1,4 @@
+/* tslint:disable: member-ordering */
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 
@@ -5,8 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import AppConstants from '../../app-constants';
 import { Router } from '@angular/router';
 
-import * as question from './question.actions';
-import * as questionSet from '../question-set/question-set.actions';
+import * as questionActions from './question.actions';
+import * as questionSetActions from '../question-set/question-set.actions';
 import { QuestionApi } from '../../services/api/question.api';
 import { NotificationService } from '../../services/notification.service';
 
@@ -21,22 +22,22 @@ export class QuestionEffects {
 
   @Effect()
   load$ = this.actions$
-    .ofType(question.ActionTypes.LOAD)
+    .ofType(questionActions.ActionTypes.LOAD)
     .map((action: any) => action.payload)
     .switchMap(() => this.questionApi.all())
-    .map(result => new question.LoadActionSuccess(result));
+    .map(result => new questionActions.LoadActionSuccess(result));
 
   @Effect()
   get$ = this.actions$
-    .ofType(question.ActionTypes.GET_CURRENT_QUESTION)
+    .ofType(questionActions.ActionTypes.GET_CURRENT_QUESTION)
     .map((action: any) => action.payload)
     .switchMap(id => this.questionApi.get(id))
-    .map(result => new question.GetCurrentQuestionSuccess(result))
-    .catch(error => Observable.of(new question.GetCurrentQuestionError(error)));
+    .map(result => new questionActions.GetCurrentQuestionSuccess(result))
+    .catch(error => Observable.of(new questionActions.GetCurrentQuestionError(error)));
 
   @Effect({ dispatch: false })
   httpErrors$ = this.actions$
-    .ofType(question.ActionTypes.GET_CURRENT_QUESTION_ERROR)
+    .ofType(questionActions.ActionTypes.GET_CURRENT_QUESTION_ERROR)
     .map((action: any) => action.payload)
     .map(error => {
       this.notificationService.notifyError('Question not found');
@@ -46,17 +47,17 @@ export class QuestionEffects {
 
   @Effect()
   delete$ = this.actions$
-    .ofType(question.ActionTypes.DELETE)
+    .ofType(questionActions.ActionTypes.DELETE)
     .map((action: any) => action.payload)
     .switchMap(question => this.questionApi.delete(question))
     .map(result => {
       this.notificationService.notifySuccess('Question successfully deleted');
-      return new question.DeleteActionSuccess(result);
+      return new questionActions.DeleteActionSuccess(result);
     });
 
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
-    .ofType(question.ActionTypes.DELETE_SUCCESS)
+    .ofType(questionActions.ActionTypes.DELETE_SUCCESS)
     .map((action: any) => action.payload)
     .map(({ questionSet }) => {
       this.router.navigate([
@@ -68,11 +69,11 @@ export class QuestionEffects {
   @Effect({ dispatch: false })
   invalidateCache = this.actions$
     .ofType(
-      question.ActionTypes.CREATE_SUCCESS,
-      question.ActionTypes.DELETE_SUCCESS,
-      questionSet.ActionTypes.ADD_QUESTION_SUCCESS,
-      questionSet.ActionTypes.DELETE_QUESTION_SUCCESS,
-      questionSet.ActionTypes.EDIT_QUESTION_SUCCESS,
+      questionActions.ActionTypes.CREATE_SUCCESS,
+      questionActions.ActionTypes.DELETE_SUCCESS,
+      questionSetActions.ActionTypes.ADD_QUESTION_SUCCESS,
+      questionSetActions.ActionTypes.DELETE_QUESTION_SUCCESS,
+      questionSetActions.ActionTypes.EDIT_QUESTION_SUCCESS,
       'USER_LOGOUT'
     )
     .map(() => {

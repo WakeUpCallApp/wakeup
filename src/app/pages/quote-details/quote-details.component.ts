@@ -2,10 +2,12 @@ import {
   Component,
   OnInit,
   OnDestroy,
+  AfterViewInit,
   ViewChild,
   ElementRef,
   NgZone,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  HostBinding
 } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,14 +18,15 @@ import { Title } from '@angular/platform-browser';
 import { QuoteStoreService, TopicStoreService } from '../../common/store';
 import { Quote, ICreateComment, Topic } from '../../common/models';
 import { DialogService } from '../../common/services/dialog.service';
+import appConstants from '../../common/app-constants';
 
 @Component({
-  selector: 'wakeup-quote-details',
+  selector: 'app-quote-details',
   templateUrl: './quote-details.component.html',
-  styleUrls: ['./quote-details.component.scss'],
-  host: { 'class': 'pageContent' }
+  styleUrls: ['./quote-details.component.scss']
 })
-export class QuoteDetailsComponent implements OnInit {
+export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
+  @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   actionsSubscription: Subscription;
   dataSubscription: Subscription;
   currentQuote: Quote;

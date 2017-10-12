@@ -1,9 +1,9 @@
-<wakeup-top-bar [hidden]="!canShowNavigation()" [isOpen]="isOpen" [loggedUser]="loginApi.getCurrentUser()" (onOpenMenu)="openMenu($event)"
+<app-top-bar [hidden]="!canShowNavigation()" [isOpen]="isOpen" [loggedUser]="loginApi.getCurrentUser()" (onOpenMenu)="openMenu($event)"
   (logout)="logout()">
-</wakeup-top-bar>
-<wakeup-side-nav [isOpen]="isOpen && canShowNavigation()" (onClose)="openMenu(false)">
+</app-top-bar>
+<app-side-nav [isOpen]="isOpen && canShowNavigation()" (onClose)="openMenu(false)">
   <div class="app-container" role="application">
     <router-outlet></router-outlet>
-    <wakeup-footer *ngIf="canShowFooter()"></wakeup-footer>
+    <app-footer *ngIf="canShowFooter()"></app-footer>
   </div>
-</wakeup-side-nav>
+</app-side-nav>

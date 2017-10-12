@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoginApi } from '../../../../common/services/api/login.api';
 import { AuthTokenService } from '../../../../common/services/authToken.service';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { environment } from '../../../../../environments/environment';
   templateUrl: './login-wakeup-call.component.html',
   styleUrls: ['./login-wakeup-call.component.scss']
 })
-export class LoginWakeupCallComponent implements OnInit {
+export class LoginWakeupCallComponent {
   public user = {
     email: '',
     password: ''
@@ -22,9 +22,6 @@ export class LoginWakeupCallComponent implements OnInit {
     private loginApi: LoginApi,
     private router: Router,
     private authService: AuthTokenService) { }
-
-  ngOnInit() {
-  }
 
   loginOauth(provider) {
     window.location.href = `${environment.serverURL}/auth/${provider}`;

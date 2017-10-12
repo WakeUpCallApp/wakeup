@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { routing } from './answers.routing';
 import { SharedModule } from '../../_shared/shared.module';
 import { AnswersComponent } from './answers.component';
-import { WakeupAnswerDialogComponent } from './components/wakeup-answer-dialog/wakeup-answer-dialog.component';
+import { AppAnswerDialogComponent } from './components/app-answer-dialog/app-answer-dialog.component';
 @NgModule({
   imports: [
     RouterModule,
@@ -16,8 +16,8 @@ import { WakeupAnswerDialogComponent } from './components/wakeup-answer-dialog/w
     routing
   ],
   exports: [],
-  declarations: [AnswersComponent, WakeupAnswerDialogComponent],
+  declarations: [AnswersComponent, AppAnswerDialogComponent],
   providers: [],
-  entryComponents: [WakeupAnswerDialogComponent]
+  entryComponents: [AppAnswerDialogComponent]
 })
 export class AnswersModule {}

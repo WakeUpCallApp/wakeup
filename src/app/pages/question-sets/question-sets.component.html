@@ -1,4 +1,4 @@
-<wakeup-card>
+<app-card>
   <div class="card-header">Question Sets</div>
   <div class="card-body">
     <mat-input-container class="search">
@@ -18,7 +18,7 @@
     </div>
     <mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>
     <span *ngIf="!(filteredList$|async)?.length">Nothing found</span>
-    <wakeup-question-sets-list *ngIf="(filteredList$|async)?.length" [questionSets]="filteredList$ | async">
-    </wakeup-question-sets-list>
+    <app-question-sets-list *ngIf="(filteredList$|async)?.length" [questionSets]="filteredList$ | async">
+    </app-question-sets-list>
   </div>
-</wakeup-card>
+</app-card>

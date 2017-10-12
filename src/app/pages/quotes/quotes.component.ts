@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
@@ -8,15 +8,16 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { TopicStoreService, QuoteStoreService } from '../../common/store';
 import { Quote, Topic } from '../../common/models';
 import appConstants from '../../common/app-constants';
-import { WakeupImportFileComponent } from '../../_shared/components/wakeup-import-file/wakeup-import-file.component';
+import { AppImportFileComponent } from '../../_shared/components/app-import-file/app-import-file.component';
 
 @Component({
-  selector: 'wakeup-quotes',
+  selector: 'app-quotes',
   templateUrl: './quotes.component.html',
-  styleUrls: ['./quotes.component.scss'],
-  host: { 'class': 'quotes pageContent' }
+  styleUrls: ['./quotes.component.scss']
 })
 export class QuotesComponent implements OnInit, OnDestroy {
+  @HostBinding('class') classes = `quotes ${appConstants.ui.PAGE_CONTAINER_CLASS}`;
+  quotesMenu;
   actionsSubscription: Subscription;
   topicSubscription: Subscription;
   currentTopicId;
@@ -80,7 +81,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
     const config: MatDialogConfig = {
       disableClose: false
     };
-    const dialogRef = this.dialog.open(WakeupImportFileComponent, config);
+    const dialogRef = this.dialog.open(AppImportFileComponent, config);
     this.importDialogRef = dialogRef;
     dialogRef.componentInstance.uploadFile = this.importQuotes.bind(this);
     dialogRef.afterClosed().subscribe(() => { });

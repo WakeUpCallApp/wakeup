@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../_shared/shared.module';
 import { QuestionSetsModule } from '../question-sets/question-sets.module';
 import { TopicDetailsComponent } from './topic-details.component';
-import { WakeupAssociateQuestionSetComponent } from './components/wakeup-associate-question-set/wakeup-associate-question-set.component';
+import { AppAssociateQuestionSetComponent } from './components/app-associate-question-set/app-associate-question-set.component';
 
 @NgModule({
   imports: [
@@ -13,7 +13,7 @@ import { WakeupAssociateQuestionSetComponent } from './components/wakeup-associa
   exports: [],
   declarations: [
     TopicDetailsComponent,
-    WakeupAssociateQuestionSetComponent,
+    AppAssociateQuestionSetComponent,
   ],
   providers: [],
 })

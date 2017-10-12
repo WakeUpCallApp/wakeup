@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Rx';
-import { WakeupConfirmDialogComponent } from '../../_shared/components/wakeup-confirm-dialog/wakeup-confirm-dialog.component';
+import { AppConfirmDialogComponent } from '../../_shared/components/app-confirm-dialog/app-confirm-dialog.component';
 import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
 import { Injectable } from '@angular/core';
 
@@ -16,9 +16,9 @@ export class DialogService {
   }
 
   private confirm(title: string, message: string): Observable<boolean> {
-    let dialogRef: MatDialogRef<WakeupConfirmDialogComponent>;
+    let dialogRef: MatDialogRef<AppConfirmDialogComponent>;
 
-    dialogRef = this.dialog.open(WakeupConfirmDialogComponent);
+    dialogRef = this.dialog.open(AppConfirmDialogComponent);
     dialogRef.componentInstance.title = title;
     dialogRef.componentInstance.message = message;
 

@@ -1,5 +1,5 @@
 <section class="details">
-    <wakeup-card class="summary">
+    <app-card class="summary">
         <div class="card-header">
             <span class="title">{{currentTopic?.name}}</span>
             <div class="actions">
@@ -34,11 +34,11 @@
                 </div>
             </div>
         </div>
-    </wakeup-card>
+    </app-card>
 </section>
 <section class="associateQuestionSet" *ngIf="!currentTopic?.isDefault">
-    <wakeup-associate-question-set [questionSets]="questionSets$| async" [selectedQuestionSets]="currentTopic?.questionSets" (update)="associateQuestionSets($event)">
-    </wakeup-associate-question-set>
+    <app-associate-question-set [questionSets]="questionSets$| async" [selectedQuestionSets]="currentTopic?.questionSets" (update)="associateQuestionSets($event)">
+    </app-associate-question-set>
 </section>
 <section class="questionSets" *ngIf="currentTopic?.questionSets?.length">
     <mat-card class="questionSetList mat-elevation-z3">
@@ -50,7 +50,7 @@
             </div>
         </mat-card-header>
         <mat-card-content class="list">
-            <wakeup-question-sets-list [questionSets]="currentTopic?.questionSets"></wakeup-question-sets-list>
+            <app-question-sets-list [questionSets]="currentTopic?.questionSets"></app-question-sets-list>
         </mat-card-content>
     </mat-card>
 </section>

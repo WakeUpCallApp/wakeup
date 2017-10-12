@@ -16,7 +16,7 @@
         "test": "test.ts",
         "tsconfig": "tsconfig.app.json",
         "testTsconfig": "tsconfig.spec.json",
-        "prefix": "wakeup",
+        "prefix": "app",
         "styles": [
             "styles.scss",
             "theme.scss",

@@ -3,6 +3,7 @@ import {
   OnInit,
   AfterViewInit,
   OnDestroy,
+  HostBinding,
   NgZone,
   ChangeDetectorRef,
   ApplicationRef,
@@ -15,16 +16,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+import appConstants from '../../common/app-constants';
 import { TopicStoreService, QuestionSetStoreService } from '../../common/store';
 import { Topic } from '../../common/models/topic.model';
 import { DialogService } from '../../common/services/dialog.service';
 @Component({
-  selector: 'wakeup-topic-details',
+  selector: 'app-topic-details',
   templateUrl: './topic-details.component.html',
-  styleUrls: ['./topic-details.component.scss'],
-  host: { 'class': 'pageContent' }
+  styleUrls: ['./topic-details.component.scss']
 })
 export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
+  @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   currentTopic: Topic;
   questionSets$;
   actionsSubscription: Subscription;

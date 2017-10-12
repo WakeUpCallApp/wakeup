@@ -4,7 +4,7 @@
     <mat-icon>keyboard_arrow_right</mat-icon>
     <span class="currentLink">{{question.text}}</span>
   </div>
-  <wakeup-card>
+  <app-card>
     <div class="card-header">
       <div class="title">Answers</div>
       <div class="actions">
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-  </wakeup-card>
+  </app-card>
 </div>
 <button mat-fab matRipple (click)="createAnswer()" matTooltip="Add Answer" [matTooltipClass]="'tooltip'" class="addAnswerButton">
  <mat-icon>add</mat-icon>

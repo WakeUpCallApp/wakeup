@@ -17,7 +17,7 @@ import { LoginApi } from '../../common/services/api/login.api';
 import { AnswerStoreService, QuestionSetStoreService, QuoteStoreService } from '../../common/store';
 
 @Component({
-  selector: 'wakeup-practice-session',
+  selector: 'app-practice-session',
   templateUrl: './practice-session.component.html',
   styleUrls: ['./practice-session.component.scss']
 })

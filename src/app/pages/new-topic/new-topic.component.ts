@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { ITopic } from '../../common/models/topic.model';
 import { TopicStoreService } from '../../common/store';
+import appConstants from '../../common/app-constants';
 
 @Component({
-  selector: 'wakeup-new-topic',
+  selector: 'app-new-topic',
   templateUrl: './new-topic.component.html',
-  styleUrls: ['./new-topic.component.scss'],
-  host: { 'class': 'newTopic pageContent' }
+  styleUrls: ['./new-topic.component.scss']
 })
-export class NewTopicComponent implements OnInit {
+export class NewTopicComponent {
+  @HostBinding('class') classes = `newTopic ${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   topic: ITopic = {
     title: '',
     description: '',
@@ -16,8 +17,6 @@ export class NewTopicComponent implements OnInit {
   };
   isCreating = false;
   constructor(private topicStoreService: TopicStoreService) { }
-
-  ngOnInit() { }
 
   createTopic() {
     this.topicStoreService.create(this.topic);

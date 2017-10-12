@@ -1,3 +1,4 @@
+/* tslint:disable: member-ordering */
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';

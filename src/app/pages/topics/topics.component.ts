@@ -1,19 +1,25 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  HostBinding
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Topic } from '../../common/models/topic.model';
 import { TopicStoreService } from '../../common/store';
 
-import AppConstants from '../../common/app-constants';
+import appConstants from '../../common/app-constants';
 
 @Component({
-  selector: 'wakeup-topics',
+  selector: 'app-topics',
   templateUrl: './topics.component.html',
   styleUrls: ['./topics.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { 'class': 'topics pageContent' }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TopicsComponent implements OnInit {
+export class TopicsComponent implements OnInit, OnDestroy {
+  @HostBinding('class') classes = `topics ${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   topics$: Observable<Topic[]>;
   searchTerm$: Observable<string>;
   filteredList$: Observable<Topic[]>;
@@ -54,6 +60,6 @@ export class TopicsComponent implements OnInit {
   goToQuotes(e, topicId: number) {
     e.preventDefault();
     e.stopImmediatePropagation();
-    this.router.navigate([AppConstants.routes.QUOTES, topicId]);
+    this.router.navigate([appConstants.routes.QUOTES, topicId]);
   }
 }

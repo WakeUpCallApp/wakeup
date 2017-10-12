@@ -69,9 +69,9 @@ export class QuestionApi {
       .post('/api/questions/', question)
       .map((response: Response) => response.json())
       .map((questionApi: IQuestionApi) => {
-        const question = Parser.questionFromApi(questionApi);
-        question.questionSet = questionApi.questionSet as number;
-        return question;
+        const questionResult = Parser.questionFromApi(questionApi);
+        questionResult.questionSet = questionApi.questionSet as number;
+        return questionResult;
       })
       .catch(this.handleError);
   }

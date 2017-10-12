@@ -29,9 +29,9 @@ import {
   LoginStoreService
 } from './store';
 
-import { WakeupTopBarComponent } from './components/wakeup-top-bar/wakeup-top-bar.component';
-import { WakeupSideNavComponent } from './components/wakeup-side-nav/wakeup-side-nav.component';
-import { WakeupFooterComponent } from './components/wakeup-footer/wakeup-footer.component';
+import { AppTopBarComponent } from './components/app-top-bar/app-top-bar.component';
+import { AppSideNavComponent } from './components/app-side-nav/app-side-nav.component';
+import { AppFooterComponent } from './components/app-footer/app-footer.component';
 
 const storeServices = [
   AnswerStoreService,
@@ -69,9 +69,9 @@ const guards = [
 @NgModule({
   imports: [SharedModule],
   declarations: [
-    WakeupTopBarComponent,
-    WakeupSideNavComponent,
-    WakeupFooterComponent
+    AppTopBarComponent,
+    AppSideNavComponent,
+    AppFooterComponent
   ],
   providers: [
     ...services,
@@ -81,8 +81,8 @@ const guards = [
 
   ],
   exports: [
-    WakeupTopBarComponent,
-    WakeupFooterComponent,
-    WakeupSideNavComponent]
+    AppTopBarComponent,
+    AppSideNavComponent,
+    AppFooterComponent]
 })
 export class WakeupCommonModule { }

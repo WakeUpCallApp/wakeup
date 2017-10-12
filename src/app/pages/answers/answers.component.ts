@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  HostBinding
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
@@ -7,7 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
 import appConstants from '../../common/app-constants';
-import { WakeupAnswerDialogComponent } from './components/wakeup-answer-dialog/wakeup-answer-dialog.component';
+import { AppAnswerDialogComponent } from './components/app-answer-dialog/app-answer-dialog.component';
 import { DialogService, AuthTokenService } from '../../common/services';
 import {
   AnswerStoreService,
@@ -21,12 +27,12 @@ enum KEY_CODE {
 }
 
 @Component({
-  selector: 'wakeup-answers',
+  selector: 'app-answers',
   templateUrl: './answers.component.html',
-  styleUrls: ['./answers.component.scss'],
-  host: { 'class': 'pageContent' }
+  styleUrls: ['./answers.component.scss']
 })
-export class AnswersComponent implements OnInit {
+export class AnswersComponent implements OnInit, OnDestroy {
+  @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   question;
   currentQuestionId;
   actionsSubscription: Subscription;
@@ -37,6 +43,7 @@ export class AnswersComponent implements OnInit {
   openModal = false;
   isLoading$;
   answers;
+  questionMenu;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -108,12 +115,12 @@ export class AnswersComponent implements OnInit {
       disableClose: false,
       width: '600px'
     };
-    const dialogRef = this.dialog.open(WakeupAnswerDialogComponent, config);
+    const dialogRef = this.dialog.open(AppAnswerDialogComponent, config);
     dialogRef.componentInstance.answer = Object.assign({}, answer);
-    dialogRef.afterClosed().subscribe(answer => {
+    dialogRef.afterClosed().subscribe(answerResult => {
       this.openModal = false;
-      if (answer) {
-        this.answerStoreService.update(answer);
+      if (answerResult) {
+        this.answerStoreService.update(answerResult);
       }
     });
   }
@@ -137,7 +144,7 @@ export class AnswersComponent implements OnInit {
       disableClose: false,
       width: '600px'
     };
-    const dialogRef: any = this.dialog.open(WakeupAnswerDialogComponent, config);
+    const dialogRef: any = this.dialog.open(AppAnswerDialogComponent, config);
     dialogRef.componentInstance.answer = Object.assign({}, newAnswer);
     dialogRef.afterClosed().subscribe(answer => {
       this.openModal = false;

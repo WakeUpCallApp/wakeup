@@ -6,7 +6,7 @@
     <mat-icon>keyboard_arrow_right</mat-icon>
     <span class="currentLink">New Quote</span>
   </div>
-  <wakeup-card>
+  <app-card>
     <div class="card-header">Create Quote <small>{{topic.name}}</small></div>
     <div class="card-body">
       <form class="createQuoteForm" #quoteForm='ngForm'>
@@ -51,6 +51,6 @@
         Create
     </button>
     </div>
-  </wakeup-card>
+  </app-card>
 </div>
 <mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>

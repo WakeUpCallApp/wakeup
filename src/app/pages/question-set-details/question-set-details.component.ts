@@ -7,7 +7,8 @@ import {
   ChangeDetectorRef,
   ApplicationRef,
   ViewChild,
-  ElementRef
+  ElementRef,
+  HostBinding
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,11 +18,11 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
-  WakeupQuotesBrowserComponent,
-  WakeupSessionConfigComponent,
-  WakeupEditQuestionDialogComponent
+  AppQuotesBrowserComponent,
+  AppSessionConfigComponent,
+  AppEditQuestionDialogComponent
 } from './components';
-import { WakeupImportFileComponent } from '../../_shared/components/wakeup-import-file/wakeup-import-file.component';
+import { AppImportFileComponent } from '../../_shared/components/app-import-file/app-import-file.component';
 import { DialogService, SessionConfigService } from '../../common/services';
 import { SessionOptions } from '../../common/services/session-config.service';
 import { QuestionSet, IQuestion } from '../../common/models';
@@ -30,13 +31,13 @@ import { QuestionSetStoreService } from '../../common/store';
 import appConstants from '../../common/app-constants';
 
 @Component({
-  selector: 'wakeup-question-set-details',
+  selector: 'app-question-set-details',
   templateUrl: './question-set-details.component.html',
-  styleUrls: ['./question-set-details.component.scss'],
-  host: { 'class': 'pageContent' }
+  styleUrls: ['./question-set-details.component.scss']
 })
 export class QuestionSetDetailsComponent
   implements OnInit, AfterViewInit, OnDestroy {
+  @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   currentQuestionSet: QuestionSet;
   newQuestion: IQuestion;
   actionsSubscription: Subscription;
@@ -45,6 +46,7 @@ export class QuestionSetDetailsComponent
   importSpinnerSubscription: Subscription;
   importDialogRef;
   isLoading$;
+  appMenu;
   @ViewChild('nameInput') nameElRef: ElementRef;
   @ViewChild('descriptionInput') descriptionElRef: ElementRef;
   constructor(
@@ -166,7 +168,7 @@ export class QuestionSetDetailsComponent
       width: '600px'
     };
     const dialogRef = this.dialog.open(
-      WakeupEditQuestionDialogComponent,
+      AppEditQuestionDialogComponent,
       config
     );
     dialogRef.componentInstance.question = Object.assign({}, question);
@@ -183,7 +185,7 @@ export class QuestionSetDetailsComponent
       width: '80%',
       height: '80%'
     };
-    const dialogRef = this.dialog.open(WakeupQuotesBrowserComponent, config);
+    const dialogRef = this.dialog.open(AppQuotesBrowserComponent, config);
     dialogRef.componentInstance.initialQuoteId = question.quote;
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -197,7 +199,7 @@ export class QuestionSetDetailsComponent
     const config: MatDialogConfig = {
       disableClose: false
     };
-    const dialogRef = this.dialog.open(WakeupSessionConfigComponent, config);
+    const dialogRef = this.dialog.open(AppSessionConfigComponent, config);
     dialogRef.afterClosed().subscribe((options: SessionOptions) => {
       if (options) {
         this.sessionConfigService.setOptions(options);
@@ -213,7 +215,7 @@ export class QuestionSetDetailsComponent
     const config: MatDialogConfig = {
       disableClose: false
     };
-    const dialogRef = this.dialog.open(WakeupImportFileComponent, config);
+    const dialogRef = this.dialog.open(AppImportFileComponent, config);
     this.importDialogRef = dialogRef;
     dialogRef.componentInstance.uploadFile = this.importQuestions.bind(this);
     dialogRef.afterClosed().subscribe(() => { });

@@ -3,7 +3,7 @@
   <mat-icon>keyboard_arrow_right</mat-icon>
   <span class="currentLink">Inspiration Page</span>
 </div>
-<wakeup-card>
+<app-card>
   <div class="card-header">
     <div class="title">Quotes <small>{{currentTopic?.name}}</small></div>
     <div class="actions">
@@ -29,7 +29,6 @@
     <ul class="quotesList">
       <li *ngFor="let quote of quotes">
         <a [routerLink]="['/quoteDetails', quote.id, currentTopic.id]" matTooltip="see details">
-          <!-- <mat-icon>format_quote</mat-icon> -->
           <blockquote class="text">
             {{quote.text}}
           </blockquote>
@@ -39,7 +38,7 @@
       </li>
     </ul>
   </div>
-</wakeup-card>
+</app-card>
 
 <button tabindex="0" matRipple *ngIf="!currentTopic?.isDefault" (click)="goToCreateQuote()" matTooltip="Create Quote" class="addQuoteButton"
   mat-fab [matTooltipPosition]="'above'" [matTooltipClass]="'tooltip'">

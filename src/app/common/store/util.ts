@@ -20,15 +20,15 @@ export function type<T>(label: T | ''): T {
 }
 
 
-export function addEvent(object, type, callback) {
+export function addEvent(object, eventType, callback) {
     if (object == null || typeof (object) === 'undefined') {
         return;
     }
     if (object.addEventListener) {
-        object.addEventListener(type, callback, false);
+        object.addEventListener(eventType, callback, false);
     } else if (object.attachEvent) {
-        object.attachEvent('on' + type, callback);
+        object.attachEvent('on' + eventType, callback);
     } else {
-        object['on' + type] = callback;
+        object['on' + eventType] = callback;
     }
-};
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoginApi } from '../../../../common/services/api/login.api';
 import { Router } from '@angular/router';
 
@@ -11,7 +11,7 @@ import { environment } from '../../../../../environments/environment';
   templateUrl: './signup-wakeup-call.component.html',
   styleUrls: ['./signup-wakeup-call.component.scss']
 })
-export class SignupWakeupCallComponent implements OnInit {
+export class SignupWakeupCallComponent {
   public user = {
     name: '',
     email: '',
@@ -21,9 +21,6 @@ export class SignupWakeupCallComponent implements OnInit {
   isSigningIn = false;
 
   constructor(private loginApi: LoginApi, private router: Router) { }
-
-  ngOnInit() {
-  }
 
   loginOauth(provider) {
     window.location.href = `${environment.serverURL}/auth/${provider}`;

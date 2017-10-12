@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { LoginApi } from 'app/common/services';
+import appConstants from '../../common/app-constants';
 
 @Component({
-  selector: 'wakeup-profile',
+  selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
-  host: { 'class': 'pageContent' }
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   oldPassword;
   newPassword;
   errorMessage;

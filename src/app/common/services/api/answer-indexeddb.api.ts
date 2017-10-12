@@ -56,7 +56,7 @@ export class AnswersIndexedDbApi {
             const trans = this.db.transaction(['answers'], 'readwrite');
             const store = trans.objectStore('answers');
             if (!lastIndex || lastIndex === 0) {
-                lastIndex = 800; //add 500 so that there is no _id conflict with the old mongodb stored answers
+                lastIndex = 800; // add 800 so that there is no _id conflict with the old mongodb stored answers
             }
             answer._id = ++lastIndex;
             answer.local = true;
@@ -178,7 +178,7 @@ export class AnswersIndexedDbApi {
         return new Promise((resolve, reject) => {
             openCursorRequest.onsuccess = (event) => {
                 if (event.target.result) {
-                    resolve(event.target.result.value._id); //the object with max revision
+                    resolve(event.target.result.value._id);
                 } else {
                     resolve(0);
                 }

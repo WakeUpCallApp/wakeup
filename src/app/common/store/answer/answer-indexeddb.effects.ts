@@ -1,3 +1,4 @@
+/* tslint:disable: member-ordering */
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
 import AppConstants from '../../app-constants';
 import { AnswersIndexedDbApi } from '../../services/api/answer-indexeddb.api';
 import { NotificationService } from '../../services/notification.service';
-import * as answer from './answer.actions';
+import * as answerActions from './answer.actions';
 
 @Injectable()
 export class AnswerEffectsIndexedDB {
@@ -17,70 +18,71 @@ export class AnswerEffectsIndexedDB {
     private actions$: Actions,
     private router: Router
   ) { }
+
   @Effect()
   openIndexedDb$ = this.actions$
-    .ofType(answer.ActionTypes.OPEN_INDEXED_DB)
+    .ofType(answerActions.ActionTypes.OPEN_INDEXED_DB)
     .map((action: any) => action.payload)
     .switchMap(questionId => this.answerService.openIndexedDb())
-    .map(result => new answer.OpenIndexedDbActionSuccess())
+    .map(result => new answerActions.OpenIndexedDbActionSuccess())
     .catch(error => {
-      return Observable.of(new answer.OpenIndexedDbActionError(error));
+      return Observable.of(new answerActions.OpenIndexedDbActionError(error));
     }); ;
 
   @Effect()
   load$ = this.actions$
-    .ofType(answer.ActionTypes.LOAD)
+    .ofType(answerActions.ActionTypes.LOAD)
     .map((action: any) => action.payload)
     .switchMap(questionId => this.answerService.getAnswers(questionId))
-    .map(result => new answer.LoadActionSuccess(result));
+    .map(result => new answerActions.LoadActionSuccess(result));
 
   @Effect()
   create$ = this.actions$
-    .ofType(answer.ActionTypes.CREATE)
+    .ofType(answerActions.ActionTypes.CREATE)
     .map((action: any) => action.payload)
     .switchMap(answer => this.answerService.saveAnswer(answer))
     .map(result => {
       this.notificationService.notifySuccess('Answer successfully created');
-      return new answer.CreateActionSuccess(result);
+      return new answerActions.CreateActionSuccess(result);
     })
     .catch(error => {
       this.notificationService.notifyError('Answer could not be created');
-      return Observable.of(new answer.CreateActionError(error));
+      return Observable.of(new answerActions.CreateActionError(error));
     });
 
   @Effect()
   update$ = this.actions$
-    .ofType(answer.ActionTypes.UPDATE)
+    .ofType(answerActions.ActionTypes.UPDATE)
     .map((action: any) => action.payload)
     .switchMap(answer => this.answerService.updateAnswer(answer))
     .map(result => {
       this.notificationService.notifySuccess('Answer successfully updated');
-      return new answer.UpdateActionSuccess(result);
+      return new answerActions.UpdateActionSuccess(result);
     })
     .catch(error => {
       this.notificationService.notifyError(
         'Answer could not be successfully updated'
       );
-      return Observable.of(new answer.UpdateActionError(error));
+      return Observable.of(new answerActions.UpdateActionError(error));
     });
 
   @Effect()
   delete$ = this.actions$
-    .ofType(answer.ActionTypes.DELETE)
+    .ofType(answerActions.ActionTypes.DELETE)
     .map((action: any) => action.payload)
     .switchMap(answer => this.answerService.deleteAnswer(answer))
     .map(answerId => {
       this.notificationService.notifySuccess('Answer successfully deleted');
-      return new answer.DeleteActionSuccess(answerId);
+      return new answerActions.DeleteActionSuccess(answerId);
     });
 
   @Effect()
   deleteAll$ = this.actions$
-    .ofType(answer.ActionTypes.DELETE_ALL)
+    .ofType(answerActions.ActionTypes.DELETE_ALL)
     .map((action: any) => action.payload)
     .switchMap(({ questionId, userId }) => this.answerService.deleteAllAnswers(questionId, userId))
     .map(questionId => {
       this.notificationService.notifySuccess('Answers successfully deleted');
-      return new answer.DeleteAllActionSuccess(questionId);
+      return new answerActions.DeleteAllActionSuccess(questionId);
     });
 }

@@ -65,9 +65,9 @@ export class QuoteApi {
       .put(`/api/quotes/${quote.id}`, Parser.quoteToApi(quote))
       .map((response: Response) => response.json())
       .map(quoteApi => {
-        const quote = Parser.quoteFromApi(quoteApi);
-        quote.topic = Parser.topicFromApi(quoteApi.topic);
-        return quote;
+        const quoteResult = Parser.quoteFromApi(quoteApi);
+        quoteResult.topic = Parser.topicFromApi(quoteApi.topic);
+        return quoteResult;
       })
       .catch(this.handleError);
   }
@@ -126,7 +126,7 @@ export class QuoteApi {
     return this.http
       .put(`/api/quotes/addComment/${quoteId}/${isDefaultTopic}`, comment)
       .map((response: Response) => response.json())
-      .map(comment => comment)
+      .map(commentResult => commentResult)
       .catch(this.handleError);
   }
 

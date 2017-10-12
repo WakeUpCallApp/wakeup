@@ -36,7 +36,7 @@ export default class Helper {
 
   sortQuestionsById(questions) {
     return questions.sort((q1, q2) => {
-      return parseInt(q1._id || q1.id) - parseInt(q2._id || q2.id);
+      return parseInt(q1._id || q1.id, 10) - parseInt(q2._id || q2.id, 10);
     });
   }
 }

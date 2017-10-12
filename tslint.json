@@ -105,13 +105,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "wakeup",
+      "app",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "wakeup",
+      "app",
       "kebab-case"
     ],
     "use-input-property-decorator": true,

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -7,14 +7,15 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { QuestionSetStoreService, AnswerStoreService } from '../../common/store';
 import { QuestionSet } from '../../common/models/question-set.model';
+import appConstants from '../../common/app-constants';
 
 @Component({
-  selector: 'wakeup-session-details',
+  selector: 'app-session-details',
   templateUrl: './session-details.component.html',
-  styleUrls: ['./session-details.component.scss'],
-  host: { 'class': 'sessionDetails pageContent' }
+  styleUrls: ['./session-details.component.scss']
 })
 export class SessionDetailsComponent implements OnInit, OnDestroy {
+  @HostBinding('class') classes = `sessionDetails ${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   actionsSubscription: Subscription;
   sessionData$: Observable<any>;
   currentQuestionSetName: string;
@@ -40,7 +41,7 @@ export class SessionDetailsComponent implements OnInit, OnDestroy {
         this.questionSetId = idParams['questionSetId'];
         this.titleService.setTitle(`SessionDetails ${name}`);
         if (isDbOpen) {
-          this.questionSetStoreService.getSessionDetails(parseInt(this.questionSetId));
+          this.questionSetStoreService.getSessionDetails(parseInt(this.questionSetId, 10));
         }
       }
     ).subscribe();
