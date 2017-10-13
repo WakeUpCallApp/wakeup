@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { IAnswer, Answer } from '../../models/answer.model';
 import { type } from '../util';
+import { IAnswerApi, Answer } from 'app/common/models';
 
 export const ActionTypes = {
   OPEN_INDEXED_DB: type('[Answer] Open indexed db'),
@@ -57,7 +57,7 @@ export class LoadActionError implements Action {
 export class CreateAction implements Action {
   type = ActionTypes.CREATE;
 
-  constructor(public payload: IAnswer) { }
+  constructor(public payload: IAnswerApi) { }
 }
 export class CreateActionSuccess implements Action {
   type = ActionTypes.CREATE_SUCCESS;
@@ -69,9 +69,7 @@ export class CreateActionSuccess implements Action {
 export class CreateActionError implements Action {
   type = ActionTypes.CREATE_ERROR;
 
-  constructor(public payload) {
-    console.log(payload);
-  }
+  constructor(public payload) {}
 }
 
 export class UpdateAction implements Action {

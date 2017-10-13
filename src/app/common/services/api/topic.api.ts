@@ -23,10 +23,8 @@ export class TopicApi {
     }
     return this.http
       .get('/api/topics')
-      .map((topicApiList: any) => {
-        return topicApiList.map(topicApi => {
-          return Topic.fromApi(topicApi);
-        });
+      .map((topicApiList: ITopicApi[]) => {
+        return topicApiList.map(topicApi => Topic.fromApi(topicApi));
       })
       .do(topics => (this.topics = topics));
   }
@@ -34,9 +32,7 @@ export class TopicApi {
   create(topic): Observable<Topic> {
     return this.http
       .post('/api/topics', topic)
-      .map((topicApi: ITopicApi) => {
-        return Topic.fromApi(topicApi);
-      });
+      .map((topicApi: ITopicApi) => Topic.fromApi(topicApi));
   }
 
   get(id: number): Observable<Topic> {
@@ -78,7 +74,7 @@ export class TopicApi {
       .map(() => topicId);
   }
 
-  findTopic(topicId) {
+  findTopic(topicId: number): Topic {
     return this.populatedTopics.find(topic => topic.id === +topicId);
   }
 

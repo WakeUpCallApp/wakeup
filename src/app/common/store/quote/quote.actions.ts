@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Topic, Quote } from '../../models';
+import { Topic, Quote, IComment } from '../../models';
 
 import { type } from '../util';
 
@@ -69,7 +69,7 @@ export class GetCommentsAction implements Action {
 
 export class GetCommentsActionSuccess implements Action {
   type = ActionTypes.GET_COMMENTS_SUCCESS;
-  constructor(public payload: Quote) { }
+  constructor(public payload: IComment[]) { }
 }
 
 export class LoadAction implements Action {

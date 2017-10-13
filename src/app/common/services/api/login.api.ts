@@ -56,7 +56,7 @@ export class LoginApi {
     this.currentUser = undefined;
   }
 
-  changePassword(oldPassword, newPassword) {
+  changePassword(oldPassword: string, newPassword: string) {
     return this.http
       .put(`/api/users/${this.currentUser._id}/password`, {
         oldPassword,

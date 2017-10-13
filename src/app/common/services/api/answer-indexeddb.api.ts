@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Answer } from '../../models/answer.model';
+
 import { QuestionSetApi } from './question-set.api';
+import { IAnswerApi, Answer, ISessionDetailsQuestion } from 'app/common/models';
 
 @Injectable()
 export class AnswersIndexedDbApi {
@@ -18,7 +19,7 @@ export class AnswersIndexedDbApi {
 
     openIndexedDb() {
         const version = 3;
-        if(this.db) {
+        if (this.db) {
             return Observable.of('db already open');
         }
         const dbObservable = Observable.create((observer) => {
@@ -51,11 +52,10 @@ export class AnswersIndexedDbApi {
         });
     }
 
-    saveAnswer(answer): Promise<any> {
+    saveAnswer(answer: IAnswerApi): Promise<Answer> {
         if (this.db === null) {
             Promise.reject('IndexDB is not opened yet!');
         }
-
         return this.getLastIndex().then((lastIndex: any) => {
             const trans = this.db.transaction(['answers'], 'readwrite');
             const store = trans.objectStore('answers');
@@ -66,17 +66,14 @@ export class AnswersIndexedDbApi {
             answer.local = true;
             const request = store.put(answer);
 
-            return new Promise((resolve, reject) => {
-                request.onsuccess = (e) => {
-                    resolve(Answer.fromApi(answer));
-                }
+            return new Promise<Answer>((resolve, reject) => {
+                request.onsuccess = (e) => resolve(Answer.fromApi(answer));
                 request.onerror = (e) => reject(e);
             });
         });
     }
 
-
-    updateAnswer(answer): Promise<Answer> {
+    updateAnswer(answer: Answer): Promise<Answer> {
         if (this.db === null) {
             Promise.reject('IndexedDB is not opened yet!');
         }
@@ -89,7 +86,7 @@ export class AnswersIndexedDbApi {
         });
     }
 
-    getAnswers(questionId): Promise<any[]> {
+    getAnswers(questionId: number): Promise<Answer[]> {
         if (this.db === null) {
             Promise.reject('IndexDB is not opened yet');
         }
@@ -115,7 +112,7 @@ export class AnswersIndexedDbApi {
         });
     }
 
-    deleteAnswer(answerId): Promise<number> {
+    deleteAnswer(answerId: number): Promise<number> {
         if (this.db === null) {
             Promise.reject('IndexDB is not opened yet!');
         }
@@ -128,7 +125,7 @@ export class AnswersIndexedDbApi {
         });
     }
 
-    deleteAllAnswers(questionId, userId): Promise<number> {
+    deleteAllAnswers(questionId: number, userId: number): Promise<number> {
         if (this.db === null) {
             Promise.reject('IndexDB is not opened yet');
         }
@@ -157,22 +154,18 @@ export class AnswersIndexedDbApi {
         });
     }
 
-    getSessionDetailsData(questionSetId) {
-        const promises = [];
+    getSessionDetailsData(questionSetId: number): Promise<any> {
         return this.questionSetApi.getSessionDetailsData(questionSetId).toPromise()
-            .then((questions: any) => {
-                questions = questions.map(question => {
-                    return this.getAnswers(question._id).then((answers => {
-                        question.answers = question.answers
-                            .concat(answers);
+            .then((questions) => {
+                return questions.map(question => this.getAnswers(question._id)
+                    .then((answers => {
+                        question.answers = question.answers.concat(answers);
                         return question;
-                    }));
-                });
-                return questions;
+                    })));
             });
     }
 
-    getLastIndex() {
+    getLastIndex(): Promise<number> {
         if (this.db === null) {
             Promise.reject('IndexDB is not opened yet');
         }
@@ -189,6 +182,5 @@ export class AnswersIndexedDbApi {
             };
             openCursorRequest.onerror = (e) => reject(e);
         });
-
     }
 }

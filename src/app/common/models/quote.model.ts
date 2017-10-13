@@ -1,8 +1,9 @@
+/* tslint:disable: member-ordering */
 import * as moment from 'moment';
 import { ITopicApi, Topic } from './topic.model';
 import { Question } from './question.model';
 
-export interface Comment {
+export interface IComment {
   _id?: number;
   createDate: Date;
   text: string;
@@ -10,9 +11,15 @@ export interface Comment {
 }
 
 export interface ICreateComment {
-  comment: Comment;
+  comment: IComment;
   quoteId: number;
   isDefaultTopic: boolean;
+}
+
+export interface IQuoteImport {
+  author: string;
+  source: string;
+  text: string;
 }
 
 export interface IQuote {

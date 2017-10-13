@@ -27,7 +27,7 @@ export class AnswerEffectsIndexedDB {
       .map(result => new answerActions.OpenIndexedDbActionSuccess())
       .catch(error => {
         return Observable.of(new answerActions.OpenIndexedDbActionError(error));
-      }));;
+      })); ;
 
   @Effect()
   load$ = this.actions$
@@ -80,7 +80,7 @@ export class AnswerEffectsIndexedDB {
     .ofType(answerActions.ActionTypes.DELETE_ALL)
     .map((action: any) => action.payload)
     .switchMap(({ questionId, userId }) => this.answerService.deleteAllAnswers(questionId, userId)
-      .then(questionId => {
+      .then(() => {
         this.notificationService.notifySuccess('Answers successfully deleted');
         return new answerActions.DeleteAllActionSuccess(questionId);
       }));

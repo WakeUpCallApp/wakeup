@@ -1,3 +1,4 @@
+/* tslint:disable: member-ordering */
 import { IAnswerApi } from './answer.model';
 import { QuestionSet, IQuestionSetApi } from './question-set.model';
 

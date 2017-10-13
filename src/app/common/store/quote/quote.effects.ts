@@ -188,20 +188,14 @@ export class QuoteEffects {
               this.notificationService.notifySuccess(
                 'Quotes successfully imported'
               );
-              return this.store.dispatch(
-                new quoteActions.ImportQuotesActionSuccess(result)
-              );
+              return this.store.dispatch(new quoteActions.ImportQuotesActionSuccess(result));
             },
             error => {
               this.notificationService.notifyError('Could not import quotes');
-              return this.store.dispatch(
-                new quoteActions.ImportQuotesActionError(error)
-              );
-            }
-          );
+              return this.store.dispatch(new quoteActions.ImportQuotesActionError(error));
+            });
         },
-        true
-      );
+        true);
     });
 
   @Effect({ dispatch: false })

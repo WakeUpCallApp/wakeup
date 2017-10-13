@@ -1,3 +1,4 @@
+/* tslint:disable: member-ordering */
 import { Question, IQuestionApi } from './question.model';
 import { Answer } from './answer.model';
 import { IQuoteApi } from './quote.model';

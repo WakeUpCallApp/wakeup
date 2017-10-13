@@ -114,7 +114,7 @@ export class QuestionSetApi {
     this.populatedQuestionSets = undefined;
   }
 
-  findQuestionSet(questionSetId) {
+  findQuestionSet(questionSetId: number): QuestionSet {
     return this.populatedQuestionSets.find(qs => qs.id === +questionSetId);
   }
 

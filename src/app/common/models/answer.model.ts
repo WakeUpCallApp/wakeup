@@ -1,17 +1,13 @@
+/* tslint:disable: member-ordering */
 import * as moment from 'moment';
 
-export interface IAnswer {
+export interface IAnswerApi {
+    _id?: number;
     text: string;
     questionId: number;
     date;
     userId;
-}
-
-export interface IAnswerApi {
-    _id: number;
-    question: number;
-    text: string;
-    date: number;
+    local?: boolean;
 }
 
 export class Answer {

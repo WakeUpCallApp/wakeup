@@ -8,7 +8,9 @@ import {
   Quote,
   IQuoteApi,
   IQuote,
-  ISuggestions
+  ISuggestions,
+  IComment,
+  IQuoteImport
 } from '../../models';
 
 @Injectable()
@@ -95,34 +97,30 @@ export class QuoteApi {
       .do(suggestions => (this.suggestions = suggestions));
   }
 
-  getComments(quoteId: number) {
+  getComments(quoteId: number): Observable<IComment[]> {
     if (this.comments.get(quoteId)) {
       return Observable.of(this.comments.get(quoteId));
     }
     return this.http
-      .get(`/api/quotes/comments/${quoteId}`)
+      .get<IComment[]>(`/api/quotes/comments/${quoteId}`)
       .do(comments => (this.comments.set(quoteId, comments)));
   }
 
-  addComment({ comment, quoteId, isDefaultTopic }) {
+  addComment({ comment, quoteId, isDefaultTopic }): Observable<IComment> {
     return this.http
-      .put(`/api/quotes/addComment/${quoteId}/${isDefaultTopic}`, comment);
+      .put<IComment>(`/api/quotes/addComment/${quoteId}/${isDefaultTopic}`, comment);
   }
 
-  deleteComment({ quoteId, commentId }) {
+  deleteComment({ quoteId, commentId }): Observable<number> {
     return this.http
       .delete(`/api/quotes/deleteComment/${quoteId}/${commentId}`)
       .map(() => quoteId);
   }
 
-  importQuotes(topicId, quotes) {
+  importQuotes(topicId: number, quotes: IQuoteImport[]): Observable<Quote[]> {
     return this.http
-      .post(`/api/quotes/importQuotes/${topicId}`, {
-        quotes: quotes
-      })
-      .map((apiQuotesList: any) => {
-        return apiQuotesList.map(quoteApi => Quote.fromApi(quoteApi));
-      });
+      .post(`/api/quotes/importQuotes/${topicId}`, { quotes })
+      .map((apiQuotesList: IQuoteApi[]) => apiQuotesList.map(quoteApi => Quote.fromApi(quoteApi)));
   }
 
   clearCache() {
@@ -132,12 +130,12 @@ export class QuoteApi {
     this.quotes = undefined;
   }
 
-  private findByTopic(topicId) {
+  private findByTopic(topicId: number): Quote[] {
     const quotes = this.quotes.filter(quote => quote.topic === topicId);
     return quotes.length ? quotes : undefined;
   }
 
-  private findQuote(quoteId) {
+  private findQuote(quoteId: number): Quote {
     return this.quotes.find(quote => quote.id === quoteId);
   }
 

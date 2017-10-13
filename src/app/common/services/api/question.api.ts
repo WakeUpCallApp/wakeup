@@ -75,7 +75,7 @@ export class QuestionApi {
       .map(() => question);
   }
 
-  findQuestion(id) {
+  findQuestion(id: number): Question {
     return this.populatedQuestions.find(q => q.id === +id);
   }
 
