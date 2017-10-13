@@ -12,7 +12,7 @@
     "dev": "nodemon server/app.js",
     "start": "node server/app.js",
     "startServerProduction": "ng build && node server/app.js",
-    "postinstall": "ng build --prod --stats-json --sm",
+    "postinstall": "ng build --prod --build-optimizer",
     "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },
   "engines": {
