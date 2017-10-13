@@ -37,7 +37,7 @@ export class QuoteStoreService {
 
     create(quote) {
         const newQuote = Object.assign({}, quote, { date: new Date() });
-        this.store.dispatch(new quoteActions.CreateAction(quote));
+        this.store.dispatch(new quoteActions.CreateAction(newQuote));
     }
 
     getById(quote) {
@@ -60,11 +60,8 @@ export class QuoteStoreService {
         this.store.dispatch(new quoteActions.DeleteAction(quote));
     }
 
-    createComment(comment) {
-        const commentObj = Object.assign(
-            {},
-            comment,
-            { createDate: new Date() });
+    createComment(commentObj) {
+        commentObj.comment.createDate = new Date();
         this.store.dispatch(new quoteActions.CreateCommentAction(commentObj));
     }
 

@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import { ITopicApi, Topic } from './topic.model';
 import { Question } from './question.model';
 
@@ -5,6 +6,7 @@ export interface Comment {
   _id?: number;
   createDate: Date;
   text: string;
+  user: string;
 }
 
 export interface ICreateComment {
@@ -28,8 +30,13 @@ export interface IQuoteApi {
   date: string;
   author: string;
   topic: number | ITopicApi;
-  questions;
-  commentList;
+  questions: any[];
+  commentList: any[];
+}
+
+export interface ISuggestions {
+  authors: string[];
+  sources: string[];
 }
 
 export class Quote {
@@ -42,5 +49,37 @@ export class Quote {
     public topic: number | Topic,
     public questions: number[] | Question[],
     public commentList
-  ) {}
+  ) { }
+
+  static fromApi(quoteApi: IQuoteApi): Quote {
+    const questions = quoteApi.questions
+      ? quoteApi.questions.map(questionApi =>
+        Question.fromApi(questionApi)
+      )
+      : [];
+    return new Quote(
+      quoteApi._id,
+      quoteApi.text,
+      quoteApi.source,
+      new Date(quoteApi.date),
+      quoteApi.author,
+      quoteApi.topic as number,
+      questions,
+      quoteApi.commentList
+    );
+  }
+
+  static toApi(quote: Quote): IQuoteApi {
+    return {
+      _id: quote.id,
+      text: quote.text,
+      source: quote.source,
+      date: moment(quote.date).isValid() ? quote.date.toISOString() : undefined,
+      author: quote.author,
+      topic: (quote.topic as Topic).id,
+      questions: (quote.questions as Question[]).map(question => question.id),
+      commentList: quote.commentList
+    };
+  }
 }
+

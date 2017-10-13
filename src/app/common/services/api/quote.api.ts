@@ -2,33 +2,39 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import Parser from './parser';
-import { Quote, IQuoteApi, IQuote } from '../../models/quote.model';
+import {
+  Topic,
+  ITopicApi,
+  Quote,
+  IQuoteApi,
+  IQuote,
+  ISuggestions
+} from '../../models';
 
 @Injectable()
 export class QuoteApi {
   private suggestions;
-  private userQuotes;
+  private quotesPopulatedTopics;
   private quotes;
-  private comments;
+  private comments = new Map();
   constructor(private http: HttpClient) { }
 
-  all(): Observable<Quote[]> {
-    if (this.userQuotes) {
-      return Observable.of(this.userQuotes);
+  all(): Observable<Topic[]> {
+    if (this.quotesPopulatedTopics) {
+      return Observable.of(this.quotesPopulatedTopics);
     }
     return this.http
       .get('/api/quotes/userQuotes/')
-      .map((userTopics: any) => {
+      .map((userTopics: ITopicApi[]) => {
         return userTopics.map(topicApi => {
-          const topic = Parser.topicFromApi(topicApi);
-          topic.quotes = topicApi.quoteList.map(quoteApi =>
-            Parser.quoteFromApi(quoteApi)
+          const topic = Topic.fromApi(topicApi);
+          topic.quotes = (topicApi.quoteList as IQuoteApi[]).map(quoteApi =>
+            Quote.fromApi(quoteApi)
           );
           return topic;
         });
       })
-      .do(quotes => (this.userQuotes = quotes));
+      .do(quotes => (this.quotesPopulatedTopics = quotes));
   }
 
   get(topicId: number): Observable<Quote[]> {
@@ -38,9 +44,7 @@ export class QuoteApi {
     }
     return this.http
       .get(`/api/quotes/${topicId}`)
-      .map((quotes: any) => {
-        return quotes.map(quoteApi => Parser.quoteFromApi(quoteApi));
-      })
+      .map((quotes: IQuoteApi[]) => quotes.map(quoteApi => Quote.fromApi(quoteApi)))
       .do(quotes => {
         this.quotes = [...quotes].concat(this.quotes || []);
       });
@@ -49,17 +53,15 @@ export class QuoteApi {
   create(quote: IQuote): Observable<Quote> {
     return this.http
       .post(`/api/quotes/${quote.topic}`, quote)
-      .map((quoteApi: IQuoteApi) => {
-        return Parser.quoteFromApi(quoteApi);
-      });
+      .map((quoteApi: IQuoteApi) => Quote.fromApi(quoteApi));
   }
 
   update(quote: Quote): Observable<Quote> {
     return this.http
-      .put(`/api/quotes/${quote.id}`, Parser.quoteToApi(quote))
-      .map((quoteApi: any) => {
-        const quoteResult = Parser.quoteFromApi(quoteApi);
-        quoteResult.topic = Parser.topicFromApi(quoteApi.topic);
+      .put(`/api/quotes/${quote.id}`, Quote.toApi(quote))
+      .map((quoteApi: IQuoteApi) => {
+        const quoteResult = Quote.fromApi(quoteApi);
+        quoteResult.topic = Topic.fromApi((quoteApi.topic as ITopicApi));
         return quoteResult;
       });
   }
@@ -70,36 +72,36 @@ export class QuoteApi {
       .map(() => quote);
   }
 
-  getById(quoteId): Observable<Quote> {
+  getById(quoteId: number): Observable<Quote> {
     const cachedQuote = this.quotes ? this.findQuote(quoteId) : undefined;
     if (cachedQuote) {
       return Observable.of(cachedQuote);
     }
     return this.http
       .get(`/api/quotes/quote/${quoteId}`)
-      .map((quoteApi: any) => {
-        const quote = Parser.quoteFromApi(quoteApi);
-        quote.topic = Parser.topicFromApi(quoteApi.topic);
+      .map((quoteApi: IQuoteApi) => {
+        const quote = Quote.fromApi(quoteApi);
+        quote.topic = Topic.fromApi((quoteApi.topic as ITopicApi));
         return quote;
       });
   }
 
-  getSuggestions() {
+  getSuggestions(): Observable<ISuggestions> {
     if (this.suggestions) {
       return Observable.of(this.suggestions);
     }
     return this.http
-      .get('/api/quotes/suggestions')
+      .get<ISuggestions>('/api/quotes/suggestions')
       .do(suggestions => (this.suggestions = suggestions));
   }
 
-  getComments(quoteId) {
-    if (this.comments) {
-      return Observable.of(this.comments);
+  getComments(quoteId: number) {
+    if (this.comments.get(quoteId)) {
+      return Observable.of(this.comments.get(quoteId));
     }
     return this.http
       .get(`/api/quotes/comments/${quoteId}`)
-      .do(comments => (this.comments = comments));
+      .do(comments => (this.comments.set(quoteId, comments)));
   }
 
   addComment({ comment, quoteId, isDefaultTopic }) {
@@ -119,13 +121,13 @@ export class QuoteApi {
         quotes: quotes
       })
       .map((apiQuotesList: any) => {
-        return apiQuotesList.map(quoteApi => Parser.quoteFromApi(quoteApi));
+        return apiQuotesList.map(quoteApi => Quote.fromApi(quoteApi));
       });
   }
 
   clearCache() {
     this.suggestions = undefined;
-    this.userQuotes = undefined;
+    this.quotesPopulatedTopics = undefined;
     this.comments = undefined;
     this.quotes = undefined;
   }

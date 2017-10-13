@@ -19,7 +19,6 @@
         user: String,
         createDate: Date,
         practiceTimes: Number,
-        impact: Number,
         questions: [{
             type: Number,
             ref: 'Question'

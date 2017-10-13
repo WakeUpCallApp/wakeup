@@ -2,14 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import Parser from './parser';
 import {
   QuestionSet,
   IQuestionSet,
-  IQuestionSetApi
-} from '../../models/question-set.model';
+  IQuestionSetApi,
+  ISessionDetailsQuestion,
+  ISessionDetailsQuestionApi,
+  IQuestionApi,
+  Answer,
+  Question
+} from '../../models';
 
-import { Question } from '../../models/question.model';
+
 
 @Injectable()
 export class QuestionSetApi {
@@ -23,10 +27,8 @@ export class QuestionSetApi {
     }
     return this.http
       .get('/api/questionSet')
-      .map((questionSetApiList: any) => {
-        return questionSetApiList.map(questionSetApi => {
-          return Parser.questionSetFromApi(questionSetApi);
-        });
+      .map((questionSetApiList: IQuestionSetApi[]) => {
+        return questionSetApiList.map(questionSetApi => QuestionSet.fromApi(questionSetApi));
       })
       .do(questionSets => (this.questionSets = questionSets));
   }
@@ -34,51 +36,38 @@ export class QuestionSetApi {
   create(questionSet: IQuestionSet): Observable<QuestionSet> {
     return this.http
       .post('/api/questionSet', questionSet)
-      .map((questionSetApi: IQuestionSetApi) => {
-        return Parser.questionSetFromApi(questionSetApi);
-      });
+      .map((questionSetApi: IQuestionSetApi) => QuestionSet.fromApi(questionSetApi));
   }
 
   get(id: number): Observable<QuestionSet> {
-    const cached = this.populatedQuestionSets
-      ? this.findQuestionSet(id)
-      : undefined;
+    const cached = this.populatedQuestionSets ? this.findQuestionSet(id) : undefined;
     if (cached) {
       return Observable.of(cached);
     }
     return this.http
       .get(`/api/questionSet/${id}`)
       .map((questionSetApi: IQuestionSetApi) => {
-        const questionSet = Parser.questionSetFromApi(questionSetApi);
+        const questionSet = QuestionSet.fromApi(questionSetApi);
         questionSet.questions = questionSetApi.questions.map(question => {
-          const parsedQuestion = Parser.questionFromApi(question);
+          const parsedQuestion = Question.fromApi(question);
           parsedQuestion.questionSet = questionSet;
           return parsedQuestion;
         });
-        questionSet.questionIds = questionSetApi.questions.map(
-          question => question._id
-        );
         return questionSet;
       })
-      .do(
-      qs =>
-        (this.populatedQuestionSets = [qs].concat(
-          this.populatedQuestionSets || []
-        ))
+      .do(qs => (this.populatedQuestionSets = [qs].concat(this.populatedQuestionSets || []))
       );
   }
 
   update(questionSet: QuestionSet): Observable<QuestionSet> {
-    const parsedQuestionSet = Parser.questionSetToApi(questionSet);
-    parsedQuestionSet.questions = (questionSet.questions as Question[]).map(
-      question => Parser.questionToApi(question)
-    );
+    const parsedQuestionSet = QuestionSet.toApi(questionSet);
+    parsedQuestionSet.questions = (questionSet.questions as Question[]).map(question => Question.toApi(question));
     return this.http
       .put(`/api/questionSet/${questionSet.id}`, parsedQuestionSet)
       .map((questionSetApi: IQuestionSetApi) => {
-        const questionSetObj = Parser.questionSetFromApi(questionSetApi);
+        const questionSetObj = QuestionSet.fromApi(questionSetApi);
         questionSetObj.questions = questionSetApi.questions.map(question => {
-          const parsedQuestion = Parser.questionFromApi(question);
+          const parsedQuestion = Question.fromApi(question);
           parsedQuestion.questionSet = questionSet;
           return parsedQuestion;
         });
@@ -92,34 +81,32 @@ export class QuestionSetApi {
       .map(() => questionSetId);
   }
 
-  registerSession(questionSetId: number) {
+  registerSession(questionSetId: number): Observable<QuestionSet> {
     return this.http
-      .put(`/api/questionSet/session/${questionSetId}`, '');
+      .put(`/api/questionSet/session/${questionSetId}`, '')
+      .map((questionSetApi: IQuestionSetApi) => QuestionSet.fromApi(questionSetApi));
   }
 
-  getSessionDetailsData(questionSetId: number) {
+  getSessionDetailsData(questionSetId: number): Observable<ISessionDetailsQuestion[]> {
     return this.http
       .get(`/api/questionSet/sessionAnswers/${questionSetId}`)
-      .map((sessionDetails: any) => {
-        sessionDetails.forEach(question => {
+      .map((sessionDetails: ISessionDetailsQuestionApi[]) => {
+        const result: ISessionDetailsQuestion[] = sessionDetails;
+        result.forEach(question => {
           question.answers = question.answers.map(answerApi =>
-            Parser.answerFromApi(answerApi)
+            Answer.fromApi(answerApi)
           );
         });
-        return sessionDetails;
+        return result;
       });
   }
 
-  importQuestions(questionSetId, questions) {
+  importQuestions(questionSetId: number, questions: [string[]]) {
     return this.http
       .post(`/api/questions/importQuestions/${questionSetId}`, {
         questions: questions
       })
-      .map((apiQuestionsList: any) => {
-        return apiQuestionsList.map(questionApi =>
-          Parser.questionFromApi(questionApi)
-        );
-      });
+      .map((apiQuestionsList: any) => apiQuestionsList.map(questionApi => Question.fromApi(questionApi)));
   }
 
   clearCache() {

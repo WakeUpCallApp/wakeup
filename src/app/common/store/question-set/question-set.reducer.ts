@@ -49,6 +49,11 @@ export function reducer(state = initialState, action: any): State {
         isLoading: false
       });
 
+    case actions.ActionTypes.REGISTER_SESSION_SUCCESS:
+      return Object.assign({}, state, {
+        entities: onRegisterSessionUpdate(state.entities, action.payload)
+      });
+
     case actions.ActionTypes.GET_SESSION_DETAILS_SUCCESS:
       return Object.assign({}, state, {
         sessionDetailsData: getSessionDetails(action.payload),
@@ -170,4 +175,14 @@ function getsortedQuestionsQS(questionSet) {
     questions: helper.sortQuestionsById(questionSet.questions)
   });
   return updatedQuestionSet;
+}
+
+function onRegisterSessionUpdate(entities, questionSet) {
+  return entities.map(entity => {
+    if (entity.id === questionSet.id) {
+      entity = Object.assign({}, entity, questionSet);
+    }
+    return entity;
+  });
+
 }

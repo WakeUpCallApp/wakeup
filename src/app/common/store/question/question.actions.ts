@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IQuestion, Question } from '../../models/question.model';
+import { IQuestion, Question, IQuestionSummary } from '../../models/question.model';
 import { type } from '../util';
 
 export const ActionTypes = {
@@ -26,7 +26,7 @@ export class LoadAction implements Action {
 export class LoadActionSuccess implements Action {
   type = ActionTypes.LOAD_SUCCESS;
 
-  constructor(public payload: Question[]) { }
+  constructor(public payload: IQuestionSummary[]) { }
 }
 
 export class LoadActionError implements Action {

@@ -32,24 +32,23 @@ export class QuestionSetEffects {
   load$ = this.actions$
     .ofType(questionSetActions.ActionTypes.LOAD)
     .map((action: any) => action.payload)
-    .switchMap(() => this.questionSetApi.all())
-    .map(result => new questionSetActions.LoadActionSuccess(result));
+    .switchMap(() => this.questionSetApi.all()
+      .map(result => new questionSetActions.LoadActionSuccess(result)));
 
   @Effect()
   create$ = this.actions$
     .ofType(questionSetActions.ActionTypes.CREATE)
     .map((action: any) => action.payload)
-    .switchMap(questionSet => this.questionSetApi.create(questionSet))
-    .map(result => {
+    .switchMap(questionSet => this.questionSetApi.create(questionSet).map(result => {
       this.notificationService.notifySuccess(
         'Question Set successfully created'
       );
       return new questionSetActions.CreateActionSuccess(result);
     })
-    .catch(error => {
-      this.notificationService.notifyError('Question Set could not be created');
-      return Observable.of(new questionSetActions.CreateActionError(error));
-    });
+      .catch(error => {
+        this.notificationService.notifyError('Question Set could not be created');
+        return Observable.of(new questionSetActions.CreateActionError(error));
+      }));
 
   @Effect({ dispatch: false })
   createSuccess$ = this.actions$
@@ -99,29 +98,29 @@ export class QuestionSetEffects {
   update$ = this.actions$
     .ofType(questionSetActions.ActionTypes.UPDATE)
     .map((action: any) => action.payload)
-    .switchMap(questionSet => this.questionSetApi.update(questionSet))
-    .map(result => {
-      this.notificationService.notifySuccess(
-        'Question Set successfully updated'
-      );
-      return new questionSetActions.UpdateActionSuccess(result);
-    })
-    .catch(error => {
-      this.notificationService.notifyError('Question Set could not be updated');
-      return Observable.of(new questionSetActions.UpdateActionError(error));
-    });
+    .switchMap(questionSet => this.questionSetApi.update(questionSet)
+      .map(result => {
+        this.notificationService.notifySuccess(
+          'Question Set successfully updated'
+        );
+        return new questionSetActions.UpdateActionSuccess(result);
+      })
+      .catch(error => {
+        this.notificationService.notifyError('Question Set could not be updated');
+        return Observable.of(new questionSetActions.UpdateActionError(error));
+      }));
 
   @Effect()
   delete$ = this.actions$
     .ofType(questionSetActions.ActionTypes.DELETE)
     .map((action: any) => action.payload)
-    .switchMap(questionSet => this.questionSetApi.delete(questionSet))
-    .map(() => {
-      this.notificationService.notifySuccess(
-        'Question Set successfully deleted'
-      );
-      return new questionSetActions.DeleteActionSuccess();
-    });
+    .switchMap(questionSet => this.questionSetApi.delete(questionSet)
+      .map(() => {
+        this.notificationService.notifySuccess(
+          'Question Set successfully deleted'
+        );
+        return new questionSetActions.DeleteActionSuccess();
+      }));
 
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
@@ -135,44 +134,42 @@ export class QuestionSetEffects {
   getCurrentQS$ = this.actions$
     .ofType(questionSetActions.ActionTypes.GET_CURRENT_QUESTION_SET)
     .map((action: any) => action.payload)
-    .switchMap(id =>
-      this.questionSetApi
-        .get(id)
-        .map(result => new questionSetActions.GetCurrentQSActionSuccess(result))
-        .catch(error =>
-          Observable.of(new questionSetActions.GetCurrentQSActionError(error))
-        )
+    .switchMap(id => this.questionSetApi.get(id)
+      .map(result => new questionSetActions.GetCurrentQSActionSuccess(result))
+      .catch(error =>
+        Observable.of(new questionSetActions.GetCurrentQSActionError(error))
+      )
     );
 
   @Effect()
   addQuestion$ = this.actions$
     .ofType(questionSetActions.ActionTypes.ADD_QUESTION)
     .map((action: any) => action.payload)
-    .switchMap(question => this.questionApi.create(question))
-    .map(result => {
-      this.notificationService.notifySuccess('Question successfully added');
-      return new questionSetActions.AddQuestionActionSuccess(result);
-    });
+    .switchMap(question => this.questionApi.create(question)
+      .map(result => {
+        this.notificationService.notifySuccess('Question successfully added');
+        return new questionSetActions.AddQuestionActionSuccess(result);
+      }));
 
   @Effect()
   updateQuestion$ = this.actions$
     .ofType(questionSetActions.ActionTypes.EDIT_QUESTION)
     .map((action: any) => action.payload)
-    .switchMap(question => this.questionApi.update(question))
-    .map(result => {
-      this.notificationService.notifySuccess('Question successfully updated');
-      return new questionSetActions.EditQuestionActionSuccess(result);
-    });
+    .switchMap(question => this.questionApi.update(question)
+      .map(result => {
+        this.notificationService.notifySuccess('Question successfully updated');
+        return new questionSetActions.EditQuestionActionSuccess(result);
+      }));
 
   @Effect()
   deleteQuestion$ = this.actions$
     .ofType(questionSetActions.ActionTypes.DELETE_QUESTION)
     .map((action: any) => action.payload)
-    .flatMap(question => this.questionApi.delete(question))
-    .map(result => {
-      this.notificationService.notifySuccess('Question successfully deleted');
-      return new questionSetActions.DeleteQuestionActionSuccess(result);
-    });
+    .flatMap(question => this.questionApi.delete(question)
+      .map(result => {
+        this.notificationService.notifySuccess('Question successfully deleted');
+        return new questionSetActions.DeleteQuestionActionSuccess(result);
+      }));
 
   @Effect({ dispatch: false })
   invalidateCache = this.actions$
@@ -183,6 +180,7 @@ export class QuestionSetEffects {
     questionSetActions.ActionTypes.ADD_QUESTION_SUCCESS,
     questionSetActions.ActionTypes.EDIT_QUESTION_SUCCESS,
     questionSetActions.ActionTypes.DELETE_QUESTION_SUCCESS,
+    questionSetActions.ActionTypes.REGISTER_SESSION_SUCCESS,
     loginActions.ActionTypes.LOGOUT
     )
     .map(() => {
@@ -200,16 +198,15 @@ export class QuestionSetEffects {
       return Observable.of(error);
     });
 
-  @Effect({ dispatch: false })
+  @Effect()
   registerSession$ = this.actions$
     .ofType(questionSetActions.ActionTypes.REGISTER_SESSION)
     .map((action: any) => action.payload)
-    .switchMap(questionSetId => {
-      this.notificationService.notifySuccess(
-        'Practice session ended successfully'
-      );
-      return this.questionSetApi.registerSession(questionSetId);
-    });
+    .switchMap(questionSetId => this.questionSetApi.registerSession(questionSetId)
+      .map((questionSet) => {
+        this.notificationService.notifySuccess('Practice session ended successfully');
+        return new questionSetActions.RegisterSessionSuccessAction(questionSet);
+      }));
 
   @Effect()
   getSessionDetails$ = this.actions$

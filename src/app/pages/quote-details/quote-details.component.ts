@@ -17,7 +17,7 @@ import { Title } from '@angular/platform-browser';
 
 import { QuoteStoreService, TopicStoreService } from '../../common/store';
 import { Quote, ICreateComment, Topic } from '../../common/models';
-import { DialogService } from '../../common/services/dialog.service';
+import { DialogService, LoginApi } from '../../common/services';
 import appConstants from '../../common/app-constants';
 
 @Component({
@@ -48,7 +48,8 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     private ngzone: NgZone,
     private cdref: ChangeDetectorRef,
     private titleService: Title,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private loginApi: LoginApi
   ) { }
 
   ngOnInit() {
@@ -169,7 +170,8 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   getEmptyComment(): ICreateComment {
     const comment = {
       createDate: undefined,
-      text: ''
+      text: '',
+      user: this.loginApi.getCurrentUser()._id
     };
     return {
       comment,

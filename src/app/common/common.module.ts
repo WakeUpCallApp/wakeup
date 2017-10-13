@@ -12,7 +12,6 @@ import {
   QuestionApi,
   QuoteApi,
   TopicApi,
-  AnswerApi,
   SessionConfigService,
   FileParsingService,
   NotificationService,
@@ -48,7 +47,6 @@ const apiServices = [
   QuestionApi,
   QuoteApi,
   TopicApi,
-  AnswerApi,
   AnswersIndexedDbApi
 ];
 

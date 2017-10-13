@@ -22,10 +22,8 @@ export const ActionTypes = {
 };
 
 export class OpenIndexedDbAction implements Action {
-   type = ActionTypes.OPEN_INDEXED_DB;
-   constructor() {
-     console.log(this.type);
-   }
+  type = ActionTypes.OPEN_INDEXED_DB;
+  constructor() { }
 }
 
 export class OpenIndexedDbActionSuccess implements Action {
@@ -35,31 +33,31 @@ export class OpenIndexedDbActionSuccess implements Action {
 
 export class OpenIndexedDbActionError implements Action {
   type = ActionTypes.OPEN_INDEXED_DB_ERROR;
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;
 
-  constructor(public payload: number) {}
+  constructor(public payload: number) { }
 }
 
 export class LoadActionSuccess implements Action {
   type = ActionTypes.LOAD_SUCCESS;
 
-  constructor(public payload: Answer[]) {}
+  constructor(public payload: Answer[]) { }
 }
 
 export class LoadActionError implements Action {
   type = ActionTypes.LOAD_ERROR;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class CreateAction implements Action {
   type = ActionTypes.CREATE;
 
-  constructor(public payload: IAnswer) {}
+  constructor(public payload: IAnswer) { }
 }
 export class CreateActionSuccess implements Action {
   type = ActionTypes.CREATE_SUCCESS;
@@ -79,41 +77,41 @@ export class CreateActionError implements Action {
 export class UpdateAction implements Action {
   type = ActionTypes.UPDATE;
 
-  constructor(public payload: Answer) {}
+  constructor(public payload: Answer) { }
 }
 
 export class UpdateActionSuccess implements Action {
   type = ActionTypes.UPDATE_SUCCESS;
 
-  constructor(public payload: Answer) {}
+  constructor(public payload: Answer) { }
 }
 
 export class UpdateActionError implements Action {
   type = ActionTypes.UPDATE_ERROR;
 
-  constructor(public payload: Answer) {}
+  constructor(public payload: Answer) { }
 }
 
 export class DeleteAction implements Action {
   type = ActionTypes.DELETE;
 
-  constructor(public payload: number) {}
+  constructor(public payload: number) { }
 }
 
 export class DeleteActionSuccess implements Action {
   type = ActionTypes.DELETE_SUCCESS;
-  constructor(public payload: number) {}
+  constructor(public payload: number) { }
 }
 
 export class DeleteAllAction implements Action {
   type = ActionTypes.DELETE_ALL;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class DeleteAllActionSuccess implements Action {
   type = ActionTypes.DELETE_ALL_SUCCESS;
-  constructor(public payload: number) {}
+  constructor(public payload: number) { }
 }
 
 /**

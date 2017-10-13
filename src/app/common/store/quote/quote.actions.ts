@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
-import { Quote } from '../../models/quote.model';
+import { Topic, Quote } from '../../models';
+
 import { type } from '../util';
 
 export const ActionTypes = {
@@ -38,172 +39,172 @@ export const ActionTypes = {
 
 export class GetByTopicIdAction implements Action {
   type = ActionTypes.GET_BY_TOPIC_ID;
-  constructor(public payload: number) {}
+  constructor(public payload: number) { }
 }
 
 export class GetByTopicIdActionSuccess implements Action {
   type = ActionTypes.GET_BY_TOPIC_ID_SUCCESS;
-  constructor(public payload: Quote[]) {}
+  constructor(public payload: Quote[]) { }
 }
 
 export class GetByIdAction implements Action {
   type = ActionTypes.GET_BY_ID;
-  constructor(public payload: number) {}
+  constructor(public payload: number) { }
 }
 
 export class GetByIdActionSuccess implements Action {
   type = ActionTypes.GET_BY_ID_SUCCESS;
-  constructor(public payload: Quote) {}
+  constructor(public payload: Quote) { }
 }
 
 export class GetByIdActionError implements Action {
   type = ActionTypes.GET_BY_ID_ERROR;
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class GetCommentsAction implements Action {
   type = ActionTypes.GET_COMMENTS;
-  constructor(public payload: number) {}
+  constructor(public payload: number) { }
 }
 
 export class GetCommentsActionSuccess implements Action {
   type = ActionTypes.GET_COMMENTS_SUCCESS;
-  constructor(public payload: Quote) {}
+  constructor(public payload: Quote) { }
 }
 
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;
 
-  constructor(public payload?: any) {}
+  constructor(public payload?: any) { }
 }
 
 export class LoadActionSuccess implements Action {
   type = ActionTypes.LOAD_SUCCESS;
 
-  constructor(public payload: Quote[]) {}
+  constructor(public payload: Topic[]) { }
 }
 
 export class LoadActionError implements Action {
   type = ActionTypes.LOAD_ERROR;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class CreateAction implements Action {
   type = ActionTypes.CREATE;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 export class CreateActionSuccess implements Action {
   type = ActionTypes.CREATE_SUCCESS;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class CreateActionError implements Action {
   type = ActionTypes.CREATE_ERROR;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class CreateCommentAction implements Action {
   type = ActionTypes.CREATE_COMMENT;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 export class CreateCommentActionSuccess implements Action {
   type = ActionTypes.CREATE_COMMENT_SUCCESS;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class CreateCommentActionError implements Action {
   type = ActionTypes.CREATE_COMMENT_ERROR;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class UpdateAction implements Action {
   type = ActionTypes.UPDATE;
 
-  constructor(public payload: Quote) {}
+  constructor(public payload: Quote) { }
 }
 
 export class UpdateActionSuccess implements Action {
   type = ActionTypes.UPDATE_SUCCESS;
 
-  constructor(public payload: Quote) {}
+  constructor(public payload: Quote) { }
 }
 
 export class UpdateActionError implements Action {
   type = ActionTypes.UPDATE_ERROR;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class DeleteAction implements Action {
   type = ActionTypes.DELETE;
 
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export class DeleteActionSuccess implements Action {
   type = ActionTypes.DELETE_SUCCESS;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class DeleteActionError implements Action {
   type = ActionTypes.DELETE_ERROR;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class DeleteCommentAction implements Action {
   type = ActionTypes.DELETE_COMMENT;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 export class DeleteCommentActionSuccess implements Action {
   type = ActionTypes.DELETE_COMMENT_SUCCESS;
 
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class DeleteCommentActionError implements Action {
   type = ActionTypes.DELETE_COMMENT_ERROR;
 
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export class GetSuggestionsAction implements Action {
   type = ActionTypes.GET_SUGGESTIONS;
-  constructor(public payload?: any) {}
+  constructor(public payload?: any) { }
 }
 
 export class GetSuggestionsActionSuccess implements Action {
   type = ActionTypes.GET_SUGGESTIONS_SUCCESS;
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class ImportQuotesAction implements Action {
   type = ActionTypes.IMPORT_QUOTES;
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class ImportQuotesActionSuccess implements Action {
   type = ActionTypes.IMPORT_QUOTES_SUCCESS;
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class ImportQuotesActionError implements Action {
   type = ActionTypes.IMPORT_QUOTES_ERROR;
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 export class ExportQuotesAction implements Action {
   type = ActionTypes.EXPORT_QUOTES;
-  constructor(public payload) {}
+  constructor(public payload) { }
 }
 
 /**

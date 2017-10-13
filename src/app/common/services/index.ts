@@ -11,4 +11,3 @@ export { QuestionApi } from './api/question.api';
 export { QuoteApi } from './api/quote.api';
 export { TopicApi } from './api/topic.api';
 export { AnswersIndexedDbApi } from './api/answer-indexeddb.api';
-export { AnswerApi } from './api/answer.api';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Answer } from '../../models/answer.model';
 import { QuestionSetApi } from './question-set.api';
-import Parser from './parser';
 
 @Injectable()
 export class AnswersIndexedDbApi {
@@ -18,19 +18,23 @@ export class AnswersIndexedDbApi {
 
     openIndexedDb() {
         const version = 3;
-        const request = indexedDB.open('answersData', version);
-        const promise = new Promise((resolve, reject) => {
+        if(this.db) {
+            return Observable.of('db already open');
+        }
+        const dbObservable = Observable.create((observer) => {
+            const request = indexedDB.open('answersData', version);
             request.onsuccess = ((e: any) => {
                 this.db = e.target.result;
-                resolve();
+                observer.next('indexedDb is open');
+                observer.complete();
             });
             request.onerror = (error) => {
-                reject(error);
                 console.log(error);
+                throw new Error(`${error}`)
             }
             request.onupgradeneeded = this.upgradeCallback;
         });
-        return promise;
+        return dbObservable.share();
     }
 
     upgradeCallback(e) {
@@ -64,7 +68,7 @@ export class AnswersIndexedDbApi {
 
             return new Promise((resolve, reject) => {
                 request.onsuccess = (e) => {
-                    resolve(Parser.answerFromApi(answer));
+                    resolve(Answer.fromApi(answer));
                 }
                 request.onerror = (e) => reject(e);
             });
@@ -78,7 +82,7 @@ export class AnswersIndexedDbApi {
         }
         const trans = this.db.transaction(['answers'], 'readwrite');
         const store = trans.objectStore('answers');
-        const request = store.put(Parser.answerIndexedDBToApi(answer));
+        const request = store.put(Answer.toApi(answer));
         return new Promise((resolve, reject) => {
             request.onsuccess = (e) => resolve(answer);
             request.onerror = (e) => reject(e);
@@ -99,7 +103,7 @@ export class AnswersIndexedDbApi {
             request.onsuccess = function (e) {
                 const result = e.target.result;
                 if (result === null || result === undefined) {
-                    resolve(answers.map(answerApi => Parser.answerFromApi(answerApi)));
+                    resolve(answers.map(answerApi => Answer.fromApi(answerApi)));
                 } else {
                     answers.push(result.value);
                     result.continue();
@@ -156,7 +160,7 @@ export class AnswersIndexedDbApi {
     getSessionDetailsData(questionSetId) {
         const promises = [];
         return this.questionSetApi.getSessionDetailsData(questionSetId).toPromise()
-            .then(questions => {
+            .then((questions: any) => {
                 questions = questions.map(question => {
                     return this.getAnswers(question._id).then((answers => {
                         question.answers = question.answers

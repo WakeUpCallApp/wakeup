@@ -31,15 +31,15 @@ export class TopicEffects {
   create$ = this.actions$
     .ofType(topicActions.ActionTypes.CREATE)
     .map((action: any) => action.payload)
-    .switchMap(topic => this.topicApi.create(topic))
-    .map(result => {
-      this.notificationService.notifySuccess('Topic succcessfully created');
-      return new topicActions.CreateActionSuccess(result);
-    })
-    .catch(error => {
-      this.notificationService.notifyError('Topic could not be created');
-      return Observable.of(new topicActions.CreateActionError(error));
-    });
+    .switchMap(topic => this.topicApi.create(topic)
+      .map(result => {
+        this.notificationService.notifySuccess('Topic succcessfully created');
+        return new topicActions.CreateActionSuccess(result);
+      })
+      .catch(error => {
+        this.notificationService.notifyError('Topic could not be created');
+        return Observable.of(new topicActions.CreateActionError(error));
+      }));
 
   @Effect({ dispatch: false })
   createSuccess$ = this.actions$
@@ -54,25 +54,25 @@ export class TopicEffects {
   update$ = this.actions$
     .ofType(topicActions.ActionTypes.UPDATE)
     .map((action: any) => action.payload)
-    .switchMap(topic => this.topicApi.update(topic))
-    .map(result => {
-      this.notificationService.notifySuccess('Topic successfully updated');
-      return new topicActions.UpdateActionSuccess(result);
-    })
-    .catch(error => {
-      this.notificationService.notifyError('Topic could not be updated');
-      return Observable.of(new topicActions.UpdateActionError(error));
-    });
+    .switchMap(topic => this.topicApi.update(topic)
+      .map(result => {
+        this.notificationService.notifySuccess('Topic successfully updated');
+        return new topicActions.UpdateActionSuccess(result);
+      })
+      .catch(error => {
+        this.notificationService.notifyError('Topic could not be updated');
+        return Observable.of(new topicActions.UpdateActionError(error));
+      }));
 
   @Effect()
   delete$ = this.actions$
     .ofType(topicActions.ActionTypes.DELETE)
     .map((action: any) => action.payload)
-    .switchMap(topic => this.topicApi.delete(topic))
-    .map(() => {
-      this.notificationService.notifySuccess('Topic successfully deleted');
-      return new topicActions.DeleteActionSuccess();
-    });
+    .switchMap(topic => this.topicApi.delete(topic)
+      .map(() => {
+        this.notificationService.notifySuccess('Topic successfully deleted');
+        return new topicActions.DeleteActionSuccess();
+      }));
 
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$

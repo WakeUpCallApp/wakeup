@@ -18,22 +18,22 @@ export class QuestionEffects {
     private notificationService: NotificationService,
     private actions$: Actions,
     private router: Router
-  ) {}
+  ) { }
 
   @Effect()
   load$ = this.actions$
     .ofType(questionActions.ActionTypes.LOAD)
     .map((action: any) => action.payload)
-    .switchMap(() => this.questionApi.all())
-    .map(result => new questionActions.LoadActionSuccess(result));
+    .switchMap(() => this.questionApi.all()
+      .map(result => new questionActions.LoadActionSuccess(result)));
 
   @Effect()
   get$ = this.actions$
     .ofType(questionActions.ActionTypes.GET_CURRENT_QUESTION)
     .map((action: any) => action.payload)
-    .switchMap(id => this.questionApi.get(id))
-    .map(result => new questionActions.GetCurrentQuestionSuccess(result))
-    .catch(error => Observable.of(new questionActions.GetCurrentQuestionError(error)));
+    .switchMap(id => this.questionApi.get(id)
+      .map(result => new questionActions.GetCurrentQuestionSuccess(result))
+      .catch(error => Observable.of(new questionActions.GetCurrentQuestionError(error))));
 
   @Effect({ dispatch: false })
   httpErrors$ = this.actions$
@@ -49,11 +49,11 @@ export class QuestionEffects {
   delete$ = this.actions$
     .ofType(questionActions.ActionTypes.DELETE)
     .map((action: any) => action.payload)
-    .switchMap(question => this.questionApi.delete(question))
-    .map(result => {
-      this.notificationService.notifySuccess('Question successfully deleted');
-      return new questionActions.DeleteActionSuccess(result);
-    });
+    .switchMap(question => this.questionApi.delete(question)
+      .map(result => {
+        this.notificationService.notifySuccess('Question successfully deleted');
+        return new questionActions.DeleteActionSuccess(result);
+      }));
 
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
@@ -69,12 +69,12 @@ export class QuestionEffects {
   @Effect({ dispatch: false })
   invalidateCache = this.actions$
     .ofType(
-      questionActions.ActionTypes.CREATE_SUCCESS,
-      questionActions.ActionTypes.DELETE_SUCCESS,
-      questionSetActions.ActionTypes.ADD_QUESTION_SUCCESS,
-      questionSetActions.ActionTypes.DELETE_QUESTION_SUCCESS,
-      questionSetActions.ActionTypes.EDIT_QUESTION_SUCCESS,
-      'USER_LOGOUT'
+    questionActions.ActionTypes.CREATE_SUCCESS,
+    questionActions.ActionTypes.DELETE_SUCCESS,
+    questionSetActions.ActionTypes.ADD_QUESTION_SUCCESS,
+    questionSetActions.ActionTypes.DELETE_QUESTION_SUCCESS,
+    questionSetActions.ActionTypes.EDIT_QUESTION_SUCCESS,
+    'USER_LOGOUT'
     )
     .map(() => {
       console.log('clear cache');

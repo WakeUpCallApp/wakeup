@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import Parser from './parser';
 import {
+  QuestionSet,
   Topic,
+  Quote,
   ITopic,
   ITopicApi,
   IQuoteApi
@@ -24,7 +25,7 @@ export class TopicApi {
       .get('/api/topics')
       .map((topicApiList: any) => {
         return topicApiList.map(topicApi => {
-          return Parser.topicFromApi(topicApi);
+          return Topic.fromApi(topicApi);
         });
       })
       .do(topics => (this.topics = topics));
@@ -34,7 +35,7 @@ export class TopicApi {
     return this.http
       .post('/api/topics', topic)
       .map((topicApi: ITopicApi) => {
-        return Parser.topicFromApi(topicApi);
+        return Topic.fromApi(topicApi);
       });
   }
 
@@ -46,12 +47,12 @@ export class TopicApi {
     return this.http
       .get(`/api/topics/${id}`)
       .map((topicApi: ITopicApi) => {
-        const topic = Parser.topicFromApi(topicApi);
+        const topic = Topic.fromApi(topicApi);
         topic.questionSets = topicApi.questionSetList.map(questionSetApi =>
-          Parser.questionSetFromApi(questionSetApi)
+          QuestionSet.fromApi(questionSetApi)
         );
         topic.quotes = (topicApi.quoteList as IQuoteApi[]).map(quoteApi =>
-          Parser.quoteFromApi(quoteApi)
+          Quote.fromApi(quoteApi)
         );
         return topic;
       })
@@ -60,11 +61,11 @@ export class TopicApi {
 
   update(topic: Topic): Observable<Topic> {
     return this.http
-      .put(`/api/topics/${topic.id}`, Parser.topicToApi(topic))
+      .put(`/api/topics/${topic.id}`, Topic.toApi(topic))
       .map((topicApi: ITopicApi) => {
-        const topicObj = Parser.topicFromApi(topicApi);
+        const topicObj = Topic.fromApi(topicApi);
         topicObj.questionSets = topicApi.questionSetList.map(questionSetApi =>
-          Parser.questionSetFromApi(questionSetApi)
+          QuestionSet.fromApi(questionSetApi)
         );
         topicObj.quoteIds = topicApi.quoteList;
         return topicObj;
