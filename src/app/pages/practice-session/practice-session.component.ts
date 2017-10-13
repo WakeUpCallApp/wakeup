@@ -115,6 +115,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   }
 
   setNextQuestion() {
+    this.answerText = '';
     if (
       this.currentQuestionIndex >= 0 &&
       this.currentQuestionIndex < this.questionsNo - 1
