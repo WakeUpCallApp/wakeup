@@ -6,6 +6,7 @@
     "ng": "ng",
     "startProd": "ng build set NODE_ENV=production && node server/app.js",
     "build": "ng build",
+    "sme":"./node_modules/.bin/source-map-explorer",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -16,8 +17,8 @@
     "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },
   "engines": {
-    "node": "6.10.0",
-    "npm": "4.3.0"
+    "node": "6.11.2",
+    "npm": "3.10.10"
   },
   "private": true,
   "dependencies": {

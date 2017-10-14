@@ -126,7 +126,7 @@ export class QuoteApi {
   clearCache() {
     this.suggestions = undefined;
     this.quotesPopulatedTopics = undefined;
-    this.comments = undefined;
+    this.comments = new Map();
     this.quotes = undefined;
   }
 
