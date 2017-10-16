@@ -111,10 +111,10 @@ export class QuoteApi {
       .put<IComment>(`/api/quotes/addComment/${quoteId}/${isDefaultTopic}`, comment);
   }
 
-  deleteComment({ quoteId, commentId }): Observable<number> {
+  deleteComment({ quoteId, commentId }): Observable<string> {
     return this.http
       .delete(`/api/quotes/deleteComment/${quoteId}/${commentId}`)
-      .map(() => quoteId);
+      .map(() => commentId);
   }
 
   importQuotes(topicId: number, quotes: IQuoteImport[]): Observable<Quote[]> {

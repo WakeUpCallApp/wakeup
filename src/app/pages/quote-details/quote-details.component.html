@@ -16,18 +16,32 @@
       <label> Topic </label> {{topic?.name}}
     </div>
     <section class="quoteForm" *ngIf="!quote.topic?.isDefault;else readOnlyQuote">
-      <form class="editQuoteForm" #quoteForm='ngForm'>
+      <form class="editQuoteForm" [formGroup]="quoteForm">
         <mat-input-container floatPlaceholder="always">
-          <textarea class="quoteText" [(ngModel)]="quote.text" #textVar maxlength="1000" placeholder="Text" type="text" matInput name="text"
-            required></textarea>
+          <textarea 
+          matInput 
+          type="text"
+          class="quoteText"
+          placeholder="Text"  
+          maxlength="1000"
+          required
+          formControlName="text"
+          #textVar></textarea>
           <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
           <mat-error>Text is required</mat-error>
           <mat-hint align="end" aria-live="polite"> {{textVar.value.length}} / 1000 </mat-hint>
         </mat-input-container>
 
         <mat-input-container floatPlaceholder="always">
-          <input [(ngModel)]="quote.author" #authorVar list="suggestions" autocomplete="off" maxlength="200" placeholder="Author" type="text"
-            matInput name="author">
+          <input 
+          matInput  
+          type="text" 
+          placeholder="Author" 
+          autocomplete="off"
+          list="suggestions"    
+          maxlength="200"
+          #authorVar
+          formControlName="author">
           <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
           <datalist id="suggestions">
             <select>
@@ -40,8 +54,15 @@
         </mat-input-container>
 
         <mat-input-container floatPlaceholder="always">
-          <input [(ngModel)]="quote.source" #sourceVar list="sourceSuggestions" autocomplete="off" placeholder="Source" type="text"
-            matInput name="source" maxlength="200">
+          <input 
+          matInput 
+          type="text" 
+          placeholder="Source" 
+          list="sourceSuggestions" 
+          autocomplete="off"  
+          maxlength="200"
+          #sourceVar
+          formControlName="source">
           <span matSuffix><mat-icon color="accent">edit</mat-icon></span>
           <datalist id="sourceSuggestions">
             <select>

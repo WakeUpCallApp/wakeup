@@ -97,5 +97,5 @@ export function reducer(state = initialState, action: any): State {
 }
 
 function onDeleteComment(commentList, commentToDelete) {
-  return commentList.filter(comment => comment.id !== commentToDelete.id);
+  return commentList.filter(comment => comment._id !== commentToDelete);
 }

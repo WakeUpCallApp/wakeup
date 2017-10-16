@@ -8,7 +8,7 @@
     <button matTooltip="Associate Questions" class="addQuestion" mat-mini-fab (click)="openQuestionsBrowser()"><mat-icon>add</mat-icon>
     </button>
     <ul class="list">
-      <li *ngFor="let question of questions; index as i">
+      <li *ngFor="let question of questions">
         <span class="text">{{question.text}}</span>
         <span tabindex="0" role="button" aria-label="remove question" class="remove" (keyup.enter)="onRemove(question)" (click)="onRemove(question)"
           matTooltip="Remove Question"><mat-icon>delete</mat-icon></span>

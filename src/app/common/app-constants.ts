@@ -21,6 +21,9 @@ const appConstants = {
     },
     ui: {
         PAGE_CONTAINER_CLASS: 'pageContent'
+    },
+    keyCodes: {
+        TAB: 9
     }
 };
 

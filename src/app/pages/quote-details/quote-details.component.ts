@@ -3,8 +3,6 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
-  ViewChild,
-  ElementRef,
   NgZone,
   ChangeDetectorRef,
   HostBinding
@@ -12,13 +10,14 @@ import {
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 import { Title } from '@angular/platform-browser';
 
 import { QuoteStoreService, TopicStoreService } from '../../common/store';
 import { Quote, ICreateComment, Topic } from '../../common/models';
 import { DialogService, LoginApi } from '../../common/services';
 import appConstants from '../../common/app-constants';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-quote-details',
@@ -27,19 +26,20 @@ import appConstants from '../../common/app-constants';
 })
 export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
-  actionsSubscription: Subscription;
-  dataSubscription: Subscription;
+
   currentQuote: Quote;
   updateObject;
   authors$: Observable<string[]>;
   sources$: Observable<string[]>;
   comments$: Observable<Comment[]>;
+  isLoading$;
   topic: Topic;
   newComment: ICreateComment;
-  isLoading$;
-  @ViewChild('textVar') textElRef: ElementRef;
-  @ViewChild('authorVar') authorElRef: ElementRef;
-  @ViewChild('sourceVar') sourceElRef: ElementRef;
+  quoteForm;
+
+  private componentDestroyed = new Subject();
+  private initFormFlag = false;
+
   constructor(
     private quoteStoreService: QuoteStoreService,
     private topicStoreService: TopicStoreService,
@@ -49,22 +49,36 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdref: ChangeDetectorRef,
     private titleService: Title,
     private dialogService: DialogService,
-    private loginApi: LoginApi
+    private loginApi: LoginApi,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
     this.isLoading$ = this.quoteStoreService.isLoading$;
-    this.actionsSubscription = Observable.combineLatest(
+    this.authors$ = this.quoteStoreService.authorSuggestions$;
+    this.sources$ = this.quoteStoreService.sourceSuggestions$;
+    this.comments$ = this.quoteStoreService.comments$;
+
+    this.quoteStoreService.getSuggestions();
+    this.quoteForm = this.fb.group({
+      text: '',
+      author: '',
+      source: ''
+    });
+
+    Observable.combineLatest(
       this.route.params.filter(params => !!params['id']),
       this.route.params.filter(params => !!params['topicId']),
       (quoteIdParams, topicIdParams) => {
+
         this.topicStoreService.get(+topicIdParams['topicId']);
         this.quoteStoreService.getById(+quoteIdParams['id']);
         this.quoteStoreService.getComments(+quoteIdParams['id']);
-      }
-    ).subscribe();
 
-    this.dataSubscription = Observable.combineLatest(
+      }
+    ).takeUntil(this.componentDestroyed).subscribe();
+
+    Observable.combineLatest(
       this.quoteStoreService.currentQuote$,
       this.topicStoreService.currentTopic$,
       (quote, topic) => {
@@ -74,59 +88,48 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.titleService.setTitle(
             `Quote Details: ${quote.text.substring(0, 60)}...`
           );
+          if (!this.initFormFlag) {
+            this.initForm(quote);
+          }
         }
         if (topic) {
           this.topic = topic;
           this.newComment = this.getEmptyComment();
         }
       }
-    ).subscribe();
-
-    this.authors$ = this.quoteStoreService.authorSuggestions$;
-    this.sources$ = this.quoteStoreService.sourceSuggestions$;
-    this.comments$ = this.quoteStoreService.comments$;
-
-    this.quoteStoreService.getSuggestions();
+    ).takeUntil(this.componentDestroyed).subscribe();
   }
 
   ngAfterViewInit() {
-    if (!this.textElRef && !this.authorElRef && !this.sourceElRef) {
-      return;
-    }
     this.ngzone.runOutsideAngular(() => {
-      Observable.fromEvent(this.textElRef.nativeElement, 'keyup')
-        .debounceTime(1000)
-        .subscribe((keyboardEvent: any) => {
-          if (keyboardEvent.keyCode === 9) {
-            return;
-          }
-          this.updateQuote(this.updateObject);
-          this.cdref.detectChanges();
-        });
-      Observable.fromEvent(this.authorElRef.nativeElement, 'keyup')
-        .debounceTime(1000)
-        .subscribe((keyboardEvent: any) => {
-          if (keyboardEvent.keyCode === 9) {
-            return;
-          }
-          this.updateQuote(this.updateObject);
-          this.cdref.detectChanges();
-        });
-      Observable.fromEvent(this.sourceElRef.nativeElement, 'keyup')
-        .debounceTime(1000)
-        .subscribe((keyboardEvent: any) => {
-          if (keyboardEvent.keyCode === 9) {
-            return;
-          }
-          this.updateQuote(this.updateObject);
-          this.cdref.detectChanges();
-        });
+      [this.quoteForm.get('text'),
+      this.quoteForm.get('author'),
+      this.quoteForm.get('source')]
+        .forEach(field => {
+          field.valueChanges
+            .skip(1)
+            .debounceTime(1000)
+            .takeUntil(this.componentDestroyed)
+            .subscribe((val) => {
+              this.updateQuote(Object.assign({}, this.updateObject, this.quoteForm.value));
+              this.cdref.detectChanges();
+            });
+        })
     });
   }
 
   ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
-    this.dataSubscription.unsubscribe();
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
+  }
+
+  initForm(quote) {
+    this.quoteForm.setValue({
+      text: quote.text,
+      author: quote.author,
+      source: quote.source
+    });
+    this.initFormFlag = true;
   }
 
   updateQuote(quote) {

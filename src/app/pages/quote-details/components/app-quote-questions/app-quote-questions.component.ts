@@ -1,18 +1,26 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { AppQuestionsBrowserComponent} from '../app-questions-browser/app-questions-browser.component';
+import { AppQuestionsBrowserComponent } from '../app-questions-browser/app-questions-browser.component';
 
 @Component({
   selector: 'app-quote-questions',
   templateUrl: './app-quote-questions.component.html',
-  styleUrls: ['./app-quote-questions.component.scss']
+  styleUrls: ['./app-quote-questions.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppQuoteQuestionsComponent implements OnInit {
   @Input() questions;
   @Output() update = new EventEmitter();
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onRemove(questionToRemove) {
     const questions = this.questions.filter(
@@ -28,7 +36,7 @@ export class AppQuoteQuestionsComponent implements OnInit {
       height: '80%'
     };
     const dialogRef = this.dialog.open(AppQuestionsBrowserComponent, config);
-     dialogRef.componentInstance.selectedQuestions = this.questions;
+    dialogRef.componentInstance.selectedQuestions = this.questions;
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.update.emit(result);
