@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
 import { TopicStoreService, QuoteStoreService } from '../../common/store';
@@ -18,15 +18,12 @@ import { AppImportFileComponent } from '../../_shared/components/app-import-file
 export class QuotesComponent implements OnInit, OnDestroy {
   @HostBinding('class') classes = `quotes ${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   quotesMenu;
-  actionsSubscription: Subscription;
-  topicSubscription: Subscription;
   currentTopicId;
   currentTopic: Topic;
-  importSpinnerSubscription: Subscription;
   importDialogRef;
   isLoading$;
-  quotesSubscription;
   quotes;
+  private componentDestroyed = new Subject();
   constructor(
     private topicStoreService: TopicStoreService,
     private quoteStoreService: QuoteStoreService,
@@ -38,22 +35,25 @@ export class QuotesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading$ = this.quoteStoreService.isLoading$;
-    this.actionsSubscription = this.route.params
+    
+    this.route.params
       .filter(params => !!params['topicId'])
       .map(idParams => {
         this.currentTopicId = idParams['topicId'];
         this.topicStoreService.get(this.currentTopicId);
         this.quoteStoreService.getByTopicId(+idParams['topicId']);
       })
-      .subscribe();
+      .takeUntil(this.componentDestroyed).subscribe();
 
-    this.topicSubscription = this.topicStoreService.currentTopic$
+    this.topicStoreService.currentTopic$
+      .takeUntil(this.componentDestroyed)
       .subscribe(currentTopic => {
         this.currentTopic = Object.assign({}, currentTopic);
         this.titleService.setTitle(`Quotes: ${this.currentTopic.name}`);
       });
 
-    this.importSpinnerSubscription = this.quoteStoreService.isImporting$
+    this.quoteStoreService.isImporting$
+      .takeUntil(this.componentDestroyed)
       .subscribe(importSpinner => {
         if (importSpinner) {
           this.importDialogRef.componentInstance.importSpinner = importSpinner;
@@ -62,15 +62,14 @@ export class QuotesComponent implements OnInit, OnDestroy {
           this.importDialogRef.close();
         }
       });
-    this.quotesSubscription = this.quoteStoreService.quotesByTopic$
+    this.quoteStoreService.quotesByTopic$
+      .takeUntil(this.componentDestroyed)
       .subscribe(quotes => (this.quotes = quotes));
   }
 
   ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
-    this.topicSubscription.unsubscribe();
-    this.importSpinnerSubscription.unsubscribe();
-    this.quotesSubscription.unsubscribe();
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
   }
 
   goToCreateQuote() {

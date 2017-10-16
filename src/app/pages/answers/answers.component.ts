@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Store } from '@ngrx/store';
+
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
 import appConstants from '../../common/app-constants';
@@ -35,15 +35,14 @@ export class AnswersComponent implements OnInit, OnDestroy {
   @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   question;
   currentQuestionId;
-  actionsSubscription: Subscription;
-  currentQuestionSubscription: Subscription;
-  groupedAnswersSubscription: Subscription;
   nextQuestionId: number;
   prevQuestionId: number;
   openModal = false;
   isLoading$;
   answers;
   questionMenu;
+  private componentDestroyed = new Subject();
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -58,19 +57,22 @@ export class AnswersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading$ = this.answerStoreService.isLoading$;
     this.answerStoreService.openIndexedDb();
-    this.actionsSubscription =
-      Observable.combineLatest(
-        this.route.params.filter(params => !!params['questionId']),
-        this.answerStoreService.isIndexedDbOpen$,
-        ((idParams, isDbOpen) => {
-          this.currentQuestionId = idParams['questionId'];
-          if (isDbOpen) {
-            this.answerStoreService.getAnswers(+this.currentQuestionId);
-          }
-          this.questionStoreService.getQuestion(+idParams['questionId']);
-        })).subscribe();
 
-    this.currentQuestionSubscription = this.questionStoreService.currentQuestion$
+    Observable.combineLatest(
+      this.route.params.filter(params => !!params['questionId']),
+      this.answerStoreService.isIndexedDbOpen$,
+      ((idParams, isDbOpen) => {
+        this.currentQuestionId = idParams['questionId'];
+        if (isDbOpen) {
+          this.answerStoreService.getAnswers(+this.currentQuestionId);
+        }
+        this.questionStoreService.getQuestion(+idParams['questionId']);
+      }))
+      .takeUntil(this.componentDestroyed)
+      .subscribe();
+
+    this.questionStoreService.currentQuestion$
+      .takeUntil(this.componentDestroyed)
       .subscribe(question => {
         this.question = question;
         this.titleService.setTitle(`Answers ${question.text}`);
@@ -81,7 +83,8 @@ export class AnswersComponent implements OnInit, OnDestroy {
           this.prevQuestionId = this.getPrevQuestion(currentQuestionIndex);
         }
       });
-    this.groupedAnswersSubscription = this.answerStoreService.groupedAnswers$
+    this.answerStoreService.groupedAnswers$
+      .takeUntil(this.componentDestroyed)
       .subscribe(answers => {
         if (answers.constructor === Array) {
           this.answers = answers;
@@ -90,9 +93,8 @@ export class AnswersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
-    this.currentQuestionSubscription.unsubscribe();
-    this.groupedAnswersSubscription.unsubscribe();
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
   }
 
   @HostListener('document:keyup', ['$event'])

@@ -30,6 +30,7 @@ export class QuestionSetsComponent implements OnInit, OnDestroy {
     this.questionSets$ = this.questionSetStoreService.sortedQuestionSets$;
     this.searchTerm$ = this.questionSetStoreService.searchTerm$;
     this.filter$ = this.questionSetStoreService.filter$;
+    this.isLoading$ = this.questionSetStoreService.isLoading$;
 
     this.filteredList$ = Observable.combineLatest(
       this.questionSets$,
@@ -50,7 +51,7 @@ export class QuestionSetsComponent implements OnInit, OnDestroy {
           : filteredQuestionSets;
       }
     );
-    this.isLoading$ = this.questionSetStoreService.isLoading$;
+
   }
 
   get all() {

@@ -1,11 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import appConstants from '../../../../common/app-constants';
 
 @Component({
   selector: 'app-question-sets-list',
   templateUrl: './app-question-sets-list.component.html',
-  styleUrls: ['./app-question-sets-list.component.scss']
+  styleUrls: ['./app-question-sets-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppQuestionSetsListComponent implements OnInit {
   @Input() questionSets;

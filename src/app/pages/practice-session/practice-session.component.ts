@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 
 import { QuestionSet, Quote } from '../../common/models';
 import appConstants from '../../common/app-constants';
@@ -24,8 +24,6 @@ import { AnswerStoreService, QuestionSetStoreService, QuoteStoreService } from '
 export class PracticeSessionComponent implements OnInit, OnDestroy {
   displayQuestion = true;
   currentQuestionSet: QuestionSet;
-  actionsSubscription: Subscription;
-  qsSubscription: Subscription;
   currentQuestionIndex = 0;
   currentQuestion;
   currentQuote: Observable<Quote>;
@@ -34,6 +32,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   private configOptions: SessionOptions = <SessionOptions>{};
   private sessionTimer;
   private isSessionMode = false;
+  private componentDestroyed = new Subject();
   constructor(
     private questionSetStoreService: QuestionSetStoreService,
     private quoteStoreService: QuoteStoreService,
@@ -49,36 +48,30 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.actionsSubscription = this.route.params
+    this.answerStoreService.openIndexedDb();
+
+    this.route.params
       .filter(params => !!params['questionSetId'])
       .map(idParams => this.questionSetStoreService.get(idParams['questionSetId']))
+      .takeUntil(this.componentDestroyed)
       .subscribe();
 
-    this.qsSubscription = this.questionSetStoreService.currentQuestionSet$
+    this.questionSetStoreService.currentQuestionSet$
+      .take(2)
       .subscribe(currentQuestionSet => {
         this.currentQuestionSet = <QuestionSet>Object.assign({}, currentQuestionSet);
         this.titleService.setTitle(`${this.currentQuestionSet.name} practice`);
-        this.questionsNo = this.currentQuestionSet.questions
-          ? this.currentQuestionSet.questions.length
-          : 0;
-        if (
-          this.configOptions &&
-          this.configOptions.shuffleQuestions &&
-          this.questionsNo
-        ) {
-          this.currentQuestionSet.questions = this.shuffle(
-            this.currentQuestionSet.questions
-          );
-        }
-        this.setCurrentQuestion();
-        this.isSessionMode = true;
+        this.initSession();
       });
-    this.answerStoreService.openIndexedDb();
+
   }
 
   ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
-    this.qsSubscription.unsubscribe();
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
+    if (this.sessionTimer) {
+      clearTimeout(this.sessionTimer);
+    }
   }
 
   canDeactivate() {
@@ -87,6 +80,23 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
     }
 
     return true;
+  }
+
+  initSession() {
+    this.questionsNo = this.currentQuestionSet.questions
+      ? this.currentQuestionSet.questions.length
+      : 0;
+    if (
+      this.configOptions &&
+      this.configOptions.shuffleQuestions &&
+      this.questionsNo
+    ) {
+      this.currentQuestionSet.questions = this.shuffle(
+        this.currentQuestionSet.questions
+      );
+    }
+    this.setCurrentQuestion();
+    this.isSessionMode = true;
   }
 
   setCurrentQuestion() {

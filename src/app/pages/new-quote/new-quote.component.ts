@@ -36,17 +36,18 @@ export class NewQuoteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading$ = this.quoteStoreService.isLoading$;
+    this.authors$ = this.quoteStoreService.authorSuggestions$;
+    this.sources$ = this.quoteStoreService.sourceSuggestions$;
+    this.topic$ = this.topicStoreService.currentTopic$;
+
+    this.quoteStoreService.getSuggestions();
+
     this.actionsSubscription = this.route.params
       .filter(params => !!params['topicId'])
       .subscribe(topicIdParams => {
         this.quote.topic = parseInt(topicIdParams['topicId'], 10);
         this.topicStoreService.get(this.quote.topic);
       });
-    this.authors$ = this.quoteStoreService.authorSuggestions$;
-    this.sources$ = this.quoteStoreService.sourceSuggestions$;
-    this.topic$ = this.topicStoreService.currentTopic$;
-
-    this.quoteStoreService.getSuggestions();
   }
 
   ngOnDestroy() {

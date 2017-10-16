@@ -5,7 +5,8 @@ import {
   Input,
   SimpleChanges,
   Output,
-  EventEmitter
+  EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/startWith';
@@ -14,7 +15,8 @@ import 'rxjs/add/operator/map';
 @Component({
   selector: 'app-associate-question-set',
   templateUrl: './app-associate-question-set.component.html',
-  styleUrls: ['./app-associate-question-set.component.scss']
+  styleUrls: ['./app-associate-question-set.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppAssociateQuestionSetComponent implements OnInit, OnChanges {
   @Input() questionSets;

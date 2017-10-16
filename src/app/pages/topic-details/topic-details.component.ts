@@ -12,9 +12,8 @@ import {
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 
 import appConstants from '../../common/app-constants';
 import { TopicStoreService, QuestionSetStoreService } from '../../common/store';
@@ -29,10 +28,9 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   currentTopic: Topic;
   questionSets$;
-  actionsSubscription: Subscription;
-  topicSubscription: Subscription;
   updateObject = <Topic>{ name: '', description: '' };
   isLoading$;
+  private componentDestroyed = new Subject();
   @ViewChild('nameInput') nameElRef: ElementRef;
   @ViewChild('descriptionInput') descriptionElRef: ElementRef;
   constructor(
@@ -48,23 +46,24 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.actionsSubscription = this.route.params
+    this.isLoading$ = this.topicStoreService.isLoading$;
+    this.questionSetStoreService.getAll();
+    this.questionSets$ = this.questionSetStoreService.questionsSets$;
+
+    this.route.params
       .filter(params => !!params['id'])
       .map(idParams => this.topicStoreService.get(idParams['id']))
+      .takeUntil(this.componentDestroyed)
       .subscribe();
 
-    this.topicSubscription = this.topicStoreService.currentTopic$
+    this.topicStoreService.currentTopic$
       .filter(currentTopic => !!currentTopic)
+      .takeUntil(this.componentDestroyed)
       .subscribe(currentTopic => {
         this.currentTopic = <Topic>currentTopic;
         this.titleService.setTitle(`${this.currentTopic.name} details`);
         this.updateObject = Object.assign({}, currentTopic);
       });
-
-    this.isLoading$ = this.topicStoreService.isLoading$;
-    this.questionSetStoreService.getAll();
-    this.questionSets$ = this.questionSetStoreService.questionsSets$;
-
   }
 
   ngAfterViewInit() {
@@ -72,29 +71,24 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
     this.ngzone.runOutsideAngular(() => {
-      Observable.fromEvent(this.nameElRef.nativeElement, 'keyup')
-        .debounceTime(1000)
-        .subscribe((keyboardEvent: any) => {
-          if (keyboardEvent.keyCode === 9) {
-            return;
-          }
-          this.updateTopic();
-          this.cdref.detectChanges();
-        });
-      Observable.fromEvent(this.descriptionElRef.nativeElement, 'keyup')
-        .debounceTime(1000)
-        .subscribe((keyboardEvent: any) => {
-          if (keyboardEvent.keyCode === 9) {
-            return;
-          }
-          this.updateTopic();
-          this.cdref.detectChanges();
-        });
+      [this.nameElRef, this.descriptionElRef].forEach(field => {
+        Observable.fromEvent(field.nativeElement, 'keyup')
+          .debounceTime(1000)
+          .takeUntil(this.componentDestroyed)
+          .subscribe((keyboardEvent: any) => {
+            if (keyboardEvent.keyCode === appConstants.keyCodes.TAB) {
+              return;
+            }
+            this.updateTopic();
+            this.cdref.detectChanges();
+          });
+      });
     });
   }
+
   ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
-    this.topicSubscription.unsubscribe();
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
   }
 
   updateTopic() {

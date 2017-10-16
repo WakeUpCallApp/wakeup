@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnDestroy, HostBinding } from '@angular/core';
 import { LoginApi } from 'app/common/services';
 import appConstants from '../../common/app-constants';
 
@@ -7,18 +7,20 @@ import appConstants from '../../common/app-constants';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnDestroy {
   @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   oldPassword;
   newPassword;
   errorMessage;
+  private apiSubscription;
   constructor(private loginApi: LoginApi) { }
 
-  ngOnInit() {
+  ngOnDestroy() {
+    if (this.apiSubscription) { this.apiSubscription.unsubscribe() };
   }
 
   updatePassword() {
-    this.loginApi
+    this.apiSubscription = this.loginApi
       .changePassword(this.oldPassword, this.newPassword)
       .subscribe(() => { }, () => {
         this.errorMessage = 'incorrect password';

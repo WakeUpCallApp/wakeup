@@ -3,21 +3,23 @@ import {
   OnInit,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 @Component({
   selector: 'app-answers-list',
   templateUrl: './app-answers-list.component.html',
-  styleUrls: ['./app-answers-list.component.scss']
+  styleUrls: ['./app-answers-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppAnswersListComponent implements OnInit, OnChanges {
   @Input() answers;
   currentGroup;
   i = 0;
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.answers) {
