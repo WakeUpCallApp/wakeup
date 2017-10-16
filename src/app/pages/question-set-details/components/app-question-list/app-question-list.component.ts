@@ -1,9 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 @Component({
   selector: 'app-question-list',
   templateUrl: './app-question-list.component.html',
-  styleUrls: ['./app-question-list.component.scss']
+  styleUrls: ['./app-question-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppQuestionListComponent implements OnInit {
   @Input() questions;

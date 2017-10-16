@@ -15,7 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 
 import {
   AppQuotesBrowserComponent,
@@ -40,15 +40,13 @@ export class QuestionSetDetailsComponent
   @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   currentQuestionSet: QuestionSet;
   newQuestion: IQuestion;
-  actionsSubscription: Subscription;
-  qsSubscription: Subscription;
   updateObject;
-  importSpinnerSubscription: Subscription;
   importDialogRef;
   isLoading$;
   appMenu;
   @ViewChild('nameInput') nameElRef: ElementRef;
   @ViewChild('descriptionInput') descriptionElRef: ElementRef;
+  private componentDestroyed = new Subject();
   constructor(
     private sessionConfigService: SessionConfigService,
     private questionSetStoreService: QuestionSetStoreService,
@@ -63,12 +61,14 @@ export class QuestionSetDetailsComponent
   ) { }
 
   ngOnInit() {
-    this.actionsSubscription = this.route.params
+    this.isLoading$ = this.questionSetStoreService.isLoading$;
+    this.route.params
       .filter(params => !!params['id'])
       .map(idParams => this.questionSetStoreService.get(idParams['id']))
-      .subscribe();
+      .takeUntil(this.componentDestroyed).subscribe();
 
-    this.qsSubscription = this.questionSetStoreService.currentQuestionSet$
+    this.questionSetStoreService.currentQuestionSet$
+      .takeUntil(this.componentDestroyed)
       .subscribe(currentQuestionSet => {
         this.currentQuestionSet = <QuestionSet>currentQuestionSet;
         this.titleService.setTitle(`${this.currentQuestionSet.name} details`);
@@ -76,7 +76,8 @@ export class QuestionSetDetailsComponent
         this.newQuestion = this.getEmptyQuestion();
       });
 
-    this.importSpinnerSubscription = this.questionSetStoreService.isImporting$
+    this.questionSetStoreService.isImporting$
+      .takeUntil(this.componentDestroyed)
       .subscribe(importSpinner => {
         if (importSpinner) {
           this.importDialogRef.componentInstance.importSpinner = importSpinner;
@@ -85,7 +86,7 @@ export class QuestionSetDetailsComponent
           this.importDialogRef.close();
         }
       });
-    this.isLoading$ = this.questionSetStoreService.isLoading$;
+
   }
 
   ngAfterViewInit() {
@@ -93,31 +94,24 @@ export class QuestionSetDetailsComponent
       return;
     }
     this.ngzone.runOutsideAngular(() => {
-      Observable.fromEvent(this.nameElRef.nativeElement, 'keyup')
-        .debounceTime(1000)
-        .subscribe((keyboardEvent: any) => {
-          if (keyboardEvent.keyCode === 9) {
-            return;
-          }
-          this.updateQuestionSet();
-          this.cdref.detectChanges();
-        });
-      Observable.fromEvent(this.descriptionElRef.nativeElement, 'keyup')
-        .debounceTime(1000)
-        .subscribe((keyboardEvent: any) => {
-          if (keyboardEvent.keyCode === 9) {
-            return;
-          }
-          this.updateQuestionSet();
-          this.cdref.detectChanges();
-        });
+      [this.nameElRef, this.descriptionElRef].forEach(field => {
+        Observable.fromEvent(field.nativeElement, 'keyup')
+          .debounceTime(1000)
+          .takeUntil(this.componentDestroyed)
+          .subscribe((keyboardEvent: any) => {
+            if (keyboardEvent.keyCode === appConstants.keyCodes.TAB) {
+              return;
+            }
+            this.updateQuestionSet();
+            this.cdref.detectChanges();
+          });
+      });
     });
   }
 
   ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
-    this.qsSubscription.unsubscribe();
-    this.importSpinnerSubscription.unsubscribe();
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
   }
 
   updateQuestionSet() {

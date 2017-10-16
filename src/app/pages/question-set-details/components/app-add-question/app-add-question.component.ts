@@ -1,19 +1,27 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  EventEmitter,
+  Output,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AppQuotesBrowserComponent } from '../app-quotes-browser/app-quotes-browser.component';
 
 @Component({
   selector: 'app-add-question',
   templateUrl: './app-add-question.component.html',
-  styleUrls: ['./app-add-question.component.scss']
+  styleUrls: ['./app-add-question.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppAddQuestionComponent implements OnInit {
   @Input() question;
   @Output() create = new EventEmitter();
   selectedQuoteText;
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   handleClick() {
     this.create.emit(this.question);
