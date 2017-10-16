@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { Title } from '@angular/platform-browser';
-import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs/Subject';
 
 import { LoginApi } from './common/services/api/login.api';
 import { AuthTokenService } from './common/services/authToken.service';
@@ -17,8 +17,8 @@ import { LoginStoreService } from './common/store';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  public isOpen = false;
-
+  isOpen = false;
+  private componentDestroyed = new Subject();
   constructor(
     private router: Router,
     public loginApi: LoginApi,
@@ -31,23 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .map(() => this.activatedRoute)
-      .map(route => {
-        while (route.firstChild) {
-          route = route.firstChild;
-        }
-        return route;
-      })
-      .filter(route => route.outlet === 'primary')
-      .mergeMap(route => route.data)
-      .subscribe(event => {
-        const title = event['title'];
-        if (title) {
-          this.titleService.setTitle(title);
-        }
-      });
+    this.setDocumentTitle();
 
     addEvent(window, 'resize', e => {
       if (this.isOpen) {
@@ -55,15 +39,18 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.notificationService.subj_notification.subscribe(
+    this.notificationService.subj_notification
+      .takeUntil(this.componentDestroyed)
+      .subscribe(
       (notification: any) => {
         this.openSnackBar(notification);
-      }
-    );
+      });
   }
 
   ngOnDestroy() {
     window.document.removeEventListener('resize');
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
   }
 
   openMenu(isOpen) {
@@ -98,5 +85,26 @@ export class AppComponent implements OnInit, OnDestroy {
     conf.duration = 10000;
     conf.extraClasses = [config.extraClass];
     this.snackBar.open(message, action, conf);
+  }
+
+  setDocumentTitle() {
+    this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .map(() => this.activatedRoute)
+      .map(route => {
+        while (route.firstChild) {
+          route = route.firstChild;
+        }
+        return route;
+      })
+      .filter(route => route.outlet === 'primary')
+      .mergeMap(route => route.data)
+      .takeUntil(this.componentDestroyed)
+      .subscribe(event => {
+        const title = event['title'];
+        if (title) {
+          this.titleService.setTitle(title);
+        }
+      });
   }
 }
