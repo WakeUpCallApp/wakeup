@@ -1,28 +1,20 @@
 # Wakeupcall
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.4.
+This app can be used either as a guided journaling experience, or for personal inquiring. 
 
-## Development server
+It can also serve as a meditation practice, allowing you to set the amount of minutes you would like to be prompted with a question, during a practice session.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Available:
+1. Default topics and question sets
+2. Create and manage your own topics and questions sets based on your interests,
+4. Practice Question Sets, with configuration options for the session allowing you to specify the time interval for being prompted with a question,
+5. Add quotes to topics for more inspiration, and associate quotes to questions, for greater impact during practice sessions.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+The application can be found at: https://wakeup-call-app.herokuapp.com. 
+You can create a new account or connect through google+. 
+For best experience use with Google Chrome browser.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+What you should know:
+ - the app is still in development
+ - currently the answers are stored in your browser storage, they are not synchronized accross devices, and can be deleted when clearing browser cookies.
