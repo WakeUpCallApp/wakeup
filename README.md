@@ -1,5 +1,5 @@
-# Wakeupcall
-
+#  Wakeupcall 
+<img width="100px" height="70px" src="https://raw.githubusercontent.com/WakeUpCallApp/wakeup/master/src/favicon.ico"/>
 This app can be used either as a guided journaling experience, or for personal inquiring. 
 
 It can also serve as a meditation practice, allowing you to set the amount of minutes you would like to be prompted with a question, during a practice session.
@@ -12,7 +12,7 @@ Available:
 
 
 The application can be found at: https://wakeup-call-app.herokuapp.com. 
-You can create a new account or connect through google+. 
+
 For best experience use with Google Chrome browser.
 
 What you should know:
