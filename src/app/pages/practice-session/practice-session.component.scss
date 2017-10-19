@@ -5,11 +5,13 @@
   top: 0%;
   left: 0%;
   width: 100%;
-  height: 100%;
   background-image: url(../../../assets/images/pathToHeart.jpg);
   background-repeat: repeat-x;
   background-size: cover;
   background-position: -327px 0px;
+  @media(min-width: 1500px)  {
+    height: 100%;
+  }
 }
 
 .endSessionButton {
@@ -32,9 +34,11 @@
     background-color: white;
     padding: 26px;
     margin: 16px;
+    margin-top: 86px;
+    margin-bottom: 86px;
     display: flex;
     flex-direction: column;
-    width: 500px;
+    max-width: 500px;
     box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42),
       0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
     border-radius: 26px;
@@ -49,6 +53,8 @@
     margin-bottom: 16px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding-bottom: 8px;
+    max-height: 400px;
+    overflow: auto;
   }
   .questionText {
     margin-top: 16px;
