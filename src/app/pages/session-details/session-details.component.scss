@@ -23,6 +23,13 @@
   .name {
     font-weight: bold;
     margin-bottom: 8px;
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    a:hover {
+      color: $accent;
+    }
   }
   .quote {
     padding: 16px;

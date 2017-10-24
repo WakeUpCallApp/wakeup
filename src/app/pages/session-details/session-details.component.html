@@ -9,7 +9,7 @@
   </div>
   <div class="card-body">
     <div class="question" *ngFor="let question of sessionData$ | async; let i = index">
-      <div class="name">{{i+1}}. {{question.text}}</div>
+      <div class="name"><a matTooltip="See Answers" [routerLink]="['/answers', question._id]">{{i+1}}. {{question.text}}</a></div>
       <div class="quote" *ngIf="question.quote">
         <a [routerLink]="['/quoteDetails', question.quote._id, question.quote.topic]" matTooltip="See Quote">
             &#34;{{question.quote?.text}}&#34;
