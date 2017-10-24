@@ -35,7 +35,7 @@ export class AnswersIndexedDbApi {
             }
             request.onupgradeneeded = this.upgradeCallback;
         });
-        return dbObservable.share();
+        return dbObservable.shareReplay();
     }
 
     upgradeCallback(e) {

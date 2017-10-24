@@ -181,6 +181,7 @@ export class QuestionSetEffects {
     questionSetActions.ActionTypes.EDIT_QUESTION_SUCCESS,
     questionSetActions.ActionTypes.DELETE_QUESTION_SUCCESS,
     questionSetActions.ActionTypes.REGISTER_SESSION_SUCCESS,
+    questionSetActions.ActionTypes.IMPORT_QUESTIONS_SUCCESS,
     loginActions.ActionTypes.LOGOUT
     )
     .map(() => {
