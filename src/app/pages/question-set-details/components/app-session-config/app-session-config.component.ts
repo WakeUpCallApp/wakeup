@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { SessionOptions } from '../../../../common/services/session-config.service';
+import { SessionOptions } from '@app/common';
 @Component({
   selector: 'app-session-config',
   templateUrl: './app-session-config.component.html',

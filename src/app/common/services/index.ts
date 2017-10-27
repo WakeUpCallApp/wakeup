@@ -1,5 +1,5 @@
 export { AuthTokenService } from './authToken.service';
-export { SessionConfigService } from './session-config.service';
+export { SessionConfigService, SessionOptions } from './session-config.service';
 export { FileParsingService } from './file-parsing';
 export { NotificationService } from './notification.service';
 export { DialogService } from './dialog.service';

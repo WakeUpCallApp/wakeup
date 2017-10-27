@@ -12,14 +12,17 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
-import appConstants from '../../common/app-constants';
+
 import { AppAnswerDialogComponent } from './components/app-answer-dialog/app-answer-dialog.component';
-import { DialogService, AuthTokenService } from '../../common/services';
+
 import {
   AnswerStoreService,
-  QuestionStoreService
-} from '../../common/store';
-import { QuestionSet } from '../../common/models';
+  QuestionStoreService,
+  QuestionSet,
+  DialogService,
+  AuthTokenService
+} from '@app/common';
+import appConstants from '@app/common/app-constants';
 
 enum KEY_CODE {
   RIGHT_ARROW = 39,

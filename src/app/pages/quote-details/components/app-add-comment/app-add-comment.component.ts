@@ -6,7 +6,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { ICreateComment } from '../../../../common/models';
+import { ICreateComment } from '@app/common';
 
 @Component({
   selector: 'app-add-comment',

@@ -15,19 +15,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-
 import {
   AppQuotesBrowserComponent,
   AppSessionConfigComponent,
   AppEditQuestionDialogComponent
 } from './components';
-import { AppImportFileComponent } from '../../_shared/components/app-import-file/app-import-file.component';
-import { DialogService, SessionConfigService } from '../../common/services';
-import { SessionOptions } from '../../common/services/session-config.service';
-import { QuestionSet, IQuestion } from '../../common/models';
-import { QuestionSetStoreService } from '../../common/store';
-
-import appConstants from '../../common/app-constants';
+import { AppImportFileComponent } from '@app/_shared/components';
+import {
+  DialogService,
+  SessionConfigService,
+  SessionOptions,
+  QuestionSet,
+  IQuestion,
+  QuestionSetStoreService
+} from '@app/common';
+import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-question-set-details',

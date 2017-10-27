@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 
-import { AuthenticationGuard } from '../common/guards/authentication.guard';
-import { CanDeactivateGuard } from '../common/guards/can-deactivate.guard';
-import { UserDetailResolver } from '../common/guards/user-details.resolver';
+import { AuthenticationGuard, CanDeactivateGuard, UserDetailResolver } from '@app/common';
+
 import { LandingComponent } from './landing/landing.component';
 import { QuestionSetsComponent } from './question-sets/question-sets.component';
 import { NewQuestionSetComponent } from './new-question-set/new-question-set.component';

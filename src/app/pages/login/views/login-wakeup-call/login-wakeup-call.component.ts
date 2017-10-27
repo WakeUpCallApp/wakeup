@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { LoginApi } from '../../../../common/services/api/login.api';
-import { AuthTokenService } from '../../../../common/services/authToken.service';
 import { Router } from '@angular/router';
-import appConstants from '../../../../common/app-constants';
+
+import appConstants from '@app/common/app-constants';
+
+import { LoginApi, AuthTokenService } from '@app/common';
+import { environment } from '@env/environment';
+
 import constants from '../../config/constants';
-import { environment } from '../../../../../environments/environment';
+
 
 @Component({
   selector: 'app-login-wakeup-call',

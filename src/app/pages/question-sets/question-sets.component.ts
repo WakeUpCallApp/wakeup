@@ -5,10 +5,9 @@ import {
   ChangeDetectionStrategy,
   HostBinding
 } from '@angular/core';
-import { QuestionSet } from '../../common/models/question-set.model';
 import { Observable } from 'rxjs/Observable';
-import { QuestionSetStoreService } from '../../common/store';
-import appConstants from '../../common/app-constants';
+import { QuestionSet, QuestionSetStoreService } from '@app/common';
+import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-question-sets',

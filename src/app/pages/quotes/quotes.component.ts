@@ -5,10 +5,14 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
-import { TopicStoreService, QuoteStoreService } from '../../common/store';
-import { Quote, Topic } from '../../common/models';
-import appConstants from '../../common/app-constants';
-import { AppImportFileComponent } from '../../_shared/components/app-import-file/app-import-file.component';
+import {
+  TopicStoreService,
+  QuoteStoreService,
+  Quote,
+  Topic
+} from '@app/common';
+import appConstants from '@app/common/app-constants';
+import { AppImportFileComponent } from '@app/_shared/components';
 
 @Component({
   selector: 'app-quotes',
@@ -35,7 +39,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading$ = this.quoteStoreService.isLoading$;
-    
+
     this.route.params
       .filter(params => !!params['topicId'])
       .map(idParams => {

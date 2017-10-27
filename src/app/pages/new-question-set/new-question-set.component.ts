@@ -1,9 +1,8 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
-import { IQuestionSet } from '../../common/models/question-set.model';
-
 import { Observable } from 'rxjs/Observable';
-import { QuestionSetStoreService } from '../../common/store';
-import appConstants from '../../common/app-constants';
+
+import { QuestionSetStoreService, IQuestionSet } from '@app/common';
+import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-new-question-set',

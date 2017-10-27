@@ -7,10 +7,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Topic } from '../../common/models/topic.model';
-import { TopicStoreService } from '../../common/store';
-
-import appConstants from '../../common/app-constants';
+import { TopicStoreService, Topic } from '@app/common';
+import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-topics',

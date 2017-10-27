@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { QuestionStoreService } from '../../../../common/store';
+import { QuestionStoreService } from '@app/common';
 import isEqual from 'lodash/isEqual';
 
 @Component({

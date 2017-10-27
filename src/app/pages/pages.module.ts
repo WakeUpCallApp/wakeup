@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '../_shared/shared.module';
+import { SharedModule } from '@app/_shared/shared.module';
 
 import { NewQuestionSetComponent } from './new-question-set/new-question-set.component';
 import { TopicsComponent } from './topics/topics.component';

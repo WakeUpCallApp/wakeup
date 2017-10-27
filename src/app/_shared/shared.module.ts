@@ -24,9 +24,8 @@ import {
   MatSlideToggleModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { AppCardComponent } from './components/app-card/app-card.component';
-import { AppImportFileComponent } from './components/app-import-file/app-import-file.component';
-import { AppConfirmDialogComponent } from './components/app-confirm-dialog/app-confirm-dialog.component';
+import { AppCardComponent, AppImportFileComponent, AppConfirmDialogComponent } from './components';
+
 @NgModule({
   imports: [
     CommonModule,

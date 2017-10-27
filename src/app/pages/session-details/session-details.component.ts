@@ -5,9 +5,12 @@ import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { QuestionSetStoreService, AnswerStoreService } from '../../common/store';
-import { QuestionSet } from '../../common/models/question-set.model';
-import appConstants from '../../common/app-constants';
+import {
+  QuestionSetStoreService,
+  AnswerStoreService,
+  QuestionSet
+} from '@app/common';
+import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-session-details',

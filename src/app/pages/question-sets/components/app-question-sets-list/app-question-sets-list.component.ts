@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import appConstants from '../../../../common/app-constants';
+import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-question-sets-list',
@@ -10,9 +10,9 @@ import appConstants from '../../../../common/app-constants';
 })
 export class AppQuestionSetsListComponent implements OnInit {
   @Input() questionSets;
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   startQuestionSet(e, questionSet) {
     e.preventDefault();

@@ -15,10 +15,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
-import appConstants from '../../common/app-constants';
-import { TopicStoreService, QuestionSetStoreService } from '../../common/store';
-import { Topic } from '../../common/models/topic.model';
-import { DialogService } from '../../common/services/dialog.service';
+import appConstants from '@app/common/app-constants';
+import {
+  TopicStoreService,
+  QuestionSetStoreService,
+  Topic,
+  DialogService
+} from '@app/common';
+
 @Component({
   selector: 'app-topic-details',
   templateUrl: './topic-details.component.html',

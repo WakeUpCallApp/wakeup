@@ -5,16 +5,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { QuestionSet, Quote } from '../../common/models';
-import appConstants from '../../common/app-constants';
+
+import appConstants from '@app/common/app-constants';
 
 import {
+  AnswerStoreService,
+  QuestionSetStoreService,
+  QuoteStoreService,
+  LoginApi,
   SessionConfigService,
-  SessionOptions
-} from '../../common/services/session-config.service';
-
-import { LoginApi } from '../../common/services/api/login.api';
-import { AnswerStoreService, QuestionSetStoreService, QuoteStoreService } from '../../common/store';
+  SessionOptions,
+  QuestionSet,
+  Quote
+} from '@app/common';
 
 @Component({
   selector: 'app-practice-session',

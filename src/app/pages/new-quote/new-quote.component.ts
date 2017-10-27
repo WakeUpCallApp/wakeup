@@ -3,9 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { TopicStoreService, QuoteStoreService } from '../../common/store';
-import { Topic } from '../../common/models/topic.model';
-import appConstants from '../../common/app-constants';
+import { TopicStoreService, QuoteStoreService, Topic } from '@app/common';
+import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-new-quote',

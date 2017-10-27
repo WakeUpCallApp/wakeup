@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Topic, Quote } from '../../../../common/models';
-import { QuoteStoreService } from '../../../../common/store';
+import { Topic, Quote, QuoteStoreService } from '@app/common';
 
 @Component({
   selector: 'app-quotes-browser',

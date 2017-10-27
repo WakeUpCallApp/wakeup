@@ -12,12 +12,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Title } from '@angular/platform-browser';
-
-import { QuoteStoreService, TopicStoreService } from '../../common/store';
-import { Quote, ICreateComment, Topic } from '../../common/models';
-import { DialogService, LoginApi } from '../../common/services';
-import appConstants from '../../common/app-constants';
 import { FormBuilder } from '@angular/forms';
+import {
+  QuoteStoreService,
+  TopicStoreService,
+  Quote,
+  ICreateComment,
+  Topic,
+  DialogService,
+  LoginApi
+} from '@app/common';
+import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-quote-details',

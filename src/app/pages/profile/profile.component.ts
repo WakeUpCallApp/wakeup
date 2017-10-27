@@ -1,6 +1,6 @@
 import { Component, OnDestroy, HostBinding } from '@angular/core';
-import { LoginApi } from 'app/common/services';
-import appConstants from '../../common/app-constants';
+import { LoginApi } from '@app/common';
+import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-profile',

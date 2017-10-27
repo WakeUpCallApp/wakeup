@@ -1,7 +1,6 @@
 import { Component, HostBinding } from '@angular/core';
-import { ITopic } from '../../common/models/topic.model';
-import { TopicStoreService } from '../../common/store';
-import appConstants from '../../common/app-constants';
+import { ITopic, TopicStoreService } from '@app/common';
+import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-new-topic',
