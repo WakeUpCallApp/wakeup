@@ -150,6 +150,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   playQuestion() {
     this.displayQuestion = true;
     const sound = new Audio('../../../assets/sounds/Bell-ding.mp3');
+    sound.volume = 0.2;
     sound.play();
   }
 

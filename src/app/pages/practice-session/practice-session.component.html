@@ -1,9 +1,8 @@
 <div class="practiceSession">
-  <button matTooltip="End Session"  [matTooltipClass]="'tooltip'" class="endSessionButton" (click)="endQuestionSet()" mat-fab>
-      <i class="fa fa-power-off" aria-hidden="true"></i>
-    </button>
+  <button matTooltip="End Session" [matTooltipClass]="'tooltip'" class="endSessionButton" (click)="endQuestionSet()" mat-fab>
+    <i class="fa fa-power-off" aria-hidden="true"></i>
+  </button>
   <div class="content" *ngIf="displayQuestion">
-    <div class="header">{{(currentQuestionIndex+1)}}/{{questionsNo}}</div>
     <div class="questionInfo">
       <div class="questionText">{{currentQuestionIndex+1}}. {{currentQuestion?.text}}</div>
       <div class="quoteText" *ngIf="currentQuote">
@@ -16,6 +15,7 @@
         <textarea maxlength="5000" matInput rows="3" placeholder="Answer" [(ngModel)]="answerText"></textarea>
       </mat-input-container>
       <div class="actions">
+        <div class="noQuestions">{{(currentQuestionIndex+1)}}/{{questionsNo}}</div>
         <button mat-button (click)="setNextQuestion()">Skip</button>
         <button mat-button (click)="saveAnswer()" [disabled]="!answerText?.trim()" mat-raised-button class="saveButton">Save</button>
       </div>
