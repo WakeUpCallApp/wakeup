@@ -7,13 +7,15 @@
     "startProd": "ng build set NODE_ENV=production && node server/app.js",
     "build": "ng build",
     "sme":"./node_modules/.bin/source-map-explorer",
-    "test": "ng test",
+    "test": "ng test --browser ChromeHeadless --single-run",
+    "watch": "ng test --browser ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "dev": "nodemon server/app.js",
     "start": "node server/app.js",
     "startServerProduction": "ng build && node server/app.js",
-    "postinstall": "ng build --prod --build-optimizer",
+    "postinstall": "npm run prod",
+    "prod":"ng build --target production --build-optimizer --vendor-chunk",
     "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },
   "engines": {

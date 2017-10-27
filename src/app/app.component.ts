@@ -82,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   openSnackBar({ message, action = '', config }) {
     const conf = new MatSnackBarConfig();
-    conf.duration = 10000;
+    conf.duration = 8000;
     conf.extraClasses = [config.extraClass];
     this.snackBar.open(message, action, conf);
   }
