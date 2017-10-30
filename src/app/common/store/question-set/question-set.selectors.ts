@@ -12,7 +12,9 @@ export const getSortedQuestionSets = createSelector(getQuestionSets, () => { },
 export const getMostPlayedQuestionSets = (state: State): QuestionSet[] => {
   return state.entities.filter(qs => {
     return qs.practiceTimes > 0;
-  }).slice(0, 5).sort((a, b) => b.practiceTimes - a.practiceTimes);
+  })
+  .sort((a, b) => b.practiceTimes - a.practiceTimes)
+  .slice(0, 5);
 };
 
 export const getSearchTerm = (state: State): string =>
