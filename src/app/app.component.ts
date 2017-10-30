@@ -105,6 +105,9 @@ export class AppComponent implements OnInit, OnDestroy {
         if (title) {
           this.titleService.setTitle(title);
         }
+        if (this.isOpen) {
+          this.isOpen = false;
+        }
       });
   }
 }
