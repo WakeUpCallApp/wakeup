@@ -2,22 +2,6 @@
 .sessionDetails {
   min-height: 70vh;
 }
-
-.card-header {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  .title {
-    flex: 1;
-    word-wrap: break-word;
-    word-break: break-all;
-
-    small {
-      font-weight: bold;
-      color: $accent;
-    }
-  }
-}
 .question {
   margin-bottom: 26px;
   .name {

@@ -1,11 +1,5 @@
 @import "~../../common/constants";
 .newQuote {
-    .card-header {
-        small {
-            font-weight: bold;
-            color: $accent;
-        }
-    }
     .createQuoteForm {
         display: flex;
         flex-direction: column;

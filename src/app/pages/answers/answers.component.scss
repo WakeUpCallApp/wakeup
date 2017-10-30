@@ -2,23 +2,6 @@
 .answers-container {
   min-height: 70vh;
 }
-
-.card-header {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  .title {
-    flex: 1;
-    word-wrap: break-word;
-    word-break: break-all;
-  }
-  .actions {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-}
-
 .summary {
   display: flex;
   flex-direction: column;

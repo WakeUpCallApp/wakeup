@@ -28,3 +28,28 @@ mat-card-content {
     margin-top: 36px;
     font-size: 16px;
 }
+
+:host /deep/ .card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    .title {
+        flex: 1;
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    small {
+        font-weight: bold;
+        color: $accent;
+        margin-left: 8px;
+        margin-top: 8px;
+    }
+    @media (min-width: 650px) {
+        flex-direction: row;
+    }
+}

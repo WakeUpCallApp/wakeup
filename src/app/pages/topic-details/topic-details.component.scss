@@ -1,15 +1,5 @@
 @import "~../../common/constants";
 .summary {
-    .card-header {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        .title {
-            flex: 1;
-            word-wrap: break-word;
-            word-break: break-all;
-        }
-    }
     .editable {
         display: flex;
         flex-direction: column;
