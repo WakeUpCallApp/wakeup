@@ -6,7 +6,7 @@
     "ng": "ng",
     "startProd": "ng build set NODE_ENV=production && node server/app.js",
     "build": "ng build",
-    "sme":"./node_modules/.bin/source-map-explorer",
+    "sme": "./node_modules/.bin/source-map-explorer",
     "test": "ng test --browser ChromeHeadless --single-run",
     "watch": "ng test --browser ChromeHeadless",
     "lint": "ng lint",
@@ -15,7 +15,7 @@
     "start": "node server/app.js",
     "startServerProduction": "ng build && node server/app.js",
     "postinstall": "npm run prod",
-    "prod":"ng build --target production --build-optimizer --vendor-chunk",
+    "prod": "ng build --target production --build-optimizer --vendor-chunk",
     "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },
   "engines": {
@@ -37,6 +37,7 @@
     "@angular/platform-browser": "4.4.4",
     "@angular/platform-browser-dynamic": "4.4.4",
     "@angular/router": "4.4.4",
+    "@angular/service-worker": "^1.0.0-beta.16",
     "@ngrx/effects": "4.0.5",
     "@ngrx/store": "4.0.3",
     "@ngrx/store-devtools": "4.0.0",
