@@ -35,9 +35,10 @@ export class QuestionSetsComponent implements OnInit, OnDestroy {
       this.questionSets$,
       this.searchTerm$,
       this.filter$,
-      (questionSets, searchTerm, filter) => {
+      this.questionSetStoreService.mostPlayedQuestionSets$,
+      (questionSets, searchTerm, filter, mostPlayedQuestionSets) => {
         const filteredQuestionSets = filter === this.mostPlayed
-          ? questionSets.filter(questionSet => questionSet.practiceTimes > 0)
+          ? mostPlayedQuestionSets
           : questionSets;
 
         return searchTerm
