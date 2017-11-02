@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
+import { tap } from 'rxjs/operators';
 import { AuthTokenService } from '../authToken.service';
 import { User, Token } from '../../models/user.model';
 
@@ -24,31 +24,31 @@ export class LoginApi {
   signUp(userObject: User): Observable<User> {
     return this.http
       .post('/api/users', userObject)
-      .do((response: any) => {
+      .pipe(tap((response: any) => {
         this.authService.setToken(response.token);
         this.currentUser = this.authService.getUserInfo();
         return response;
-      });
+      }));
   }
 
   login(userObject: User): Observable<Token> {
     return this.http
       .post('/auth/local', userObject)
-      .do((response: any) => {
+      .pipe(tap((response: any) => {
         this.authService.setToken(response.token);
         this.currentUser = this.authService.getUserInfo();
         return response;
-      });
+      }));
   }
 
   getUserDetails(): Observable<User> {
     return this.http
       .get(this.identityUrl)
-      .do((currentUser: any) => {
+      .pipe(tap((currentUser: any) => {
         if (!!currentUser.name) {
           this.currentUser = currentUser;
         }
-      });
+      }));
   }
 
   logout() {

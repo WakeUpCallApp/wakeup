@@ -1,6 +1,6 @@
 {
-    "name": "wake-up-call",
-    "short_name": "wakeup",
+    "name": "wake-up-call app",
+    "short_name": "wakeup-call",
     "theme_color": "#4050b6",
     "background_color": "#ff9701",
     "display": "fullscreen",

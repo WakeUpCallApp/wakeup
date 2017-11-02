@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
+import { filter, map, take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 
 
@@ -54,13 +55,14 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
     this.answerStoreService.openIndexedDb();
 
     this.route.params
-      .filter(params => !!params['questionSetId'])
-      .map(idParams => this.questionSetStoreService.get(idParams['questionSetId']))
-      .takeUntil(this.componentDestroyed)
+      .pipe(
+      filter(params => !!params['questionSetId']),
+      map(idParams => this.questionSetStoreService.get(idParams['questionSetId'])),
+      takeUntil(this.componentDestroyed))
       .subscribe();
 
     this.questionSetStoreService.currentQuestionSet$
-      .take(2)
+      .pipe(take(2))
       .subscribe(currentQuestionSet => {
         this.currentQuestionSet = <QuestionSet>Object.assign({}, currentQuestionSet);
         this.titleService.setTitle(`${this.currentQuestionSet.name} practice`);

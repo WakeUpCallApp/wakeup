@@ -6,6 +6,8 @@ import { Store, Action } from '@ngrx/store';
 import * as reducers from '../app.store';
 
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import AppConstants from '../../app-constants';
 
 import * as quoteActions from './quote.actions';
@@ -28,86 +30,102 @@ export class QuoteEffects {
   @Effect()
   load$ = this.actions$
     .ofType(quoteActions.ActionTypes.LOAD)
-    .map((action: any) => action.payload)
-    .switchMap(() => this.quoteApi.all()
-      .map(result => new quoteActions.LoadActionSuccess(result)));
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(() => this.quoteApi.all()
+      .pipe(map(result => new quoteActions.LoadActionSuccess(result))))
+    );
 
   @Effect()
   getByTopic$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_BY_TOPIC_ID)
-    .map((action: any) => action.payload)
-    .switchMap(topicId => this.quoteApi.get(topicId)
-      .map(result => new quoteActions.GetByTopicIdActionSuccess(result)));
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(topicId => this.quoteApi.get(topicId)
+      .pipe(map(result => new quoteActions.GetByTopicIdActionSuccess(result))))
+    );
 
   @Effect()
   getById$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_BY_ID)
-    .map((action: any) => action.payload)
-    .switchMap(quoteId => this.quoteApi.getById(quoteId)
-      .map(result => new quoteActions.GetByIdActionSuccess(result))
-      .catch(error => Observable.of(new quoteActions.GetByIdActionError(error))));
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(quoteId => this.quoteApi.getById(quoteId)
+      .pipe(
+      map(result => new quoteActions.GetByIdActionSuccess(result)),
+      catchError(error => of(new quoteActions.GetByIdActionError(error)))))
+    );
 
   @Effect({ dispatch: false })
   httpErrors$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_BY_ID_ERROR)
-    .map((action: any) => action.payload)
-    .map(error => {
+    .pipe(
+    map((action: any) => action.payload),
+    map(error => {
       if (error.status === AppConstants.errorCode.NotFound) {
         this.notificationService.notifyError('Quote not found');
       }
       this.router.navigate([AppConstants.routes.TOPICS]);
-      return Observable.of(error);
-    });
+      return of(error);
+    }));
 
   @Effect()
   getSuggestions$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_SUGGESTIONS)
-    .switchMap(() => this.quoteApi.getSuggestions()
-      .map(result => new quoteActions.GetSuggestionsActionSuccess(result)));
+    .pipe(switchMap(() => this.quoteApi.getSuggestions()
+      .pipe(map(result => new quoteActions.GetSuggestionsActionSuccess(result)))));
 
   @Effect()
   create$ = this.actions$
     .ofType(quoteActions.ActionTypes.CREATE)
-    .map((action: any) => action.payload)
-    .switchMap(quote => this.quoteApi.create(quote)
-      .map(result => {
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(quote => this.quoteApi.create(quote)
+      .pipe(
+      map(result => {
         this.notificationService.notifySuccess('Quote successfully created');
         return new quoteActions.CreateActionSuccess(result);
-      })
-      .catch(error => {
+      }),
+      catchError(error => {
         this.notificationService.notifyError('Quote could not be created');
-        return Observable.of(new quoteActions.CreateActionError(error));
-      }));
+        return of(new quoteActions.CreateActionError(error));
+      })))
+    );
 
   @Effect({ dispatch: false })
   createSuccess$ = this.actions$
     .ofType(quoteActions.ActionTypes.CREATE_SUCCESS)
-    .map((action: any) => action.payload)
-    .map(quote => {
+    .pipe(
+    map((action: any) => action.payload),
+    map(quote => {
       this.router.navigate([AppConstants.routes.QUOTE_DETAILS, quote.id, quote.topic]);
-    });
+    }));
 
   @Effect()
   delete$ = this.actions$
     .ofType(quoteActions.ActionTypes.DELETE)
-    .map((action: any) => action.payload)
-    .switchMap(quote => this.quoteApi.delete(quote)
-      .map(result => {
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(quote => this.quoteApi.delete(quote)
+      .pipe(
+      map(result => {
         this.notificationService.notifySuccess('Quote successfully deleted');
         return new quoteActions.DeleteActionSuccess(result);
-      })
-      .catch(error => {
+      }),
+      catchError(error => {
         this.notificationService.notifyError('Quote could not be deleted');
-        return Observable.of(new quoteActions.DeleteActionError(error));
-      }));
+        return of(new quoteActions.DeleteActionError(error));
+      })))
+    );
 
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
     .ofType(quoteActions.ActionTypes.DELETE_SUCCESS)
-    .map((action: any) => action.payload)
-    .map(({ topic }) => {
+    .pipe(
+    map((action: any) => action.payload),
+    map(({ topic }) => {
       this.router.navigate([AppConstants.routes.QUOTES, topic.id ? topic.id : topic]);
-    });
+    }));
 
   @Effect({ dispatch: false })
   invalidateCache = this.actions$
@@ -119,67 +137,78 @@ export class QuoteEffects {
     quoteActions.ActionTypes.DELETE_COMMENT_SUCCESS,
     'USER_LOGOUT'
     )
-    .map(() => {
+    .pipe(map(() => {
       console.log('clear cache');
       this.quoteApi.clearCache();
-    });
+    }));
 
   @Effect()
   getComments$ = this.actions$
     .ofType(quoteActions.ActionTypes.GET_COMMENTS)
-    .map((action: any) => action.payload)
-    .switchMap(quoteId => this.quoteApi.getComments(quoteId)
-      .map(result => new quoteActions.GetCommentsActionSuccess(result)));
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(quoteId => this.quoteApi.getComments(quoteId)
+      .pipe(map(result => new quoteActions.GetCommentsActionSuccess(result))))
+    );
 
   @Effect()
   create_comment$ = this.actions$
     .ofType(quoteActions.ActionTypes.CREATE_COMMENT)
-    .map((action: any) => action.payload)
-    .switchMap(comment => this.quoteApi.addComment(comment)
-      .map(result => {
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(comment => this.quoteApi.addComment(comment)
+      .pipe(
+      map(result => {
         this.notificationService.notifySuccess('Comment successfully created');
         return new quoteActions.CreateCommentActionSuccess(result);
-      })
-      .catch(error => {
+      }),
+      catchError(error => {
         this.notificationService.notifyError('Comment could not be created');
-        return Observable.of(new quoteActions.CreateCommentActionError(error));
-      }));
+        return of(new quoteActions.CreateCommentActionError(error));
+      })))
+    );
 
   @Effect()
   delete_comment$ = this.actions$
     .ofType(quoteActions.ActionTypes.DELETE_COMMENT)
-    .map((action: any) => action.payload)
-    .switchMap(comment => this.quoteApi.deleteComment(comment)
-      .map(result => {
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(comment => this.quoteApi.deleteComment(comment)
+      .pipe(
+      map(result => {
         this.notificationService.notifySuccess('Comment successfully deleted');
         return new quoteActions.DeleteCommentActionSuccess(result);
-      })
-      .catch(error => {
+      }),
+      catchError(error => {
         this.notificationService.notifyError('Comment could not be deleted');
-        return Observable.of(new quoteActions.DeleteCommentActionError(error));
-      }));
+        return of(new quoteActions.DeleteCommentActionError(error));
+      })))
+    );
 
   @Effect()
   updateS$ = this.actions$
     .ofType(quoteActions.ActionTypes.UPDATE)
-    .map((action: any) => action.payload)
-    .switchMap(quote =>
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(quote =>
       this.quoteApi.update(quote)
-        .map(result => {
+        .pipe(
+        map(result => {
           this.notificationService.notifySuccess('Quote successfully updated');
           return new quoteActions.UpdateActionSuccess(result);
-        })
-        .catch(error => {
+        }),
+        catchError(error => {
           this.notificationService.notifyError('Quote could not be updated');
-          return Observable.of(new quoteActions.UpdateActionError(error));
-        })
-    );
+          return of(new quoteActions.UpdateActionError(error));
+        }))
+    ));
 
   @Effect({ dispatch: false })
   importQuotes$ = this.actions$
     .ofType(quoteActions.ActionTypes.IMPORT_QUOTES)
-    .map((action: any) => action.payload)
-    .map(data => {
+    .pipe(
+    map((action: any) => action.payload),
+    map(data => {
       this.fileParsing.parseCVS(
         data.quotes[0],
         results => {
@@ -196,16 +225,17 @@ export class QuoteEffects {
             });
         },
         true);
-    });
+    }));
 
   @Effect({ dispatch: false })
   exportQuotes$ = this.actions$
     .ofType(quoteActions.ActionTypes.EXPORT_QUOTES)
-    .map((action: any) => action.payload)
-    .map(data => {
+    .pipe(
+    map((action: any) => action.payload),
+    map(data => {
       this.fileParsing.downloadCSV(
         this.fileParsing.unparseCVS(data.quotes, true),
         data.topicName
       );
-    });
+    }));
 }

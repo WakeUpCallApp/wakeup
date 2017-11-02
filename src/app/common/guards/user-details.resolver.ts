@@ -6,7 +6,8 @@ import {
 import { AuthTokenService, LoginApi } from '../services';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Observable';
-
+import { of } from 'rxjs/observable/of';
+import { catchError } from 'rxjs/operators';
 import AppConstants from '../app-constants';
 
 
@@ -18,10 +19,10 @@ export class UserDetailResolver implements Resolve<User> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
     if (!this.loginApi.getCurrentUser() && this.authTokenService.isLoggedIn()) {
       return this.loginApi.getUserDetails()
-        .catch(error => {
+        .pipe(catchError(error => {
           this.router.navigate([AppConstants.routes.LANDING]);
-          return Observable.of(error);
-        });
+          return of(error);
+        }));
     } else if (!this.loginApi.getCurrentUser()) {
       this.router.navigate([AppConstants.routes.LANDING]);
       return null;

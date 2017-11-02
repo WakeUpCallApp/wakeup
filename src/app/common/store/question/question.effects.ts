@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import AppConstants from '../../app-constants';
 import { Router } from '@angular/router';
 
@@ -23,48 +25,56 @@ export class QuestionEffects {
   @Effect()
   load$ = this.actions$
     .ofType(questionActions.ActionTypes.LOAD)
-    .map((action: any) => action.payload)
-    .switchMap(() => this.questionApi.all()
-      .map(result => new questionActions.LoadActionSuccess(result)));
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(() => this.questionApi.all()
+      .pipe(map(result => new questionActions.LoadActionSuccess(result)))
+    )
+    );
 
   @Effect()
   get$ = this.actions$
     .ofType(questionActions.ActionTypes.GET_CURRENT_QUESTION)
-    .map((action: any) => action.payload)
-    .switchMap(id => this.questionApi.get(id)
-      .map(result => new questionActions.GetCurrentQuestionSuccess(result))
-      .catch(error => Observable.of(new questionActions.GetCurrentQuestionError(error))));
+    .pipe(map((action: any) => action.payload),
+    switchMap(id => this.questionApi.get(id)
+      .pipe(
+      map(result => new questionActions.GetCurrentQuestionSuccess(result)),
+      catchError(error => of(new questionActions.GetCurrentQuestionError(error)))))
+    );
 
   @Effect({ dispatch: false })
   httpErrors$ = this.actions$
     .ofType(questionActions.ActionTypes.GET_CURRENT_QUESTION_ERROR)
-    .map((action: any) => action.payload)
-    .map(error => {
+    .pipe(
+    map((action: any) => action.payload),
+    map(error => {
       this.notificationService.notifyError('Question not found');
       this.router.navigate([AppConstants.routes.QUESTION_SETS]);
-      return Observable.of(error);
-    });
+      return of(error);
+    }));
 
   @Effect()
   delete$ = this.actions$
     .ofType(questionActions.ActionTypes.DELETE)
-    .map((action: any) => action.payload)
-    .switchMap(question => this.questionApi.delete(question)
-      .map(result => {
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(question => this.questionApi.delete(question)
+      .pipe(map(result => {
         this.notificationService.notifySuccess('Question successfully deleted');
         return new questionActions.DeleteActionSuccess(result);
-      }));
+      }))));
 
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
     .ofType(questionActions.ActionTypes.DELETE_SUCCESS)
-    .map((action: any) => action.payload)
-    .map(({ questionSet }) => {
+    .pipe(
+    map((action: any) => action.payload),
+    map(({ questionSet }) => {
       this.router.navigate([
         AppConstants.routes.QUESTION_SET_DETAILS,
         questionSet.id
       ]);
-    });
+    }));
 
   @Effect({ dispatch: false })
   invalidateCache = this.actions$
@@ -80,6 +90,4 @@ export class QuestionEffects {
       console.log('clear cache');
       this.questionApi.clearCache();
     });
-
-
 }

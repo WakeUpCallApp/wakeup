@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { map, tap } from 'rxjs/operators';
 
 import {
   QuestionSet,
@@ -19,30 +21,30 @@ export class TopicApi {
 
   all(): Observable<Topic[]> {
     if (this.topics) {
-      return Observable.of(this.topics);
+      return of(this.topics);
     }
     return this.http
       .get('/api/topics')
-      .map((topicApiList: ITopicApi[]) => {
+      .pipe(map((topicApiList: ITopicApi[]) => {
         return topicApiList.map(topicApi => Topic.fromApi(topicApi));
-      })
-      .do(topics => (this.topics = topics));
+      }),
+      tap(topics => (this.topics = topics)));
   }
 
   create(topic): Observable<Topic> {
     return this.http
       .post('/api/topics', topic)
-      .map((topicApi: ITopicApi) => Topic.fromApi(topicApi));
+      .pipe(map((topicApi: ITopicApi) => Topic.fromApi(topicApi)));
   }
 
   get(id: number): Observable<Topic> {
     const cachedTopic = this.populatedTopics ? this.findTopic(id) : undefined;
     if (cachedTopic) {
-      return Observable.of(cachedTopic);
+      return of(cachedTopic);
     }
     return this.http
       .get(`/api/topics/${id}`)
-      .map((topicApi: ITopicApi) => {
+      .pipe(map((topicApi: ITopicApi) => {
         const topic = Topic.fromApi(topicApi);
         topic.questionSets = topicApi.questionSetList.map(questionSetApi =>
           QuestionSet.fromApi(questionSetApi)
@@ -51,27 +53,27 @@ export class TopicApi {
           Quote.fromApi(quoteApi)
         );
         return topic;
-      })
-      .do(topic => (this.populatedTopics = [topic].concat(this.populatedTopics || [])));
+      }),
+      tap(topic => (this.populatedTopics = [topic].concat(this.populatedTopics || []))));
   }
 
   update(topic: Topic): Observable<Topic> {
     return this.http
       .put(`/api/topics/${topic.id}`, Topic.toApi(topic))
-      .map((topicApi: ITopicApi) => {
+      .pipe(map((topicApi: ITopicApi) => {
         const topicObj = Topic.fromApi(topicApi);
         topicObj.questionSets = topicApi.questionSetList.map(questionSetApi =>
           QuestionSet.fromApi(questionSetApi)
         );
         topicObj.quoteIds = topicApi.quoteList;
         return topicObj;
-      });
+      }));
   }
 
   delete(topicId: number): Observable<number> {
     return this.http
       .delete(`/api/topics/${topicId}`)
-      .map(() => topicId);
+      .pipe(map(() => topicId));
   }
 
   findTopic(topicId: number): Topic {

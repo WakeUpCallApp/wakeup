@@ -4,6 +4,8 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { catchError, switchMap, map, flatMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import AppConstants from '../../app-constants';
 
@@ -31,42 +33,51 @@ export class QuestionSetEffects {
   @Effect()
   load$ = this.actions$
     .ofType(questionSetActions.ActionTypes.LOAD)
-    .map((action: any) => action.payload)
-    .switchMap(() => this.questionSetApi.all()
-      .map(result => new questionSetActions.LoadActionSuccess(result)));
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(() => this.questionSetApi.all()
+      .pipe(map(result => new questionSetActions.LoadActionSuccess(result))))
+    );
 
   @Effect()
   create$ = this.actions$
     .ofType(questionSetActions.ActionTypes.CREATE)
-    .map((action: any) => action.payload)
-    .switchMap(questionSet => this.questionSetApi.create(questionSet).map(result => {
-      this.notificationService.notifySuccess(
-        'Question Set successfully created'
-      );
-      return new questionSetActions.CreateActionSuccess(result);
-    })
-      .catch(error => {
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(questionSet => this.questionSetApi.create(questionSet)
+      .pipe(
+      map(result => {
+        this.notificationService.notifySuccess(
+          'Question Set successfully created'
+        );
+        return new questionSetActions.CreateActionSuccess(result);
+      }),
+      catchError(error => {
         this.notificationService.notifyError('Question Set could not be created');
-        return Observable.of(new questionSetActions.CreateActionError(error));
-      }));
+        return of(new questionSetActions.CreateActionError(error));
+      }))
+    )
+    );
 
   @Effect({ dispatch: false })
   createSuccess$ = this.actions$
     .ofType(questionSetActions.ActionTypes.CREATE_SUCCESS)
-    .map((action: any) => action.payload)
-    .map(questionSet => {
+    .pipe(
+    map((action: any) => action.payload),
+    map(questionSet => {
       this.router.navigate([
         AppConstants.routes.QUESTION_SET_DETAILS,
         questionSet.id
       ]);
-      return Observable.of(questionSet);
-    });
+      return of(questionSet);
+    }));
 
   @Effect({ dispatch: false })
   importQuestions$ = this.actions$
     .ofType(questionSetActions.ActionTypes.IMPORT_QUESTIONS)
-    .map((action: any) => action.payload)
-    .map(data => {
+    .pipe(
+    map((action: any) => action.payload),
+    map(data => {
       this.fileParsing.parseCVS(data.questions[0], results => {
         this.questionSetApi
           .importQuestions(data.questionSetId, results.data)
@@ -81,85 +92,104 @@ export class QuestionSetEffects {
             )
           );
       });
-    });
+    }));
 
   @Effect({ dispatch: false })
   exportQuestions$ = this.actions$
     .ofType(questionSetActions.ActionTypes.EXPORT_QUESTIONS)
-    .map((action: any) => action.payload)
-    .map(data => {
+    .pipe(
+    map((action: any) => action.payload),
+    map(data => {
       this.fileParsing.downloadCSV(
         this.fileParsing.unparseCVS(data.questions, false),
         data.questionSetName
       );
-    });
+    }));
 
   @Effect()
   update$ = this.actions$
     .ofType(questionSetActions.ActionTypes.UPDATE)
-    .map((action: any) => action.payload)
-    .switchMap(questionSet => this.questionSetApi.update(questionSet)
-      .map(result => {
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(questionSet => this.questionSetApi.update(questionSet)
+      .pipe(
+      map(result => {
         this.notificationService.notifySuccess(
           'Question Set successfully updated'
         );
         return new questionSetActions.UpdateActionSuccess(result);
-      })
-      .catch(error => {
+      }),
+      catchError(error => {
         this.notificationService.notifyError('Question Set could not be updated');
-        return Observable.of(new questionSetActions.UpdateActionError(error));
-      }));
+        return of(new questionSetActions.UpdateActionError(error));
+      }))
+    )
+    );
 
   @Effect()
   delete$ = this.actions$
     .ofType(questionSetActions.ActionTypes.DELETE)
-    .map((action: any) => action.payload)
-    .switchMap(questionSet => this.questionSetApi.delete(questionSet)
-      .map(() => {
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(questionSet => this.questionSetApi.delete(questionSet)
+      .pipe(
+      map(() => {
         this.notificationService.notifySuccess(
           'Question Set successfully deleted'
         );
         return new questionSetActions.DeleteActionSuccess();
-      }));
+      })))
+    );
 
   @Effect({ dispatch: false })
   deleteSuccess$ = this.actions$
     .ofType(questionSetActions.ActionTypes.DELETE_SUCCESS)
-    .map((action: any) => action.payload)
-    .map(() => {
+    .pipe(
+    map((action: any) => action.payload),
+    map(() => {
       this.router.navigate([AppConstants.routes.QUESTION_SETS]);
-    });
+    })
+    );
 
   @Effect()
   getCurrentQS$ = this.actions$
     .ofType(questionSetActions.ActionTypes.GET_CURRENT_QUESTION_SET)
-    .map((action: any) => action.payload)
-    .switchMap(id => this.questionSetApi.get(id)
-      .map(result => new questionSetActions.GetCurrentQSActionSuccess(result))
-      .catch(error =>
-        Observable.of(new questionSetActions.GetCurrentQSActionError(error))
-      )
-    );
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(id => this.questionSetApi.get(id)
+      .pipe(
+      map(result => new questionSetActions.GetCurrentQSActionSuccess(result)),
+      catchError(error =>
+        of(new questionSetActions.GetCurrentQSActionError(error))
+      ))
+    ));
 
   @Effect()
   addQuestion$ = this.actions$
     .ofType(questionSetActions.ActionTypes.ADD_QUESTION)
-    .map((action: any) => action.payload)
-    .switchMap(question => this.questionApi.create(question)
-      .map(result => {
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(question => this.questionApi.create(question)
+      .pipe(
+      map(result => {
         this.notificationService.notifySuccess('Question successfully added');
         return new questionSetActions.AddQuestionActionSuccess(result);
-      }));
+      }))
+    )
+    );
 
   @Effect()
   updateQuestion$ = this.actions$
     .ofType(questionSetActions.ActionTypes.EDIT_QUESTION)
-    .map((action: any) => action.payload)
-    .switchMap(question => this.questionApi.update(question)
-      .map(result => {
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(question => this.questionApi.update(question)
+      .pipe(
+      map(result => {
         this.notificationService.notifySuccess('Question successfully updated');
         return new questionSetActions.EditQuestionActionSuccess(result);
-      }));
+      })))
+    );
 
   @Effect()
   deleteQuestion$ = this.actions$
@@ -196,26 +226,30 @@ export class QuestionSetEffects {
     .map(error => {
       this.notificationService.notifyError('Question Set not found');
       this.router.navigate([AppConstants.routes.QUESTION_SETS]);
-      return Observable.of(error);
+      return of(error);
     });
 
   @Effect()
   registerSession$ = this.actions$
     .ofType(questionSetActions.ActionTypes.REGISTER_SESSION)
-    .map((action: any) => action.payload)
-    .switchMap(questionSetId => this.questionSetApi.registerSession(questionSetId)
-      .map((questionSet) => {
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(questionSetId => this.questionSetApi.registerSession(questionSetId)
+      .pipe(map((questionSet) => {
         this.notificationService.notifySuccess('Practice session ended successfully');
         return new questionSetActions.RegisterSessionSuccessAction(questionSet);
-      }));
+      }))
+    )
+    );
 
   @Effect()
   getSessionDetails$ = this.actions$
     .ofType(questionSetActions.ActionTypes.GET_SESSION_DETAILS)
-    .map((action: any) => action.payload)
-    .switchMap(questionSetId =>
+    .pipe(
+    map((action: any) => action.payload),
+    switchMap(questionSetId =>
       this.answerIndexedDbService.getSessionDetailsData(questionSetId)
-    )
-    .flatMap(promises => Observable.forkJoin(...promises))
-    .map(data => new questionSetActions.GetSessionDetailsActionSuccess(data));
+    ),
+    flatMap(promises => Observable.forkJoin(...promises)),
+    map(data => new questionSetActions.GetSessionDetailsActionSuccess(data)));
 }

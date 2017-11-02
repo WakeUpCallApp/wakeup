@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs/Observable';
+import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -36,8 +37,8 @@ export class SessionDetailsComponent implements OnInit, OnDestroy {
 
     this.sessionData$ = this.questionSetStoreService.sessionDetails$;
     this.actionsSubscription = Observable.combineLatest(
-      this.route.params.filter(params => !!params['questionSetId']),
-      this.route.params.filter(params => !!params['questionSetName']),
+      this.route.params.pipe(filter(params => !!params['questionSetId'])),
+      this.route.params.pipe(filter(params => !!params['questionSetName'])),
       this.answerStoreService.isIndexedDbOpen$,
       (idParams, nameParams, isDbOpen) => {
         this.currentQuestionSetName = nameParams['questionSetName'];

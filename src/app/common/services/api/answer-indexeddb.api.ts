@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
+import { of } from 'rxjs/observable/of';
+import { shareReplay } from 'rxjs/operators';
 import { QuestionSetApi } from './question-set.api';
 import { IAnswerApi, Answer, ISessionDetailsQuestion } from 'app/common/models';
 
@@ -20,7 +21,7 @@ export class AnswersIndexedDbApi {
     openIndexedDb() {
         const version = 3;
         if (this.db) {
-            return Observable.of('db already open');
+            return of('db already open');
         }
         const dbObservable = Observable.create((observer) => {
             const request = indexedDB.open('answersData', version);
@@ -35,7 +36,7 @@ export class AnswersIndexedDbApi {
             }
             request.onupgradeneeded = this.upgradeCallback;
         });
-        return dbObservable.shareReplay();
+        return dbObservable.pipe(shareReplay());
     }
 
     upgradeCallback(e) {

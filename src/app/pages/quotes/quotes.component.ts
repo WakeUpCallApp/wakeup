@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
+import { filter, takeUntil, map } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
@@ -41,23 +42,24 @@ export class QuotesComponent implements OnInit, OnDestroy {
     this.isLoading$ = this.quoteStoreService.isLoading$;
 
     this.route.params
-      .filter(params => !!params['topicId'])
-      .map(idParams => {
+      .pipe(
+      filter(params => !!params['topicId']),
+      map(idParams => {
         this.currentTopicId = idParams['topicId'];
         this.topicStoreService.get(this.currentTopicId);
         this.quoteStoreService.getByTopicId(+idParams['topicId']);
-      })
-      .takeUntil(this.componentDestroyed).subscribe();
+      }),
+      takeUntil(this.componentDestroyed)).subscribe();
 
     this.topicStoreService.currentTopic$
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(currentTopic => {
         this.currentTopic = Object.assign({}, currentTopic);
         this.titleService.setTitle(`Quotes: ${this.currentTopic.name}`);
       });
 
     this.quoteStoreService.isImporting$
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(importSpinner => {
         if (importSpinner) {
           this.importDialogRef.componentInstance.importSpinner = importSpinner;
@@ -67,7 +69,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
         }
       });
     this.quoteStoreService.quotesByTopic$
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(quotes => (this.quotes = quotes));
   }
 

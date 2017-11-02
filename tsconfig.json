@@ -25,5 +25,8 @@
     "node_modules",
     "../../node_modules",
     "dist"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "preserveWhitespaces": false
+  }
 }

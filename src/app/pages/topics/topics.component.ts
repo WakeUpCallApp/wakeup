@@ -27,19 +27,16 @@ export class TopicsComponent implements OnInit, OnDestroy {
     this.isLoading$ = this.topicStoreService.isLoading$;
     this.topics$ = this.topicStoreService.sortedTopics$;
     this.searchTerm$ = this.topicStoreService.searchTerm$;
-    this.filteredList$ = Observable.combineLatest(
-      this.topics$,
-      this.searchTerm$,
-      (topics, searchTerm) => {
-        return searchTerm
-          ? topics.filter(
-            topic =>
-              topic.name
-                .toLocaleLowerCase()
-                .indexOf(searchTerm.toLocaleLowerCase()) !== -1
-          )
-          : topics;
-      }
+    this.filteredList$ = Observable.combineLatest(this.topics$, this.searchTerm$, (topics, searchTerm) => {
+      return searchTerm
+        ? topics.filter(
+          topic =>
+            topic.name
+              .toLocaleLowerCase()
+              .indexOf(searchTerm.toLocaleLowerCase()) !== -1
+        )
+        : topics;
+    }
     );
   }
 

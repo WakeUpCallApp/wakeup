@@ -14,7 +14,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-
+import { filter, map, takeUntil, debounceTime } from 'rxjs/operators';
 import appConstants from '@app/common/app-constants';
 import {
   TopicStoreService,
@@ -55,14 +55,16 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.questionSets$ = this.questionSetStoreService.questionsSets$;
 
     this.route.params
-      .filter(params => !!params['id'])
-      .map(idParams => this.topicStoreService.get(idParams['id']))
-      .takeUntil(this.componentDestroyed)
+      .pipe(
+      filter(params => !!params['id']),
+      map(idParams => this.topicStoreService.get(idParams['id'])),
+      takeUntil(this.componentDestroyed))
       .subscribe();
 
     this.topicStoreService.currentTopic$
-      .filter(currentTopic => !!currentTopic)
-      .takeUntil(this.componentDestroyed)
+      .pipe(
+      filter(currentTopic => !!currentTopic),
+      takeUntil(this.componentDestroyed))
       .subscribe(currentTopic => {
         this.currentTopic = <Topic>currentTopic;
         this.titleService.setTitle(`${this.currentTopic.name} details`);
@@ -77,8 +79,10 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ngzone.runOutsideAngular(() => {
       [this.nameElRef, this.descriptionElRef].forEach(field => {
         Observable.fromEvent(field.nativeElement, 'keyup')
-          .debounceTime(1000)
-          .takeUntil(this.componentDestroyed)
+          .pipe(
+          debounceTime(1000),
+          takeUntil(this.componentDestroyed)
+          )
           .subscribe((keyboardEvent: any) => {
             if (keyboardEvent.keyCode === appConstants.keyCodes.TAB) {
               return;

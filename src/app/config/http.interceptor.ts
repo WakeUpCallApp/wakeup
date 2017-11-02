@@ -1,7 +1,8 @@
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-
+import { Observable } from 'rxjs/Observable';
+import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
+import { catchError } from 'rxjs/operators';
 import appConstants from '../common/app-constants';
 import { environment } from '../../environments/environment';
 import { AuthTokenService } from '../common/services/authToken.service';
@@ -31,17 +32,18 @@ export class InterceptedHttp implements HttpInterceptor {
         });
 
         return next.handle(authReq)
-            .catch((res) => {
+            .pipe(
+            catchError((res: any) => {
                 if (res instanceof HttpErrorResponse
                     && (res.status === appConstants.errorCode.Unauthorized ||
                         res.status === appConstants.errorCode.Forbidden)) {
                     // handle authorization errors
                     this.authService.removeStoredToken();
                     this.injector.get(Router).navigate(['/login']);
-                    return Observable.empty();
+                    return new EmptyObservable();
                 }
                 return Observable.throw(res);
-            });
+            }));
     }
 
     private updateUrl(req: string) {

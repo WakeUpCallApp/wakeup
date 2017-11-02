@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs/Observable';
+import { takeUntil, filter, map } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
@@ -62,7 +63,7 @@ export class AnswersComponent implements OnInit, OnDestroy {
     this.answerStoreService.openIndexedDb();
 
     Observable.combineLatest(
-      this.route.params.filter(params => !!params['questionId']),
+      this.route.params.pipe(filter(params => !!params['questionId'])),
       this.answerStoreService.isIndexedDbOpen$,
       ((idParams, isDbOpen) => {
         this.currentQuestionId = idParams['questionId'];
@@ -70,12 +71,11 @@ export class AnswersComponent implements OnInit, OnDestroy {
           this.answerStoreService.getAnswers(+this.currentQuestionId);
         }
         this.questionStoreService.getQuestion(+idParams['questionId']);
-      }))
-      .takeUntil(this.componentDestroyed)
+      })).pipe(takeUntil(this.componentDestroyed))
       .subscribe();
 
     this.questionStoreService.currentQuestion$
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(question => {
         this.question = question;
         this.titleService.setTitle(`Answers ${question.text}`);
@@ -87,7 +87,7 @@ export class AnswersComponent implements OnInit, OnDestroy {
         }
       });
     this.answerStoreService.groupedAnswers$
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(answers => {
         if (answers.constructor === Array) {
           this.answers = answers;

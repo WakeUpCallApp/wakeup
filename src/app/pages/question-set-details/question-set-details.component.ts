@@ -14,6 +14,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { map, filter, takeUntil, debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import {
   AppQuotesBrowserComponent,
@@ -64,12 +65,13 @@ export class QuestionSetDetailsComponent
   ngOnInit() {
     this.isLoading$ = this.questionSetStoreService.isLoading$;
     this.route.params
-      .filter(params => !!params['id'])
-      .map(idParams => this.questionSetStoreService.get(idParams['id']))
-      .takeUntil(this.componentDestroyed).subscribe();
+      .pipe(
+      filter(params => !!params['id']),
+      map(idParams => this.questionSetStoreService.get(idParams['id'])),
+      takeUntil(this.componentDestroyed)).subscribe();
 
     this.questionSetStoreService.currentQuestionSet$
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(currentQuestionSet => {
         this.currentQuestionSet = <QuestionSet>currentQuestionSet;
         this.titleService.setTitle(`${this.currentQuestionSet.name} details`);
@@ -78,7 +80,7 @@ export class QuestionSetDetailsComponent
       });
 
     this.questionSetStoreService.isImporting$
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(importSpinner => {
         if (importSpinner) {
           this.importDialogRef.componentInstance.importSpinner = importSpinner;
@@ -97,8 +99,9 @@ export class QuestionSetDetailsComponent
     this.ngzone.runOutsideAngular(() => {
       [this.nameElRef, this.descriptionElRef].forEach(field => {
         Observable.fromEvent(field.nativeElement, 'keyup')
-          .debounceTime(1000)
-          .takeUntil(this.componentDestroyed)
+          .pipe(
+          debounceTime(1000),
+          takeUntil(this.componentDestroyed))
           .subscribe((keyboardEvent: any) => {
             if (keyboardEvent.keyCode === appConstants.keyCodes.TAB) {
               return;

@@ -10,6 +10,7 @@ import {
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { filter, takeUntil, skip, debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
@@ -72,8 +73,8 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     Observable.combineLatest(
-      this.route.params.filter(params => !!params['id']),
-      this.route.params.filter(params => !!params['topicId']),
+      this.route.params.pipe(filter(params => !!params['id'])),
+      this.route.params.pipe(filter(params => !!params['topicId'])),
       (quoteIdParams, topicIdParams) => {
 
         this.topicStoreService.get(+topicIdParams['topicId']);
@@ -81,7 +82,7 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.quoteStoreService.getComments(+quoteIdParams['id']);
 
       }
-    ).takeUntil(this.componentDestroyed).subscribe();
+    ).pipe(takeUntil(this.componentDestroyed)).subscribe();
 
     Observable.combineLatest(
       this.quoteStoreService.currentQuote$,
@@ -102,7 +103,7 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.newComment = this.getEmptyComment();
         }
       }
-    ).takeUntil(this.componentDestroyed).subscribe();
+    ).pipe(takeUntil(this.componentDestroyed)).subscribe();
   }
 
   ngAfterViewInit() {
@@ -112,9 +113,10 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.quoteForm.get('source')]
         .forEach(field => {
           field.valueChanges
-            .skip(1)
-            .debounceTime(1000)
-            .takeUntil(this.componentDestroyed)
+            .pipe(
+            skip(1),
+            debounceTime(1000),
+            takeUntil(this.componentDestroyed))
             .subscribe((val) => {
               this.updateQuote(Object.assign({}, this.updateObject, this.quoteForm.value));
               this.cdref.detectChanges();

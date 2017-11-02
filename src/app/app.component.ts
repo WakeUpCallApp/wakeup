@@ -3,7 +3,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { Subject } from 'rxjs/Subject';
-
+import { takeUntil, filter, map, mergeMap } from 'rxjs/operators';
 import { LoginApi } from './common/services/api/login.api';
 import { AuthTokenService } from './common/services/authToken.service';
 import appConstants from './common/app-constants';
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.notificationService.subj_notification
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(
       (notification: any) => {
         this.openSnackBar(notification);
@@ -89,17 +89,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   setDocumentTitle() {
     this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .map(() => this.activatedRoute)
-      .map(route => {
+      .pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => this.activatedRoute),
+      map(route => {
         while (route.firstChild) {
           route = route.firstChild;
         }
         return route;
-      })
-      .filter(route => route.outlet === 'primary')
-      .mergeMap(route => route.data)
-      .takeUntil(this.componentDestroyed)
+      }),
+      filter(route => route.outlet === 'primary'),
+      mergeMap(route => route.data),
+      takeUntil(this.componentDestroyed)
+      )
       .subscribe(event => {
         const title = event['title'];
         if (title) {
