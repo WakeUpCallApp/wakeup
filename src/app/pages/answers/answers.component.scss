@@ -54,6 +54,14 @@
       }
     }
   }
+  .content {
+    display: flex;
+    flex: 1;
+    .time {
+      align-self: center;
+      font-size: 12px;
+    }
+  }
   .actions {
     display: flex;
     flex-wrap: wrap;

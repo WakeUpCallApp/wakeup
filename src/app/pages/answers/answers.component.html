@@ -35,7 +35,10 @@
           <span class="group">{{answerGroup.date}}</span>
           <ul>
             <li *ngFor="let answer of answerGroup.answers">
-              <span class="text">{{answer.text}}</span>
+              <div class="content">
+                <span class="text">{{answer.text}}</span>
+                <span class="time">{{answer.createDate | date:'shortTime' }}</span>
+              </div>
               <div class="actions">
                 <button color="accent" mat-icon-button (click)="editAnswer(answer)" matTooltip="Edit Answer"> <mat-icon>edit</mat-icon></button>
                 <button color="warn" mat-icon-button (click)="onDeleteAnswer(answer)" matTooltip="Delete Answer"> <mat-icon>delete_forever</mat-icon></button>
