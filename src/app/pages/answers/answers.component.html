@@ -37,7 +37,7 @@
             <li *ngFor="let answer of answerGroup.answers">
               <div class="content">
                 <span class="text">{{answer.text}}</span>
-                <span class="time">{{answer.createDate | date:'shortTime' }}</span>
+                <span class="time">at {{answer.createDate | date:'shortTime' }}</span>
               </div>
               <div class="actions">
                 <button color="accent" mat-icon-button (click)="editAnswer(answer)" matTooltip="Edit Answer"> <mat-icon>edit</mat-icon></button>
