@@ -11,6 +11,7 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 import AppConstants from '../../app-constants';
 
 import * as quoteActions from './quote.actions';
+import { ActionTypes as topicActionTypes } from '../topic/topic.actions';
 import { QuoteApi } from '../../services/api/quote.api';
 import { NotificationService } from '../../services/notification.service';
 import { FileParsingService } from '../../services/file-parsing';
@@ -135,6 +136,7 @@ export class QuoteEffects {
     quoteActions.ActionTypes.DELETE_SUCCESS,
     quoteActions.ActionTypes.CREATE_COMMENT_SUCCESS,
     quoteActions.ActionTypes.DELETE_COMMENT_SUCCESS,
+    topicActionTypes.DELETE_SUCCESS,
     'USER_LOGOUT'
     )
     .pipe(map(() => {

@@ -88,6 +88,7 @@ export function reducer(state = initialState, action: any): State {
       });
     case actions.ActionTypes.IMPORT_QUOTES_SUCCESS:
       return Object.assign({}, state, {
+        quotesByTopic: state.quotesByTopic.concat(action.payload),
         importSpinner: false
       });
     default: {
