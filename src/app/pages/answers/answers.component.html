@@ -8,9 +8,10 @@
     <div class="card-header">
       <div class="title">Answers</div>
       <div class="actions">
-        <button *ngIf="answers?.length" mat-button matTooltip="Delete all answers" (click)="onDeleteAnswers()"> <mat-icon>delete_forever</mat-icon> All Answers </button>
+        <button *ngIf="answers?.length" mat-button matTooltip="Delete all answers" (click)="onDeleteAnswers()">
+          <mat-icon>delete_forever</mat-icon> All Answers </button>
         <button *ngIf="!question.questionSet?.isDefault" mat-button [matMenuTriggerFor]="questionMenu" matTooltip="More actions">
-            <mat-icon>more_horiz</mat-icon> More
+          <mat-icon>more_horiz</mat-icon> More
         </button>
         <mat-menu #questionMenu="matMenu">
           <button mat-menu-item (click)="onDeleteQuestion()">
@@ -19,6 +20,13 @@
       </div>
     </div>
     <div class="card-body">
+      <button mat-fab matRipple *ngIf="prevQuestionId" [routerLink]="['/answers', prevQuestionId]" title="previous question" class="prevQuestionButton">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+
+      <button mat-fab matRipple *ngIf="nextQuestionId" [routerLink]="['/answers', nextQuestionId]" title="next question" class="nextQuestionButton">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
       <div class="summary">
         <div class="name">
           <label> Question </label> {{question?.text}}
@@ -30,7 +38,8 @@
         </div>
       </div>
       <div class="answers">
-        <span class="noAnswersMessage" *ngIf="!answers?.length">No answers available. <br>Please, click the + button to add an answer</span>
+        <span class="noAnswersMessage" *ngIf="!answers?.length">No answers available.
+          <br>Please, click the + button to add an answer</span>
         <div *ngFor="let answerGroup of answers">
           <span class="group">{{answerGroup.date}}</span>
           <ul>
@@ -40,8 +49,12 @@
                 <span class="time">at {{answer.createDate | date:'shortTime' }}</span>
               </div>
               <div class="actions">
-                <button color="accent" mat-icon-button (click)="editAnswer(answer)" matTooltip="Edit Answer"> <mat-icon>edit</mat-icon></button>
-                <button color="warn" mat-icon-button (click)="onDeleteAnswer(answer)" matTooltip="Delete Answer"> <mat-icon>delete_forever</mat-icon></button>
+                <button color="accent" mat-icon-button (click)="editAnswer(answer)" matTooltip="Edit Answer">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button color="warn" mat-icon-button (click)="onDeleteAnswer(answer)" matTooltip="Delete Answer">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
               </div>
             </li>
           </ul>
@@ -51,16 +64,7 @@
   </app-card>
 </div>
 <button mat-fab matRipple (click)="createAnswer()" matTooltip="Add Answer" [matTooltipClass]="'tooltip'" class="addAnswerButton">
- <mat-icon>add</mat-icon>
+  <mat-icon>add</mat-icon>
 </button>
 
-<button mat-button matRipple *ngIf="prevQuestionId" [routerLink]="['/answers', prevQuestionId]" title="previous question" class="prevQuestionButton"
-  mat-icon-button>
- <mat-icon>keyboard_arrow_left</mat-icon>
-</button>
-
-<button mat-button matRipple *ngIf="nextQuestionId" [routerLink]="['/answers', nextQuestionId]" title="next question" class="nextQuestionButton"
-  mat-icon-button>
- <mat-icon>keyboard_arrow_right</mat-icon>
-</button>
 <mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>

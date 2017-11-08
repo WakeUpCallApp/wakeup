@@ -3,12 +3,14 @@
   <button class="addQuoteButton" mat-button mat-button-raised (click)="safeClose()">Save</button>
 </h2>
 <mat-dialog-content>
-  <mat-select class="topicDropDown" placeholder="Topic" [(ngModel)]="currentTopic">
-    <mat-option *ngFor="let topic of topics" [value]="topic">
-      {{ topic.name }}
-    </mat-option>
-  </mat-select>
-  <div class="quoteList">
+  <mat-form-field>
+    <mat-select class="topicDropDown" placeholder="Topic" [(ngModel)]="currentTopic">
+      <mat-option *ngFor="let topic of topics" [value]="topic">
+        {{ topic.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="quoteList" *ngIf="currentTopic.quotes?.length; else noQuotesMessage">
     <ul>
       <li *ngFor="let quote of currentTopic.quotes" [ngClass]="{'selected': isSelectedQuote(quote)}" (click)="toggleSelectedQuote(quote)">
         <span class="quoteText truncate" title="{{quote.text}}">{{quote.text}}</span>
@@ -16,9 +18,6 @@
       </li>
     </ul>
   </div>
-
-  <div class="noQuotes" *ngIf="!currentTopic.quotes?.length">
-    There are no quotes for this topic
-  </div>
+  <ng-template #noQuotesMessage><span class="noQuotes">There are no quotes for this topic</span></ng-template>
 
 </mat-dialog-content>

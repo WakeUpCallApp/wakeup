@@ -23,8 +23,7 @@ mat-dialog-content {
 }
 
 mat-select.questionSetDropDown {
-    width: 100%;
-    flex: 1;
+    max-width: 287px;
 }
 .addQuestionButton {
     margin-left: 16px;
@@ -83,4 +82,8 @@ mat-select.questionSetDropDown {
 
 .mat-dialog-container {
     max-width: none !important;
+}
+
+.noQuestions{
+    color: $primary;
 }

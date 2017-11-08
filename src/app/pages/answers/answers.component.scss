@@ -85,29 +85,27 @@
   left: calc(100vw - 83px);
 }
 
-.prevQuestionButton {
-  z-index: 20;
-  position: fixed;
-  bottom: calc(100vh/2);
-  left: 26px;
-  display: flex;
-  justify-content: center;
-}
-
-.prevQuestionButton mat-icon,
-.nextQuestionButton mat-icon {
-  font-size: 30px;
-  display: flex;
-  justify-content: center;
-}
-
+.prevQuestionButton,
 .nextQuestionButton {
   z-index: 20;
   position: fixed;
   bottom: calc(100vh/2);
-  left: calc(100vw - 96px);
+  background-color: white !important;
   display: flex;
   justify-content: center;
+  mat-icon {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.nextQuestionButton {
+  left: calc(100vw - 62px);
+}
+
+.prevQuestionButton {
+  left: 5px;
 }
 
 .quote {

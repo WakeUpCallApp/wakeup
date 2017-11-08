@@ -3,21 +3,24 @@
   <button class="addQuestionButton" mat-button mat-button-raised (click)="safeClose()">Save</button>
 </h2>
 <mat-dialog-content *ngIf="currentQuestionSet">
-  <mat-select class="questionSetDropDown" placeholder="Question Set" [(ngModel)]="currentQuestionSet">
-    <mat-option *ngFor="let questionSet of questionSets" [value]="questionSet">
-      {{ questionSet.questionSet }}
-    </mat-option>
-  </mat-select>
-  <div class="questionList">
+  <mat-form-field>
+    <mat-select class="questionSetDropDown" placeholder="Question Set" [(ngModel)]="currentQuestionSet">
+      <mat-option *ngFor="let questionSet of questionSets" [value]="questionSet">
+        {{ questionSet.questionSet }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="questionList" *ngIf="currentQuestionSet.questions?.length; else noQuestionsMessage">
     <ul>
       <li *ngFor="let question of currentQuestionSet.questions" [ngClass]="{'selected': isSelectedQuestion(question)}" (click)="toggleSelectedQuestion(question)">
         <span class="questionText truncate" title="{{question.text}}">{{question.text}}</span>
       </li>
     </ul>
   </div>
-
-  <div class="noQuestions" *ngIf="!currentQuestionSet.questions?.length">
-    There are no questions in this question set
-  </div>
+  <ng-template #noQuestionsMessage>
+    <div class="noQuestions">
+      There are no questions in this question set
+    </div>
+  </ng-template>
 
 </mat-dialog-content>
