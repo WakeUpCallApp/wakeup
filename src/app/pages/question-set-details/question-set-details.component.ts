@@ -216,12 +216,10 @@ export class QuestionSetDetailsComponent
 
   openImportQuestionsModal() {
     const config: MatDialogConfig = {
-      disableClose: false,
-      data: {
-        uploadFile: this.importQuestions.bind(this)
-      }
+      disableClose: false
     };
     const dialogRef = this.dialog.open(AppImportFileComponent, config);
+    dialogRef.componentInstance.uploadFile = this.importQuestions.bind(this);
     this.importDialogRef = dialogRef;
 
     dialogRef.afterClosed().subscribe(() => { });
