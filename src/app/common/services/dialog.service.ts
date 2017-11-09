@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DialogService {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   public openDialog(message, callback) {
     this.confirm('Confirmation Required', message).subscribe(result => {
@@ -17,11 +17,13 @@ export class DialogService {
 
   private confirm(title: string, message: string): Observable<boolean> {
     let dialogRef: MatDialogRef<AppConfirmDialogComponent>;
-
-    dialogRef = this.dialog.open(AppConfirmDialogComponent);
-    dialogRef.componentInstance.title = title;
-    dialogRef.componentInstance.message = message;
-
+    const config = {
+      data: {
+        title,
+        message
+      }
+    };
+    dialogRef = this.dialog.open(AppConfirmDialogComponent, config);
     return dialogRef.afterClosed();
   }
 }

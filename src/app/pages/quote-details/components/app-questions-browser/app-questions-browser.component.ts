@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { QuestionStoreService } from '@app/common';
@@ -18,11 +18,13 @@ export class AppQuestionsBrowserComponent implements OnInit, OnDestroy {
   initialSelection;
   constructor(
     private questionStoreService: QuestionStoreService,
-    public dialogRef: MatDialogRef<AppQuestionsBrowserComponent>
+    public dialogRef: MatDialogRef<AppQuestionsBrowserComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit() {
-    this.initialSelection = this.selectedQuestions;
+    this.initialSelection = this.data.selectedQuestions;
+    this.selectedQuestions = this.data.selectedQuestions;
     this.questionStoreService.getAll();
     this.allQuestionsSubscription = this.questionStoreService.questions$
       .subscribe(questionSets => {

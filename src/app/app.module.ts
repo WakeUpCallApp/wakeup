@@ -2,7 +2,6 @@ import 'hammerjs';
 import './rxjs.imports';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {HttpModule} from '@angular/http';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
@@ -34,7 +33,6 @@ import { PagesModule } from './pages/pages.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    HttpModule,
     SharedModule,
     WakeupCommonModule,
     StoreModule.forRoot(reducers),

@@ -118,10 +118,13 @@ export class AnswersComponent implements OnInit, OnDestroy {
     this.openModal = true;
     const config: MatDialogConfig = {
       disableClose: false,
-      width: '600px'
+      width: '600px',
+      data: {
+        answer: Object.assign({}, answer)
+      }
     };
     const dialogRef = this.dialog.open(AppAnswerDialogComponent, config);
-    dialogRef.componentInstance.answer = Object.assign({}, answer);
+
     dialogRef.afterClosed().subscribe(answerResult => {
       this.openModal = false;
       if (answerResult) {
@@ -147,10 +150,13 @@ export class AnswersComponent implements OnInit, OnDestroy {
     };
     const config: MatDialogConfig = {
       disableClose: false,
-      width: '600px'
+      width: '600px',
+      data: {
+        answer: Object.assign({}, newAnswer)
+      }
     };
     const dialogRef: any = this.dialog.open(AppAnswerDialogComponent, config);
-    dialogRef.componentInstance.answer = Object.assign({}, newAnswer);
+
     dialogRef.afterClosed().subscribe(answer => {
       this.openModal = false;
       if (answer) {

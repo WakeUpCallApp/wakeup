@@ -33,10 +33,12 @@ export class AppQuoteQuestionsComponent implements OnInit {
     const config: MatDialogConfig = {
       disableClose: false,
       width: '80%',
-      height: '80%'
+      height: '80%',
+      data: {
+        selectedQuestions: this.questions
+      }
     };
     const dialogRef = this.dialog.open(AppQuestionsBrowserComponent, config);
-    dialogRef.componentInstance.selectedQuestions = this.questions;
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.update.emit(result);

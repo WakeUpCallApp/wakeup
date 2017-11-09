@@ -1,16 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-confirm-dialog',
   templateUrl: './app-confirm-dialog.component.html',
   styleUrls: ['./app-confirm-dialog.component.scss']
 })
-export class AppConfirmDialogComponent implements OnInit {
-  @Input() title: string;
-  @Input() message: string;
+export class AppConfirmDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<AppConfirmDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  constructor(public dialogRef: MatDialogRef<AppConfirmDialogComponent>) { }
-
-  ngOnInit() { }
 }

@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Import file</h2>
 <mat-dialog-content>
-  <mat-spinner class="spinner" *ngIf="importSpinner"></mat-spinner>
+  <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="importSpinner"></mat-progress-spinner>
   <form class="content">
     <input type="file" placeholder="File" name="file" accept=".csv" (change)="fileChanged($event)">
   </form>

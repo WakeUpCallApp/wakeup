@@ -13,7 +13,6 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
@@ -23,6 +22,7 @@ import {
   MatTooltipModule,
   MatSlideToggleModule
 } from '@angular/material';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppCardComponent, AppImportFileComponent, AppConfirmDialogComponent } from './components';
 
@@ -32,7 +32,9 @@ import { AppCardComponent, AppImportFileComponent, AppConfirmDialogComponent } f
     RouterModule,
     MatCardModule,
     MatButtonModule,
-    MatTooltipModule],
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatDialogModule],
   declarations: [
     AppCardComponent,
     AppImportFileComponent,

@@ -1,6 +1,6 @@
 <div class="confirmDialog">
-    <p class="title"><i class="material-icons warning" >warning</i> {{ title }}</p>
-    <p class="message">{{ message }}</p>
+    <p class="title"><i class="material-icons warning" >warning</i> {{ data.title }}</p>
+    <p class="message">{{ data.message }}</p>
     <button type="button" mat-button (click)="dialogRef.close()">Cancel</button>
     <button class="okButton" type="button" mat-raised-button (click)="dialogRef.close(true)">OK</button>
 </div>

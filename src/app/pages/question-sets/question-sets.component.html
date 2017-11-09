@@ -16,7 +16,7 @@
         </mat-option>
       </mat-select>
     </div>
-    <mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>
+    <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="isLoading$ | async"></mat-progress-spinner>
     <span *ngIf="!(filteredList$|async)?.length">Nothing found</span>
     <app-question-sets-list *ngIf="(filteredList$|async)?.length" [questionSets]="filteredList$ | async">
     </app-question-sets-list>

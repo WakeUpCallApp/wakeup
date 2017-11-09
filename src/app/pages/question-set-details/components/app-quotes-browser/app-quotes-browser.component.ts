@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Topic, Quote, QuoteStoreService } from '@app/common';
@@ -13,16 +13,16 @@ export class AppQuotesBrowserComponent implements OnInit, OnDestroy {
   quotesSubscription: Subscription;
   topics: Topic[];
   currentTopic: Topic;
-  initialQuoteId;
   selectedQuoteId;
   selectedQuoteText;
   constructor(
     private quoteStoreService: QuoteStoreService,
-    public dialogRef: MatDialogRef<AppQuotesBrowserComponent>
+    public dialogRef: MatDialogRef<AppQuotesBrowserComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit() {
-    this.selectedQuoteId = this.initialQuoteId;
+    this.selectedQuoteId = this.data.initialQuoteId;
     this.quoteStoreService.getAll();
     this.quotesSubscription = this.quoteStoreService.topicsWithQuotes$
       .subscribe(topicsList => {
@@ -36,7 +36,7 @@ export class AppQuotesBrowserComponent implements OnInit, OnDestroy {
   }
 
   safeClose() {
-    if (this.selectedQuoteId !== this.initialQuoteId) {
+    if (this.selectedQuoteId !== this.data.initialQuoteId) {
       this.dialogRef.close({ selectedQuoteId: this.selectedQuoteId, selectedQuoteText: this.selectedQuoteText });
     } else {
       this.dialogRef.close();

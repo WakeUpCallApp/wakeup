@@ -28,7 +28,7 @@
 
   <div class="errorMessage" *ngIf="errorMessage">{{errorMessage}}</div>
   <button *ngIf="!isSigningIn" mat-button mat-raised-button class="signupButton" (click)="signUp()" [disabled]="!signupForm.valid">Sign Up</button>
-  <mat-spinner class="spinner" *ngIf="isSigningIn"></mat-spinner>
+  <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="isSigningIn"></mat-progress-spinner>
 </form>
 <div class="usefulLinks">
   <a [routerLink]="['../wakeupcallapp']">Log in now ></a>

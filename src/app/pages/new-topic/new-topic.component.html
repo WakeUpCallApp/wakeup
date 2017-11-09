@@ -19,6 +19,6 @@
     <button *ngIf="!isCreating" mat-button mat-raised-button [disabled]="!topicForm.valid" class="createButton" (click)="createTopic()">
     Create
     </button>
-    <mat-spinner class="spinner" *ngIf="isCreating"></mat-spinner>
+    <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="isCreating"></mat-progress-spinner>
   </div>
 </app-card>

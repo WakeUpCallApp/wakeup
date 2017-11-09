@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-edit-question-dialog',
@@ -7,15 +7,13 @@ import { MatDialogRef } from '@angular/material';
   styleUrls: ['./app-edit-question-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppEditQuestionDialogComponent implements OnInit {
-  question;
+export class AppEditQuestionDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<AppEditQuestionDialogComponent>
-  ) {}
-
-  ngOnInit() {}
+    public dialogRef: MatDialogRef<AppEditQuestionDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   handleClick() {
-    this.dialogRef.close(this.question);
+    this.dialogRef.close(this.data.question);
   }
 }

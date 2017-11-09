@@ -1,32 +1,22 @@
-<h2 mat-dialog-title>{{ answer.id ? 'Update' : 'Create'}} Answer</h2>
-<mat-dialog-content class="editAnswer">
-  <form class="content">
-    <mat-input-container floatPlaceholder="always">
-      <textarea #characterCountInputHint
-       matInput 
-       maxlength="5000" 
-       type="text" 
-       placeholder="Text" 
-       rows="3" 
-       [(ngModel)]="answer.text"
-       name="text"
-       required>
-      </textarea>
-      <mat-hint align="end" aria-live="polite">
-        {{characterCountInputHint.value.length}} / 5000
-      </mat-hint>
-    </mat-input-container>
-  </form>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button class="cancelButton" mat-button mat-raised-button mat-dialog-close>Cancel</button>
-  <!-- Can optionally provide a result for the closing dialog. -->
-  <button 
-    class="updateButton" 
-    [disabled]="!answer.text.trim()"
-    mat-button 
-    mat-raised-button
-    (click)="handleClick()">
-    {{answer.id? 'Update' : 'Create' }}
+<div class="wrapper" *ngIf="data.answer as answer">
+  <h2 mat-dialog-title>{{ answer.id ? 'Update' : 'Create'}} Answer</h2>
+  <mat-dialog-content class="editAnswer">
+    <form class="content">
+      <mat-input-container floatPlaceholder="always">
+        <textarea #characterCountInputHint matInput maxlength="5000" type="text" placeholder="Text" rows="3" [(ngModel)]="answer.text"
+          name="text" required>
+        </textarea>
+        <mat-hint align="end" aria-live="polite">
+          {{characterCountInputHint.value.length}} / 5000
+        </mat-hint>
+      </mat-input-container>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button class="cancelButton" mat-button mat-raised-button mat-dialog-close>Cancel</button>
+    <!-- Can optionally provide a result for the closing dialog. -->
+    <button class="updateButton" [disabled]="!answer.text.trim()" mat-button mat-raised-button (click)="handleClick()">
+      {{answer.id? 'Update' : 'Create' }}
     </button>
-</mat-dialog-actions>
+  </mat-dialog-actions>
+</div>

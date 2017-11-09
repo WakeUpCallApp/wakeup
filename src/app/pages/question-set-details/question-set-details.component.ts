@@ -163,13 +163,15 @@ export class QuestionSetDetailsComponent
   editQuestion(question) {
     const config: MatDialogConfig = {
       disableClose: false,
-      width: '600px'
+      width: '600px',
+      data: {
+        question: Object.assign({}, question)
+      }
     };
     const dialogRef = this.dialog.open(
       AppEditQuestionDialogComponent,
       config
     );
-    dialogRef.componentInstance.question = Object.assign({}, question);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.questionSetStoreService.editQuestion(result);
@@ -181,10 +183,13 @@ export class QuestionSetDetailsComponent
     const config: MatDialogConfig = {
       disableClose: false,
       width: '80%',
-      height: '80%'
+      height: '80%',
+      data: {
+        initialQuoteId: question.quote
+      }
     };
     const dialogRef = this.dialog.open(AppQuotesBrowserComponent, config);
-    dialogRef.componentInstance.initialQuoteId = question.quote;
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         question.quote = result.selectedQuoteId;
@@ -211,11 +216,14 @@ export class QuestionSetDetailsComponent
 
   openImportQuestionsModal() {
     const config: MatDialogConfig = {
-      disableClose: false
+      disableClose: false,
+      data: {
+        uploadFile: this.importQuestions.bind(this)
+      }
     };
     const dialogRef = this.dialog.open(AppImportFileComponent, config);
     this.importDialogRef = dialogRef;
-    dialogRef.componentInstance.uploadFile = this.importQuestions.bind(this);
+
     dialogRef.afterClosed().subscribe(() => { });
   }
 

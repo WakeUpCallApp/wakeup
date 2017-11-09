@@ -50,7 +50,7 @@
      [disabled]="!loginForm.valid"
      (click)="login()">Log In
       </button>
-   <mat-spinner class="spinner" *ngIf="isLoggingIn"></mat-spinner>
+   <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="isLoggingIn"></mat-progress-spinner>
 </form>
 <div class="usefulLinks">
   <a [routerLink]="['../signup']">Sign up now ></a>

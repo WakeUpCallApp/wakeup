@@ -61,4 +61,4 @@
         (edit)="editQuestion($event)" (openQuotesBrowser)="openQuotesBrowser($event)">
     </app-question-list>
 </section>
-<mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>
+<mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="isLoading$ | async"></mat-progress-spinner>

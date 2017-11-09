@@ -16,7 +16,7 @@
     .createButton:not(:disabled) {
         background-color: $accent;
     }
-    mat-spinner {
+    mat-progress-spinner {
         height: 50px;
         align-self: center;
     }

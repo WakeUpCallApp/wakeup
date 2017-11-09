@@ -94,4 +94,4 @@
   <app-comment-list *ngIf="comments.length" [comments]="comments" (delete)="onDeleteComment($event)">
   </app-comment-list>
 </section>
-<mat-spinner class="spinner" *ngIf="isLoading$ | async"></mat-spinner>
+<mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="isLoading$ | async"></mat-progress-spinner>
