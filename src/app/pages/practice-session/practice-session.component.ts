@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
-import { filter, map, take, takeUntil } from 'rxjs/operators';
+import { map, take, takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 
 
@@ -56,8 +56,8 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
 
     this.route.params
       .pipe(
-      filter(params => !!params['questionSetId']),
-      map(idParams => this.questionSetStoreService.get(idParams['questionSetId'])),
+      map(params => params),
+      tap(params => this.questionSetStoreService.get(params.questionSetId)),
       takeUntil(this.componentDestroyed))
       .subscribe();
 

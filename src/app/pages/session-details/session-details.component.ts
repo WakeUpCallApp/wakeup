@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs/Observable';
-import { filter } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -37,18 +37,17 @@ export class SessionDetailsComponent implements OnInit, OnDestroy {
 
     this.sessionData$ = this.questionSetStoreService.sessionDetails$;
     this.actionsSubscription = Observable.combineLatest(
-      this.route.params.pipe(filter(params => !!params['questionSetId'])),
-      this.route.params.pipe(filter(params => !!params['questionSetName'])),
-      this.answerStoreService.isIndexedDbOpen$,
-      (idParams, nameParams, isDbOpen) => {
-        this.currentQuestionSetName = nameParams['questionSetName'];
-        this.questionSetId = idParams['questionSetId'];
+      this.route.params,
+      this.answerStoreService.isIndexedDbOpen$).pipe(
+      map(([params, isDbOpen]) => {
+        this.currentQuestionSetName = params.questionSetName;
+        this.questionSetId = +params.questionSetId;
         this.titleService.setTitle(`SessionDetails ${name}`);
-        if (isDbOpen) {
-          this.questionSetStoreService.getSessionDetails(parseInt(this.questionSetId, 10));
-        }
-      }
-    ).subscribe();
+        return isDbOpen;
+      }),
+      tap(isDbOpen => isDbOpen &&
+        this.questionSetStoreService.getSessionDetails(this.questionSetId))
+      ).subscribe();
   }
 
   ngOnDestroy() {

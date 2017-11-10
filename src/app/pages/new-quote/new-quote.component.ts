@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { filter } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 
 import { TopicStoreService, QuoteStoreService, Topic } from '@app/common';
@@ -43,10 +43,13 @@ export class NewQuoteComponent implements OnInit, OnDestroy {
     this.quoteStoreService.getSuggestions();
 
     this.actionsSubscription = this.route.params
-      .pipe(filter(params => !!params['topicId']))
-      .subscribe(topicIdParams => {
-        this.quote.topic = parseInt(topicIdParams['topicId'], 10);
-        this.topicStoreService.get(this.quote.topic);
+      .pipe(
+      map(params => params),
+      tap((params) => {
+        this.topicStoreService.get(+params.topicId);
+      }))
+      .subscribe(params => {
+        this.quote.topic = parseInt(params.topicId, 10);
       });
   }
 

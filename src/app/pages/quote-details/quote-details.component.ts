@@ -10,7 +10,7 @@ import {
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { filter, takeUntil, skip, debounceTime } from 'rxjs/operators';
+import { map, tap, takeUntil, skip, debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
@@ -72,17 +72,17 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       source: ''
     });
 
-    Observable.combineLatest(
-      this.route.params.pipe(filter(params => !!params['id'])),
-      this.route.params.pipe(filter(params => !!params['topicId'])),
-      (quoteIdParams, topicIdParams) => {
 
-        this.topicStoreService.get(+topicIdParams['topicId']);
-        this.quoteStoreService.getById(+quoteIdParams['id']);
-        this.quoteStoreService.getComments(+quoteIdParams['id']);
-
-      }
-    ).pipe(takeUntil(this.componentDestroyed)).subscribe();
+    this.route.params
+      .pipe(
+      map(params => params),
+      tap(params => {
+        this.topicStoreService.get(params.topicId);
+        this.quoteStoreService.getById(params.id);
+        this.quoteStoreService.getComments(params.id);
+      }),
+      takeUntil(this.componentDestroyed)
+      ).subscribe();
 
     Observable.combineLatest(
       this.quoteStoreService.currentQuote$,

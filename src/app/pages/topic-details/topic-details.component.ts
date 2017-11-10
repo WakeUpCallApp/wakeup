@@ -14,7 +14,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { filter, map, takeUntil, debounceTime } from 'rxjs/operators';
+import { tap, filter, map, takeUntil, debounceTime } from 'rxjs/operators';
 import appConstants from '@app/common/app-constants';
 import {
   TopicStoreService,
@@ -56,8 +56,8 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.route.params
       .pipe(
-      filter(params => !!params['id']),
-      map(idParams => this.topicStoreService.get(idParams['id'])),
+      map(params => params),
+      tap(params => this.topicStoreService.get(params.id)),
       takeUntil(this.componentDestroyed))
       .subscribe();
 

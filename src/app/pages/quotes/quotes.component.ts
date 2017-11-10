@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
-import { filter, takeUntil, map } from 'rxjs/operators';
+import { tap, takeUntil, map } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
@@ -43,11 +43,11 @@ export class QuotesComponent implements OnInit, OnDestroy {
 
     this.route.params
       .pipe(
-      filter(params => !!params['topicId']),
-      map(idParams => {
-        this.currentTopicId = idParams['topicId'];
+      map(params => params),
+      tap(params => {
+        this.currentTopicId = +params.topicId;
         this.topicStoreService.get(this.currentTopicId);
-        this.quoteStoreService.getByTopicId(+idParams['topicId']);
+        this.quoteStoreService.getByTopicId(this.currentTopicId);
       }),
       takeUntil(this.componentDestroyed)).subscribe();
 

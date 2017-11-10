@@ -14,7 +14,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
-import { map, filter, takeUntil, debounceTime } from 'rxjs/operators';
+import { map, tap, takeUntil, debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import {
   AppQuotesBrowserComponent,
@@ -66,8 +66,8 @@ export class QuestionSetDetailsComponent
     this.isLoading$ = this.questionSetStoreService.isLoading$;
     this.route.params
       .pipe(
-      filter(params => !!params['id']),
-      map(idParams => this.questionSetStoreService.get(idParams['id'])),
+      map(params => params),
+      tap(params => this.questionSetStoreService.get(params.id)),
       takeUntil(this.componentDestroyed)).subscribe();
 
     this.questionSetStoreService.currentQuestionSet$
