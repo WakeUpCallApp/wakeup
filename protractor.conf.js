@@ -5,24 +5,32 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 
 exports.config = {
   allScriptsTimeout: 11000,
-  specs: [
-    './e2e/**/*.e2e-spec.ts'
-  ],
+  specs: [ 'spec/**/*.spec.ts' ],
+  mochaOpts: {
+    ui: 'bdd',                  // use the describe/it syntax (default: 'bdd').
+    compiler: 'ts:ts-node/register'   // interpret step definitions as TypeScript
+  },
   capabilities: {
     'browserName': 'chrome'
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
-  framework: 'jasmine',
+  framework: 'custom',
+  frameworkPath: require.resolve('serenity-js'),
+  serenity: {
+    dialect: 'mocha',
+    requirementsDirectory: `${process.cwd()}/features`,
+    outputDirectory: `${process.cwd()}/target/site/serenity/`
+  },
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000,
-    print: function() {}
+    print: function () { }
   },
-  onPrepare() {
-    require('ts-node').register({
-      project: 'e2e/tsconfig.e2e.json'
-    });
-    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-  }
+  // onPrepare() {
+  //   require('ts-node').register({
+  //     project: 'e2e/tsconfig.e2e.json'
+  //   });
+  //   jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+  // }
 };
