@@ -22,7 +22,7 @@
             <li *ngFor="let answer of currentGroup.answers">
                 <span class="text">{{answer.text}}</span>
                 <span class="time">
-                    {{answer.createDate | date:'shortTime' }}
+                    at {{answer.createDate | date:'shortTime' }}
                 </span>
             </li>
         </ul>
