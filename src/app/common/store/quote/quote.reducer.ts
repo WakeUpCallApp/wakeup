@@ -42,7 +42,6 @@ export function reducer(state = initialState, action: any): State {
         isLoading: true
       });
 
-    case actions.ActionTypes.CREATE_SUCCESS:
     case actions.ActionTypes.CREATE_COMMENT_ERROR:
     case actions.ActionTypes.DELETE_COMMENT_ERROR:
     case actions.ActionTypes.GET_BY_TOPIC_ID:
@@ -76,6 +75,8 @@ export function reducer(state = initialState, action: any): State {
       return Object.assign({}, state, {
         suggestions: action.payload
       });
+
+    case actions.ActionTypes.CREATE_SUCCESS:
     case actions.ActionTypes.GET_BY_ID_SUCCESS:
     case actions.ActionTypes.UPDATE_SUCCESS:
       return Object.assign({}, state, {
