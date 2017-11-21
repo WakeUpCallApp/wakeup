@@ -4,8 +4,9 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
 
 exports.config = {
-  allScriptsTimeout: 11000,
-  specs: [ 'spec/**/*.spec.ts' ],
+  allScriptsTimeout: 111000,
+  getPageTimeout: 111000,
+  specs: ['spec/**/*.spec.ts'],
   mochaOpts: {
     ui: 'bdd',                  // use the describe/it syntax (default: 'bdd').
     compiler: 'ts:ts-node/register'   // interpret step definitions as TypeScript
@@ -24,8 +25,10 @@ exports.config = {
   },
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 30000,
-    print: function () { }
+    defaultTimeoutInterval: 120000,
+    includeStackTrace : true,
+    isVerbose : true,
+    print: function () {}
   },
   // onPrepare() {
   //   require('ts-node').register({
