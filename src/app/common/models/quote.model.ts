@@ -1,7 +1,6 @@
 /* tslint:disable: member-ordering */
-import * as moment from 'moment';
-import { ITopicApi, Topic } from './topic.model';
-import { Question } from './question.model';
+import { ITopicApi, Topic } from "./topic.model";
+import { Question } from "./question.model";
 
 export interface IComment {
   _id?: number;
@@ -46,6 +45,11 @@ export interface ISuggestions {
   sources: string[];
 }
 
+const isDate = d =>
+  Object.prototype.toString.call(d) === "[object Date]"
+    ? !isNaN(d.getTime())
+    : false;
+
 export class Quote {
   constructor(
     public id: number,
@@ -56,13 +60,11 @@ export class Quote {
     public topic: number | Topic,
     public questions: number[] | Question[],
     public commentList
-  ) { }
+  ) {}
 
   static fromApi(quoteApi: IQuoteApi): Quote {
     const questions = quoteApi.questions
-      ? quoteApi.questions.map(questionApi =>
-        Question.fromApi(questionApi)
-      )
+      ? quoteApi.questions.map(questionApi => Question.fromApi(questionApi))
       : [];
     return new Quote(
       quoteApi._id,
@@ -81,7 +83,7 @@ export class Quote {
       _id: quote.id,
       text: quote.text,
       source: quote.source,
-      date: moment(quote.date).isValid() ? quote.date.toISOString() : undefined,
+      date: isDate(quote.date) ? quote.date.toISOString() : undefined,
       author: quote.author,
       topic: (quote.topic as Topic).id,
       questions: (quote.questions as Question[]).map(question => question.id),
@@ -89,4 +91,3 @@ export class Quote {
     };
   }
 }
-

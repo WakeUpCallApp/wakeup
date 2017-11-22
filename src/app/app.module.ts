@@ -8,6 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { Router } from '@angular/router';
+import { JwtModule } from '@auth0/angular-jwt';
 import {
   QuestionSetEffects,
   QuestionEffects,
@@ -25,6 +26,10 @@ import { WakeupCommonModule } from './common/common.module';
 import { SharedModule } from './_shared/shared.module';
 import { PagesModule } from './pages/pages.module';
 
+export function getTokenFunction() {
+  return localStorage.getItem('token');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +41,11 @@ import { PagesModule } from './pages/pages.module';
     SharedModule,
     WakeupCommonModule,
     StoreModule.forRoot(reducers),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: getTokenFunction
+      }
+    }),
     !environment.production
       ? StoreDevtoolsModule.instrument()
       : [],
