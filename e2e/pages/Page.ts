@@ -1,6 +1,6 @@
 import { browser, ExpectedConditions, ElementFinder } from 'protractor';
 
-class Page {
+export class Page {
   route: string;
 
   constructor(route) {
@@ -20,5 +20,3 @@ class Page {
       .then(url => url.indexOf(this.route) > -1);
   }
 }
-
-export { Page };

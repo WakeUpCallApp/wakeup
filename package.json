@@ -91,5 +91,10 @@
     "ts-node": "3.3.0",
     "tslint": "5.7.0",
     "webpack-bundle-analyzer": "2.9.0"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "singleQuote": true
   }
 }

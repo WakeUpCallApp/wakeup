@@ -1,10 +1,10 @@
 import { Page } from "./Page";
-import { element, by, ElementFinder } from "protractor";
+import { $ , ElementFinder } from "protractor";
 
-class LoginPage extends Page {
-  username: ElementFinder = element(by.css('[name="email"]'));
-  password: ElementFinder = element(by.css('[name="password"]'));
-  submitBtn: ElementFinder = element(by.css(".loginButton"));
+export class LoginPage extends Page {
+  username: ElementFinder = $('[name="email"]');
+  password: ElementFinder = $('[name="password"]');
+  submitBtn: ElementFinder = $(".loginButton");
 
   constructor() {
     super("/login/wakeupcallapp");
@@ -14,8 +14,6 @@ class LoginPage extends Page {
     this.open();
     this.username.sendKeys(user.username);
     this.password.sendKeys(user.password);
-    this.submitBtn.click();
+    return this.submitBtn.click();
   }
 }
-
-export { LoginPage };
