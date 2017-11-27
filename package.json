@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf target",
-    "prereport": "serenity update",
-    "report": "serenity run",
     "ng": "ng",
     "startProd": "ng build set NODE_ENV=production && node server/app.js",
     "build": "ng build",
@@ -77,14 +74,8 @@
     "zone.js": "0.8.18"
   },
   "devDependencies": {
-    "@types/chai": "4.0.4",
-    "@types/chai-as-promised": "^7.1.0",
     "@types/jasmine": "2.5.38",
-    "@types/mocha": "^2.2.44",
     "@types/node": "~6.0.60",
-    "chai": "4.0.0",
-    "chai-as-promised": "^7.1.1",
-    "chai-smoothie": "^0.3.2",
     "codelyzer": "4.0.1",
     "jasmine-core": "2.8.0",
     "jasmine-spec-reporter": "4.2.1",
@@ -97,11 +88,8 @@
     "mocha": "^4.0.1",
     "nodemon": "1.12.1",
     "protractor": "5.1.2",
-    "serenity-cli": "0.7.0",
-    "serenity-js": "1.10.1",
     "ts-node": "3.3.0",
     "tslint": "5.7.0",
-    "webpack-bundle-analyzer": "2.9.0",
-    "npm-failsafe": "^0.2.1"
+    "webpack-bundle-analyzer": "2.9.0"
   }
 }
