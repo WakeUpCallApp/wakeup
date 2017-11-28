@@ -3,7 +3,7 @@ import {
   OnInit,
   OnDestroy,
   HostListener,
-  HostBinding
+  HostBinding,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -13,7 +13,6 @@ import { takeUntil, filter, map, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
-
 import { AppAnswerDialogComponent } from './components/app-answer-dialog/app-answer-dialog.component';
 
 import {
@@ -21,19 +20,19 @@ import {
   QuestionStoreService,
   QuestionSet,
   DialogService,
-  AuthTokenService
+  AuthTokenService,
 } from '@app/common';
 import appConstants from '@app/common/app-constants';
 
 enum KEY_CODE {
   RIGHT_ARROW = 39,
-  LEFT_ARROW = 37
+  LEFT_ARROW = 37,
 }
 
 @Component({
   selector: 'app-answers',
   templateUrl: './answers.component.html',
-  styleUrls: ['./answers.component.scss']
+  styleUrls: ['./answers.component.scss'],
 })
 export class AnswersComponent implements OnInit, OnDestroy {
   @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
@@ -56,7 +55,7 @@ export class AnswersComponent implements OnInit, OnDestroy {
     private auth: AuthTokenService,
     private answerStoreService: AnswerStoreService,
     private questionStoreService: QuestionStoreService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.isLoading$ = this.answerStoreService.isLoading$;
@@ -64,17 +63,19 @@ export class AnswersComponent implements OnInit, OnDestroy {
 
     Observable.combineLatest(
       this.route.params,
-      this.answerStoreService.isIndexedDbOpen$)
+      this.answerStoreService.isIndexedDbOpen$
+    )
       .pipe(
-      map(([params, isDbOpen]) => {
-        this.currentQuestionId = +params.questionId;
-        if (isDbOpen) {
-          this.answerStoreService.getAnswers(this.currentQuestionId);
-        }
-        return this.currentQuestionId;
-      }),
-      tap(questionId => this.questionStoreService.getQuestion(questionId)),
-      takeUntil(this.componentDestroyed))
+        map(([params, isDbOpen]) => {
+          this.currentQuestionId = +params.questionId;
+          if (isDbOpen) {
+            this.answerStoreService.getAnswers(this.currentQuestionId);
+          }
+          return this.currentQuestionId;
+        }),
+        tap(questionId => this.questionStoreService.getQuestion(questionId)),
+        takeUntil(this.componentDestroyed)
+      )
       .subscribe();
 
     this.questionStoreService.currentQuestion$
@@ -123,8 +124,8 @@ export class AnswersComponent implements OnInit, OnDestroy {
       disableClose: false,
       width: '600px',
       data: {
-        answer: Object.assign({}, answer)
-      }
+        answer: { ...answer },
+      },
     };
     const dialogRef = this.dialog.open(AppAnswerDialogComponent, config);
 
@@ -149,14 +150,14 @@ export class AnswersComponent implements OnInit, OnDestroy {
     this.openModal = true;
     const newAnswer = {
       questionId: +this.currentQuestionId,
-      text: ''
+      text: '',
     };
     const config: MatDialogConfig = {
       disableClose: false,
       width: '600px',
       data: {
-        answer: Object.assign({}, newAnswer)
-      }
+        answer: { ...newAnswer },
+      },
     };
     const dialogRef: any = this.dialog.open(AppAnswerDialogComponent, config);
 
@@ -187,7 +188,10 @@ export class AnswersComponent implements OnInit, OnDestroy {
   }
 
   private deleteAnswers() {
-    this.answerStoreService.deleteAll(+this.currentQuestionId, this.auth.getUserInfo().id);
+    this.answerStoreService.deleteAll(
+      +this.currentQuestionId,
+      this.auth.getUserInfo().id
+    );
   }
 
   getPrevQuestion(currentQuestionId): number {

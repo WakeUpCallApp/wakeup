@@ -15,7 +15,7 @@ export const initialState: State = {
   entities: [],
   isLoading: false,
   groupedAnswers: {},
-  isIndexedDBOpen: false
+  isIndexedDBOpen: false,
 };
 
 export function reducer(state = initialState, action: any): State {
@@ -26,48 +26,49 @@ export function reducer(state = initialState, action: any): State {
     case actions.ActionTypes.DELETE:
     case actions.ActionTypes.CREATE:
     case actions.ActionTypes.DELETE_ALL: {
-      return Object.assign({}, state, {
-        isLoading: true
-      });
+      return { ...state, isLoading: true };
     }
     case actions.ActionTypes.OPEN_INDEXED_DB_SUCCESS: {
-      return Object.assign({}, state, {
-        isIndexedDBOpen: true
-      });
+      return { ...state, isIndexedDBOpen: true };
     }
     case actions.ActionTypes.LOAD_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         entities: action.payload,
         groupedAnswers: helper.groupAnswersByDate(action.payload),
-        isLoading: false
-      });
+        isLoading: false,
+      };
     case actions.ActionTypes.UPDATE_SUCCESS:
       newEntities = onUpdateAnswer(state.entities, action.payload);
-      return Object.assign({}, state, {
+      return {
+        ...state,
         entities: newEntities,
         groupedAnswers: helper.groupAnswersByDate(newEntities),
-        isLoading: false
-      });
+        isLoading: false,
+      };
     case actions.ActionTypes.DELETE_SUCCESS:
       newEntities = onDeleteAnswer(state.entities, action.payload);
-      return Object.assign({}, state, {
+      return {
+        ...state,
         entities: newEntities,
         groupedAnswers: helper.groupAnswersByDate(newEntities),
-        isLoading: false
-      });
+        isLoading: false,
+      };
     case actions.ActionTypes.CREATE_SUCCESS:
       newEntities = onCreateAnswer(state.entities, action.payload);
-      return Object.assign({}, state, {
+      return {
+        ...state,
         entities: newEntities,
         groupedAnswers: helper.groupAnswersByDate(newEntities),
-        isLoading: false
-      });
+        isLoading: false,
+      };
     case actions.ActionTypes.DELETE_ALL_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         entities: [],
         groupedAnswers: [],
-        isLoading: false
-      });
+        isLoading: false,
+      };
     default: {
       return state;
     }
@@ -77,7 +78,7 @@ export function reducer(state = initialState, action: any): State {
 function onUpdateAnswer(answers, answerToUpdate) {
   return answers.map(answer => {
     if (answer.id === answerToUpdate.id) {
-      answer = Object.assign({}, answerToUpdate);
+      answer = { ...answerToUpdate };
     }
     return answer;
   });

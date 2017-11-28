@@ -8,7 +8,7 @@ import {
   ChangeDetectorRef,
   ApplicationRef,
   ViewChild,
-  ElementRef
+  ElementRef,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,13 +20,13 @@ import {
   TopicStoreService,
   QuestionSetStoreService,
   Topic,
-  DialogService
+  DialogService,
 } from '@app/common';
 
 @Component({
   selector: 'app-topic-details',
   templateUrl: './topic-details.component.html',
-  styleUrls: ['./topic-details.component.scss']
+  styleUrls: ['./topic-details.component.scss'],
 })
 export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
@@ -47,7 +47,7 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     private appref: ApplicationRef,
     private dialogService: DialogService,
     private titleService: Title
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.isLoading$ = this.topicStoreService.isLoading$;
@@ -56,19 +56,21 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.route.params
       .pipe(
-      map(params => params),
-      tap(params => this.topicStoreService.get(params.id)),
-      takeUntil(this.componentDestroyed))
+        map(params => params),
+        tap(params => this.topicStoreService.get(params.id)),
+        takeUntil(this.componentDestroyed)
+      )
       .subscribe();
 
     this.topicStoreService.currentTopic$
       .pipe(
-      filter(currentTopic => !!currentTopic),
-      takeUntil(this.componentDestroyed))
+        filter(currentTopic => !!currentTopic),
+        takeUntil(this.componentDestroyed)
+      )
       .subscribe(currentTopic => {
         this.currentTopic = <Topic>currentTopic;
         this.titleService.setTitle(`${this.currentTopic.name} details`);
-        this.updateObject = Object.assign({}, currentTopic);
+        this.updateObject = { ...currentTopic };
       });
   }
 
@@ -79,10 +81,7 @@ export class TopicDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ngzone.runOutsideAngular(() => {
       [this.nameElRef, this.descriptionElRef].forEach(field => {
         Observable.fromEvent(field.nativeElement, 'keyup')
-          .pipe(
-          debounceTime(1000),
-          takeUntil(this.componentDestroyed)
-          )
+          .pipe(debounceTime(1000), takeUntil(this.componentDestroyed))
           .subscribe((keyboardEvent: any) => {
             if (keyboardEvent.keyCode === appConstants.keyCodes.TAB) {
               return;

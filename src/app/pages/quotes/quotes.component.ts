@@ -10,7 +10,7 @@ import {
   TopicStoreService,
   QuoteStoreService,
   Quote,
-  Topic
+  Topic,
 } from '@app/common';
 import appConstants from '@app/common/app-constants';
 import { AppImportFileComponent } from '@app/_shared/components';
@@ -18,10 +18,11 @@ import { AppImportFileComponent } from '@app/_shared/components';
 @Component({
   selector: 'app-quotes',
   templateUrl: './quotes.component.html',
-  styleUrls: ['./quotes.component.scss']
+  styleUrls: ['./quotes.component.scss'],
 })
 export class QuotesComponent implements OnInit, OnDestroy {
-  @HostBinding('class') classes = `quotes ${appConstants.ui.PAGE_CONTAINER_CLASS}`;
+  @HostBinding('class')
+  classes = `quotes ${appConstants.ui.PAGE_CONTAINER_CLASS}`;
   quotesMenu;
   currentTopicId;
   currentTopic: Topic;
@@ -36,25 +37,27 @@ export class QuotesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.isLoading$ = this.quoteStoreService.isLoading$;
 
     this.route.params
       .pipe(
-      map(params => params),
-      tap(params => {
-        this.currentTopicId = +params.topicId;
-        this.topicStoreService.get(this.currentTopicId);
-        this.quoteStoreService.getByTopicId(this.currentTopicId);
-      }),
-      takeUntil(this.componentDestroyed)).subscribe();
+        map(params => params),
+        tap(params => {
+          this.currentTopicId = +params.topicId;
+          this.topicStoreService.get(this.currentTopicId);
+          this.quoteStoreService.getByTopicId(this.currentTopicId);
+        }),
+        takeUntil(this.componentDestroyed)
+      )
+      .subscribe();
 
     this.topicStoreService.currentTopic$
       .pipe(takeUntil(this.componentDestroyed))
       .subscribe(currentTopic => {
-        this.currentTopic = Object.assign({}, currentTopic);
+        this.currentTopic = { ...currentTopic };
         this.titleService.setTitle(`Quotes: ${this.currentTopic.name}`);
       });
 
@@ -84,12 +87,12 @@ export class QuotesComponent implements OnInit, OnDestroy {
 
   openImportQuotesModal() {
     const config: MatDialogConfig = {
-      disableClose: false
+      disableClose: false,
     };
     const dialogRef = this.dialog.open(AppImportFileComponent, config);
     this.importDialogRef = dialogRef;
     dialogRef.componentInstance.uploadFile = this.importQuotes.bind(this);
-    dialogRef.afterClosed().subscribe(() => { });
+    dialogRef.afterClosed().subscribe(() => {});
   }
 
   importQuotes(files) {
@@ -101,7 +104,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
       return {
         author: quote.author,
         text: quote.text,
-        source: quote.source
+        source: quote.source,
       };
     });
     this.quoteStoreService.exportQuotes(this.currentTopic.name, exportData);

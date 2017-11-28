@@ -8,7 +8,7 @@ import {
   ApplicationRef,
   ViewChild,
   ElementRef,
-  HostBinding
+  HostBinding,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,7 +19,7 @@ import { Subject } from 'rxjs/Subject';
 import {
   AppQuotesBrowserComponent,
   AppSessionConfigComponent,
-  AppEditQuestionDialogComponent
+  AppEditQuestionDialogComponent,
 } from './components';
 import { AppImportFileComponent } from '@app/_shared/components';
 import {
@@ -28,14 +28,14 @@ import {
   SessionOptions,
   QuestionSet,
   IQuestion,
-  QuestionSetStoreService
+  QuestionSetStoreService,
 } from '@app/common';
 import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-question-set-details',
   templateUrl: './question-set-details.component.html',
-  styleUrls: ['./question-set-details.component.scss']
+  styleUrls: ['./question-set-details.component.scss'],
 })
 export class QuestionSetDetailsComponent
   implements OnInit, AfterViewInit, OnDestroy {
@@ -60,22 +60,24 @@ export class QuestionSetDetailsComponent
     private appref: ApplicationRef,
     private titleService: Title,
     private dialogService: DialogService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.isLoading$ = this.questionSetStoreService.isLoading$;
     this.route.params
       .pipe(
-      map(params => params),
-      tap(params => this.questionSetStoreService.get(params.id)),
-      takeUntil(this.componentDestroyed)).subscribe();
+        map(params => params),
+        tap(params => this.questionSetStoreService.get(params.id)),
+        takeUntil(this.componentDestroyed)
+      )
+      .subscribe();
 
     this.questionSetStoreService.currentQuestionSet$
       .pipe(takeUntil(this.componentDestroyed))
       .subscribe(currentQuestionSet => {
         this.currentQuestionSet = <QuestionSet>currentQuestionSet;
         this.titleService.setTitle(`${this.currentQuestionSet.name} details`);
-        this.updateObject = Object.assign({}, currentQuestionSet);
+        this.updateObject = { ...currentQuestionSet };
         this.newQuestion = this.getEmptyQuestion();
       });
 
@@ -89,7 +91,6 @@ export class QuestionSetDetailsComponent
           this.importDialogRef.close();
         }
       });
-
   }
 
   ngAfterViewInit() {
@@ -99,9 +100,7 @@ export class QuestionSetDetailsComponent
     this.ngzone.runOutsideAngular(() => {
       [this.nameElRef, this.descriptionElRef].forEach(field => {
         Observable.fromEvent(field.nativeElement, 'keyup')
-          .pipe(
-          debounceTime(1000),
-          takeUntil(this.componentDestroyed))
+          .pipe(debounceTime(1000), takeUntil(this.componentDestroyed))
           .subscribe((keyboardEvent: any) => {
             if (keyboardEvent.keyCode === appConstants.keyCodes.TAB) {
               return;
@@ -138,7 +137,7 @@ export class QuestionSetDetailsComponent
       id: undefined,
       text: '',
       quote: undefined,
-      questionSet: this.currentQuestionSet.id
+      questionSet: this.currentQuestionSet.id,
     };
   }
 
@@ -165,13 +164,10 @@ export class QuestionSetDetailsComponent
       disableClose: false,
       width: '600px',
       data: {
-        question: Object.assign({}, question)
-      }
+        question: { ...question },
+      },
     };
-    const dialogRef = this.dialog.open(
-      AppEditQuestionDialogComponent,
-      config
-    );
+    const dialogRef = this.dialog.open(AppEditQuestionDialogComponent, config);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.questionSetStoreService.editQuestion(result);
@@ -185,8 +181,8 @@ export class QuestionSetDetailsComponent
       width: '80%',
       height: '80%',
       data: {
-        initialQuoteId: question.quote
-      }
+        initialQuoteId: question.quote,
+      },
     };
     const dialogRef = this.dialog.open(AppQuotesBrowserComponent, config);
 
@@ -200,7 +196,7 @@ export class QuestionSetDetailsComponent
 
   openPracticeSessionModal() {
     const config: MatDialogConfig = {
-      disableClose: false
+      disableClose: false,
     };
     const dialogRef = this.dialog.open(AppSessionConfigComponent, config);
     dialogRef.afterClosed().subscribe((options: SessionOptions) => {
@@ -208,7 +204,7 @@ export class QuestionSetDetailsComponent
         this.sessionConfigService.setOptions(options);
         this.router.navigate([
           appConstants.routes.PRACTICE_SESSION,
-          this.currentQuestionSet.id
+          this.currentQuestionSet.id,
         ]);
       }
     });
@@ -216,26 +212,33 @@ export class QuestionSetDetailsComponent
 
   openImportQuestionsModal() {
     const config: MatDialogConfig = {
-      disableClose: false
+      disableClose: false,
     };
     const dialogRef = this.dialog.open(AppImportFileComponent, config);
     dialogRef.componentInstance.uploadFile = this.importQuestions.bind(this);
     this.importDialogRef = dialogRef;
 
-    dialogRef.afterClosed().subscribe(() => { });
+    dialogRef.afterClosed().subscribe(() => {});
   }
 
   importQuestions(files) {
-    this.questionSetStoreService.importQuestions(this.currentQuestionSet.id, files);
+    this.questionSetStoreService.importQuestions(
+      this.currentQuestionSet.id,
+      files
+    );
   }
 
   exportQuestions() {
-    const exportData = (this.currentQuestionSet
-      .questions as any[]).map(question => {
+    const exportData = (this.currentQuestionSet.questions as any[]).map(
+      question => {
         return {
-          questionName: question.text
+          questionName: question.text,
         };
-      });
-    this.questionSetStoreService.exportQuestions(exportData, this.currentQuestionSet.name);
+      }
+    );
+    this.questionSetStoreService.exportQuestions(
+      exportData,
+      this.currentQuestionSet.name
+    );
   }
 }

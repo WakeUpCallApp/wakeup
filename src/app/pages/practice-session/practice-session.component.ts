@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Observable';
 import { map, take, takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 
-
 import appConstants from '@app/common/app-constants';
 
 import {
@@ -17,13 +16,13 @@ import {
   SessionConfigService,
   SessionOptions,
   QuestionSet,
-  Quote
+  Quote,
 } from '@app/common';
 
 @Component({
   selector: 'app-practice-session',
   templateUrl: './practice-session.component.html',
-  styleUrls: ['./practice-session.component.scss']
+  styleUrls: ['./practice-session.component.scss'],
 })
 export class PracticeSessionComponent implements OnInit, OnDestroy {
   displayQuestion = true;
@@ -48,7 +47,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
     private loginApi: LoginApi
   ) {
     this.configOptions =
-      this.sessionConfigService.getOptions() || (<SessionOptions>{});
+      this.sessionConfigService.getOptions() || <SessionOptions>{};
   }
 
   ngOnInit() {
@@ -56,19 +55,19 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
 
     this.route.params
       .pipe(
-      map(params => params),
-      tap(params => this.questionSetStoreService.get(params.questionSetId)),
-      takeUntil(this.componentDestroyed))
+        map(params => params),
+        tap(params => this.questionSetStoreService.get(params.questionSetId)),
+        takeUntil(this.componentDestroyed)
+      )
       .subscribe();
 
     this.questionSetStoreService.currentQuestionSet$
       .pipe(take(2))
       .subscribe(currentQuestionSet => {
-        this.currentQuestionSet = <QuestionSet>Object.assign({}, currentQuestionSet);
+        this.currentQuestionSet = <QuestionSet>{ ...currentQuestionSet };
         this.titleService.setTitle(`${this.currentQuestionSet.name} practice`);
         this.initSession();
       });
-
   }
 
   ngOnDestroy() {
@@ -125,7 +124,7 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
     this.router.navigate([
       appConstants.routes.SESSION_DETAILS,
       this.currentQuestionSet.id,
-      this.currentQuestionSet.name
+      this.currentQuestionSet.name,
     ]);
   }
 
@@ -180,11 +179,13 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   }
 
   saveAnswer() {
-    this.answerStoreService.create({
-      questionId: this.currentQuestion.id,
-      text: this.answerText
-    },
-      this.loginApi.getCurrentUser()._id);
+    this.answerStoreService.create(
+      {
+        questionId: this.currentQuestion.id,
+        text: this.answerText,
+      },
+      this.loginApi.getCurrentUser()._id
+    );
     this.answerText = '';
     this.setNextQuestion();
   }

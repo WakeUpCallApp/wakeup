@@ -14,30 +14,30 @@ export interface State {
 export const initialState: State = {
   entities: [],
   currentQuestion: <Question>{},
-  isLoading: false
+  isLoading: false,
 };
 
 export function reducer(state = initialState, action: any): State {
   switch (action.type) {
     case actions.ActionTypes.LOAD_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         entities: helper.groupQuestionsByQuestionSet(action.payload),
-        isLoading: false
-      });
+        isLoading: false,
+      };
     case actions.ActionTypes.GET_CURRENT_QUESTION:
     case actions.ActionTypes.DELETE:
-      return Object.assign({}, state, {
-        isLoading: true
-      });
+      return { ...state, isLoading: true };
+
     case actions.ActionTypes.GET_CURRENT_QUESTION_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentQuestion: action.payload,
-        isLoading: false
-      });
+        isLoading: false,
+      };
     case actions.ActionTypes.DELETE_SUCCESS:
-      return Object.assign({}, state, {
-        isLoading: false
-      });
+      return { ...state, isLoading: false };
+
     default: {
       return state;
     }

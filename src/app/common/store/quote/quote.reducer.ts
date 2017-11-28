@@ -18,19 +18,20 @@ export const initialState: State = {
   currentQuote: <Quote>{},
   suggestions: {},
   comments: [],
-  importSpinner: undefined
+  importSpinner: undefined,
 };
 
 export function reducer(state = initialState, action: any): State {
   switch (action.type) {
     case actions.ActionTypes.LOAD:
-      return Object.assign({}, state, { isLoading: true });
+      return { ...state, isLoading: true };
 
     case actions.ActionTypes.LOAD_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         topicsWithQuotes: action.payload,
-        isLoading: false
-      });
+        isLoading: false,
+      };
 
     case actions.ActionTypes.GET_COMMENTS:
     case actions.ActionTypes.CREATE_COMMENT:
@@ -38,60 +39,65 @@ export function reducer(state = initialState, action: any): State {
     case actions.ActionTypes.GET_BY_TOPIC_ID:
     case actions.ActionTypes.CREATE:
     case actions.ActionTypes.UPDATE:
-      return Object.assign({}, state, {
-        isLoading: true
-      });
+      return { ...state, isLoading: true };
 
     case actions.ActionTypes.CREATE_COMMENT_ERROR:
     case actions.ActionTypes.DELETE_COMMENT_ERROR:
     case actions.ActionTypes.GET_BY_TOPIC_ID:
     case actions.ActionTypes.CREATE_ERROR:
     case actions.ActionTypes.UPDATE_ERROR:
-      return Object.assign({}, state, {
-        isLoading: false
-      });
+      return { ...state, isLoading: false };
 
     case actions.ActionTypes.GET_COMMENTS_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         comments: action.payload,
-        isLoading: false
-      });
+        isLoading: false,
+      };
+
     case actions.ActionTypes.CREATE_COMMENT_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         comments: [...state.comments, action.payload],
-        isLoading: false
-      });
+        isLoading: false,
+      };
+
     case actions.ActionTypes.DELETE_COMMENT_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         comments: onDeleteComment(state.comments, action.payload),
-        isLoading: false
-      });
+        isLoading: false,
+      };
+
     case actions.ActionTypes.GET_BY_TOPIC_ID_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         quotesByTopic: action.payload,
-        isLoading: false
-      });
+        isLoading: false,
+      };
+
     case actions.ActionTypes.GET_SUGGESTIONS_SUCCESS:
-      return Object.assign({}, state, {
-        suggestions: action.payload
-      });
+      return { ...state, suggestions: action.payload };
 
     case actions.ActionTypes.CREATE_SUCCESS:
     case actions.ActionTypes.GET_BY_ID_SUCCESS:
     case actions.ActionTypes.UPDATE_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentQuote: action.payload,
-        isLoading: false
-      });
+        isLoading: false,
+      };
+
     case actions.ActionTypes.IMPORT_QUOTES:
-      return Object.assign({}, state, {
-        importSpinner: true
-      });
+      return { ...state, importSpinner: true };
+
     case actions.ActionTypes.IMPORT_QUOTES_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         quotesByTopic: state.quotesByTopic.concat(action.payload),
-        importSpinner: false
-      });
+        importSpinner: false,
+      };
+
     default: {
       return state;
     }

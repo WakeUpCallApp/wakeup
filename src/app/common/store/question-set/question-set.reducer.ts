@@ -21,18 +21,16 @@ export const initialState: State = {
   searchTerm: '',
   filter: actions.Filter.ALL,
   sessionDetailsData: [],
-  showImportSpinner: undefined
+  showImportSpinner: undefined,
 };
 
 export function reducer(state = initialState, action: any): State {
   switch (action.type) {
     case actions.ActionTypes.SEARCH_INPUT:
-      return Object.assign({}, state, { searchTerm: action.payload });
+      return { ...state, searchTerm: action.payload };
 
     case actions.ActionTypes.FILTER:
-      return Object.assign({}, state, {
-        filter: action.payload
-      });
+      return { ...state, filter: action.payload };
 
     case actions.ActionTypes.LOAD:
     case actions.ActionTypes.UPDATE:
@@ -41,84 +39,92 @@ export function reducer(state = initialState, action: any): State {
     case actions.ActionTypes.ADD_QUESTION:
     case actions.ActionTypes.EDIT_QUESTION:
     case actions.ActionTypes.DELETE_QUESTION:
-      return Object.assign({}, state, { isLoading: true });
+      return { ...state, isLoading: true };
 
     case actions.ActionTypes.LOAD_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         entities: action.payload,
-        isLoading: false
-      });
+        isLoading: false,
+      };
 
     case actions.ActionTypes.REGISTER_SESSION_SUCCESS:
-      return Object.assign({}, state, {
-        entities: onRegisterSessionUpdate(state.entities, action.payload)
-      });
+      return {
+        ...state,
+        entities: onRegisterSessionUpdate(state.entities, action.payload),
+      };
 
     case actions.ActionTypes.GET_SESSION_DETAILS_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         sessionDetailsData: getSessionDetails(action.payload),
-        isLoading: false
-      });
+        isLoading: false,
+      };
 
     case actions.ActionTypes.GET_CURRENT_QUESTION_SET_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentQuestionSet: getsortedQuestionsQS(action.payload),
-        isLoading: false
-      });
+        isLoading: false,
+      };
 
     case actions.ActionTypes.CREATE_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentQuestionSet: action.payload,
-        isLoading: false
-      });
+        isLoading: false,
+      };
 
     case actions.ActionTypes.UPDATE_SUCCESS:
-      return Object.assign({}, state, {
-        currentQuestionSet: Object.assign(
-          {},
-          state.currentQuestionSet,
-          action.payload
-        ),
-        isLoading: false
-      });
+      return {
+        ...state,
+        currentQuestionSet: {
+          ...state.currentQuestionSet,
+          ...action.payload,
+        },
+        isLoading: false,
+      };
 
     case actions.ActionTypes.ADD_QUESTION_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentQuestionSet: updateOnAddQuestion(
           state.currentQuestionSet,
           action.payload
         ),
-        isLoading: false
-      });
+        isLoading: false,
+      };
 
     case actions.ActionTypes.EDIT_QUESTION_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentQuestionSet: updateOnEditQuestion(
           state.currentQuestionSet,
           action.payload
         ),
-        isLoading: false
-      });
+        isLoading: false,
+      };
     case actions.ActionTypes.DELETE_QUESTION_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentQuestionSet: updateOnDeleteQuestion(
           state.currentQuestionSet,
           action.payload
         ),
-        isLoading: false
-      });
+        isLoading: false,
+      };
     case actions.ActionTypes.IMPORT_QUESTIONS:
-      return Object.assign({}, state, {
-        showImportSpinner: true
-      });
+      return { ...state, showImportSpinner: true };
+
     case actions.ActionTypes.IMPORT_QUESTIONS_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentQuestionSet: updateOnImportQuestions(
           state.currentQuestionSet,
           action.payload
         ),
-        showImportSpinner: false
-      });
+        showImportSpinner: false,
+      };
     default: {
       return state;
     }
@@ -126,30 +132,33 @@ export function reducer(state = initialState, action: any): State {
 }
 
 function updateOnAddQuestion(questionSet, questionToAdd) {
-  const updatedQuestionSet = Object.assign({}, questionSet, {
-    questions: [...questionSet.questions, questionToAdd]
-  });
+  const updatedQuestionSet = {
+    ...questionSet,
+    questions: [...questionSet.questions, questionToAdd],
+  };
   return updatedQuestionSet;
 }
 
 function updateOnEditQuestion(questionSet, questionToUpdate) {
-  const updatedQuestionSet = <QuestionSet>Object.assign({}, questionSet, {
+  const updatedQuestionSet = <QuestionSet>{
+    ...questionSet,
     questions: questionSet.questions.map(question => {
       if (question.id === questionToUpdate.id) {
-        return Object.assign({}, question, questionToUpdate);
+        return { ...question, ...questionToUpdate };
       }
       return question;
-    })
-  });
+    }),
+  };
   return updatedQuestionSet;
 }
 
 function updateOnDeleteQuestion(questionSet, questionToDelete) {
-  const updatedQuestionSet = Object.assign({}, questionSet, {
+  const updatedQuestionSet = {
+    ...questionSet,
     questions: questionSet.questions.filter(
       question => question.id !== questionToDelete.id
-    )
-  });
+    ),
+  };
   return updatedQuestionSet;
 }
 
@@ -164,25 +173,26 @@ function getSessionDetails(data) {
 }
 
 function updateOnImportQuestions(questionSet, questionsToAdd) {
-  const updatedQuestionSet = Object.assign({}, questionSet, {
-    questions: questionSet.questions.concat(questionsToAdd)
-  });
+  const updatedQuestionSet = {
+    ...questionSet,
+    questions: questionSet.questions.concat(questionsToAdd),
+  };
   return updatedQuestionSet;
 }
 
 function getsortedQuestionsQS(questionSet) {
-  const updatedQuestionSet = Object.assign({}, questionSet, {
-    questions: helper.sortQuestionsById(questionSet.questions)
-  });
+  const updatedQuestionSet = {
+    ...questionSet,
+    questions: helper.sortQuestionsById(questionSet.questions),
+  };
   return updatedQuestionSet;
 }
 
 function onRegisterSessionUpdate(entities, questionSet) {
   return entities.map(entity => {
     if (entity.id === questionSet.id) {
-      entity = Object.assign({}, entity, questionSet);
+      entity = { ...entity, ...questionSet };
     }
     return entity;
   });
-
 }

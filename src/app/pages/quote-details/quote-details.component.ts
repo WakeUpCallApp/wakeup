@@ -5,7 +5,7 @@ import {
   AfterViewInit,
   NgZone,
   ChangeDetectorRef,
-  HostBinding
+  HostBinding,
 } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,14 +21,14 @@ import {
   ICreateComment,
   Topic,
   DialogService,
-  LoginApi
+  LoginApi,
 } from '@app/common';
 import appConstants from '@app/common/app-constants';
 
 @Component({
   selector: 'app-quote-details',
   templateUrl: './quote-details.component.html',
-  styleUrls: ['./quote-details.component.scss']
+  styleUrls: ['./quote-details.component.scss'],
 })
 export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class') classes = `${appConstants.ui.PAGE_CONTAINER_CLASS}`;
@@ -57,7 +57,7 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     private dialogService: DialogService,
     private loginApi: LoginApi,
     private fb: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.isLoading$ = this.quoteStoreService.isLoading$;
@@ -69,27 +69,27 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.quoteForm = this.fb.group({
       text: '',
       author: '',
-      source: ''
+      source: '',
     });
-
 
     this.route.params
       .pipe(
-      map(params => params),
-      tap(params => {
-        this.topicStoreService.get(params.topicId);
-        this.quoteStoreService.getById(params.id);
-        this.quoteStoreService.getComments(params.id);
-      }),
-      takeUntil(this.componentDestroyed)
-      ).subscribe();
+        map(params => params),
+        tap(params => {
+          this.topicStoreService.get(params.topicId);
+          this.quoteStoreService.getById(params.id);
+          this.quoteStoreService.getComments(params.id);
+        }),
+        takeUntil(this.componentDestroyed)
+      )
+      .subscribe();
 
     Observable.combineLatest(
       this.quoteStoreService.currentQuote$,
       this.topicStoreService.currentTopic$,
       (quote, topic) => {
         this.currentQuote = quote;
-        this.updateObject = Object.assign({}, this.currentQuote);
+        this.updateObject = { ...this.currentQuote };
         if (quote.text) {
           this.titleService.setTitle(
             `Quote Details: ${quote.text.substring(0, 60)}...`
@@ -103,25 +103,25 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.newComment = this.getEmptyComment();
         }
       }
-    ).pipe(takeUntil(this.componentDestroyed)).subscribe();
+    )
+      .pipe(takeUntil(this.componentDestroyed))
+      .subscribe();
   }
 
   ngAfterViewInit() {
     this.ngzone.runOutsideAngular(() => {
-      [this.quoteForm.get('text'),
-      this.quoteForm.get('author'),
-      this.quoteForm.get('source')]
-        .forEach(field => {
-          field.valueChanges
-            .pipe(
-            skip(1),
-            debounceTime(1000),
-            takeUntil(this.componentDestroyed))
-            .subscribe((val) => {
-              this.updateQuote(Object.assign({}, this.updateObject, this.quoteForm.value));
-              this.cdref.detectChanges();
-            });
-        })
+      [
+        this.quoteForm.get('text'),
+        this.quoteForm.get('author'),
+        this.quoteForm.get('source'),
+      ].forEach(field => {
+        field.valueChanges
+          .pipe(skip(1), debounceTime(1000), takeUntil(this.componentDestroyed))
+          .subscribe(val => {
+            this.updateQuote({ ...this.updateObject, ...this.quoteForm.value });
+            this.cdref.detectChanges();
+          });
+      });
     });
   }
 
@@ -134,7 +134,7 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.quoteForm.setValue({
       text: quote.text,
       author: quote.author,
-      source: quote.source
+      source: quote.source,
     });
     this.initFormFlag = true;
   }
@@ -144,9 +144,10 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateQuoteOnQuestionsUpdate(questions) {
-    const updateObject = Object.assign({}, this.updateObject, {
-      questions
-    });
+    const updateObject = {
+      ...this.updateObject,
+      questions,
+    };
     this.updateQuote(updateObject);
   }
 
@@ -181,12 +182,12 @@ export class QuoteDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     const comment = {
       createDate: undefined,
       text: '',
-      user: this.loginApi.getCurrentUser()._id
+      user: this.loginApi.getCurrentUser()._id,
     };
     return {
       comment,
       quoteId: this.currentQuote.id,
-      isDefaultTopic: this.topic.isDefault
+      isDefaultTopic: this.topic.isDefault,
     };
   }
 }
