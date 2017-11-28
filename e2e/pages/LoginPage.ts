@@ -1,19 +1,19 @@
-import { Page } from "./Page";
-import { $ , ElementFinder } from "protractor";
+import { Page } from './Page';
+import { $, ElementFinder } from 'protractor';
 
 export class LoginPage extends Page {
   username: ElementFinder = $('[name="email"]');
   password: ElementFinder = $('[name="password"]');
-  submitBtn: ElementFinder = $(".loginButton");
+  submitBtn: ElementFinder = $('.loginButton');
 
   constructor() {
-    super("/login/wakeupcallapp");
+    super('/login/wakeupcallapp');
   }
 
-  doLogin(user) {
+  async doLogin(user) {
     this.open();
     this.username.sendKeys(user.username);
     this.password.sendKeys(user.password);
-    return this.submitBtn.click();
+    return await this.submitBtn.click();
   }
 }

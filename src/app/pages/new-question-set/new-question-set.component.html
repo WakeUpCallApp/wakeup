@@ -3,7 +3,7 @@
   <div class="card-body">
     <form class="createQuestionSetForm" #qsForm='ngForm'>
       <mat-input-container floatPlaceholder="always">
-        <input placeholder="Name" type="text" maxlength="200" #titleInputHint matInput name="name" required [(ngModel)]="questionSet.name">
+        <input placeholder="Name" type="text" maxlength="200" #titleInputHint matInput name="qsName" required [(ngModel)]="questionSet.name">
         <mat-error>Name is required</mat-error>
         <mat-hint align="end" aria-live="polite"> {{titleInputHint.value.length}} / 200 </mat-hint>
       </mat-input-container>
