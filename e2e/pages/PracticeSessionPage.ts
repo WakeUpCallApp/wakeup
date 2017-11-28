@@ -10,16 +10,15 @@ export class PracticeSessionPage extends Page {
     super(`/practiceSession`);
   }
 
-  endPracticeSession() {
-    return this.endSessionBtn.click();
+  async endPracticeSession() {
+    return await this.endSessionBtn.click();
   }
-  saveAnswer(text) {
+  async saveAnswer(text) {
     this.textAreaBox.sendKeys(text);
-    return this.saveBtn.click();
+    return await this.saveBtn.click();
   }
-  getQuestionNo() {
-    return this.questionName.getText().then(name => {
-      return name.split('.')[0];
-    });
+  async getQuestionNo() {
+    const name = await this.questionName.getText();
+    return name.split('.')[0];
   }
 }
