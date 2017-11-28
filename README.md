@@ -13,8 +13,6 @@ Available:
 
 The application can be found at: https://wakeup-call-app.herokuapp.com. 
 
-For best experience use with Google Chrome browser.
 
 What you should know:
- - the app is still in development
  - currently the answers are stored in your browser storage, they are not synchronized accross devices, and can be deleted when clearing browser cookies.
