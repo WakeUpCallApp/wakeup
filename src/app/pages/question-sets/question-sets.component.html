@@ -1,10 +1,7 @@
 <app-card>
   <div class="card-header">Question Sets</div>
   <div class="card-body">
-    <mat-input-container class="search">
-      <input matInput [(ngModel)]="search" name="search" placeholder="search" (keyup)="doSearch($event.target.value)">
-      <mat-icon class="material-icons" matSuffix>search</mat-icon>
-    </mat-input-container>
+    <app-search-input class="search" [search]="search" (doSearch)="doSearch($event)"></app-search-input>
     <div class="filter">
       <strong>Filter:</strong>
       <mat-select [(ngModel)]="selectedFilter" (change)="doFilter()">

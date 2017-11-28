@@ -20,52 +20,68 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
 } from '@angular/material';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { AppCardComponent, AppImportFileComponent, AppConfirmDialogComponent } from './components';
+import {
+  AppCardComponent,
+  AppImportFileComponent,
+  AppConfirmDialogComponent,
+  SearchInputComponent,
+} from './components';
+
+const material = [
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSnackBarModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
+  MatSlideToggleModule,
+];
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     MatCardModule,
     MatButtonModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
-    MatDialogModule],
+    MatDialogModule,
+    MatIconModule,
+    MatInputModule
+  ],
   declarations: [
     AppCardComponent,
     AppImportFileComponent,
-    AppConfirmDialogComponent],
+    AppConfirmDialogComponent,
+    SearchInputComponent,
+  ],
   exports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSnackBarModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatSlideToggleModule,
-    AppCardComponent
+    ...material,
+    AppCardComponent,
+    SearchInputComponent,
   ],
-  entryComponents: [AppImportFileComponent, AppConfirmDialogComponent]
+  entryComponents: [AppImportFileComponent, AppConfirmDialogComponent],
 })
-export class SharedModule { }
+export class SharedModule {}

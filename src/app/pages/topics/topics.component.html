@@ -1,19 +1,18 @@
 <app-card>
   <div class="card-header">Topics</div>
   <div class="card-body">
-    <mat-input-container class="search">
-      <input matInput [(ngModel)]="search" name="search" placeholder="search" (keyup)="doSearch($event.target.value)">
-      <mat-icon class="material-icons" matSuffix>search</mat-icon>
-    </mat-input-container>
+    <app-search-input class="search" [search]="search" (doSearch)="doSearch($event)"></app-search-input>
     <span *ngIf="!(filteredList$|async)?.length">Nothing found</span>
     <ul class="topicList">
       <li *ngFor="let topic of filteredList$ | async">
         <a matRipple [routerLink]="['/topicDetails', topic.id]">
           <div class="info" mat-line>
             <span class="title truncate">{{topic.name}}</span>
-            <span class="summary"> 
-              <span> <mat-icon>list</mat-icon> {{topic.questionSetIds?.length}} Question Sets</span>
-            <span><mat-icon> format_quote</mat-icon>{{topic.quotes?.length}} Quotes</span>
+            <span class="summary">
+              <span>
+                <mat-icon>list</mat-icon> {{topic.questionSetIds?.length}} Question Sets</span>
+              <span>
+                <mat-icon> format_quote</mat-icon>{{topic.quotes?.length}} Quotes</span>
             </span>
           </div>
           <div role="button" tabindex="0" aria-label="See Quotes" matTooltip="See Quotes" (keyup.enter)="goToQuotes($event, topic.id)"

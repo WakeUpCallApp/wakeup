@@ -1,0 +1,4 @@
+<mat-input-container class="search">
+  <input matInput [(ngModel)]="search" name="search" placeholder="search" (keyup)="onSearch($event.target.value)">
+  <mat-icon class="material-icons" matSuffix>search</mat-icon>
+</mat-input-container>
