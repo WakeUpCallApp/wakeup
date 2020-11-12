@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serverURL: ''
+  serverURL: 'https://wakeup-call-app.herokuapp.com/'
 };
