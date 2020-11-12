@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "startProd": "ng build set NODE_ENV=production && node server/app.js",
+        "startProd": "ng build --prod set NODE_ENV=production && node server/app.js",
         "build": "ng build",
         "sme": "./node_modules/.bin/source-map-explorer",
         "test": "ng test --browser ChromeHeadless --single-run",
