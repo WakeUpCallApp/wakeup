@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "startProd": "ng build --prod set NODE_ENV=production && node server/app.js",
+        "startProd": "ng build --prod --env=prod set NODE_ENV=production && node server/app.js",
         "build": "ng build",
         "sme": "./node_modules/.bin/source-map-explorer",
         "test": "ng test --browser ChromeHeadless --single-run",
@@ -15,7 +15,7 @@
         "start": "node server/app.js",
         "startServerProduction": "ng build && node server/app.js",
         "postinstall": "npm run prod",
-        "prod": "ng build --prod --vendor-chunk",
+        "prod": "ng build --prod --env=prod --vendor-chunk",
         "bundle-report": "webpack-bundle-analyzer dist/stats.json",
         "webdriver:update": "webdriver-manager update"
     },
